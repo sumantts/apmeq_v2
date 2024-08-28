@@ -43,7 +43,7 @@
 		$status = true;
 		$mainData = array();
 		$author_bio1 = '';
-		$sql = "SELECT * FROM user_type ORDER BY user_type_name";
+		$sql = "SELECT * FROM user_type";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {

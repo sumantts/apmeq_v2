@@ -182,7 +182,7 @@ function populateDataTable(){
                 titleAttr: 'Print'
             },
         ],
-        order: [[1, 'asc']],
+        order: [[0, 'asc']],
 
     });
 }//end fun

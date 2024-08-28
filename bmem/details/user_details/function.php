@@ -93,16 +93,12 @@
 				$data[4] = $user_phone; 
 				$data[5] = $user_email;
 				$data[6] = $user_address;
-				$data[7] = $activity_status[$user_status];
-				if($_SESSION["user_type_code"] == 'dev' || $_SESSION["user_type_code"] == 'super' || $_SESSION["user_type_code"] == 'h_admin'){
-					if($_SESSION["user_type_code"] == 'dev'){
-						$data[8] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$user_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$user_id.")'></i></a>";
-					}else{
-						$data[8] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$user_id.")'></i></a>";
-					}
+				$data[7] = $activity_status[$user_status]; 
+				if($_SESSION["user_type_code"] != 'super'){
+					$data[8] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$user_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$user_id.")'></i></a>";
 				}else{
-					$data[8] = "Restricted";
-				}
+					$data[8] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$user_id.")'></i></a>";
+				} 
 				array_push($mainData, $data);
 				$slno++;
 			}
@@ -185,7 +181,7 @@
 		$status = true;
 		$mainData = array(); 
 
-		$sql = "SELECT * FROM user_type WHERE user_type_status = 1 ORDER BY user_type_name ASC";
+		$sql = "SELECT * FROM user_type WHERE user_type_status = 1";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {

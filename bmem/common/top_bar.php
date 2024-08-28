@@ -162,8 +162,8 @@
                         <div class="dropdown-menu dropdown-menu-right profile-notification">
                             <div class="pro-head">
                                 <!-- <img src="assets/images/user/avatar-1.jpg" class="img-radius" alt="User-Profile-Image"> -->
-                                <span><?=$_SESSION["profile_name"]?></span>
-                                <a href="?p=signin&log=out&id=<?=base64_encode($_SESSION["author_id"])?>" class="dud-logout" title="Logout">
+                                <span><?=$_SESSION["user_name"]?></span>
+                                <a href="?p=signin&log=out&id=<?=base64_encode($_SESSION["user_id"])?>" class="dud-logout" title="Logout">
                                     <i class="feather icon-log-out"></i>
                                 </a>
                             </div>

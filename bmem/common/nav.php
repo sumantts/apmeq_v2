@@ -5,66 +5,102 @@
 				<ul class="nav pcoded-inner-navbar " >
 					<li class="nav-item <?php if($p == 'dashboard'){ ?> active <?php } ?>">
 					    <a href="?p=dashboard" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
-					</li>
-
-					<?php if($_SESSION["user_type_code"] == 'dev' || $_SESSION["user_type_code"] == 'super'){?>
-					<li class="nav-item pcoded-menu-caption" id="setup">
-						<label>SETUP </label>
 					</li> 
 
-					
-					<!-- <li class="nav-item <?php if($p == 'hospital-details'){ ?> active <?php } ?>">
-					    <a href="?p=hospital-details&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Hospital Details</span></a>
-					</li> -->
-					<li class="nav-item <?php if($p == 'department'){ ?> active <?php } ?>">
-						<a href="?p=department&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Department</span></a>
+					<!-- Super Admin Menu -->
+					<?php if($_SESSION["user_type_code"] == 'super'){?>					
+					<li class="nav-item pcoded-menu-caption" id="setup">
+						<label>SETUP </label>
 					</li>
-					<li class="nav-item <?php if($p == 'user-type'){ ?> active <?php } ?>">
-					    <a href="?p=user-type&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">User Type</span></a>
-					</li>
-					<!-- <li class="nav-item <?php if($p == 'students'){ ?> active <?php } ?>">
-					    <a href="?p=students&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext"> Students</span></a>
-					</li> -->
-					<li class="nav-item <?php if($p == 'asset-type'){ ?> active <?php } ?>">
-					    <a href="?p=asset-type&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Asset Type</span></a>
-					</li>
-					<?php } ?> 
-
-					<li class="nav-item pcoded-menu-caption" id="details">
-						<label>DETAILS </label>
-					</li>
-					<li class="nav-item <?php if($p == 'user-details'){ ?> active <?php } ?>">
-					    <a href="?p=user-details&gr=details" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">User Details</span></a>
-					</li>
-					<li class="nav-item <?php if($p == 'asset-details'){ ?> active <?php } ?>">
-					    <a href="?p=asset-details&gr=details" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Asset Details</span></a>
-					</li>
-					<li class="nav-item <?php if($p == 'supplier'){ ?> active <?php } ?>">
-					    <a href="?p=supplier&gr=details" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Supplier</span></a>
-					</li>
-					<li class="nav-item <?php if($p == 'manufacturer'){ ?> active <?php } ?>">
-					    <a href="?p=manufacturer&gr=details" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Manufacturer</span></a>
-					</li>
-					<li class="nav-item <?php if($p == 'service-providers'){ ?> active <?php } ?>">
-					    <a href="?p=service-providers&gr=details" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Service Providers</span></a>
-					</li>
-
-					<li class="nav-item pcoded-menu-caption" id="actions">
-						<label>ACTIONS </label>
-					</li>
-					<li class="nav-item <?php if($p == 'asset-reallocate'){ ?> active <?php } ?>">
-						<a href="?p=asset-reallocate&gr=actions" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Asset Reallocate</span></a>
-					</li>
-
-					<li class="nav-item pcoded-menu-caption" id="reports">
-						<label>REPORTS </label>
-					</li>
-					<li class="nav-item pcoded-hasmenu <?php if($p == 'collected_fees' || $p == 'paid_fees'){ ?> active pcoded-trigger <?php } ?>">
-						<a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Reports</span></a>
+					<li class="nav-item pcoded-hasmenu <?php if($p == 'user-facility' || $p == 'paid_fees'){ ?> active pcoded-trigger <?php } ?>">
+						<a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Manage User/Facility/Asset</span></a>
 						<ul class="pcoded-submenu">							
-							<li <?php if($p == 'collected_fees'){ ?> class="active" <?php } ?>><a href="#">Reports</a></li>													
+							<li <?php if($p == 'user_facility'){ ?> class="active" <?php } ?>><a href="?p=user_facility&gr=setup">User/Facility</a></li>							
+							<li <?php if($p == 'asset'){ ?> class="active" <?php } ?>><a href="?p=asset&gr=setup">Asset</a></li>												
 						</ul>
 					</li>
+					
+					<li class="nav-item <?php if($p == 'asset-dashboard'){ ?> active <?php } ?>">
+						<a href="?p=asset-dashboard&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Asset dashboard</span></a>
+					</li>
+					<li class="nav-item <?php if($p == 'ticket-dashboard'){ ?> active <?php } ?>">
+						<a href="?p=ticket-dashboard&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Ticket dashboard</span></a>
+					</li>
+					<li class="nav-item <?php if($p == 'pms-dashboard'){ ?> active <?php } ?>">
+						<a href="?p=pms-dashboard&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">PMS dashboard</span></a>
+					</li>
+					<li class="nav-item <?php if($p == 'calibration-dashboard'){ ?> active <?php } ?>">
+						<a href="?p=calibration-dashboard&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Calibration Dashboard</span></a>
+					</li>
+					<li class="nav-item <?php if($p == 'qa-dashboard'){ ?> active <?php } ?>">
+						<a href="?p=qa-dashboard&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">QA Dashboard</span></a>
+					</li>
+					<li class="nav-item <?php if($p == 'rber-Condemned'){ ?> active <?php } ?>">
+						<a href="?p=rber-Condemned&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">RBER/Condemned</span></a>
+					</li>
+					<li class="nav-item <?php if($p == 'reallocated-asset-details'){ ?> active <?php } ?>">
+						<a href="?p=reallocated-asset-details&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Reallocated Asset Details</span></a>
+					</li>
+					<li class="nav-item <?php if($p == 'call-log'){ ?> active <?php } ?>">
+						<a href="?p=call-log&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Call Log</span></a>
+					</li>
+					<?php } ?> 
+					<!-- //Super Admin Menu -->
+
+					<!-- Hospital admin Menu -->
+					<?php if($_SESSION["user_type_code"] == 'h_admin'){?>					
+					<li class="nav-item pcoded-menu-caption" id="setup">
+						<label>SETUP </label>
+					</li>
+					<li class="nav-item pcoded-hasmenu <?php if($p == 'department' || $p == 'asset'){ ?> active pcoded-trigger <?php } ?>">
+						<a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Manage Department/Asset</span></a>
+						<ul class="pcoded-submenu">							
+							<li <?php if($p == 'department'){ ?> class="active" <?php } ?>><a href="?p=department&gr=setup">Department</a></li>							
+							<li <?php if($p == 'asset'){ ?> class="active" <?php } ?>><a href="?p=asset&gr=setup">Asset</a></li>												
+						</ul>
+					</li>
+					
+					<li class="nav-item <?php if($p == 'asset-dashboard'){ ?> active <?php } ?>">
+						<a href="?p=asset-dashboard&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Asset dashboard</span></a>
+					</li>
+					<li class="nav-item <?php if($p == 'ticket-dashboard'){ ?> active <?php } ?>">
+						<a href="?p=ticket-dashboard&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Ticket dashboard</span></a>
+					</li>
+					<li class="nav-item <?php if($p == 'pms-dashboard'){ ?> active <?php } ?>">
+						<a href="?p=pms-dashboard&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">PMS dashboard</span></a>
+					</li>
+					<li class="nav-item <?php if($p == 'calibration-dashboard'){ ?> active <?php } ?>">
+						<a href="?p=calibration-dashboard&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Calibration Dashboard</span></a>
+					</li>
+					<li class="nav-item <?php if($p == 'qa-dashboard'){ ?> active <?php } ?>">
+						<a href="?p=qa-dashboard&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">QA Dashboard</span></a>
+					</li>
+					<li class="nav-item <?php if($p == 'rber-Condemned'){ ?> active <?php } ?>">
+						<a href="?p=rber-Condemned&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">RBER/Condemned</span></a>
+					</li>
+					<li class="nav-item <?php if($p == 'reallocated-asset-details'){ ?> active <?php } ?>">
+						<a href="?p=reallocated-asset-details&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Reallocated Asset Details</span></a>
+					</li>
+					<li class="nav-item <?php if($p == 'call-log'){ ?> active <?php } ?>">
+						<a href="?p=call-log&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Call Log</span></a>
+					</li>
+					<?php } ?> 
+					<!-- //Hospital admin Menu -->
+
+					<!-- Department/Doctor -->
+					<?php if($_SESSION["user_type_code"] == 'dep_doc'){?>					
+					<li class="nav-item pcoded-menu-caption" id="setup">
+						<label>SETUP </label>
+					</li>
+					<li class="nav-item <?php if($p == 'ticket-dashboard'){ ?> active <?php } ?>">
+						<a href="?p=ticket-dashboard&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Ticket dashboard</span></a>
+					</li>
+					<li class="nav-item <?php if($p == 'call-log'){ ?> active <?php } ?>">
+						<a href="?p=call-log&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Call Log</span></a>
+					</li>
+					<?php } ?> 
+					<!-- //Department/Doctor -->
+					 
 
 				</ul>				
 				
