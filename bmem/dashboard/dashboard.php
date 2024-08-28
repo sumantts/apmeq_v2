@@ -42,32 +42,79 @@ include('common/head.php'); ?>
         <!-- [ breadcrumb ] end -->
         <!-- [ Main Content ] start -->
         <div class="row">
-            <!-- [ sample-page ] start -->
-            <div class="col-sm-12">
-                <div class="card">
-
-                    <div class="card-header">
-                        <h5>Welcome to Hospital Asset Management Portal</h5>
-                        <div class="card-header-right">
-                            <div class="btn-group card-option">
-                                <button type="button" class="btn dropdown-toggle btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="feather icon-more-horizontal"></i>
-                                </button>
-                                <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right">
-                                    <li class="dropdown-item full-card"><a href="#!"><span><i class="feather icon-maximize"></i> maximize</span><span style="display:none"><i class="feather icon-minimize"></i> Restore</span></a></li>
-                                    <li class="dropdown-item minimize-card"><a href="#!"><span><i class="feather icon-minus"></i> collapse</span><span style="display:none"><i class="feather icon-plus"></i> expand</span></a></li>
-                                    <li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>
-                                    <li class="dropdown-item close-card"><a href="#!"><i class="feather icon-trash"></i> remove</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <p>The <strong>Hospital Asset Management Portal </strong> is a specialized digital platform designed to streamline the management of a hospital’s assets. Hospitals deal with a vast array of equipment, medical supplies, and infrastructure that are crucial for day-to-day operations. Effective asset management ensures that these resources are available, functional, and well-maintained, which in turn enhances patient care, reduces costs, and improves overall hospital efficiency.</p>
-                    </div>
-                </div>
-            </div>
-            <!-- [ sample-page ] end -->
+            <!-- Facilities -->
+			<div class="col-xl-12">
+				<h5 class="mt-4">Facilities</h5>
+				<hr>
+				<div class="row">
+					<div class="col-sm-4">
+						<div class="card text-white bg-primary ">
+							<div class="card-header">Facility 1</div>
+							<div class="card-body">
+								<h5 class="card-title text-white">Due Calibration</h5>
+                                <h5 class="card-title text-white">Due PMS</h5>
+                                <h5 class="card-title text-white">Due Service</h5>
+                                <h5 class="card-title text-white">Due QA</h5>
+                                <h5 class="card-title text-white">Warranty expired</h5>
+                                <h5 class="card-title text-white">AMC expired</h5>
+                                <h5 class="card-title text-white">CMC exipred</h5> 
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-4">
+						<div class="card text-white bg-secondary ">
+							<div class="card-header">Facility 2</div>
+							<div class="card-body">
+								<h5 class="card-title text-white">Due Calibration</h5>
+                                <h5 class="card-title text-white">Due PMS</h5>
+                                <h5 class="card-title text-white">Due Service</h5>
+                                <h5 class="card-title text-white">Due QA</h5>
+                                <h5 class="card-title text-white">Warranty expired</h5>
+                                <h5 class="card-title text-white">AMC expired</h5>
+                                <h5 class="card-title text-white">CMC exipred</h5> 
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-4">
+						<div class="card text-white bg-success ">
+							<div class="card-header">Facility 3</div>
+							<div class="card-body">
+								<h5 class="card-title text-white">Due Calibration</h5>
+                                <h5 class="card-title text-white">Due PMS</h5>
+                                <h5 class="card-title text-white">Due Service</h5>
+                                <h5 class="card-title text-white">Due QA</h5>
+                                <h5 class="card-title text-white">Warranty expired</h5>
+                                <h5 class="card-title text-white">AMC expired</h5>
+                                <h5 class="card-title text-white">CMC exipred</h5> 
+							</div>
+						</div>
+					</div> 
+				</div>
+			</div>
+            <!-- //Facilities -->
+             
+            <!-- Total -->
+			<div class="col-xl-12">
+				<h5 class="mt-4">Total</h5>
+				<hr>
+				<div class="row">
+					<div class="col-sm-4">
+						<div class="card text-white bg-warning">
+							<div class="card-header">Facility 1</div>
+							<div class="card-body">
+								<h5 class="card-title text-white">Due Calibration</h5>
+                                <h5 class="card-title text-white">Due PMS</h5>
+                                <h5 class="card-title text-white">Due Service</h5>
+                                <h5 class="card-title text-white">Due QA</h5>
+                                <h5 class="card-title text-white">Warranty expired</h5>
+                                <h5 class="card-title text-white">AMC expired</h5>
+                                <h5 class="card-title text-white">CMC exipred</h5> 
+							</div>
+						</div>
+					</div> 
+				</div>
+			</div>
+            <!-- //Total -->
         </div>
         <!-- [ Main Content ] end -->
     </div>
