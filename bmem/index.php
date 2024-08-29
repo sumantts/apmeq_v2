@@ -17,12 +17,7 @@
 		case 'signin':
         $title = "Signin";
 		include('signin/signin.php');
-		break;
-
-		case 'signup':
-        $title = "Signup";
-		include('signup/signup.php');
-		break;
+		break; 
 		
 		case 'dashboard':
 		$title = "Dashboard";
@@ -85,6 +80,16 @@
 		case 'asset-reallocate':
 			$title = "Asset Reallocate";
 			include('actions/asset_reallocate/asset_reallocate.php');		
+		break; 	
+
+		/******** V2 ****************/	 	
+		case 'user-facility':
+			$title = "User Facility";
+			include('user_facility/user_facility.php');		
+		break; 		 	
+		case 'asset':
+			$title = "Asset";
+			include('asset/asset.php');		
 		break; 	
 
 		default:
