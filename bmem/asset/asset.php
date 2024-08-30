@@ -524,12 +524,22 @@ include('common/head.php');
                                         Please provide .
                                     </div>
                                 </div> 
+                            </div>
+
+                            <div class="form-row">                                 
+                                <div class="col-md-2 mt-4">
+                                    <button class="btn btn-dark" type="button" id="submitForm">
+                                        <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
+                                        <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
+                                        <span class="btn-text" id="submitForm_text">Cancel</span>
+                                    </button>
+                                </div>     
 
                                 <div class="col-md-4 mt-4">
                                     <button class="btn  btn-primary" type="button" id="submitForm">
                                         <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
                                         <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
-                                        <span class="btn-text" id="submitForm_text">Search</span>
+                                        <span class="btn-text" id="submitForm_text">Save</span>
                                     </button>
                                 </div> 
                             </div>
