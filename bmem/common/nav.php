@@ -20,7 +20,7 @@
 						</ul>
 					</li>
 					
-					<li class="nav-item <?php if($p == 'asset-dashboard'){ ?> active <?php } ?>">
+					<li class="nav-item <?php if($p == 'asset-dashboard' || $p == 'asset-facility-details' || $p == 'asset-data'){ ?> active <?php } ?>">
 						<a href="?p=asset-dashboard&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Asset dashboard</span></a>
 					</li>
 					<li class="nav-item <?php if($p == 'ticket-dashboard'){ ?> active <?php } ?>">

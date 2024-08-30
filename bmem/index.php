@@ -90,7 +90,23 @@
 		case 'asset':
 			$title = "Asset";
 			include('asset/asset.php');		
-		break; 	
+		break;  		 	
+		case 'asset-dashboard':
+			$title = "Asset Dashboard";
+			include('asset_dashboard/asset_dashboard.php');		
+		break; 	 		 	
+		case 'asset-facility-details':
+			$title = "Facility Wise Asset Dashboard";
+			include('asset_facility_details/asset_facility_details.php');		
+		break;  	 		 	
+		case 'asset-data':
+			$title = "Asset Data";
+			include('asset_data/asset_data.php');		
+		break; 	 	 		 	
+		case 'ticket-dashboard':
+			$title = "Ticket Dashboard";
+			include('ticket_dashboard/ticket_dashboard.php');		
+		break; 
 
 		default:
 		include('signin/signin.php');
