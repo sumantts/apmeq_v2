@@ -60,7 +60,7 @@
 						</ul>
 					</li>
 					
-					<li class="nav-item <?php if($p == 'asset-dashboard'){ ?> active <?php } ?>">
+					<li class="nav-item <?php if($p == 'asset-dashboard' || $p == 'asset-facility-details' || $p == 'asset-data'){ ?> active <?php } ?>">
 						<a href="?p=asset-dashboard&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Asset dashboard</span></a>
 					</li>
 					<li class="nav-item <?php if($p == 'ticket-dashboard'){ ?> active <?php } ?>">
@@ -75,8 +75,8 @@
 					<li class="nav-item <?php if($p == 'qa-dashboard'){ ?> active <?php } ?>">
 						<a href="?p=qa-dashboard&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">QA Dashboard</span></a>
 					</li>
-					<li class="nav-item <?php if($p == 'rber-Condemned'){ ?> active <?php } ?>">
-						<a href="?p=rber-Condemned&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">RBER/Condemned</span></a>
+					<li class="nav-item <?php if($p == 'rber-condemned'){ ?> active <?php } ?>">
+						<a href="?p=rber-condemned&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">RBER/Condemned</span></a>
 					</li>
 					<li class="nav-item <?php if($p == 'reallocated-asset-details'){ ?> active <?php } ?>">
 						<a href="?p=reallocated-asset-details&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Reallocated Asset Details</span></a>
@@ -100,6 +100,14 @@
 					</li>
 					<?php } ?> 
 					<!-- //Department/Doctor -->
+
+					<!-- Calibration service provider -->
+					<?php if($_SESSION["user_type_code"] == 'cal_sp'){?>
+					<li class="nav-item <?php if($p == 'calibration-dashboard'){ ?> active <?php } ?>">
+						<a href="?p=calibration-dashboard&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Calibration Dashboard</span></a>
+					</li>
+					<?php } ?> 
+					<!-- //Calibration service provider -->
 					 
 
 				</ul>				

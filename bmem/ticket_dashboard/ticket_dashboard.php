@@ -247,7 +247,19 @@ include('common/head.php');
                                         <option value="1">critical</option>
                                         <option value="2">Non Critical</option>
                                     </select> 
-                                </div>      
+                                </div>           
+                                
+                                <div class="col-md-4 mb-3">
+                                    <label for="registration_number">Date Wise (From date to To date)</label>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input type="date" class="form-control" name="from_dt" id="from_dt"> 
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="date" class="form-control" name="to_dt" id="to_dt"> 
+                                        </div>
+                                    </div>
+                                </div> 
 
                                 <div class="col-md-2 mt-4">
                                     <button class="btn  btn-primary" type="button" id="submitForm">

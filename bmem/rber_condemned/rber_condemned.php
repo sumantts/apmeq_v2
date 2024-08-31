@@ -249,7 +249,7 @@ include('common/head.php');
                         </div>
                     </div>
                     <div class="card-body">
-                        <!-- <button type="button" class="btn btn-primary mb-2 float-right" id="generateLink">Generate Link <i class="fa fa-external-link" aria-hidden="true"></i></button>                         -->
+                        <button type="button" class="btn btn-primary mb-2 float-right" id="generateLink">Generate Link <i class="fa fa-external-link" aria-hidden="true"></i></button>                        
                         <div class="table-responsive">
                             <table id="example_1" class="table table-striped" style="width:100%">
                                 <thead>

@@ -357,7 +357,7 @@ function configureCourseDropDown(){
 }//end
 
 $('#generateLink').on('click', function(){ 
-    window.open('rber_condemned/qa_link.html', '_blank');
+    window.open('rber_condemned/rber_link.html', '_blank');
 });
 
 $(document).ready(function () {
