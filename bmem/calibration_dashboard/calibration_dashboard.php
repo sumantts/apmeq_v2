@@ -59,7 +59,7 @@ include('common/head.php');
                 <div class="card support-bar overflow-hidden">
                     <div class="card-body pb-0 text-center">
                         <h2 class="m-0">350</h2>
-                        <span class="text-c-blue">Support Requests</span>
+                        <span class="text-c-blue">Calibration Status</span>
                         <p class="mb-3 mt-3">Total number of support requests that come in.</p>
                     </div>
                     <div id="support-chart"></div>
@@ -67,15 +67,15 @@ include('common/head.php');
                         <div class="row text-center">
                             <div class="col">
                                 <h4 class="m-0 text-white">10</h4>
-                                <span>Total Ticket</span>
+                                <span>Total Number of Calibration due</span>
                             </div>
                             <div class="col">
                                 <h4 class="m-0 text-white">5</h4>
-                                <span>Resolved</span>
+                                <span>Total Number of Calibration done</span>
                             </div>
                             <div class="col">
                                 <h4 class="m-0 text-white">3</h4>
-                                <span>Open / Assign / WIP</span>
+                                <span>Total Calibration Schedule / planned</span>
                             </div>
                         </div>
                     </div>
@@ -88,7 +88,7 @@ include('common/head.php');
                 <div class="card">
 
                     <div class="card-header">
-                        <h5><?=$title?></h5>
+                        <h5>Facility wise Calibration Tickets</h5>
                         <div class="card-header-right">
                             <div class="btn-group card-option"> 
                             </div>
@@ -113,32 +113,18 @@ include('common/head.php');
                                     <tr>
                                         <th>No.</th> 
                                         <th>Facility name/code</th>
-                                        <th>Total Tickets</th>
-                                        <th>Critical Tickets</th>
-                                        <th>Non Critical Tickets</th>
-                                        <th>Closed/Resolved Tickets</th>
-                                        <th>Open Tickets</th>
-                                        <th>WIP Tickets</th>
-                                        <th>< 3 Days</th>
-                                        <th>3 > < 5 Days</th>
-                                        <th>5 > < 7 Days</th> 
-                                        <th>> 7 Days</th>
+                                        <th>Calibration Due</th>
+                                        <th>Calibration Done</th>
+                                        <th>Calibration Planned</th> 
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>No.</th> 
-                                        <th>Facility name/code</th>
-                                        <th>Total Tickets</th>
-                                        <th>Critical Tickets</th>
-                                        <th>Non Critical Tickets</th>
-                                        <th>Closed/Resolved Tickets</th>
-                                        <th>Open Tickets</th>
-                                        <th>WIP Tickets</th>
-                                        <th>< 3 Days</th>
-                                        <th>3 > < 5 Days</th>
-                                        <th>5 > < 7 Days</th> 
-                                        <th>> 7 Days</th>
+                                        <th>Facility Name/Code</th>
+                                        <th>Calibration Due</th>
+                                        <th>Calibration Done</th>
+                                        <th>Calibration Planned</th> 
                                     </tr>
                                 </tfoot>
                             </table>
@@ -152,7 +138,7 @@ include('common/head.php');
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Filter wise</h5> 
+                        <h5>Filter PMS </h5> 
                     </div>
                     <div class="card-body">
                         <div class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;" id="orgFormAlert">
@@ -174,51 +160,12 @@ include('common/head.php');
                                         <option value="1">Facility 1</option>
                                         <option value="2">Facility 2</option>
                                     </select> 
-                                </div>  
-
-                                <div class="col-md-3 mb-3">
-                                    <label for="author_name">Department</label>
-                                    <select class="form-control" id="author_name">
-                                        <option value="0">Select</option>
-                                        <option value="1">Department 1</option>
-                                        <option value="2">Department 2</option>
-                                    </select> 
-                                </div>    
-
-                                <div class="col-md-3 mb-3">
-                                    <label for="author_name">Status</label>
-                                    <select class="form-control" id="author_name">
-                                        <option value="0">Select</option>
-                                        <option value="1">Assigned</option>
-                                        <option value="2">Open</option>
-                                        <option value="3">Resolved</option>
-                                        <option value="4">WIP</option>
-                                        <option value="5">Incident report</option>
-                                        <option value="6">Standby</option>
-                                        <option value="7">RBER</option>
-                                    </select> 
-                                </div>    
-
-                                <div class="col-md-3 mb-3">
-                                    <label for="author_name">Ticket Id</label>
-                                    <input type="text" class="form-control" id="author_name"> 
                                 </div>     
 
                                 <div class="col-md-3 mb-3">
-                                    <label for="author_name">Day Wise</label>
-                                    <select class="form-control" id="author_name">
-                                        <option value="0">Select</option>
-                                        <option value="1">< 3days</option>
-                                        <option value="2">> 3days</option>
-                                        <option value="3">< 7days</option>
-                                        <option value="4">> 7days</option> 
-                                    </select> 
-                                </div>    
-
-                                <div class="col-md-3 mb-3">
-                                    <label for="author_name">Enter Barcode</label>
+                                    <label for="author_name">Facility code</label>
                                     <input type="text" class="form-control" id="author_name"> 
-                                </div>     
+                                </div>    
 
                                 <div class="col-md-3 mb-3">
                                     <label for="author_name">Device Group</label>
@@ -236,18 +183,52 @@ include('common/head.php');
                                 </div>     
 
                                 <div class="col-md-3 mb-3">
-                                    <label for="author_name">Device Name</label>
-                                    <input type="text" class="form-control" id="author_name"> 
-                                </div>  
-
-                                <div class="col-md-3 mb-3">
-                                    <label for="author_name">Ticket Class</label>
+                                    <label for="author_name">Asset Class</label>
                                     <select class="form-control" id="author_name">
                                         <option value="0">Select</option>
                                         <option value="1">critical</option>
                                         <option value="2">Non Critical</option>
                                     </select> 
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="author_name">Department</label>
+                                    <select class="form-control" id="author_name">
+                                        <option value="0">Select</option>
+                                        <option value="1">Department 1</option>
+                                        <option value="2">Department 2</option>
+                                    </select> 
+                                </div>    
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="author_name">Calibration Status</label>
+                                    <select class="form-control" id="author_name">
+                                        <option value="0">Select</option>
+                                        <option value="1">DONE</option>
+                                        <option value="2">DUE</option> 
+                                    </select> 
                                 </div>      
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="author_name">Calibration Required</label>
+                                    <select class="form-control" id="author_name">
+                                        <option value="0">Select</option>
+                                        <option value="1">> 1 Week</option>
+                                        <option value="2">> 2 Weeks</option> 
+                                    </select> 
+                                </div>        
+                                
+                                <div class="col-md-4 mb-3">
+                                    <label for="registration_number">Date from - Date to</label>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input type="date" class="form-control" id="author_name">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="date" class="form-control" id="author_name">
+                                        </div>
+                                    </div>
+                                </div>     
 
                                 <div class="col-md-2 mt-4">
                                     <button class="btn  btn-primary" type="button" id="submitForm">
@@ -263,7 +244,7 @@ include('common/head.php');
                                         <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
                                         <span class="btn-text" id="submitForm_text">Clear</span>
                                     </button>
-                                </div>
+                                </div> 
                             </div>
                         </form>
                     </div>
@@ -281,51 +262,45 @@ include('common/head.php');
                         </div>
                     </div>
                     <div class="card-body">
-                        
+                        <button type="button" class="btn btn-primary mb-2 float-right" id="generateLink">Generate Link <i class="fa fa-external-link" aria-hidden="true"></i></button>                        
                         <div class="table-responsive">
                             <table id="example_1" class="table table-striped" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>No.</th> 
-                                        <th>Ticket no</th>
-                                        <th>Complaint/issue</th>
-                                        <th>Barcode</th>
-                                        <th>Asset Name</th>
-                                        <th>Facility code</th>
                                         <th>Facility Name</th>
+                                        <th>Facility Code</th>
                                         <th>Department</th>
+                                        <th>Device Group</th>
+                                        <th>Asset Class</th> 
+                                        <th>Equpment Name</th>
+                                        <th>Equipment Make/Model</th>
+                                        <th>Equipment sl no</th>
+                                        <th>Calibration due date</th> 
                                         <th>Supplied by</th>
-                                        <th>Service provider details<br> if it is in <br>Warranty/AMC/CMC</th>
-                                        <th>Logged date</th> 
-                                        <th>Resolved Date</th>
-                                        <th>Contact details <br>of <br>ticket raiser</th>
-                                        <th>Assign Service provider/<br>Junior enhgineer</th>
-                                        <th>Engineer Contact No</th>
-                                        <th>Report Upload</th>
-                                        <th>Report view</th>
-                                        <th>Status<br>(WIP/Resolved/closed)</th> 
+                                        <th>Calibration planned date</th>
+                                        <th>Assign Service provider/<br>Junior engineer <br>(by soft link <br>email/mobile no/whatsapp)</th> 
+                                        <th>View report</th>
+                                        <th>Updated status<br>(WIP/Resolved/closed)</th> 
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>No.</th> 
-                                        <th>Ticket no</th>
-                                        <th>Complaint/issue</th>
-                                        <th>Barcode</th>
-                                        <th>Asset Name</th>
-                                        <th>Facility code</th>
+                                        <th>No.</th>
                                         <th>Facility Name</th>
+                                        <th>Facility Code</th>
                                         <th>Department</th>
+                                        <th>Device Group</th>
+                                        <th>Asset Class</th> 
+                                        <th>Equpment Name</th>
+                                        <th>Equipment Make/Model</th>
+                                        <th>Equipment sl no</th>
+                                        <th>Calibration due date</th> 
                                         <th>Supplied by</th>
-                                        <th>Service provider details<br> if it is in <br>Warranty/AMC/CMC</th>
-                                        <th>Logged date</th> 
-                                        <th>Resolved Date</th>
-                                        <th>Contact details <br>of <br>ticket raiser</th>
-                                        <th>Assign Service provider/<br>Junior enhgineer</th>
-                                        <th>Engineer Contact No</th>
-                                        <th>Report Upload</th>
-                                        <th>Report view</th>
-                                        <th>Status<br>(WIP/Resolved/closed)</th> 
+                                        <th>Planned date for Calibration</th>
+                                        <th>Assign Service provider/<br>Junior engineer <br>(by soft link <br>email/mobile no/whatsapp)</th> 
+                                        <th>View report</th>
+                                        <th>Updated status<br>(WIP/Resolved/closed)</th> 
                                     </tr>
                                 </tfoot>
                             </table>
@@ -343,4 +318,4 @@ include('common/head.php');
 <!-- [ Main Content ] end -->
 	<?php include('common/footer.php'); ?>
     
-    <script src="ticket_dashboard/function.js?d=<?=date('Ymdhis')?>"></script>
+    <script src="calibration_dashboard/function.js?d=<?=date('Ymdhis')?>"></script>

@@ -106,6 +106,18 @@
 		case 'ticket-dashboard':
 			$title = "Ticket Dashboard";
 			include('ticket_dashboard/ticket_dashboard.php');		
+		break;  	 	 		 	
+		case 'pms-dashboard':
+			$title = "PMS Dashboard";
+			include('pms_dashboard/pms_dashboard.php');		
+		break;  	 	 		 	
+		case 'calibration-dashboard':
+			$title = "Calibration Dashboard";
+			include('calibration_dashboard/calibration_dashboard.php');		
+		break;  	 	 		 	
+		case 'qa-dashboard':
+			$title = "QA Dashboard";
+			include('qa_dashboard/qa_dashboard.php');		
 		break; 
 
 		default:
