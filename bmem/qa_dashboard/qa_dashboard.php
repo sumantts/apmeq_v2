@@ -138,7 +138,7 @@ include('common/head.php');
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Filter PMS </h5> 
+                        <h5>Filter QA </h5> 
                     </div>
                     <div class="card-body">
                         <div class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;" id="orgFormAlert">
