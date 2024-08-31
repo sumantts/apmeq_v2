@@ -122,6 +122,10 @@
 		case 'rber-condemned':
 			$title = "Recomended for Beyond Economic Repair / Condemned";
 			include('rber_condemned/rber_condemned.php');		
+		break;  	 	 		 	
+		case 'reallocated-asset-details':
+			$title = "Reallocated Asset Details";
+			include('reallocated_asset_details/reallocated_asset_details.php');		
 		break; 
 
 		default:
