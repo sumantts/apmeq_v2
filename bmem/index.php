@@ -126,7 +126,11 @@
 		case 'reallocated-asset-details':
 			$title = "Reallocated Asset Details";
 			include('reallocated_asset_details/reallocated_asset_details.php');		
-		break; 
+		break;   	 	 		 	
+		case 'call-log':
+			$title = "Call Log";
+			include('call_log/call_log.php');		
+		break;
 
 		default:
 		include('signin/signin.php');
