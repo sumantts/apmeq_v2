@@ -320,4 +320,4 @@ include('common/head.php');
 <!-- [ Main Content ] end -->
 	<?php include('common/footer.php'); ?>
     
-    <script src="QA_dashboard/function.js?d=<?=date('Ymdhis')?>"></script>
+    <script src="qa_dashboard/function.js?d=<?=date('Ymdhis')?>"></script>
