@@ -35,8 +35,8 @@
 					<li class="nav-item <?php if($p == 'qa-dashboard'){ ?> active <?php } ?>">
 						<a href="?p=qa-dashboard&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">QA Dashboard</span></a>
 					</li>
-					<li class="nav-item <?php if($p == 'rber-Condemned'){ ?> active <?php } ?>">
-						<a href="?p=rber-Condemned&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">RBER/Condemned</span></a>
+					<li class="nav-item <?php if($p == 'rber-condemned'){ ?> active <?php } ?>">
+						<a href="?p=rber-condemned&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">RBER/Condemned</span></a>
 					</li>
 					<li class="nav-item <?php if($p == 'reallocated-asset-details'){ ?> active <?php } ?>">
 						<a href="?p=reallocated-asset-details&gr=setup" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Reallocated Asset Details</span></a>

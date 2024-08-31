@@ -118,6 +118,10 @@
 		case 'qa-dashboard':
 			$title = "QA Dashboard";
 			include('qa_dashboard/qa_dashboard.php');		
+		break;  	 	 		 	
+		case 'rber-condemned':
+			$title = "Recomended for Beyond Economic Repair / Condemned";
+			include('rber_condemned/rber_condemned.php');		
 		break; 
 
 		default:
