@@ -83,8 +83,8 @@
 		break; 	
 
 		/******** V2 ****************/	 	
-		case 'user-facility':
-			$title = "User Facility";
+		case 'facility':
+			$title = "Facility";
 			include('user_facility/user_facility.php');		
 		break; 		 	
 		case 'asset':

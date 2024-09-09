@@ -120,12 +120,12 @@ include('common/head.php');
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         </div>
                         <div class="modal-body">
-                            <form class="needs-validation" novalidate>
+                            <form action="#" method="POST" id="myForm">
                                 <div class="form-row">
                                     
                                     <div class="col-md-4 mb-3">
                                         <label for="user_name" class="text-danger">Name*</label>
-                                        <input type="text" class="form-control" id="user_name" value="" >
+                                        <input type="text" class="form-control" id="user_name" value="" required>
                                         <div class="valid-feedback">
                                             Looks good!
                                         </div>                                    
@@ -136,8 +136,8 @@ include('common/head.php');
 
                                     <div class="col-md-4 mb-3">
                                         <label for="user_type_id" class="text-danger">User Type*</label>
-                                        <select class="form-control" name="user_type_id" id="user_type_id">
-                                            <option value="0">Select</option> 
+                                        <select class="form-control" name="user_type_id" id="user_type_id" required>
+                                            <option value="">Select</option> 
                                         </select>
                                         <div class="valid-feedback">
                                             Looks good!
@@ -149,8 +149,8 @@ include('common/head.php');
 
                                     <div class="col-md-4 mb-3">
                                         <label for="hospital_id" class="text-danger">Hospital Name*</label>
-                                        <select class="form-control" name="hospital_id" id="hospital_id">
-                                            <option value="0">Select</option>                                             
+                                        <select class="form-control" name="hospital_id" id="hospital_id" required>
+                                            <option value="">Select</option>                                             
                                         </select>
                                         <div class="valid-feedback">
                                             Looks good!
@@ -162,7 +162,7 @@ include('common/head.php');
                                     
                                     <div class="col-md-4 mb-3">
                                         <label for="user_mobile" class="text-danger">Mobile Number*</label>
-                                        <input type="tel" class="form-control" id="user_mobile" value=""> 
+                                        <input type="tel" class="form-control" id="user_mobile" value="" required> 
                                         <div class="valid-feedback">
                                             Looks good!
                                         </div>                                    
@@ -173,7 +173,7 @@ include('common/head.php');
                                     
                                     <div class="col-md-4 mb-3">
                                         <label for="user_phone" >Phone Number</label>
-                                        <input type="text" class="form-control" id="user_phone" value=""> 
+                                        <input type="text" class="form-control" id="user_phone" value="" required> 
                                         <div class="valid-feedback">
                                             Looks good!
                                         </div>                                    
@@ -184,7 +184,7 @@ include('common/head.php');
                                     
                                     <div class="col-md-4 mb-3">
                                         <label for="user_email" class="text-danger">Email ID*</label>
-                                        <input type="text" class="form-control" id="user_email" value=""> 
+                                        <input type="text" class="form-control" id="user_email" value="" required> 
                                         <div class="valid-feedback">
                                             Looks good!
                                         </div>                                    
@@ -195,7 +195,7 @@ include('common/head.php');
                                     
                                     <div class="col-md-4 mb-3">
                                         <label for="user_dob" class="text-danger">Date of Birth*</label>
-                                        <input type="date" class="form-control" id="user_dob" value=""> 
+                                        <input type="date" class="form-control" id="user_dob" value="" required> 
                                         <div class="valid-feedback">
                                             Looks good!
                                         </div>                                    
@@ -206,7 +206,7 @@ include('common/head.php');
 
                                     <div class="col-md-8 mb-3">
                                         <label for="user_address" class="text-danger">Address*</label>
-                                        <textarea class="form-control" name="user_address" id="user_address"> </textarea>
+                                        <textarea class="form-control" name="user_address" id="user_address" required> </textarea>
                                         <div class="valid-feedback">
                                             Looks good!
                                         </div>                                    
@@ -217,7 +217,7 @@ include('common/head.php');
                                     
                                     <div class="col-md-4 mb-3">
                                         <label for="user_user_name" class="text-danger">Username*</label>
-                                        <input type="text" class="form-control" id="user_user_name" value=""> 
+                                        <input type="text" class="form-control" id="user_user_name" value="" required> 
                                         <div class="valid-feedback">
                                             Looks good!
                                         </div>                                    
@@ -228,7 +228,7 @@ include('common/head.php');
                                     
                                     <div class="col-md-4 mb-3">
                                         <label for="user_password" class="text-danger">Password*</label>
-                                        <input type="text" class="form-control" id="user_password" value=""> 
+                                        <input type="text" class="form-control" id="user_password" value="" required> 
                                         <div class="valid-feedback">
                                             Looks good!
                                         </div>                                    
@@ -259,18 +259,19 @@ include('common/head.php');
                                     </div> 
 
                                 </div>
-                            </form>
                         </div>
                         <div class="modal-footer">
                             <input type="hidden" id="user_id" value="0">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-                            <button class="btn  btn-primary" type="button" id="submitForm">
+                            <button class="btn  btn-primary" type="submit" id="submitForm">
                                 <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
                                 <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
                                 <span class="btn-text" id="submitForm_text">Save</span>
                             </button>
                         </div>
+                        
+                        </form>
                     </div>
                 </div>
             </div>

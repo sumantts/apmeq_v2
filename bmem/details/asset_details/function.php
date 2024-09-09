@@ -309,7 +309,7 @@
 		echo json_encode($return_array);
 	}//function end	
 
-	//Get Authors name
+	//Get Dept name
 	if($fn == 'getAllDepartmentName'){
 		$return_array = array();
 		$status = true;

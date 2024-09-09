@@ -82,11 +82,9 @@ include('common/head.php');
                         <form class="needs-validation" novalidate>
                             <div class="form-row">
                                 <div class="col-md-4 mb-3">
-                                    <label for="category_id" class="text-danger">Facilities*</label>
-                                    <select class="form-control" name="category_id" id="category_id">
-                                        <option value="0">Select</option> 
-                                        <option value="0">Facility 1</option> 
-                                        <option value="0">Facility 2</option> 
+                                    <label for="facility_id_dd" class="text-danger">Facilities*</label>
+                                    <select class="form-control" name="facility_id_dd" id="facility_id_dd">
+                                        <option value="">Select</option>  
                                     </select>
                                     <div class="valid-feedback">
                                         Looks good!
@@ -134,11 +132,11 @@ include('common/head.php');
 						</div>
                          
 
-                        <form class="needs-validation" novalidate>  
+                        <form name="myForm" id="myForm" method="POST" action="#" >  
                         <div class="form-row">                                
                             <div class="col-md-4 mb-3">
-                                <label for="author_name" class="text-danger">Facility name*</label>
-                                <input type="text" class="form-control" id="author_name" value="" required >
+                                <label for="facility_name" class="text-danger">Facility name*</label>
+                                <input type="text" class="form-control" id="facility_name" value="" required >
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>                                    
@@ -148,9 +146,9 @@ include('common/head.php');
                             </div> 
                                 
                             <div class="col-md-4 mb-3">
-                                <label for="author_status" class="text-danger">Facility Type*</label>
-                                <select class="form-control" name="author_status" id="author_status">
-                                    <option value="0">Select</option>
+                                <label for="facility_type" class="text-danger">Facility Type*</label>
+                                <select class="form-control" name="facility_type" id="facility_type" required>
+                                    <option value="">Select</option>
                                     <option value="1">Hospital</option>
                                     <option value="2">Lab</option>
                                 </select>
@@ -158,13 +156,13 @@ include('common/head.php');
                                     Looks good!
                                 </div>                                    
                                 <div class="invalid-feedback">
-                                    Please provide Biography.
+                                    Please select Facility Type.
                                 </div>
                             </div> 
                                 
                             <div class="col-md-4 mb-3">
-                                <label for="email" class="text-danger">Facility code*</label>
-                                <input type="text" class="form-control" id="email" value=""> 
+                                <label for="facility_code" class="text-danger">Facility code*</label>
+                                <input type="text" class="form-control" id="facility_code" value="" required> 
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>                                    
@@ -174,9 +172,9 @@ include('common/head.php');
                             </div>  
                                 
                             <div class="col-md-12 mb-3">
-                                <label for="registration_number" class="text-danger">Facility Address*</label>
+                                <label for="facility_address" class="text-danger">Facility Address*</label>
                                 <!-- <input type="text" class="form-control" id="registration_number" value=""> -->
-                                <textarea class="form-control" id="author_bio" value="" ></textarea>
+                                <textarea class="form-control" id="facility_address" value="" required></textarea>
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>                                    
@@ -186,9 +184,9 @@ include('common/head.php');
                             </div>
                                 
                             <div class="col-md-4 mb-3">
-                                <label for="author_status" class="text-danger">NABH Accredited*</label>
-                                <select class="form-control" name="author_status" id="author_status">
-                                    <option value="0">Select</option>
+                                <label for="nabh_accrediated" class="text-danger">NABH Accredited*</label>
+                                <select class="form-control" name="nabh_accrediated" id="nabh_accrediated" required>
+                                    <option value="">Select</option>
                                     <option value="1">Yes</option>
                                     <option value="2">No</option>
                                 </select>
@@ -201,9 +199,9 @@ include('common/head.php');
                             </div> 
                                 
                             <div class="col-md-4 mb-3">
-                                <label for="author_status" class="text-danger">NABL Accredited*</label>
-                                <select class="form-control" name="author_status" id="author_status">
-                                    <option value="0">Select</option>
+                                <label for="nabl_accrediated" class="text-danger">NABL Accredited*</label>
+                                <select class="form-control" name="nabl_accrediated" id="nabl_accrediated" required>
+                                    <option value="">Select</option>
                                     <option value="1">Yes</option>
                                     <option value="2">No</option>
                                 </select>
@@ -216,11 +214,9 @@ include('common/head.php');
                             </div> 
                                 
                             <div class="col-md-4 mb-3">
-                                <label for="author_status" class="text-danger">Department*</label>
-                                <select class="form-control" name="author_status" id="author_status">
-                                    <option value="0">Select</option>
-                                    <option value="1">Department 1</option>
-                                    <option value="2">Department 2</option>
+                                <label for="department_id" class="text-danger">Department*</label>
+                                <select class="form-control" name="department_id" id="department_id" required>
+                                    <option value="">Select</option> 
                                 </select>
                                 <div class="valid-feedback">
                                     Looks good!
@@ -231,11 +227,9 @@ include('common/head.php');
                             </div> 
                                 
                             <div class="col-md-4 mb-3">
-                                <label for="author_status" class="text-danger">Hospital*</label>
-                                <select class="form-control" name="author_status" id="author_status">
-                                    <option value="0">Select</option>
-                                    <option value="1">Hospital 1</option>
-                                    <option value="2">Hospital 2</option>
+                                <label for="hospital_id" class="text-danger">Hospital*</label>
+                                <select class="form-control" name="hospital_id" id="hospital_id" required>
+                                    <option value="">Select</option> 
                                 </select>
                                 <div class="valid-feedback">
                                     Looks good!
@@ -243,14 +237,7 @@ include('common/head.php');
                                 <div class="invalid-feedback">
                                     Please Select Hospital.
                                 </div>
-                            </div>
-                                
-                                <!-- <div class="col-md-4 mb-2 mt-4">
-                                    <input type="file" accept="image/*" class="custom-file-input" id="author_photo" aria-describedby="author_photo"  onchange="savePhoto()">
-                                    <label class="custom-file-label" for="validatedCustomFile">Choose image...</label>
-                                    <small id="author_photoError" class="form-text text-danger"> </small>
-                                    <img src="" id="image" width="100">
-                                </div>  -->
+                            </div> 
                             </div>
 
                             <div class="form-row">                                
@@ -262,7 +249,10 @@ include('common/head.php');
                                     </button>
                                 </div>                                
                                 <div class="col-md-2 mt-4">
-                                    <button class="btn  btn-primary" type="button" id="submitForm">
+                                    <input type="hidden" name="facility_id" id="facility_id">
+                                    <!-- <input type="submit" class="btn  btn-primary" name="submitForm" id="submitForm" value="Save Changes"> -->
+
+                                    <button class="btn  btn-primary" type="submit" id="submitForm">
                                         <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
                                         <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
                                         <span class="btn-text" id="submitForm_text">Save Changes</span>
@@ -273,135 +263,7 @@ include('common/head.php');
                     </div>
                 </div>
             </div>
-            <!-- End Form -->
-
-            <!-- Modal start -->
-            <div id="exampleModalLong" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle"><?=$title?></h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        </div>
-                        <div class="modal-body">
-                            <form class="needs-validation" novalidate>
-                                <div class="form-row">
-                                    <div class="col-md-4 mb-3">
-                                        <label for="category_id" class="text-danger">Department*</label>
-                                        <select class="form-control" name="category_id" id="category_id">
-                                            <option value="0">Select</option> 
-                                        </select>
-                                        <div class="valid-feedback">
-                                            Looks good!
-                                        </div>                                    
-                                        <div class="invalid-feedback">
-                                            Please select Department.
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4 mb-3">
-                                        <label for="for_the_year" class="text-danger">For the Year*</label>
-                                        <select class="form-control" name="for_the_year" id="for_the_year">
-                                            <?php
-                                            for($i = 0; $i < sizeof($forTheYearsArr); $i++){
-                                            ?>
-                                            <option value="<?=$forTheYearsArr[$i]->value?>"><?=$forTheYearsArr[$i]->text?></option> 
-                                            <?php } ?>
-                                        </select>
-                                        <div class="valid-feedback">
-                                            Looks good!
-                                        </div>                                    
-                                        <div class="invalid-feedback">
-                                            Please select Department.
-                                        </div>
-                                    </div>
-
-                                    <!-- <div class="col-md-4 mb-3">
-                                        <label for="course_id" class="text-danger">Course*</label>
-                                        <select class="form-control" name="course_id" id="course_id">
-                                            <option value="0">Select</option> 
-                                        </select>
-                                        <div class="valid-feedback">
-                                            Looks good!
-                                        </div>                                    
-                                        <div class="invalid-feedback">
-                                            Please select Course.
-                                        </div>
-                                    </div> -->
-                                    
-                                    <div class="col-md-4 mb-3">
-                                        <label for="author_name" class="text-danger">Student Name*</label>
-                                        <input type="text" class="form-control" id="author_name" value="" required >
-                                        <div class="valid-feedback">
-                                            Looks good!
-                                        </div>                                    
-                                        <div class="invalid-feedback">
-                                            Please provide Name.
-                                        </div>
-                                    </div> 
-                                    
-                                    <div class="col-md-4 mb-3">
-                                        <label for="email" class="text-danger">Primary Email*</label>
-                                        <input type="text" class="form-control" id="email" value="">
-                                        <!-- <textarea class="form-control" id="author_bio" value="" required style="min-height:300px;"></textarea> -->
-                                        <div class="valid-feedback">
-                                            Looks good!
-                                        </div>                                    
-                                        <div class="invalid-feedback">
-                                            Please provide Primary Email.
-                                        </div>
-                                    </div>  
-                                    
-                                    <div class="col-md-4 mb-3">
-                                        <label for="registration_number" class="text-danger">Registration Number*</label>
-                                        <input type="text" class="form-control" id="registration_number" value="">
-                                        <!-- <textarea class="form-control" id="author_bio" value="" required style="min-height:300px;"></textarea> -->
-                                        <div class="valid-feedback">
-                                            Looks good!
-                                        </div>                                    
-                                        <div class="invalid-feedback">
-                                            Please provide Registration Number.
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="col-md-4 mb-2 mt-4">
-                                        <input type="file" accept="image/*" class="custom-file-input" id="author_photo" aria-describedby="author_photo"  onchange="savePhoto()">
-                                        <label class="custom-file-label" for="validatedCustomFile">Choose image...</label>
-                                        <small id="author_photoError" class="form-text text-danger"> </small>
-                                        <img src="" id="image" width="100">
-                                    </div> 
-                                    
-                                    <div class="col-md-4 mb-3">
-                                        <label for="author_status" class="text-danger">Activity Status*</label>
-                                        <select class="form-control" name="author_status" id="author_status">
-                                            <option value="active">Active</option>
-                                            <option value="inactive">Inactive</option>
-                                        </select>
-                                        <div class="valid-feedback">
-                                            Looks good!
-                                        </div>                                    
-                                        <div class="invalid-feedback">
-                                            Please provide Biography.
-                                        </div>
-                                    </div> 
-
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <input type="hidden" id="author_id" value="0">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-                            <button class="btn  btn-primary" type="button" id="submitForm">
-                                <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
-                                <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
-                                <span class="btn-text" id="submitForm_text">Save Changes</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Modal end -->
+            <!-- End Form --> 
 
             <!-- [ sample-page ] end -->
         </div>

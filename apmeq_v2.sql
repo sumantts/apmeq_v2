@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 16, 2024 at 07:22 PM
+-- Generation Time: Sep 06, 2024 at 06:41 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `apmeq`
+-- Database: `apmeq_v2`
 --
 
 -- --------------------------------------------------------
@@ -62,7 +62,7 @@ CREATE TABLE `asset_details` (
 --
 
 INSERT INTO `asset_details` (`asset_detail_id`, `name_of_asset`, `department_id`, `hospital_id`, `asset_code`, `manufacturer_id`, `model_name`, `supplier_id`, `asset_slno`, `equipment_name`, `installation_date`, `total_year_in_service`, `calibration_last_date`, `calibration_frequency`, `preventive_maintain_last_date`, `preventive_maintenance_frequency`, `warenty`, `amc`, `amc_last_date`, `cmc`, `cmc_last_date`, `service_providers_id`, `files_attached`, `reallocate_id`, `qa_certificate`, `qa_certificate_last_date`, `asset_status`) VALUES
-(1, '1', 3, 2, '2', 1, '4', 2, '3', '5', '2024-08-16', 6, '2024-08-16', 7, '2024-08-16', 8, '9', '10', '2024-08-16', '11', '2024-08-16', 1, '', 0, '12', '2024-08-16', 1);
+(1, 'X-Ray Machine', 3, 2, 'XRAY-001', 1, 'M-10001', 2, '10001', 'X-Ray', '2024-08-16', 5, '2024-08-16', 2, '2024-08-16', 2, '5 years', '12', '2024-08-16', '11', '2024-08-16', 1, '[\"66c0241f1941e.jpeg\"]', 0, '12', '2024-08-16', 0);
 
 -- --------------------------------------------------------
 
@@ -89,14 +89,6 @@ CREATE TABLE `asset_type_list` (
   `asset_type_status` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `asset_type_list`
---
-
-INSERT INTO `asset_type_list` (`asset_type_id`, `asset_type_name`, `asset_type_code`, `asset_type_status`) VALUES
-(1, 'Tangible Assets', 'Tangible_Assets', 1),
-(2, 'Nontangible Assets', 'Nontangible_Assets', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -109,14 +101,6 @@ CREATE TABLE `category_list` (
   `category_slug` varchar(255) NOT NULL,
   `activity_status` varchar(10) NOT NULL DEFAULT 'active'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `category_list`
---
-
-INSERT INTO `category_list` (`category_id`, `category_name`, `category_slug`, `activity_status`) VALUES
-(17, 'Doctor of Theology (D.Th.)', 'doctor_of_theology_(d.th.)', 'active'),
-(18, 'DOCTOR OF MINISTRY (D.Min.)', 'doctor_of_ministry_(d.min.)', 'active');
 
 -- --------------------------------------------------------
 
@@ -136,8 +120,27 @@ CREATE TABLE `department_list` (
 --
 
 INSERT INTO `department_list` (`department_id`, `department_name`, `department_code`, `department_status`) VALUES
-(1, 'Information Technology', 'IT', 1),
-(3, 'Electrical', 'Electrical', 1);
+(1, 'SNCU', 'SNCU', 1),
+(3, 'CCU', 'CCU', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `facility_master`
+--
+
+CREATE TABLE `facility_master` (
+  `facility_id` int(11) NOT NULL,
+  `hospital_id` int(11) NOT NULL COMMENT 'PK of hospital_list',
+  `department_id` int(11) NOT NULL COMMENT 'PK of department_list',
+  `facility_name` varchar(255) NOT NULL,
+  `facility_type` tinyint(1) NOT NULL,
+  `facility_code` varchar(255) NOT NULL,
+  `facility_address` text NOT NULL,
+  `nabh_accrediated` tinyint(1) NOT NULL,
+  `nabl_accrediated` tinyint(1) NOT NULL,
+  `user_id` int(11) NOT NULL COMMENT 'PK of user_details'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -175,14 +178,6 @@ CREATE TABLE `manufacturer_list` (
   `manufacturer_status` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `manufacturer_list`
---
-
-INSERT INTO `manufacturer_list` (`manufacturer_id`, `manufacturer_name`, `manufacturer_code`, `primary_contact_number`, `secondary_contact_number`, `manufacturer_status`) VALUES
-(1, 'iBall', 'IBALL', '9874563210', '9852012547', 1),
-(2, 'Logitech', 'Logitech', '8521459874', '589632012', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -198,14 +193,6 @@ CREATE TABLE `service_providers_list` (
   `service_providers_status` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `service_providers_list`
---
-
-INSERT INTO `service_providers_list` (`service_providers_id`, `service_providers_name`, `service_providers_code`, `primary_contact_number`, `secondary_contact_number`, `service_providers_status`) VALUES
-(1, 'Bablu Expert Services', 'BAB_EXP', '9874563210', '9852012547', 1),
-(2, 'Hubba Telecom', 'Hubba_Telecom', '8527414102', '9369025801', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -220,14 +207,6 @@ CREATE TABLE `supplier_list` (
   `secondary_contact_number` varchar(10) NOT NULL,
   `supplier_status` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `supplier_list`
---
-
-INSERT INTO `supplier_list` (`supplier_id`, `supplier_name`, `supplier_code`, `primary_contact_number`, `secondary_contact_number`, `supplier_status`) VALUES
-(1, 'Viewcom Telecom', 'VCOM', '9874563210', '9852012547', 1),
-(2, 'RupanjanDa', 'RupanjanDa', '9856320120', '5852474103', 1);
 
 -- --------------------------------------------------------
 
@@ -255,15 +234,10 @@ CREATE TABLE `user_details` (
 --
 
 INSERT INTO `user_details` (`user_id`, `user_name`, `user_type_id`, `hospital_id`, `user_mobile`, `user_phone`, `user_email`, `user_dob`, `user_address`, `user_user_name`, `user_password`, `user_status`) VALUES
-(1, 'Suman Jana', 3, 2, '9733935161', '256789', 'sumanjana.6@gmail.com', '1987-10-01', 'Bagnan', 'sumanjana.6@gmail.com', '12345678', 1),
-(7, 'Mr. Developer', 3, 2, '9874563210', '', 'developer@apmeq.com', '2024-08-13', 'kolkata', 'developer@apmeq.com', '12345678', 1),
-(8, 'Mr. Super Admin', 1, 2, '9856320125', '', 'superadmin@apmeq.com', '2024-08-13', 'Kolkata', 'superadmin@apmeq.com', '12345678', 1),
-(9, 'Mr. Hospital Admin', 2, 2, '9874521542', '', 'hadmin@apmeq.com', '2024-08-13', 'kolkata', 'hadmin@apmeq.com', '12345678', 1),
-(10, 'Mr. Hospital Doctor', 4, 2, '9785421258', '', 'hdoctor@apmeq.com', '2024-08-13', 'kolkata', 'hdoctor@apmeq.com', '12345678', 1),
-(11, 'Mr. Hospital Incharge', 5, 2, '9758965230', '', 'hincharge@apmeq.com', '2024-08-13', 'kolkata', 'hincharge@apmeq.com', '12345678', 1),
-(12, 'Mr. Hospital Engineer', 6, 2, '9852125487', '', 'hengineer@apmeq.com', '2024-08-13', 'Kolkata', 'hengineer@apmeq.com', '12345678', 1),
-(13, 'Mr. AMC', 7, 2, '9632584512', '256789', 'amc@apmeq.com', '2024-08-13', 'kolkata', 'amc@apmeq.com', '12345678', 1),
-(14, 'Mr. Local', 8, 2, '9685215478', '', 'local@apmeq.com', '2024-08-13', 'kolkata', 'local@apmeq.com', '12345678', 1);
+(1, 'Mr. Superadmin', 1, 2, '9733935161', '256789', 'superadmin@gmail.com', '1987-10-01', 'Bagnan', 'superadmin@gmail.com', '12345678', 1),
+(15, 'Mr. Hospital Admin', 2, 2, '9876543210', '', 'hospitaladmin@apmeq.com', '2024-08-28', 'Village: Bhuarah; Post Office: Agunshi; Police Station: Bagnan;\nDistrict: Howrah', 'hospitaladmin@apmeq.com', '12345678', 1),
+(16, 'Mr. Department Doctor', 3, 2, '9876543211', '', 'department_doctor@apmeq.com', '2024-08-28', 'Village: Bhuarah; Post Office: Agunshi; Police Station: Bagnan;\nDistrict: Howrah', 'department_doctor@apmeq.com', '12345678', 1),
+(17, 'Mr. Calibration service provider', 4, 2, '9876543212', '', 'calibration_ap@apmeq.com', '2024-08-28', 'Village: Bhuarah; Post Office: Agunshi; Police Station: Bagnan;\nDistrict: Howrah', 'calibration_ap@apmeq.com', '12345678', 1);
 
 -- --------------------------------------------------------
 
@@ -285,12 +259,8 @@ CREATE TABLE `user_type` (
 INSERT INTO `user_type` (`user_type_id`, `user_type_name`, `user_type_code`, `user_type_status`) VALUES
 (1, 'Super Admin', 'super', 1),
 (2, 'Hospital Admin', 'h_admin', 1),
-(3, 'Developer', 'dev', 1),
-(4, 'Hospital Doctor', 'h_doc', 1),
-(5, 'Hospital Incharge', 'h_inch', 1),
-(6, 'Hospital Engineer', 'h_eng', 1),
-(7, 'Existing Service provider (amc/warenty)', 'sp_amc', 0),
-(8, 'Registered service provider (Local Service Provider)', 'sp_local', 0);
+(3, 'Department Doctor', 'dep_doc', 1),
+(4, 'Calibration service provider', 'cal_sp', 1);
 
 --
 -- Indexes for dumped tables
@@ -319,6 +289,12 @@ ALTER TABLE `category_list`
 --
 ALTER TABLE `department_list`
   ADD PRIMARY KEY (`department_id`);
+
+--
+-- Indexes for table `facility_master`
+--
+ALTER TABLE `facility_master`
+  ADD PRIMARY KEY (`facility_id`);
 
 --
 -- Indexes for table `hospital_list`
@@ -385,6 +361,12 @@ ALTER TABLE `department_list`
   MODIFY `department_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `facility_master`
+--
+ALTER TABLE `facility_master`
+  MODIFY `facility_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `hospital_list`
 --
 ALTER TABLE `hospital_list`
@@ -412,7 +394,7 @@ ALTER TABLE `supplier_list`
 -- AUTO_INCREMENT for table `user_details`
 --
 ALTER TABLE `user_details`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `user_type`
