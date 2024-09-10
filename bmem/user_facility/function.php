@@ -55,38 +55,36 @@
 		$return_array = array();
 		$status = true;
 		$mainData = array();
-		$author_id = $_POST['author_id'];
+		$facility_id = $_POST['facility_id_dd'];
 
-		$sql = "SELECT * FROM facility_master WHERE author_id = '" .$author_id. "'";
+		$sql = "SELECT * FROM facility_master WHERE facility_id = '" .$facility_id. "'";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
 			$status = true;	
 			$row = $result->fetch_array();
-			$author_id = $row['author_id'];		
-			$category_id = $row['category_id'];		
-			$for_the_year = $row['for_the_year'];			
-			$author_name = $row['author_name'];		
-			$email = $row['email'];				
-			$registration_number = $row['registration_number'];			
-			$author_status = $row['author_status'];	
-			if($row['author_photo'] != ''){
-				$author_photo = $row['author_photo'];	
-			}else{
-				$author_photo = '';
-			}
+			$hospital_id = $row['hospital_id'];		
+			$department_id = $row['department_id'];		
+			$facility_name = $row['facility_name'];			
+			$facility_type = $row['facility_type'];		
+			$facility_code = $row['facility_code'];				
+			$facility_address = $row['facility_address'];			
+			$nabh_accrediated = $row['nabh_accrediated'];		
+			$nabl_accrediated = $row['nabl_accrediated']; 
+			
 		} else {
 			$status = false;
 		}
 		//$mysqli->close();
 
-		$return_array['author_name'] = $author_name;
-		$return_array['category_id'] = $category_id;
-		$return_array['for_the_year'] = $for_the_year;
-		$return_array['email'] = $email;
-		$return_array['registration_number'] = $registration_number;
-		$return_array['author_photo'] = $author_photo;
-		$return_array['author_status'] = $author_status;
+		$return_array['hospital_id'] = $hospital_id;
+		$return_array['department_id'] = $department_id;
+		$return_array['facility_name'] = $facility_name;
+		$return_array['facility_type'] = $facility_type;
+		$return_array['facility_code'] = $facility_code;
+		$return_array['facility_address'] = $facility_address;
+		$return_array['nabh_accrediated'] = $nabh_accrediated;
+		$return_array['nabl_accrediated'] = $nabl_accrediated;
 		$return_array['status'] = $status;
     	echo json_encode($return_array);
 	}//function end 

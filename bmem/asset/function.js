@@ -4,153 +4,64 @@ $('#onMyModal').on('click', function(){
     $('#exampleModalLong').modal('show');
 })
 
-function validateForm(){
-    $category_id = $('#category_id').val();
-    $for_the_year = $('#for_the_year').val();
-    $author_name = $('#author_name').val().replace(/^\s+|\s+$/gm,'');
-    $email = $('#email').val().replace(/^\s+|\s+$/gm,'');
-    $registration_number = $('#registration_number').val().replace(/^\s+|\s+$/gm,'');
-    $course_id = $('#course_id').val();
+ 
 
-    $status = true;
-
-    if($category_id == '0'){
-        $status = false;
-        $('#category_id').removeClass('is-valid');
-        $('#category_id').addClass('is-invalid');
-    }else{
-        $status = true;
-        $('#category_id').removeClass('is-invalid');
-        $('#category_id').addClass('is-valid');
-    }
-
-    if($for_the_year == '0'){
-        $status = false;
-        $('#for_the_year').removeClass('is-valid');
-        $('#for_the_year').addClass('is-invalid');
-    }else{
-        $status = true;
-        $('#for_the_year').removeClass('is-invalid');
-        $('#for_the_year').addClass('is-valid');
-    }
-
-    if($course_id == '0'){
-        $status = false;
-        $('#course_id').removeClass('is-valid');
-        $('#course_id').addClass('is-invalid');
-    }else{
-        $status = true;
-        $('#course_id').removeClass('is-invalid');
-        $('#course_id').addClass('is-valid');
-    }
-
-    if($author_name == ''){
-        $status = false;
-        $('#author_name').removeClass('is-valid');
-        $('#author_name').addClass('is-invalid');
-    }else{
-        $status = true;
-        $('#author_name').removeClass('is-invalid');
-        $('#author_name').addClass('is-valid');
-    }
-
-    if($email == ''){
-        $status = false;
-        $('#email').removeClass('is-valid');
-        $('#email').addClass('is-invalid');
-    }else{
-        $status = true;
-        $('#email').removeClass('is-invalid');
-        $('#email').addClass('is-valid');
-    }  
-
-    if($registration_number == ''){
-        $status = false;
-        $('#registration_number').removeClass('is-valid');
-        $('#registration_number').addClass('is-invalid');
-    }else{
-        $status = true;
-        $('#registration_number').removeClass('is-invalid');
-        $('#registration_number').addClass('is-valid');
-    }     
-
-    $('#submitForm_spinner').hide();
-    $('#submitForm_spinner_text').hide();
-    $('#submitForm_text').show();
-
-    return $status;
-}//en validate form
-
-function clearForm(){
-    $('#category_id').val('0').trigger('change');
-    $('#category_id').removeClass('is-valid');
-    $('#category_id').removeClass('is-invalid');
-
-    $('#for_the_year').val('0').trigger('change');
-    $('#for_the_year').removeClass('is-valid');
-    $('#for_the_year').removeClass('is-invalid');
-
-    $('#author_name').val('');
-    $('#author_name').removeClass('is-valid');
-    $('#author_name').removeClass('is-invalid');
-
-    $('#email').val('');
-    $('#email').removeClass('is-valid');
-    $('#email').removeClass('is-invalid');
-
-    $('#registration_number').val('');
-    $('#registration_number').removeClass('is-valid');
-    $('#registration_number').removeClass('is-invalid');
-
-    $('#author_id').val('0');           
-    let img = document.getElementById('image');
-    img.src = '';
-
-}//end 
-
-$(".form-control").blur(function(){
-    $('#orgFormAlert').css("display", "none");
-    $formVallidStatus = validateForm();
-});
-
-$('#submitForm').click(function(){
+$('#myForm').on('submit', function(){
     $('#submitForm_spinner').show();
     $('#submitForm_spinner_text').show();
-    $('#submitForm_text').hide();
-    //setTimeout(function(){
-        $formVallidStatus = validateForm();
+    $('#submitForm_text').hide(); 
 
-        if($formVallidStatus == true){
-            $category_id = $('#category_id').val();
-            $author_id = $('#author_id').val();
-            $author_photo = localStorage.getItem('author_photo');
-            $author_status = $('#author_status').val();
-            $for_the_year = $('#for_the_year').val();
-            $course_id = 0;//$('#course_id').val();
+    $asset_id = $('#asset_id').val(); 
+    $facility_id = $('#facility_id').val(); 
+    $department_id = $('#department_id').val(); 
+    $equipment_name = $('#equipment_name').val(); 
+    $asset_make = $('#asset_make').val(); 
+    $asset_model = $('#asset_model').val(); 
+    $slerial_number = $('#slerial_number').val(); 
+    $asset_specifiaction = $('#asset_specifiaction').val(); 
+    $date_of_installation = $('#date_of_installation').val(); 
+    $ins_certificate = $('#ins_certificate').val(); 
+    $asset_supplied_by = $('#asset_supplied_by').val(); 
+    $value_of_the_asset = $('#value_of_the_asset').val(); 
+    $total_year_in_service = $('#total_year_in_service').val(); 
+    $technology = $('#technology').val(); 
+    $asset_status = $('#asset_status').val(); 
+    $asset_class = $('#asset_class').val(); 
+    $device_group = $('#device_group').val(); 
+    $last_date_of_calibration = $('#last_date_of_calibration').val(); 
+    $calibration_attachment = $('#calibration_attachment').val(); 
+    $frequency_of_calibration = $('#frequency_of_calibration').val(); 
+    $last_date_of_pms = $('#last_date_of_pms').val(); 
+    $pms_attachment = $('#pms_attachment').val(); 
+    $frequency_of_pms = $('#frequency_of_pms').val(); 
+    $qa_due_date = $('#qa_due_date').val(); 
+    $qa_attachment = $('#qa_attachment').val(); 
+    $warranty_last_date = $('#warranty_last_date').val(); 
+    $amc_yes_no = $('#amc_yes_no').val(); 
+    $amc_last_date = $('#amc_last_date').val(); 
+    $cmc_yes_no = $('#cmc_yes_no').val(); 
+    $cmc_last_date = $('#cmc_last_date').val(); 
+    $sp_details = $('#sp_details').val();
 
-            $.ajax({
-                method: "POST",
-                url: "asset/function.php",
-                data: { fn: "saveFormData", category_id: $category_id, for_the_year: $for_the_year, course_id: $course_id, author_id: $author_id, author_name: $author_name, email: $email, registration_number: $registration_number, author_photo: $author_photo, author_status: $author_status }
-            })
-            .done(function( res ) {
-                //console.log(res);
-                $res1 = JSON.parse(res);
-                if($res1.status == true){
-                    $('#orgFormAlert1').css("display", "block");
-                    $('.toast-right').toast('show');
-                    //$('#liveToast').toast('show');
-                    clearForm();
-                    localStorage.setItem('author_photo', '');
-                    $('#exampleModalLong').modal('hide');
-                    populateDataTable();
-                }else{
-                    alert($res1.error_message);
-                }
-            });//end ajax
+    $.ajax({
+        type: "POST",
+        url: "asset/function.php",
+        dataType: "json",
+        data: { fn: "saveFormData", asset_id: $asset_id, facility_id: $facility_id, department_id: $department_id, equipment_name: $equipment_name, asset_make: $asset_make, asset_model: $asset_model, slerial_number: $slerial_number, asset_specifiaction: $asset_specifiaction, date_of_installation: $date_of_installation, ins_certificate: $ins_certificate, asset_supplied_by: $asset_supplied_by, value_of_the_asset: $value_of_the_asset, total_year_in_service: $total_year_in_service, technology: $technology, asset_status: $asset_status, asset_class: $asset_class, device_group: $device_group, last_date_of_calibration: $last_date_of_calibration, calibration_attachment: $calibration_attachment, frequency_of_calibration: $frequency_of_calibration, last_date_of_pms: $last_date_of_pms, pms_attachment: $pms_attachment, frequency_of_pms: $frequency_of_pms, qa_due_date: $qa_due_date, qa_attachment: $qa_attachment, warranty_last_date: $warranty_last_date, amc_yes_no: $amc_yes_no, amc_last_date: $amc_last_date, cmc_yes_no: $cmc_yes_no, cmc_last_date: $cmc_last_date, sp_details: $sp_details }
+    })
+    .done(function( res ) {
+        if(res.status == true){
+            $('#orgFormAlert1').css("display", "block");
+            $('.toast-right').toast('show');
+            //$('#liveToast').toast('show');
+            clearForm();
+            localStorage.setItem('author_photo', '');
+            $('#exampleModalLong').modal('hide');
+            populateDataTable();
+        }else{
+            alert($res1.error_message);
         }
-
-    //}, 500)    
+    });//end ajax 
 })
 
 function editTableData($author_id){
@@ -196,28 +107,7 @@ function deleteTableData($author_id){
             }
         });//end ajax
     }		
-}//end delete
-
-//Image upload
-function savePhoto(){
-    const imgPath = document.querySelector('input[type=file]').files[0];
-    const reader = new FileReader();
-
-    reader.addEventListener("load", function () {
-        // convert image file to base64 string and save to localStorage
-        localStorage.setItem("author_photo", reader.result);
-    }, false);
-
-    if (imgPath) {
-        reader.readAsDataURL(imgPath);
-    }
-
-    //To display image again
-    setTimeout(function(){
-    let img = document.getElementById('image');
-    img.src = localStorage.getItem('author_photo');
-    }, 250);
-}
+}//end delete 
 
 
 function populateDataTable(){
@@ -260,16 +150,40 @@ function populateDataTable(){
         order: [[0, 'desc']],
 
     });
-}//end fun
+}//end fun 
 
-
-
-//Category
-function configureCategoryDropDown(){
+//Department
+function configureDepartmentDropDown(){
     $.ajax({
         method: "POST",
-        url: "asset/function.php",
-        data: { fn: "getAllCategoryName" }
+        url: "user_facility/function.php",
+        data: { fn: "getAllDepartmentName" }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res); 
+        if($res1.status == true){
+            $rows = $res1.data;
+
+            if($rows.length > 0){
+                $('#department_id').html('');
+                $html = "<option value=''>Select</option>";
+
+                for($i = 0; $i < $rows.length; $i++){
+                    $html += "<option value='"+$rows[$i].department_id+"'>"+$rows[$i].department_name+"</option>";                    
+                }//end for
+                
+                $('#department_id').html($html);
+            }//end if
+        }        
+    });//end ajax
+}//end
+
+//Facility
+function configureFacilityDropDown(){
+    $.ajax({
+        method: "POST",
+        url: "user_facility/function.php",
+        data: { fn: "getAllFacilityName" }
     })
     .done(function( res ) {
         $res1 = JSON.parse(res);
@@ -277,46 +191,37 @@ function configureCategoryDropDown(){
             $rows = $res1.data;
 
             if($rows.length > 0){
-                $('#category_id').html('');
-                $option_category_id = "<option value='0'>Select</option>";
+                $('#facility_id_dd').html('');
+                $html = "<option value=''>Select</option>";
 
                 for($i = 0; $i < $rows.length; $i++){
-                    $option_category_id += "<option data-category_slug='"+$rows[$i].category_slug+"' value='"+$rows[$i].category_id+"'>"+$rows[$i].category_name+"</option>";                    
+                    $html += "<option value='"+$rows[$i].facility_id+"'>"+$rows[$i].facility_name+"</option>";                    
                 }//end for
                 
-                $('#category_id').html($option_category_id);
+                $('#facility_id_dd').html($html);
             }//end if
         }        
     });//end ajax
 }//end
 
-//Course
-function configureCourseDropDown(){
-    $.ajax({
-        method: "POST",
-        url: "asset/function.php",
-        data: { fn: "getAllCourseName" }
-    })
-    .done(function( res ) {
-        $res1 = JSON.parse(res);
-        if($res1.status == true){
-            $rows = $res1.data;
+$('#frequency_of_calibration_m, #frequency_of_calibration_d').on('change', function(){
+    $frequency_of_calibration_m = $('#frequency_of_calibration_m').val();
+    $frequency_of_calibration_d = $('#frequency_of_calibration_d').val();
+    $frequency_of_calibration = $frequency_of_calibration_m+'|'+$frequency_of_calibration_d;
+    $('#frequency_of_calibration').val($frequency_of_calibration); 
+})
 
-            if($rows.length > 0){
-                $('#course_id').html('');
-                $option_course_id = "<option value='0'>Select</option>";
-
-                for($i = 0; $i < $rows.length; $i++){
-                    $option_course_id += "<option data-course_fee='"+$rows[$i].course_fee+"' data-course_duration='"+$rows[$i].course_duration+"' value='"+$rows[$i].course_id+"'>"+$rows[$i].course_name+"</option>";                    
-                }//end for
-                
-                $('#course_id').html($option_course_id);
-            }//end if
-        }        
-    });//end ajax
-}//end
+$('#frequency_of_pms_m, #frequency_of_pms_d').on('change', function(){
+    $frequency_of_pms_m = $('#frequency_of_pms_m').val();
+    $frequency_of_pms_d = $('#frequency_of_pms_d').val();
+    $frequency_of_pms = $frequency_of_pms_m+'|'+$frequency_of_pms_d;
+    $('#frequency_of_pms').val($frequency_of_pms); 
+})
 
 $(document).ready(function () {
+    configureFacilityDropDown();
+    configureDepartmentDropDown();
+    $('.js-example-basic-single').select2();
     //configureCategoryDropDown(); 
     //configureCourseDropDown(); 
     //populateDataTable();

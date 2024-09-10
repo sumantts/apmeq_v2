@@ -3,6 +3,11 @@ $('#onMyModal').on('click', function(){
     $('#exampleModalLong').modal('show');
 })
 
+$('#cancelForm').on('click', function(){
+    $('#myForm').trigger('reset');
+    $('#facility_id').val('');
+})
+
 $('#myForm').on("submit", function(){  
     
     $facility_id = $('#facility_id').val(); 
@@ -26,6 +31,8 @@ $('#myForm').on("submit", function(){
         if(res.status == true){   
             $('#orgFormAlert1').css("display", "block");  
             $('#myForm').trigger('reset');
+            $('#facility_id').val('');
+            configureFacilityDropDown(); 
         }else{
             alert(res.error_message);
         }
@@ -34,7 +41,34 @@ $('#myForm').on("submit", function(){
     return false;
 });//end fun
  
+$('#getFacility').on('click', function(){
+    $facility_id_dd = $('#facility_id_dd').val();
 
+    if($facility_id_dd > 0){
+        $.ajax({
+            method: "POST",
+            url: "user_facility/function.php",
+            data: { fn: "getFormEditData", facility_id_dd: $facility_id_dd }
+        })
+        .done(function( res ) {
+            //console.log(res);
+            $res1 = JSON.parse(res);
+            if($res1.status == true){
+                $('#facility_id').val($facility_id_dd);
+                $('#facility_name').val($res1.facility_name);
+                $('#facility_type').val($res1.facility_type).trigger('change');
+                $('#facility_code').val($res1.facility_code);   
+                $('#facility_address').val($res1.facility_address);          
+                $('#nabh_accrediated').val($res1.nabh_accrediated).trigger('change');
+                $('#nabl_accrediated').val($res1.nabl_accrediated).trigger('change');
+                $('#department_id').val($res1.department_id).trigger('change');
+                $('#hospital_id').val($res1.hospital_id).trigger('change');
+            }
+        });//end ajax
+    }else{
+        alert('Please select Facility');
+    }
+})
  
 
 function editTableData($author_id){
@@ -63,7 +97,7 @@ function editTableData($author_id){
 
 } 
 
-
+//Department
 function configureDepartmentDropDown(){
     $.ajax({
         method: "POST",
