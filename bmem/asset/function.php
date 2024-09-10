@@ -11,57 +11,63 @@
 	//Save function start
 	if($fn == 'saveFormData'){
 		$return_result = array();
-		$insert_id1 = 0;
-		$password = '12345678';
-		$status = true;
+		$status = true; 
+		$insert_id = 0;
 
-		$author_id = $_POST["author_id"];	
-		$category_id = $_POST["category_id"];	
-		$for_the_year = $_POST["for_the_year"];
-		$author_name = $_POST["author_name"];
-		$email = $_POST["email"];	
-		$registration_number = $_POST["registration_number"];
-		$author_photo = $_POST["author_photo"];	
-		$author_status = $_POST["author_status"];
+		$asset_id = $_POST['asset_id']; 
+		$facility_id = $_POST['facility_id']; 
+		$department_id = $_POST['department_id']; 
+		$equipment_name = $_POST['equipment_name']; 
+		$asset_make = $_POST['asset_make']; 
+		$asset_model = $_POST['asset_model']; 
+		$slerial_number = $_POST['slerial_number']; 
+		$asset_specifiaction = $_POST['asset_specifiaction']; 
+		$date_of_installation = $_POST['date_of_installation']; 
+		$ins_certificate = $_POST['ins_certificate']; 
+		$asset_supplied_by = $_POST['asset_supplied_by']; 
+		$value_of_the_asset = $_POST['value_of_the_asset']; 
+		$total_year_in_service = $_POST['total_year_in_service']; 
+		$technology = $_POST['technology']; 
+		$asset_status = $_POST['asset_status']; 
+		$asset_class = $_POST['asset_class']; 
+		$device_group = $_POST['device_group']; 
+		$last_date_of_calibration = $_POST['last_date_of_calibration']; 
+		$calibration_attachment = $_POST['calibration_attachment']; 
+		$frequency_of_calibration = $_POST['frequency_of_calibration']; 
+		$last_date_of_pms = $_POST['last_date_of_pms']; 
+		$pms_attachment = $_POST['pms_attachment']; 
+		$frequency_of_pms = $_POST['frequency_of_pms']; 
+		$qa_due_date = $_POST['qa_due_date']; 
+		$qa_attachment = $_POST['qa_attachment']; 
+		$warranty_last_date = $_POST['warranty_last_date']; 
+		$amc_yes_no = $_POST['amc_yes_no']; 
+		$amc_last_date = $_POST['amc_last_date']; 
+		$cmc_yes_no = $_POST['cmc_yes_no']; 
+		$cmc_last_date = $_POST['cmc_last_date']; 
+		$sp_details = $_POST['sp_details'];
 		
 		try {
-			if($author_id > 0){
+			if($asset_id > 0){
 				$status = true;
-				$sql = "UPDATE author_details SET category_id = '" .$category_id. "', for_the_year = '" .$for_the_year. "', author_name = '" .$author_name. "', email = '" .$email. "', registration_number = '" .$registration_number. "', author_photo = '" .$author_photo. "', author_status = '" .$author_status. "' WHERE author_id = '" .$author_id. "' ";
+				$sql = "UPDATE asset_details SET facility_id = '" .$facility_id. "', department_id = '" .$department_id. "', equipment_name = '" .$equipment_name. "', asset_make = '" .$asset_make. "', asset_model = '" .$asset_model. "', slerial_number = '" .$slerial_number. "', asset_specifiaction = '" .$asset_specifiaction. "', date_of_installation = '" .$date_of_installation. "', asset_supplied_by = '" .$asset_supplied_by. "', value_of_the_asset = '" .$value_of_the_asset. "', total_year_in_service = '" .$total_year_in_service. "', technology = '" .$technology. "', asset_status = '" .$asset_status. "', asset_class = '" .$asset_class. "', device_group = '" .$device_group. "', last_date_of_calibration = '" .$last_date_of_calibration. "', frequency_of_calibration = '" .$frequency_of_calibration. "', last_date_of_pms = '" .$last_date_of_pms. "', pms_attachment = '" .$pms_attachment. "', frequency_of_pms = '" .$frequency_of_pms. "', qa_due_date = '" .$qa_due_date. "', warranty_last_date = '" .$warranty_last_date. "', amc_yes_no = '" .$amc_yes_no. "', amc_last_date = '" .$amc_last_date. "', cmc_yes_no = '" .$cmc_yes_no. "', cmc_last_date = '" .$cmc_last_date. "', sp_details = '" .$sp_details."' WHERE asset_id = '" .$asset_id. "' ";
+				$result = $mysqli->query($sql); 
+				$asset_id_temp = $asset_id;
+			}else{ 
+				$sql = "INSERT INTO asset_details (facility_id, department_id, equipment_name, asset_make, asset_model, slerial_number, asset_specifiaction, date_of_installation, ins_certificate, asset_supplied_by, value_of_the_asset, total_year_in_service, technology, asset_status, asset_class, device_group, last_date_of_calibration, calibration_attachment, frequency_of_calibration, last_date_of_pms, pms_attachment, frequency_of_pms, qa_due_date, qa_attachment, warranty_last_date, amc_yes_no, amc_last_date, cmc_yes_no, cmc_last_date, sp_details) VALUES ('" .$facility_id. "', '" .$department_id. "', '" .$equipment_name. "', '" .$asset_make. "', '" .$asset_model. "', '" .$slerial_number. "', '" .$asset_specifiaction. "', '" .$date_of_installation. "', '" .$ins_certificate. "', '" .$asset_supplied_by. "', '" .$value_of_the_asset. "', '" .$total_year_in_service. "', '" .$technology. "', '" .$asset_status. "', '" .$asset_class. "', '" .$device_group. "', '" .$last_date_of_calibration. "', '" .$calibration_attachment. "', '" .$frequency_of_calibration. "', '" .$last_date_of_pms. "', '" .$pms_attachment. "', '" .$frequency_of_pms. "', '" .$qa_due_date. "', '" .$qa_attachment. "', '" .$warranty_last_date. "', '" .$amc_yes_no. "', '" .$amc_last_date. "', '" .$cmc_yes_no. "', '" .$cmc_last_date. "', '" .$sp_details."')";
 				$result = $mysqli->query($sql);
-
-				//Update login table
-				$sql1 = "UPDATE login SET profile_name = '" .$author_name. "', username = '" .$email. "', password = '" .$password. "' WHERE author_id = '" .$author_id. "' ";
-				$result1 = $mysqli->query($sql1);
-			}else{
-				$check_sql = "SELECT * FROM author_details WHERE email = '" .$email. "' ";
-				$check_result = $mysqli->query($check_sql);
-
-				if ($check_result->num_rows > 0) {
-					$return_result['error_message'] = 'This email already exist';
-					$status = false;
+				$asset_id_temp = $mysqli->insert_id;
+				if($asset_id_temp > 0){
+					$status = true; 
 				}else{
-					$sql = "INSERT INTO author_details (category_id, for_the_year, author_name, email, registration_number, author_photo) VALUES ('" .$category_id. "', '" .$for_the_year. "', '" .$author_name. "', '" .$email. "', '" .$registration_number. "', '" .$author_photo. "')";
-					$result = $mysqli->query($sql);
-					$insert_id = $mysqli->insert_id;
-					if($insert_id > 0){
-						$status = true;
-
-						//Insert into login table
-						$sql1 = "INSERT INTO login (author_id, profile_name, username, password) VALUES ('" .$insert_id. "', '" .$author_name. "', '" .$email. "', '" .$password. "')";
-						$result1 = $mysqli->query($sql1);
-						$insert_id1 = $mysqli->insert_id;
-					}else{
-						$return_result['error_message'] = 'Photo size is soo large';
-						$status = false;
-					}	
-				}//end if	
+					$return_result['error_message'] = 'Photo size is soo large';
+					$status = false;
+				}	 
 			}	
 		} catch (PDOException $e) {
 			die("Error occurred:" . $e->getMessage());
 		}
 		$return_result['status'] = $status;
-		$return_result['login_id'] = $insert_id1;
+		$return_result['asset_id_temp'] = $asset_id_temp;
 		//sleep(2);
 		echo json_encode($return_result);
 	}//Save function end	

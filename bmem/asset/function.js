@@ -4,15 +4,24 @@ $('#onMyModal').on('click', function(){
     $('#exampleModalLong').modal('show');
 })
 
- 
+$('#clearForm').on('click', function(){
+    $('#myForm').trigger('reset');
+    $('#facility_id_dd').val('').trigger('change');
+    $('#department_id').val('').trigger('change'); 
+    $('#technology').val('').trigger('change');
+    $('#asset_class').val('').trigger('change'); 
+    $('#device_group').val('').trigger('change'); 
+    $('#frequency_of_calibration_m').val('').trigger('change'); 
+    $('#frequency_of_calibration_d').val('').trigger('change');
+    $('#frequency_of_pms_m').val('').trigger('change');
+    $('#frequency_of_pms_d').val('').trigger('change');
+    $('#cmc_yes_no').val('').trigger('change');
+    $('#asset_id').val('0'); 
+})
 
 $('#myForm').on('submit', function(){
-    $('#submitForm_spinner').show();
-    $('#submitForm_spinner_text').show();
-    $('#submitForm_text').hide(); 
-
     $asset_id = $('#asset_id').val(); 
-    $facility_id = $('#facility_id').val(); 
+    $facility_id = $('#facility_id_dd').val(); 
     $department_id = $('#department_id').val(); 
     $equipment_name = $('#equipment_name').val(); 
     $asset_make = $('#asset_make').val(); 
@@ -52,16 +61,13 @@ $('#myForm').on('submit', function(){
     .done(function( res ) {
         if(res.status == true){
             $('#orgFormAlert1').css("display", "block");
-            $('.toast-right').toast('show');
-            //$('#liveToast').toast('show');
-            clearForm();
-            localStorage.setItem('author_photo', '');
-            $('#exampleModalLong').modal('hide');
-            populateDataTable();
+            $('#asset_id').val(res.asset_id_temp);
         }else{
             alert($res1.error_message);
         }
     });//end ajax 
+
+    return false;
 })
 
 function editTableData($author_id){
@@ -216,6 +222,10 @@ $('#frequency_of_pms_m, #frequency_of_pms_d').on('change', function(){
     $frequency_of_pms_d = $('#frequency_of_pms_d').val();
     $frequency_of_pms = $frequency_of_pms_m+'|'+$frequency_of_pms_d;
     $('#frequency_of_pms').val($frequency_of_pms); 
+})
+
+$('#ins_cert_attach').on('click', function(){
+    $('#exampleModalLong').modal('show');
 })
 
 $(document).ready(function () {

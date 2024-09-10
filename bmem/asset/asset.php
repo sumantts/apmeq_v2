@@ -59,16 +59,7 @@ include('common/head.php');
                     <div class="card-header">
                         <h5>Filter Assets</h5> 
                     </div>
-                    <div class="card-body">
-                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;" id="orgFormAlert">
-							<strong>Success!</strong> Your Data Deleted successfully.
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						</div>
-                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;" id="orgFormAlert1">
-							<strong>Success!</strong> Your Data saved successfully.
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						</div>
-                         
+                    <div class="card-body">                        
 
                         <form class="needs-validation" novalidate>
                             <div class="form-row">                               
@@ -132,6 +123,15 @@ include('common/head.php');
 							<strong>Success!</strong> Your Data saved successfully.
 							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						</div>
+
+                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;" id="orgFormAlert">
+							<strong>Success!</strong> Your Data Deleted successfully.
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						</div>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;" id="orgFormAlert1">
+							<strong>Success!</strong> Your Data saved successfully.
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						</div>
                          
 
                         <form method="POST" action="#" id="myForm">  
@@ -181,8 +181,10 @@ include('common/head.php');
                                 </div> 
                                 
                                 <div class="col-md-4 mb-2 mt-4">
-                                    <input type="file" accept="image/*" class="custom-file-input" id="ins_certificate" aria-describedby="ins_certificate" >
-                                    <label class="custom-file-label" for="ins_certificate">Installaion certificate attachment...</label> 
+                                    <label for="date_of_installation">Installaion certificate attachment</label>
+                                    <a href="javascript: void(0)" id="ins_cert_attach">Upload & View Certificate</a>
+                                    <!-- <input type="file" accept="image/*" class="custom-file-input" id="ins_certificate" aria-describedby="ins_certificate" >
+                                    <label class="custom-file-label" for="ins_certificate">Installaion certificate attachment...</label>  -->
                                 </div>    
                                 
                                 <div class="col-md-4 mb-3">
@@ -202,7 +204,7 @@ include('common/head.php');
                                 
                                 <div class="col-md-4 mb-3">
                                     <label for="technology" class="text-danger">Technology*</label>
-                                    <select class="form-control" name="technology" id="technology" required>
+                                    <select class="form-control js-example-basic-single" name="technology" id="technology" required>
                                         <option value="">Select</option>
                                         <option value="1">Obsolute</option>
                                         <option value="2">Running</option>
@@ -211,7 +213,7 @@ include('common/head.php');
                                 
                                 <div class="col-md-4 mb-3">
                                     <label for="asset_status" class="text-danger">Asset status*</label>
-                                    <select class="form-control" name="asset_status" id="asset_status" required>
+                                    <select class="form-control js-example-basic-single" name="asset_status" id="asset_status" required>
                                         <option value="">Select</option>
                                         <option value="1">Working</option>
                                         <option value="2">Not Working</option>
@@ -223,7 +225,7 @@ include('common/head.php');
                                 
                                 <div class="col-md-4 mb-3">
                                     <label for="asset_class" class="text-danger">Asset class*</label>
-                                    <select class="form-control" name="asset_class" id="asset_class" required>
+                                    <select class="form-control js-example-basic-single" name="asset_class" id="asset_class" required>
                                         <option value="">Select</option>
                                         <option value="1">Critical</option>
                                         <option value="2">Non Critical</option>
@@ -232,7 +234,7 @@ include('common/head.php');
                                 
                                 <div class="col-md-4 mb-3">
                                     <label for="device_group" class="text-danger">Device group*</label>
-                                    <select class="form-control" name="device_group" id="device_group" required>
+                                    <select class="form-control js-example-basic-single" name="device_group" id="device_group" required>
                                         <option value="">Select</option>
                                         <option value="1">Scanner</option>
                                         <option value="2">In vitro Diagnostics</option>
@@ -260,17 +262,19 @@ include('common/head.php');
                                     <input type="hidden" name="frequency_of_calibration" id="frequency_of_calibration" value="">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <select class="form-control" name="frequency_of_calibration_m" id="frequency_of_calibration_m">
-                                                <option value="">Month</option>
-                                                <option value="1">January</option>
-                                                <option value="2">February</option>
+                                            <select class="form-control js-example-basic-single" name="frequency_of_calibration_m" id="frequency_of_calibration_m">
+                                                <?php if(sizeof($month_name) > 0){
+                                                    for($m = 0; $m < sizeof($month_name); $m++){ ?>
+                                                <option value="<?=$month_name[$m]->value?>"><?=$month_name[$m]->text?></option>
+                                                <?php } }?>
                                             </select>
                                         </div>
                                         <div class="col-md-6">
-                                            <select class="form-control" name="frequency_of_calibration_d" id="frequency_of_calibration_d">
-                                                <option value="">Day</option>
-                                                <option value="1">Sunday</option>
-                                                <option value="2">Monday</option>
+                                            <select class="form-control js-example-basic-single" name="frequency_of_calibration_d" id="frequency_of_calibration_d">
+                                                <?php if(sizeof($week_days) > 0){
+                                                    for($w1 = 0; $w1 < sizeof($week_days); $w1++){ ?>
+                                                <option value="<?=$week_days[$w1]->value?>"><?=$week_days[$w1]->text?></option>
+                                                <?php } }?>
                                             </select>
                                         </div>
                                     </div>
@@ -291,17 +295,19 @@ include('common/head.php');
                                     <input type="hidden" name="frequency_of_pms" id="frequency_of_pms" value="">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <select class="form-control" name="frequency_of_pms_m" id="frequency_of_pms_m">
-                                                <option value="">Month</option>
-                                                <option value="1">January</option>
-                                                <option value="2">February</option>
+                                            <select class="form-control js-example-basic-single" name="frequency_of_pms_m" id="frequency_of_pms_m">
+                                                <?php if(sizeof($month_name) > 0){
+                                                    for($m1 = 0; $m1 < sizeof($month_name); $m1++){ ?>
+                                                <option value="<?=$month_name[$m1]->value?>"><?=$month_name[$m1]->text?></option>
+                                                <?php } }?>
                                             </select>
                                         </div>
                                         <div class="col-md-6">
-                                            <select class="form-control" name="frequency_of_pms_d" id="frequency_of_pms_d">
-                                                <option value="">Day</option>
-                                                <option value="1">Sunday</option>
-                                                <option value="2">Monday</option>
+                                            <select class="form-control js-example-basic-single" name="frequency_of_pms_d" id="frequency_of_pms_d">
+                                                <?php if(sizeof($week_days) > 0){
+                                                    for($w = 0; $w < sizeof($week_days); $w++){ ?>
+                                                <option value="<?=$week_days[$w]->value?>"><?=$week_days[$w]->text?></option>
+                                                <?php } }?>
                                             </select>
                                         </div>
                                     </div>
@@ -324,7 +330,7 @@ include('common/head.php');
                                 
                                 <div class="col-md-4 mb-3">
                                     <label for="amc_yes_no" >AMC</label>
-                                    <select class="form-control" name="amc_yes_no" id="amc_yes_no">
+                                    <select class="form-control js-example-basic-single" name="amc_yes_no" id="amc_yes_no">
                                         <option value="">Select</option>
                                         <option value="1">Yes</option>
                                         <option value="2">NO</option>
@@ -338,7 +344,7 @@ include('common/head.php');
                                 
                                 <div class="col-md-4 mb-3">
                                     <label for="cmc_yes_no">CMC</label>
-                                    <select class="form-control" name="cmc_yes_no" id="cmc_yes_no">
+                                    <select class="form-control js-example-basic-single" name="cmc_yes_no" id="cmc_yes_no">
                                         <option value="">Select</option>
                                         <option value="1">Yes</option>
                                         <option value="2">NO</option>
@@ -358,7 +364,7 @@ include('common/head.php');
 
                             <div class="form-row">                                 
                                 <div class="col-md-2 mt-4">
-                                    <button class="btn btn-dark" type="button" id="submitForm">
+                                    <button class="btn btn-dark" type="button" id="clearForm">
                                         <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
                                         <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
                                         <span class="btn-text" id="submitForm_text">Cancel</span>
@@ -366,6 +372,7 @@ include('common/head.php');
                                 </div>     
 
                                 <div class="col-md-4 mt-4">
+                                    <input type="hidden" name="asset_id" id="asset_id" value="">
                                     <button class="btn  btn-primary" type="submit" id="submitForm">
                                         <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
                                         <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
@@ -378,6 +385,58 @@ include('common/head.php');
                 </div>
             </div>
             <!-- End Form --> 
+
+
+            <!-- Modal start -->
+            <div id="exampleModalLong" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle"><?=$title?></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="#" method="POST" id="myFormModal">
+                                <div class="form-row">
+                                    <div class="col-md-4 mb-3">
+                                        <label for="user_user_name" class="text-danger">Username*</label>
+                                        <input type="text" class="form-control" id="user_user_name" value="" required> 
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>                                    
+                                        <div class="invalid-feedback">
+                                            Please provide Username.
+                                        </div>
+                                    </div> 
+                                    
+                                    <div class="col-md-4 mb-3">
+                                        <label for="user_password" class="text-danger">Password*</label>
+                                        <input type="text" class="form-control" id="user_password" value="" required> 
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>                                    
+                                        <div class="invalid-feedback">
+                                            Please enter Password.
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <input type="hidden" id="user_id" value="0">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                
+                                <!-- <button class="btn  btn-primary" type="submit" id="submitForm">
+                                    <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
+                                    <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
+                                    <span class="btn-text" id="submitForm_text">Save</span>
+                                </button> -->
+                            </div>                        
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal end -->
 
             <!-- [ sample-page ] end -->
         </div>
