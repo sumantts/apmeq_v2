@@ -397,27 +397,14 @@ include('common/head.php');
                         </div>
                         <div class="modal-body">
                             <form action="#" method="POST" id="myFormModal">
-                                <div class="form-row">
-                                    <div class="col-md-4 mb-3">
-                                        <label for="user_user_name" class="text-danger">Username*</label>
-                                        <input type="text" class="form-control" id="user_user_name" value="" required> 
-                                        <div class="valid-feedback">
-                                            Looks good!
-                                        </div>                                    
-                                        <div class="invalid-feedback">
-                                            Please provide Username.
-                                        </div>
+                                <div class="form-row">                                    
+                                    <div class="col-md-3 mt-4">
+                                        <input type="file" id="multiupload" name="uploadFiledd[]" multiple accept=".jpg,.jpeg,.png" >
+                                        <span id="uploadMessage"></span>
                                     </div> 
-                                    
-                                    <div class="col-md-4 mb-3">
-                                        <label for="user_password" class="text-danger">Password*</label>
-                                        <input type="text" class="form-control" id="user_password" value="" required> 
-                                        <div class="valid-feedback">
-                                            Looks good!
-                                        </div>                                    
-                                        <div class="invalid-feedback">
-                                            Please enter Password.
-                                        </div>
+
+                                    <div class="col-md-1 mt-4"> 
+                                        <button type="button" id="startUpload" class="btn btn-primary btn-sm">Upload</button>
                                     </div> 
                                 </div>
                             </div>
