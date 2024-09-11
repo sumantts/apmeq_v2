@@ -181,10 +181,8 @@ include('common/head.php');
                                 </div> 
                                 
                                 <div class="col-md-4 mb-2 mt-4">
-                                    <label for="date_of_installation">Installaion certificate attachment</label>
-                                    <a href="javascript: void(0)" id="ins_cert_attach">Upload & View Certificate</a>
-                                    <!-- <input type="file" accept="image/*" class="custom-file-input" id="ins_certificate" aria-describedby="ins_certificate" >
-                                    <label class="custom-file-label" for="ins_certificate">Installaion certificate attachment...</label>  -->
+                                    <label for="ins_cert_attach">Installaion certificate attachment</label><br>
+                                    <a href="javascript: void(0)" id="ins_cert_attach">Upload & View Certificate</a> 
                                 </div>    
                                 
                                 <div class="col-md-4 mb-3">
@@ -387,12 +385,12 @@ include('common/head.php');
             <!-- End Form --> 
 
 
-            <!-- Modal start -->
+            <!-- 1. Modal start -->
             <div id="exampleModalLong" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle"><?=$title?></h5>
+                            <h5 class="modal-title" id="exampleModalLongTitle">Installaion certificate attachment</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         </div>
                         <div class="modal-body">
@@ -406,6 +404,15 @@ include('common/head.php');
                                     <div class="col-md-1 mt-4"> 
                                         <button type="button" id="startUpload" class="btn btn-primary btn-sm">Upload</button>
                                     </div> 
+                                </div>
+                                <hr>
+                                <div class="form-row"> 
+                                    <div class="col-md-12 mb-3">
+                                        <div class="text-center" id="product_gallery"> 
+                                            <h5>No Attachment Available</h5>
+                                            <!-- <img src="products/add_product/photos/668a0b1f77bb7.png" width="75" class="img-fluid img-thumbnail" alt="..."><a href='javascript: void(0)'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteProdImage()'></i></a>  -->
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 

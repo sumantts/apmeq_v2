@@ -23,7 +23,6 @@
 		$slerial_number = $_POST['slerial_number']; 
 		$asset_specifiaction = $_POST['asset_specifiaction']; 
 		$date_of_installation = $_POST['date_of_installation']; 
-		$ins_certificate = $_POST['ins_certificate']; 
 		$asset_supplied_by = $_POST['asset_supplied_by']; 
 		$value_of_the_asset = $_POST['value_of_the_asset']; 
 		$total_year_in_service = $_POST['total_year_in_service']; 
@@ -53,7 +52,7 @@
 				$result = $mysqli->query($sql); 
 				$asset_id_temp = $asset_id;
 			}else{ 
-				$sql = "INSERT INTO asset_details (facility_id, department_id, equipment_name, asset_make, asset_model, slerial_number, asset_specifiaction, date_of_installation, ins_certificate, asset_supplied_by, value_of_the_asset, total_year_in_service, technology, asset_status, asset_class, device_group, last_date_of_calibration, calibration_attachment, frequency_of_calibration, last_date_of_pms, pms_attachment, frequency_of_pms, qa_due_date, qa_attachment, warranty_last_date, amc_yes_no, amc_last_date, cmc_yes_no, cmc_last_date, sp_details) VALUES ('" .$facility_id. "', '" .$department_id. "', '" .$equipment_name. "', '" .$asset_make. "', '" .$asset_model. "', '" .$slerial_number. "', '" .$asset_specifiaction. "', '" .$date_of_installation. "', '" .$ins_certificate. "', '" .$asset_supplied_by. "', '" .$value_of_the_asset. "', '" .$total_year_in_service. "', '" .$technology. "', '" .$asset_status. "', '" .$asset_class. "', '" .$device_group. "', '" .$last_date_of_calibration. "', '" .$calibration_attachment. "', '" .$frequency_of_calibration. "', '" .$last_date_of_pms. "', '" .$pms_attachment. "', '" .$frequency_of_pms. "', '" .$qa_due_date. "', '" .$qa_attachment. "', '" .$warranty_last_date. "', '" .$amc_yes_no. "', '" .$amc_last_date. "', '" .$cmc_yes_no. "', '" .$cmc_last_date. "', '" .$sp_details."')";
+				$sql = "INSERT INTO asset_details (facility_id, department_id, equipment_name, asset_make, asset_model, slerial_number, asset_specifiaction, date_of_installation, asset_supplied_by, value_of_the_asset, total_year_in_service, technology, asset_status, asset_class, device_group, last_date_of_calibration, calibration_attachment, frequency_of_calibration, last_date_of_pms, pms_attachment, frequency_of_pms, qa_due_date, qa_attachment, warranty_last_date, amc_yes_no, amc_last_date, cmc_yes_no, cmc_last_date, sp_details) VALUES ('" .$facility_id. "', '" .$department_id. "', '" .$equipment_name. "', '" .$asset_make. "', '" .$asset_model. "', '" .$slerial_number. "', '" .$asset_specifiaction. "', '" .$date_of_installation. "', '" .$asset_supplied_by. "', '" .$value_of_the_asset. "', '" .$total_year_in_service. "', '" .$technology. "', '" .$asset_status. "', '" .$asset_class. "', '" .$device_group. "', '" .$last_date_of_calibration. "', '" .$calibration_attachment. "', '" .$frequency_of_calibration. "', '" .$last_date_of_pms. "', '" .$pms_attachment. "', '" .$frequency_of_pms. "', '" .$qa_due_date. "', '" .$qa_attachment. "', '" .$warranty_last_date. "', '" .$amc_yes_no. "', '" .$amc_last_date. "', '" .$cmc_yes_no. "', '" .$cmc_last_date. "', '" .$sp_details."')";
 				$result = $mysqli->query($sql);
 				$asset_id_temp = $mysqli->insert_id;
 				if($asset_id_temp > 0){
@@ -261,6 +260,79 @@
 		$return_array['status'] = $status;
 		$return_array['data'] = $mainData;
 		echo json_encode($return_array);
-	}//function end	
+	}//function end	 
+
+	//Get Product Images
+	if($fn == 'getAllProductImages'){
+		$return_array = array();
+		$status = true;
+		$all_images = array();
+		$asset_id = $_POST["asset_id"];
+
+		$sql = "SELECT ins_certificate FROM asset_details WHERE asset_id = '".$asset_id."'";
+		$result = $mysqli->query($sql);
+
+		if ($result->num_rows > 0) {
+			$slno = 1;
+			while($row = $result->fetch_array()){
+				$all_images_en = $row['ins_certificate']; 
+				if($all_images_en != ''){
+					$status = true;
+					$all_images = json_decode($all_images_en);
+				}
+			}
+		} else {
+			$status = false;
+		}
+		//$mysqli->close();
+
+		$return_array['status'] = $status;
+		$return_array['all_images'] = $all_images;
+    	echo json_encode($return_array);
+	}//function end		
+
+	//Delete Single Image
+	if($fn == 'deleteProdImage'){
+		$return_result = array();
+		$all_images = array();
+		$all_images_temp = array();
+		$status = true;
+		$asset_id = $_POST["asset_id"];
+		$prod_iamge_name = $_POST["prod_iamge_name"];
+
+		//Unlink product image
+		$sql = "SELECT ins_certificate FROM asset_details WHERE asset_id = '".$asset_id."'";
+		$result = $mysqli->query($sql);
+
+		if ($result->num_rows > 0) {
+			$slno = 1;
+			while($row = $result->fetch_array()){
+				$all_images_en = $row['ins_certificate']; 
+				if($all_images_en != ''){
+					$status = true;
+					$all_images = json_decode($all_images_en);
+					if(sizeof($all_images) > 0){
+						for($i = 0; $i < sizeof($all_images); $i++){
+							if($all_images[$i] == $prod_iamge_name){
+								$file_path = ''.$all_images[$i];
+								unlink('photos/'.$file_path);
+							}
+							if($all_images[$i] != $prod_iamge_name){
+								array_push($all_images_temp, $all_images[$i]); 
+							}
+						}//end for
+						$all_images_en = json_encode($all_images_temp);
+					}//end if
+				}//end if
+			}//end while
+		} //end if
+
+		$sql = "UPDATE asset_details SET ins_certificate = '" .$all_images_en. "' WHERE asset_id = '".$asset_id."'";
+		$mysqli->query($sql);
+
+		$return_result['status'] = $status;
+		//sleep(1);
+		echo json_encode($return_result);
+	}//end function deleteItem
 
 ?>

@@ -28,8 +28,7 @@ $('#myForm').on('submit', function(){
     $asset_model = $('#asset_model').val(); 
     $slerial_number = $('#slerial_number').val(); 
     $asset_specifiaction = $('#asset_specifiaction').val(); 
-    $date_of_installation = $('#date_of_installation').val(); 
-    $ins_certificate = $('#ins_certificate').val(); 
+    $date_of_installation = $('#date_of_installation').val();  
     $asset_supplied_by = $('#asset_supplied_by').val(); 
     $value_of_the_asset = $('#value_of_the_asset').val(); 
     $total_year_in_service = $('#total_year_in_service').val(); 
@@ -56,12 +55,12 @@ $('#myForm').on('submit', function(){
         type: "POST",
         url: "asset/function.php",
         dataType: "json",
-        data: { fn: "saveFormData", asset_id: $asset_id, facility_id: $facility_id, department_id: $department_id, equipment_name: $equipment_name, asset_make: $asset_make, asset_model: $asset_model, slerial_number: $slerial_number, asset_specifiaction: $asset_specifiaction, date_of_installation: $date_of_installation, ins_certificate: $ins_certificate, asset_supplied_by: $asset_supplied_by, value_of_the_asset: $value_of_the_asset, total_year_in_service: $total_year_in_service, technology: $technology, asset_status: $asset_status, asset_class: $asset_class, device_group: $device_group, last_date_of_calibration: $last_date_of_calibration, calibration_attachment: $calibration_attachment, frequency_of_calibration: $frequency_of_calibration, last_date_of_pms: $last_date_of_pms, pms_attachment: $pms_attachment, frequency_of_pms: $frequency_of_pms, qa_due_date: $qa_due_date, qa_attachment: $qa_attachment, warranty_last_date: $warranty_last_date, amc_yes_no: $amc_yes_no, amc_last_date: $amc_last_date, cmc_yes_no: $cmc_yes_no, cmc_last_date: $cmc_last_date, sp_details: $sp_details }
+        data: { fn: "saveFormData", asset_id: $asset_id, facility_id: $facility_id, department_id: $department_id, equipment_name: $equipment_name, asset_make: $asset_make, asset_model: $asset_model, slerial_number: $slerial_number, asset_specifiaction: $asset_specifiaction, date_of_installation: $date_of_installation, asset_supplied_by: $asset_supplied_by, value_of_the_asset: $value_of_the_asset, total_year_in_service: $total_year_in_service, technology: $technology, asset_status: $asset_status, asset_class: $asset_class, device_group: $device_group, last_date_of_calibration: $last_date_of_calibration, calibration_attachment: $calibration_attachment, frequency_of_calibration: $frequency_of_calibration, last_date_of_pms: $last_date_of_pms, pms_attachment: $pms_attachment, frequency_of_pms: $frequency_of_pms, qa_due_date: $qa_due_date, qa_attachment: $qa_attachment, warranty_last_date: $warranty_last_date, amc_yes_no: $amc_yes_no, amc_last_date: $amc_last_date, cmc_yes_no: $cmc_yes_no, cmc_last_date: $cmc_last_date, sp_details: $sp_details }
     })
     .done(function( res ) {
         if(res.status == true){
             $('#orgFormAlert1').css("display", "block");
-            $('#asset_id').val(res.asset_id_temp);
+            $('#asset_id').val(res.asset_id_temp); 
         }else{
             alert($res1.error_message);
         }
@@ -225,19 +224,25 @@ $('#frequency_of_pms_m, #frequency_of_pms_d').on('change', function(){
 })
 
 $('#ins_cert_attach').on('click', function(){
-    $('#exampleModalLong').modal('show');
+    $asset_id = $('#asset_id').val();
+    if($asset_id > 0){
+        $('#exampleModalLong').modal('show');
+    }else{
+        alert('Please add an Asset first');
+    }
 })
 
 
 
 //Multiple Photo Upload
 function uploadajax(ttl,cl){
-    $prod_id = $('#prod_id').val();
+    $asset_id = $('#asset_id').val();
+
     var fileList = $('#multiupload').prop("files"); 
     var form_data =  "";
     form_data = new FormData();
     form_data.append("upload_image", fileList[cl]);
-    form_data.append("prod_id", $prod_id);
+    form_data.append("asset_id", $asset_id);
 
     var request = $.ajax({
         url: "asset/upload.php",
@@ -258,7 +263,7 @@ function uploadajax(ttl,cl){
                 } else {
                     console.log('Done');
                     $('#uploadMessage').html($upload_count + ' Files Uploaded');
-                    getAllProductImages($prod_id);
+                    getAllProductImages($asset_id);
                 }
             }
         },
@@ -270,9 +275,9 @@ function uploadajax(ttl,cl){
 
 $('#startUpload').on('click', function(){
     console.log('upload start...');    
-    $prod_id = 1;//$('#prod_id').val();
+    $asset_id = $('#asset_id').val();
     $upload_count = 0;
-    if($prod_id > 0){
+    if($asset_id > 0){
         $('#uploadMessage').html('');
         var fileList = $('#multiupload').prop("files"); 
         var i;
@@ -286,12 +291,12 @@ $('#startUpload').on('click', function(){
     }//end if
 }); 
 
-function getAllProductImages($prod_id){
+function getAllProductImages($asset_id){
     $('#product_gallery').html('');
     $.ajax({
         method: "POST",
-        url: "products/add_product/function.php",
-        data: { fn: "getAllProductImages", prod_id: $prod_id }
+        url: "asset/function.php",
+        data: { fn: "getAllProductImages", asset_id: $asset_id }
     })
     .done(function( res ) {
         $res1 = JSON.parse(res);
@@ -303,7 +308,7 @@ function getAllProductImages($prod_id){
                 $html = "";
                 console.log('all_images length: '+$all_images.length);
                 for($i in $all_images ){
-                    $html += '<img src="products/add_product/photos/'+$all_images[$i]+'" width="75" class="img-fluid img-thumbnail" alt="..."><a href="javascript: void(0)"> <i class="fa fa-trash" aria-hidden="true" onclick="deleteProdImage(\''+$all_images[$i]+'\')"></i></a>'; 
+                    $html += '<img src="asset/photos/'+$all_images[$i]+'" width="75" class="img-fluid img-thumbnail" alt="..."><a href="javascript: void(0)"> <i class="fa fa-trash" aria-hidden="true" onclick="deleteProdImage(\''+$all_images[$i]+'\')"></i></a>'; 
                 }//end for
                 
                 $('#product_gallery').html($html);
@@ -316,17 +321,17 @@ function getAllProductImages($prod_id){
 function deleteProdImage($prod_iamge_name){
     console.log('prod_iamge_name: ' + $prod_iamge_name);
     if (confirm('Are you sure to delete the Image?')) {
-        $prod_id = $('#prod_id').val();
+        $asset_id = $('#asset_id').val();
         $.ajax({
             method: "POST",
-            url: "products/add_product/function.php",
-            data: { fn: "deleteProdImage", prod_id: $prod_id, prod_iamge_name: $prod_iamge_name }
+            url: "asset/function.php",
+            data: { fn: "deleteProdImage", asset_id: $asset_id, prod_iamge_name: $prod_iamge_name }
         })
         .done(function( res ) {
             //console.log(res);
             $res1 = JSON.parse(res);
             if($res1.status == true){
-                getAllProductImages($prod_id);
+                getAllProductImages($asset_id);
             }
         });//end ajax
     }		
