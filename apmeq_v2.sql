@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 06, 2024 at 06:41 AM
+-- Generation Time: Sep 11, 2024 at 06:33 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -28,41 +28,65 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `asset_details` (
-  `asset_detail_id` int(11) NOT NULL,
-  `name_of_asset` varchar(255) NOT NULL,
+  `asset_id` int(11) NOT NULL,
+  `facility_id` int(11) NOT NULL COMMENT 'PK of facility_master',
   `department_id` int(11) NOT NULL COMMENT 'PK of department_list',
-  `hospital_id` int(11) NOT NULL COMMENT 'PK of hospital_list',
-  `asset_code` varchar(10) NOT NULL,
-  `manufacturer_id` int(11) NOT NULL COMMENT 'PK of manufacturer_list',
-  `model_name` varchar(255) NOT NULL,
-  `supplier_id` int(11) NOT NULL COMMENT 'PK of supplier_list',
-  `asset_slno` varchar(255) NOT NULL,
   `equipment_name` varchar(255) NOT NULL,
-  `installation_date` date NOT NULL,
-  `total_year_in_service` int(2) NOT NULL,
-  `calibration_last_date` date NOT NULL,
-  `calibration_frequency` tinyint(1) NOT NULL,
-  `preventive_maintain_last_date` date NOT NULL,
-  `preventive_maintenance_frequency` tinyint(1) NOT NULL,
-  `warenty` varchar(10) NOT NULL,
-  `amc` varchar(10) NOT NULL,
+  `asset_make` varchar(255) NOT NULL,
+  `asset_model` varchar(255) NOT NULL,
+  `slerial_number` varchar(255) NOT NULL,
+  `asset_specifiaction` varchar(255) NOT NULL,
+  `date_of_installation` date NOT NULL,
+  `ins_certificate` varchar(255) NOT NULL,
+  `asset_supplied_by` varchar(255) NOT NULL,
+  `value_of_the_asset` varchar(255) NOT NULL,
+  `total_year_in_service` varchar(255) NOT NULL,
+  `technology` tinyint(1) NOT NULL,
+  `asset_status` tinyint(1) NOT NULL,
+  `asset_class` tinyint(1) NOT NULL,
+  `device_group` tinyint(1) NOT NULL,
+  `last_date_of_calibration` date NOT NULL,
+  `calibration_attachment` varchar(255) NOT NULL,
+  `frequency_of_calibration` varchar(255) NOT NULL,
+  `last_date_of_pms` date NOT NULL,
+  `pms_attachment` varchar(255) NOT NULL,
+  `frequency_of_pms` varchar(255) NOT NULL,
+  `qa_due_date` date NOT NULL,
+  `qa_attachment` varchar(255) NOT NULL,
+  `warranty_last_date` date NOT NULL,
+  `amc_yes_no` tinyint(1) NOT NULL,
   `amc_last_date` date NOT NULL,
-  `cmc` varchar(10) NOT NULL,
+  `cmc_yes_no` tinyint(1) NOT NULL,
   `cmc_last_date` date NOT NULL,
-  `service_providers_id` int(11) NOT NULL COMMENT 'PK of service_providers_list',
-  `files_attached` text NOT NULL,
-  `reallocate_id` int(11) NOT NULL COMMENT 'PK of asset_reallocate',
-  `qa_certificate` text NOT NULL,
-  `qa_certificate_last_date` date NOT NULL,
-  `asset_status` tinyint(1) NOT NULL DEFAULT 1
+  `asset_code` varchar(10) NOT NULL,
+  `sp_details` text NOT NULL,
+  `row_status` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `asset_details`
 --
 
-INSERT INTO `asset_details` (`asset_detail_id`, `name_of_asset`, `department_id`, `hospital_id`, `asset_code`, `manufacturer_id`, `model_name`, `supplier_id`, `asset_slno`, `equipment_name`, `installation_date`, `total_year_in_service`, `calibration_last_date`, `calibration_frequency`, `preventive_maintain_last_date`, `preventive_maintenance_frequency`, `warenty`, `amc`, `amc_last_date`, `cmc`, `cmc_last_date`, `service_providers_id`, `files_attached`, `reallocate_id`, `qa_certificate`, `qa_certificate_last_date`, `asset_status`) VALUES
-(1, 'X-Ray Machine', 3, 2, 'XRAY-001', 1, 'M-10001', 2, '10001', 'X-Ray', '2024-08-16', 5, '2024-08-16', 2, '2024-08-16', 2, '5 years', '12', '2024-08-16', '11', '2024-08-16', 1, '[\"66c0241f1941e.jpeg\"]', 0, '12', '2024-08-16', 0);
+INSERT INTO `asset_details` (`asset_id`, `facility_id`, `department_id`, `equipment_name`, `asset_make`, `asset_model`, `slerial_number`, `asset_specifiaction`, `date_of_installation`, `ins_certificate`, `asset_supplied_by`, `value_of_the_asset`, `total_year_in_service`, `technology`, `asset_status`, `asset_class`, `device_group`, `last_date_of_calibration`, `calibration_attachment`, `frequency_of_calibration`, `last_date_of_pms`, `pms_attachment`, `frequency_of_pms`, `qa_due_date`, `qa_attachment`, `warranty_last_date`, `amc_yes_no`, `amc_last_date`, `cmc_yes_no`, `cmc_last_date`, `asset_code`, `sp_details`, `row_status`) VALUES
+(1, 0, 3, 'X-Ray Table', '1', '2', '3', '4', '2024-09-10', '', '6', '7', '8', 1, 1, 1, 1, '2024-09-10', '', '1|1', '2024-09-10', '', '2|2', '2024-09-10', '', '2024-09-10', 1, '2024-09-10', 1, '2024-09-10', 'ABC_123456', 'ok', 1),
+(2, 5, 3, 'X-Ray Table', '1', '2', '3', '4', '2024-09-10', '', '6', '7', '8', 1, 1, 1, 1, '2024-09-10', '', '1|1', '2024-09-10', '', '2|1', '2024-09-10', '', '2024-09-10', 1, '2024-09-10', 1, '2024-09-10', 'ASD_456', 'ok no problem', 1),
+(3, 4, 3, 'ECG Machine', '1', '2', '3', '4', '2024-09-10', '', '6', '7', '8', 1, 1, 1, 2, '2024-09-10', '', '1|1', '2024-09-10', '', '1|1', '2024-09-10', '', '2024-09-10', 1, '2024-09-10', 1, '2024-09-10', '', 'ok', 1),
+(4, 4, 3, 'ECG Machine', '1', '2', '3', '4', '2024-09-10', '', '6', '7', '8', 1, 1, 1, 2, '2024-09-10', '', '1|1', '2024-09-10', '', '1|1', '2024-09-10', '', '2024-09-10', 1, '2024-09-10', 1, '2024-09-10', '', 'ok 1 2 3 4', 1),
+(5, 4, 3, 'X-Ray Table', '', '', '', '', '0000-00-00', '', '', '', '', 1, 2, 1, 1, '0000-00-00', '', '', '0000-00-00', '', '', '0000-00-00', '', '0000-00-00', 0, '0000-00-00', 0, '0000-00-00', '', '', 1),
+(6, 2, 3, 'X-Ray Table', '', '', '', '', '0000-00-00', '', '', '', '', 1, 1, 1, 3, '0000-00-00', '', '', '0000-00-00', '', '', '0000-00-00', '', '0000-00-00', 0, '0000-00-00', 0, '0000-00-00', '', '', 1),
+(7, 6, 3, 'X-Ray Table', '', '', '', '', '0000-00-00', '', '', '', '', 1, 3, 1, 4, '0000-00-00', '', '', '0000-00-00', '', '', '0000-00-00', '', '0000-00-00', 0, '0000-00-00', 0, '0000-00-00', '', '', 1),
+(8, 6, 3, 'X-Ray Table', '', '', '', '', '0000-00-00', '', '', '', '', 1, 4, 1, 3, '0000-00-00', '', '', '0000-00-00', '', '', '0000-00-00', '', '0000-00-00', 0, '0000-00-00', 0, '0000-00-00', '', '', 1),
+(9, 6, 3, 'X-Ray Table', '', '', '', '', '0000-00-00', '', '', '', '', 1, 2, 1, 1, '0000-00-00', '', '', '0000-00-00', '', '', '0000-00-00', '', '0000-00-00', 0, '0000-00-00', 0, '0000-00-00', '', '', 1),
+(10, 6, 3, 'X-Ray Table', '', '', '', '', '0000-00-00', '[\"66e10adb2c32b.png\",\"66e10adb3a2ea.jpg\",\"66e10adb559ed.jpg\"]', '', '', '', 1, 1, 1, 2, '0000-00-00', '', '', '0000-00-00', '', '', '0000-00-00', '', '0000-00-00', 0, '0000-00-00', 0, '0000-00-00', '', '', 1),
+(11, 5, 1, 'X-Ray Table', '', '', '', '', '0000-00-00', '[\"66e10bde6cef3.png\",\"66e10bde79eed.jpg\",\"66e10bde9269d.jpg\"]', '', '', '', 1, 4, 1, 2, '0000-00-00', '', '', '0000-00-00', '', '', '0000-00-00', '', '0000-00-00', 0, '0000-00-00', 0, '0000-00-00', '', '', 1),
+(12, 6, 3, 'X-Ray Table', '', '', '', '', '0000-00-00', '[\"66e10c9222d05.png\",\"66e10c9235555.jpg\",\"66e10c9244441.jpg\"]', '', '', '', 1, 1, 1, 1, '0000-00-00', '', '', '0000-00-00', '', '', '0000-00-00', '', '0000-00-00', 0, '0000-00-00', 0, '0000-00-00', '', '', 1),
+(13, 6, 3, 'X-Ray Table', '', '', '', '', '0000-00-00', '[\"66e1114778f30.png\",\"66e11147850ab.jpg\",\"66e1117ccd5a0.jpg\"]', '', '', '', 1, 1, 2, 2, '0000-00-00', '', '', '0000-00-00', '', '', '0000-00-00', '', '0000-00-00', 0, '0000-00-00', 0, '0000-00-00', '', '', 1),
+(14, 6, 3, 'X-Ray Table', '', '', '', '', '0000-00-00', '', '', '', '', 1, 1, 1, 2, '0000-00-00', '', '', '0000-00-00', '', '', '0000-00-00', '', '0000-00-00', 0, '0000-00-00', 0, '0000-00-00', '', '', 1),
+(15, 6, 3, 'X-Ray Table', '', '', '', '', '0000-00-00', '[\"66e113348e4b1.png\"]', '', '', '', 1, 5, 2, 4, '0000-00-00', '[\"66e1131cba397.jpg\"]', '', '0000-00-00', '', '', '0000-00-00', '', '0000-00-00', 0, '0000-00-00', 0, '0000-00-00', '', '', 1),
+(16, 6, 3, 'X-Ray Table', '', '', '', '', '0000-00-00', '[\"66e1149dc6212.jpg\"]', '', '', '', 2, 4, 1, 1, '0000-00-00', '[\"66e11491dd2fc.jpg\"]', '', '0000-00-00', '[\"66e11487ee971.jpg\"]', '', '0000-00-00', '', '0000-00-00', 0, '0000-00-00', 0, '0000-00-00', '', '', 1),
+(17, 6, 3, 'X-Ray Table', '', '', '', '', '0000-00-00', '[\"66e116b5b1381.png\"]', '', '', '', 1, 2, 1, 2, '0000-00-00', '[\"66e116add0287.jpg\"]', '', '0000-00-00', '[\"66e116a5cac98.jpg\"]', '', '0000-00-00', '[\"66e1169c3c090.png\"]', '0000-00-00', 0, '0000-00-00', 0, '0000-00-00', '', '', 1),
+(18, 6, 3, 'X-Ray Table', '', '', '', '', '0000-00-00', '[\"66e1171aac3e3.jpg\"]', '', '', '', 1, 2, 1, 2, '0000-00-00', '[\"66e11721d09d2.jpg\"]', '', '0000-00-00', '[\"66e11727f2582.jpg\"]', '', '0000-00-00', '[\"66e1172e0a997.jpg\"]', '0000-00-00', 0, '0000-00-00', 0, '0000-00-00', '', '', 1),
+(19, 6, 3, 'X-Ray', '', '', '', '', '0000-00-00', '[\"66e11ab42f9ba.png\",\"66e11ac07cd32.jpg\"]', '', '', '', 1, 2, 1, 2, '0000-00-00', '[\"66e11ad763797.jpg\",\"66e11ad784fd8.jpg\"]', '', '0000-00-00', '', '', '0000-00-00', '', '0000-00-00', 0, '0000-00-00', 0, '0000-00-00', '', '', 1);
 
 -- --------------------------------------------------------
 
@@ -141,6 +165,18 @@ CREATE TABLE `facility_master` (
   `nabl_accrediated` tinyint(1) NOT NULL,
   `user_id` int(11) NOT NULL COMMENT 'PK of user_details'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `facility_master`
+--
+
+INSERT INTO `facility_master` (`facility_id`, `hospital_id`, `department_id`, `facility_name`, `facility_type`, `facility_code`, `facility_address`, `nabh_accrediated`, `nabl_accrediated`, `user_id`) VALUES
+(1, 2, 3, 'Facility 5', 1, 'FAC_HOS_1', 'jkhn', 1, 1, 1),
+(2, 2, 3, 'Facility 4', 1, 'FAC_HOS_1', 'kjlkj', 1, 1, 1),
+(3, 2, 1, 'Facility 2', 2, 'FAC_HOS_2', 'Bagnan', 2, 2, 1),
+(4, 2, 1, 'Facility 3', 2, 'FAC_HOS_3', 'kolkata', 2, 2, 1),
+(5, 2, 1, 'Facility 1', 2, 'FAC_HOS_1', 'ok', 1, 1, 1),
+(6, 2, 3, 'New Facility', 1, 'N_FAC', 'Facility Address', 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -270,7 +306,7 @@ INSERT INTO `user_type` (`user_type_id`, `user_type_name`, `user_type_code`, `us
 -- Indexes for table `asset_details`
 --
 ALTER TABLE `asset_details`
-  ADD PRIMARY KEY (`asset_detail_id`);
+  ADD PRIMARY KEY (`asset_id`);
 
 --
 -- Indexes for table `asset_type_list`
@@ -340,7 +376,7 @@ ALTER TABLE `user_type`
 -- AUTO_INCREMENT for table `asset_details`
 --
 ALTER TABLE `asset_details`
-  MODIFY `asset_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `asset_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `asset_type_list`
@@ -364,7 +400,7 @@ ALTER TABLE `department_list`
 -- AUTO_INCREMENT for table `facility_master`
 --
 ALTER TABLE `facility_master`
-  MODIFY `facility_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `facility_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `hospital_list`
@@ -394,7 +430,7 @@ ALTER TABLE `supplier_list`
 -- AUTO_INCREMENT for table `user_details`
 --
 ALTER TABLE `user_details`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `user_type`

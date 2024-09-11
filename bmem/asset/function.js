@@ -115,12 +115,15 @@ function deleteTableData($author_id){
 function populateDataTable(){
     $('#example').dataTable().fnClearTable();
     $('#example').dataTable().fnDestroy();
+    $facility_id_sr = $('#facility_id_sr').val();
+    $facility_code = $('#facility_code').val();
+    $asset_code = $('#asset_code').val();
 
     $('#example').DataTable({ 
-        columnDefs: [{ width: 5, targets: 0 }, { width: 5, targets: 1 }, { width: 150, targets: 2 }, { width: 200, targets: 3 }, { width: 10, targets: 4 }, { width: 10, targets: 5 }],
+        columnDefs: [{ width: 5, targets: 0 }],
         responsive: true,
         serverMethod: 'GET',
-        ajax: {'url': 'asset/function.php?fn=getTableData' },
+        ajax: {'url': 'asset/function.php?fn=getTableData&facility_id='+$facility_id_sr+'&facility_code='+$facility_code+'&asset_code='+$asset_code },
         dom: 'Bfrtip',
         buttons: [
             {
@@ -149,7 +152,7 @@ function populateDataTable(){
                 titleAttr: 'Print'
             },
         ],
-        order: [[0, 'desc']],
+        order: [[0, 'asc']],
 
     });
 }//end fun 
@@ -194,13 +197,15 @@ function configureFacilityDropDown(){
 
             if($rows.length > 0){
                 $('#facility_id_dd').html('');
+                $('#facility_id_sr').html('');
                 $html = "<option value=''>Select</option>";
 
                 for($i = 0; $i < $rows.length; $i++){
                     $html += "<option value='"+$rows[$i].facility_id+"'>"+$rows[$i].facility_name+"</option>";                    
                 }//end for
                 
-                $('#facility_id_dd').html($html);
+                $('#facility_id_dd').html($html);                
+                $('#facility_id_sr').html($html);
             }//end if
         }        
     });//end ajax
@@ -381,11 +386,30 @@ function deleteProdImage($prod_iamge_name){
 }//end fun
 //End multiple pgoto upload
 
+//Search Function
+$('#submitFormSearch').on('click', function(){
+    $facility_id_sr = $('#facility_id_sr').val();
+    $facility_code = $('#facility_code').val();
+    $asset_code = $('#asset_code').val();
+
+    if($facility_id_sr == '' && $facility_code == '' && $asset_code == ''){
+        alert('Please select/enter any search parameter');
+    }else{
+        $('#partTwo').removeClass('d-none').show();
+        $('#partThree').addClass('d-none').show();
+        populateDataTable();
+    }
+})
+
+$('#clearFormSearch').on('click', function(){
+    $('#partTwo').addClass('d-none').hide();
+    $('#partThree').removeClass('d-none').show();
+    $('#facility_id_sr').val('').trigger('change');
+    $('#searchForm').trigger('reset');
+})
+
 $(document).ready(function () {
     configureFacilityDropDown();
     configureDepartmentDropDown();
     $('.js-example-basic-single').select2();
-    //configureCategoryDropDown(); 
-    //configureCourseDropDown(); 
-    //populateDataTable();
 });

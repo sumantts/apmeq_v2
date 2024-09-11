@@ -72,9 +72,27 @@
 	if($fn == 'getTableData'){
 		$return_array = array();
 		$status = true;
-		$mainData = array();
-		$email1 = '';
-		/*$sql = "SELECT author_details.author_id, author_details.for_the_year, author_details.category_id, author_details.author_name, author_details.email, author_details.registration_number, author_details.author_photo, author_details.author_status, category_list.category_name, login.user_level FROM author_details JOIN category_list ON author_details.category_id = category_list.category_id JOIN login ON author_details.author_id = login.author_id WHERE category_list.activity_status = 'active'";
+		$mainData = array(); 
+
+		$facility_id = $_GET['facility_id'];
+		$facility_code = $_GET['facility_code'];
+		$asset_code = $_GET['asset_code'];
+		$condition = "WHERE row_status = 1";
+
+		if($facility_id > 0){
+			$condition .= " AND facility_id = '" .$facility_id. "' ";			
+		}
+
+		/*if($facility_code != ''){
+			$condition .= " AND facility_code = '" .$facility_code. "' ";			
+		}*/
+
+		if($asset_code != ''){
+			$condition .= " AND asset_code = '" .$asset_code. "' ";			
+		}
+
+
+		$sql = "SELECT * FROM asset_details $condition";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -82,45 +100,45 @@
 			$slno = 1;
 
 			while($row = $result->fetch_array()){
-				$author_id = $row['author_id'];		
-				$category_name = $row['category_name'];		
-				$for_the_year = $row['for_the_year'];
-				$course_id = 0;//$row['course_id'];		
-				$course_name = '';//$row['course_name'];			
-				$author_name = $row['author_name'];		
-				$email = $row['email'];			
-				$registration_number = $row['registration_number'];	
-				$user_level = $row['user_level'];	
-
-				if($row['author_photo'] != ''){
-					$author_photo = $row['author_photo'];
-				}else{
-					$author_photo = '';
-				}	
-				$author_status = ucfirst($row['author_status']);
-
-				$profile_link = "../?p=my-bio&id=".base64_encode($author_id);
+				$asset_id = $row['asset_id'];		
+				$facility_id = $row['facility_id'];		
+				$department_id = $row['department_id']; 			
+				$equipment_name = $row['equipment_name'];		
+				$asset_make = $row['asset_make'];			
+				$asset_model = $row['asset_model'];	
+				$slerial_number = $row['slerial_number'];	  
+				$asset_specifiaction = $row['asset_specifiaction'];	
+				$date_of_installation = $row['date_of_installation'];	
+				$asset_supplied_by = $row['asset_supplied_by'];	
+				$value_of_the_asset = $row['value_of_the_asset'];	
+				$total_year_in_service = $row['total_year_in_service'];
+				$technology = $row['technology'];
+				$asset_status = $row['asset_status'];
+				$asset_class = $row['asset_class'];
 
 				$data[0] = $slno; 
-				$data[1] = $author_name;
-				$data[2] = $email;
-				$data[3] = $registration_number;
-				$data[4] = "<img src='".$author_photo."' id='saved_image' width='75' style='border-radius: 15px'>"; 
-				$data[5] = $category_name;
-				$data[6] = $forTheYearsArr[$for_the_year]->text;
-				$data[7] = $author_status;
-				if($user_level == 1){
-					$data[8] = "Restricted";
-				}else{
-					$data[8] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$author_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$author_id.")'></i></a>";
-				}
+				$data[1] = $facility_id;
+				$data[2] = $department_id;
+				$data[3] = $equipment_name;
+				$data[4] = $asset_make; 
+				$data[5] = $asset_model;
+				$data[6] = $slerial_number;
+				$data[7] = $asset_specifiaction;
+				$data[8] = $date_of_installation;
+				$data[9] = $asset_supplied_by;
+				$data[10] = $value_of_the_asset;
+				$data[11] = $total_year_in_service;
+				$data[12] = $technology;
+				$data[13] = $asset_status;
+				$data[14] = $asset_class;
+				$data[15] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$asset_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$asset_id.")'></i></a>";
 
 				array_push($mainData, $data);
 				$slno++;
 			}
 		} else {
 			$status = false;
-		}*/
+		}
 		//$mysqli->close();
 
 		$return_array['data'] = $mainData;

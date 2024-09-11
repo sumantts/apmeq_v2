@@ -1,17 +1,7 @@
 <?php 
 if(!$_SESSION["user_id"] || !$_SESSION["user_type_code"]){header('location:?p=signin');}
 include('common/head.php');  
-?>
-<script type="text/javascript">   
-
-</script>
-<style>
-    /*table td {
-        word-break: break-word;
-        vertical-align: top;
-        white-space: normal !important;
-    }*/
-</style>
+?> 
 
 <body class="">
 	<!-- [ Pre-loader ] start -->
@@ -61,55 +51,103 @@ include('common/head.php');
                     </div>
                     <div class="card-body">                        
 
-                        <form class="needs-validation" novalidate>
+                        <form method="POST" action="#" id="searchForm">
                             <div class="form-row">                               
                                 <div class="col-md-4 mb-3">
                                     <label for="author_name">Facility Name</label>
-                                    <input type="text" class="form-control" id="author_name" value="" required >
-                                    <div class="valid-feedback">
-                                        Looks good!
-                                    </div>                                    
-                                    <div class="invalid-feedback">
-                                        Please provide Facility Name.
-                                    </div>
+                                    <select class="form-control js-example-basic-single" name="facility_id_sr" id="facility_id_sr" required>
+                                        <option value="">Select</option> 
+                                    </select> 
                                 </div>  
 
                                 <div class="col-md-4 mb-3">
-                                    <label for="author_name">Facility Code</label>
-                                    <input type="text" class="form-control" id="author_name" value="" required >
-                                    <div class="valid-feedback">
-                                        Looks good!
-                                    </div>                                    
-                                    <div class="invalid-feedback">
-                                        Please provide Facility Code.
-                                    </div>
+                                    <label for="facility_code">Facility Code</label>
+                                    <input type="text" class="form-control" id="facility_code" value="" > 
                                 </div>   
 
                                 <div class="col-md-4 mb-3">
-                                    <label for="author_name">Asset code</label>
-                                    <input type="text" class="form-control" id="author_name" value="" required >
-                                    <div class="valid-feedback">
-                                        Looks good!
-                                    </div>                                    
-                                    <div class="invalid-feedback">
-                                        Please provide Asset code.
-                                    </div>
-                                </div> 
+                                    <label for="asset_code">Asset code</label>
+                                    <input type="text" class="form-control" id="asset_code" value="" > 
+                                </div>   
 
-                                <div class="col-md-4 mt-4">
-                                    <button class="btn  btn-primary" type="button" id="submitForm">
+                                <div class="col-md-2 mt-4">
+                                    <button class="btn  btn-primary" type="button" id="submitFormSearch">
                                         <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
                                         <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
                                         <span class="btn-text" id="submitForm_text">Search</span>
                                     </button>
+                                </div>  
+                                
+                                <div class="col-md-2 mt-4">
+                                    <button class="btn btn-dark" type="button" id="clearFormSearch">
+                                        <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
+                                        <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
+                                        <span class="btn-text" id="submitForm_text">Clear</span>
+                                    </button>
                                 </div> 
+
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
             <!-- [ sample-table ] start -->
-            <div class="col-sm-12">
+            <div class="col-sm-12 d-none" id="partTwo">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Filtered Table Data</h5>                        
+                    </div>
+                    <div class="card-body">                         
+                        <div class="table-responsive">
+                            <table id="example" class="table table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Sl.No.</th> 
+                                        <th>Facility name</th>
+                                        <th>Department</th>
+                                        <th>Equipment name</th>
+                                        <th>Make</th>
+                                        <th>Model</th>
+                                        <th>Slerial number</th>
+                                        <th>Specifiaction</th>
+                                        <th>Date of installation</th>
+                                        <th>Supplied by</th>
+                                        <th>Value of the asset</th>
+                                        <th>Total year in service</th>
+                                        <th>Technology</th>
+                                        <th>Asset status</th>
+                                        <th>Asset class</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Sl.No.</th> 
+                                        <th>Facility name</th>
+                                        <th>Department</th>
+                                        <th>Equipment name</th>
+                                        <th>Make</th>
+                                        <th>Model</th>
+                                        <th>Slerial number</th>
+                                        <th>Specifiaction</th>
+                                        <th>Date of installation</th>
+                                        <th>Supplied by</th>
+                                        <th>Value of the asset</th>
+                                        <th>Total year in service</th>
+                                        <th>Technology</th>
+                                        <th>Asset status</th>
+                                        <th>Asset class</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>                       
+
+                    </div>
+                </div>
+            </div>
+            <!-- [ sample-table ] start -->
+            <div class="col-sm-12" id="partThree">
                 <div class="card">
                     <div class="card-header">
                         <h5>Add/update Asset </h5> 
@@ -122,17 +160,7 @@ include('common/head.php');
                         <div class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;" id="orgFormAlert1">
 							<strong>Success!</strong> Your Data saved successfully.
 							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						</div>
-
-                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;" id="orgFormAlert">
-							<strong>Success!</strong> Your Data Deleted successfully.
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						</div>
-                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;" id="orgFormAlert1">
-							<strong>Success!</strong> Your Data saved successfully.
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						</div>
-                         
+						</div>                         
 
                         <form method="POST" action="#" id="myForm">  
                         <div class="form-row">                                  
