@@ -248,11 +248,11 @@ include('common/head.php');
                                 <div class="col-md-4 mb-3">
                                     <label for="last_date_of_calibration">Last date of calibration</label>
                                     <input type="date" class="form-control" id="last_date_of_calibration" value=""> 
-                                </div> 
+                                </div>
                                 
                                 <div class="col-md-4 mb-2 mt-4">
-                                    <input type="file" accept="image/*" class="custom-file-input" id="calibration_attachment" aria-describedby="calibration_attachment">
-                                    <label class="custom-file-label" for="calibration_attachment">Attachment...</label> 
+                                    <label for="ins_cert_attach">calibration Certificate</label><br>
+                                    <a href="javascript: void(0)" id="calib_cert_attach">Upload & View calibration Certificate</a> 
                                 </div>      
                                 
                                 <div class="col-md-4 mb-3">
@@ -284,8 +284,8 @@ include('common/head.php');
                                 </div> 
                                 
                                 <div class="col-md-4 mb-2 mt-4">
-                                    <input type="file" accept="image/*" class="custom-file-input" id="pms_attachment" aria-describedby="pms_attachment" >
-                                    <label class="custom-file-label" for="pms_attachment">Attachment...</label> 
+                                    <label for="pms_cert_attach">PMS Certificate</label><br>
+                                    <a href="javascript: void(0)" id="pms_cert_attach">Upload & View PMS Certificate</a> 
                                 </div>     
                                 
                                 <div class="col-md-4 mb-3">
@@ -317,9 +317,9 @@ include('common/head.php');
                                 </div> 
                                 
                                 <div class="col-md-4 mb-2 mt-4">
-                                    <input type="file" accept="image/*" class="custom-file-input" id="qa_attachment" aria-describedby="qa_attachment" >
-                                    <label class="custom-file-label" for="qa_attachment">Attachment...</label> 
-                                </div>   
+                                    <label for="qa_cert_attach">QA Certificate</label><br>
+                                    <a href="javascript: void(0)" id="qa_cert_attach">Upload & View QA Certificate</a> 
+                                </div>  
                                 
                                 <div class="col-md-4 mb-3">
                                     <label for="warranty_last_date">Warranty last date</label>
@@ -390,19 +390,20 @@ include('common/head.php');
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Installaion certificate attachment</h5>
+                            <h5 class="modal-title" id="exampleModalLongTitle">File Attachment</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         </div>
                         <div class="modal-body">
                             <form action="#" method="POST" id="myFormModal">
                                 <div class="form-row">                                    
-                                    <div class="col-md-3 mt-4">
+                                    <div class="col-md-3 mt-4 mr-2">
                                         <input type="file" id="multiupload" name="uploadFiledd[]" multiple accept=".jpg,.jpeg,.png" >
                                         <span id="uploadMessage"></span>
                                     </div> 
 
                                     <div class="col-md-1 mt-4"> 
                                         <button type="button" id="startUpload" class="btn btn-primary btn-sm">Upload</button>
+                                        <input type="hidden" name="field_name" id="field_name" value="">
                                     </div> 
                                 </div>
                                 <hr>

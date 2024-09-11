@@ -37,13 +37,10 @@ $('#myForm').on('submit', function(){
     $asset_class = $('#asset_class').val(); 
     $device_group = $('#device_group').val(); 
     $last_date_of_calibration = $('#last_date_of_calibration').val(); 
-    $calibration_attachment = $('#calibration_attachment').val(); 
     $frequency_of_calibration = $('#frequency_of_calibration').val(); 
-    $last_date_of_pms = $('#last_date_of_pms').val(); 
-    $pms_attachment = $('#pms_attachment').val(); 
+    $last_date_of_pms = $('#last_date_of_pms').val();  
     $frequency_of_pms = $('#frequency_of_pms').val(); 
     $qa_due_date = $('#qa_due_date').val(); 
-    $qa_attachment = $('#qa_attachment').val(); 
     $warranty_last_date = $('#warranty_last_date').val(); 
     $amc_yes_no = $('#amc_yes_no').val(); 
     $amc_last_date = $('#amc_last_date').val(); 
@@ -55,7 +52,7 @@ $('#myForm').on('submit', function(){
         type: "POST",
         url: "asset/function.php",
         dataType: "json",
-        data: { fn: "saveFormData", asset_id: $asset_id, facility_id: $facility_id, department_id: $department_id, equipment_name: $equipment_name, asset_make: $asset_make, asset_model: $asset_model, slerial_number: $slerial_number, asset_specifiaction: $asset_specifiaction, date_of_installation: $date_of_installation, asset_supplied_by: $asset_supplied_by, value_of_the_asset: $value_of_the_asset, total_year_in_service: $total_year_in_service, technology: $technology, asset_status: $asset_status, asset_class: $asset_class, device_group: $device_group, last_date_of_calibration: $last_date_of_calibration, calibration_attachment: $calibration_attachment, frequency_of_calibration: $frequency_of_calibration, last_date_of_pms: $last_date_of_pms, pms_attachment: $pms_attachment, frequency_of_pms: $frequency_of_pms, qa_due_date: $qa_due_date, qa_attachment: $qa_attachment, warranty_last_date: $warranty_last_date, amc_yes_no: $amc_yes_no, amc_last_date: $amc_last_date, cmc_yes_no: $cmc_yes_no, cmc_last_date: $cmc_last_date, sp_details: $sp_details }
+        data: { fn: "saveFormData", asset_id: $asset_id, facility_id: $facility_id, department_id: $department_id, equipment_name: $equipment_name, asset_make: $asset_make, asset_model: $asset_model, slerial_number: $slerial_number, asset_specifiaction: $asset_specifiaction, date_of_installation: $date_of_installation, asset_supplied_by: $asset_supplied_by, value_of_the_asset: $value_of_the_asset, total_year_in_service: $total_year_in_service, technology: $technology, asset_status: $asset_status, asset_class: $asset_class, device_group: $device_group, last_date_of_calibration: $last_date_of_calibration, frequency_of_calibration: $frequency_of_calibration, last_date_of_pms: $last_date_of_pms, frequency_of_pms: $frequency_of_pms, qa_due_date: $qa_due_date, warranty_last_date: $warranty_last_date, amc_yes_no: $amc_yes_no, amc_last_date: $amc_last_date, cmc_yes_no: $cmc_yes_no, cmc_last_date: $cmc_last_date, sp_details: $sp_details }
     })
     .done(function( res ) {
         if(res.status == true){
@@ -227,6 +224,49 @@ $('#ins_cert_attach').on('click', function(){
     $asset_id = $('#asset_id').val();
     if($asset_id > 0){
         $('#exampleModalLong').modal('show');
+        $('#product_gallery').html('');
+        $('#myFormModal').trigger('reset');
+        $('#field_name').val('ins_certificate');
+        $('#uploadMessage').html('');
+    }else{
+        alert('Please add an Asset first');
+    }
+})
+
+$('#calib_cert_attach').on('click', function(){
+    $asset_id = $('#asset_id').val();
+    if($asset_id > 0){
+        $('#exampleModalLong').modal('show');
+        $('#product_gallery').html('');
+        $('#myFormModal').trigger('reset');
+        $('#field_name').val('calibration_attachment');
+        $('#uploadMessage').html('');
+    }else{
+        alert('Please add an Asset first');
+    }
+})
+
+$('#pms_cert_attach').on('click', function(){
+    $asset_id = $('#asset_id').val();
+    if($asset_id > 0){
+        $('#exampleModalLong').modal('show');
+        $('#product_gallery').html('');
+        $('#myFormModal').trigger('reset');
+        $('#field_name').val('pms_attachment');
+        $('#uploadMessage').html('');
+    }else{
+        alert('Please add an Asset first');
+    }
+})
+
+$('#qa_cert_attach').on('click', function(){
+    $asset_id = $('#asset_id').val();
+    if($asset_id > 0){
+        $('#exampleModalLong').modal('show');
+        $('#product_gallery').html('');
+        $('#myFormModal').trigger('reset');
+        $('#field_name').val('qa_attachment');
+        $('#uploadMessage').html('');
     }else{
         alert('Please add an Asset first');
     }
@@ -237,12 +277,14 @@ $('#ins_cert_attach').on('click', function(){
 //Multiple Photo Upload
 function uploadajax(ttl,cl){
     $asset_id = $('#asset_id').val();
+    $field_name = $('#field_name').val();
 
     var fileList = $('#multiupload').prop("files"); 
     var form_data =  "";
     form_data = new FormData();
     form_data.append("upload_image", fileList[cl]);
     form_data.append("asset_id", $asset_id);
+    form_data.append("field_name", $field_name);
 
     var request = $.ajax({
         url: "asset/upload.php",
@@ -263,7 +305,7 @@ function uploadajax(ttl,cl){
                 } else {
                     console.log('Done');
                     $('#uploadMessage').html($upload_count + ' Files Uploaded');
-                    getAllProductImages($asset_id);
+                    getAllProductImages($asset_id, $field_name);
                 }
             }
         },
@@ -291,12 +333,12 @@ $('#startUpload').on('click', function(){
     }//end if
 }); 
 
-function getAllProductImages($asset_id){
+function getAllProductImages($asset_id, $field_name){
     $('#product_gallery').html('');
     $.ajax({
         method: "POST",
         url: "asset/function.php",
-        data: { fn: "getAllProductImages", asset_id: $asset_id }
+        data: { fn: "getAllProductImages", asset_id: $asset_id, field_name: $field_name }
     })
     .done(function( res ) {
         $res1 = JSON.parse(res);
@@ -322,16 +364,17 @@ function deleteProdImage($prod_iamge_name){
     console.log('prod_iamge_name: ' + $prod_iamge_name);
     if (confirm('Are you sure to delete the Image?')) {
         $asset_id = $('#asset_id').val();
+        $field_name = $('#field_name').val();
         $.ajax({
             method: "POST",
             url: "asset/function.php",
-            data: { fn: "deleteProdImage", asset_id: $asset_id, prod_iamge_name: $prod_iamge_name }
+            data: { fn: "deleteProdImage", asset_id: $asset_id, prod_iamge_name: $prod_iamge_name, field_name: $field_name }
         })
         .done(function( res ) {
             //console.log(res);
             $res1 = JSON.parse(res);
             if($res1.status == true){
-                getAllProductImages($asset_id);
+                getAllProductImages($asset_id, $field_name);
             }
         });//end ajax
     }		

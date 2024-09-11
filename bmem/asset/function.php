@@ -30,14 +30,11 @@
 		$asset_status = $_POST['asset_status']; 
 		$asset_class = $_POST['asset_class']; 
 		$device_group = $_POST['device_group']; 
-		$last_date_of_calibration = $_POST['last_date_of_calibration']; 
-		$calibration_attachment = $_POST['calibration_attachment']; 
+		$last_date_of_calibration = $_POST['last_date_of_calibration'];  
 		$frequency_of_calibration = $_POST['frequency_of_calibration']; 
-		$last_date_of_pms = $_POST['last_date_of_pms']; 
-		$pms_attachment = $_POST['pms_attachment']; 
+		$last_date_of_pms = $_POST['last_date_of_pms'];  
 		$frequency_of_pms = $_POST['frequency_of_pms']; 
-		$qa_due_date = $_POST['qa_due_date']; 
-		$qa_attachment = $_POST['qa_attachment']; 
+		$qa_due_date = $_POST['qa_due_date'];
 		$warranty_last_date = $_POST['warranty_last_date']; 
 		$amc_yes_no = $_POST['amc_yes_no']; 
 		$amc_last_date = $_POST['amc_last_date']; 
@@ -48,11 +45,11 @@
 		try {
 			if($asset_id > 0){
 				$status = true;
-				$sql = "UPDATE asset_details SET facility_id = '" .$facility_id. "', department_id = '" .$department_id. "', equipment_name = '" .$equipment_name. "', asset_make = '" .$asset_make. "', asset_model = '" .$asset_model. "', slerial_number = '" .$slerial_number. "', asset_specifiaction = '" .$asset_specifiaction. "', date_of_installation = '" .$date_of_installation. "', asset_supplied_by = '" .$asset_supplied_by. "', value_of_the_asset = '" .$value_of_the_asset. "', total_year_in_service = '" .$total_year_in_service. "', technology = '" .$technology. "', asset_status = '" .$asset_status. "', asset_class = '" .$asset_class. "', device_group = '" .$device_group. "', last_date_of_calibration = '" .$last_date_of_calibration. "', frequency_of_calibration = '" .$frequency_of_calibration. "', last_date_of_pms = '" .$last_date_of_pms. "', pms_attachment = '" .$pms_attachment. "', frequency_of_pms = '" .$frequency_of_pms. "', qa_due_date = '" .$qa_due_date. "', warranty_last_date = '" .$warranty_last_date. "', amc_yes_no = '" .$amc_yes_no. "', amc_last_date = '" .$amc_last_date. "', cmc_yes_no = '" .$cmc_yes_no. "', cmc_last_date = '" .$cmc_last_date. "', sp_details = '" .$sp_details."' WHERE asset_id = '" .$asset_id. "' ";
+				$sql = "UPDATE asset_details SET facility_id = '" .$facility_id. "', department_id = '" .$department_id. "', equipment_name = '" .$equipment_name. "', asset_make = '" .$asset_make. "', asset_model = '" .$asset_model. "', slerial_number = '" .$slerial_number. "', asset_specifiaction = '" .$asset_specifiaction. "', date_of_installation = '" .$date_of_installation. "', asset_supplied_by = '" .$asset_supplied_by. "', value_of_the_asset = '" .$value_of_the_asset. "', total_year_in_service = '" .$total_year_in_service. "', technology = '" .$technology. "', asset_status = '" .$asset_status. "', asset_class = '" .$asset_class. "', device_group = '" .$device_group. "', last_date_of_calibration = '" .$last_date_of_calibration. "', frequency_of_calibration = '" .$frequency_of_calibration. "', last_date_of_pms = '" .$last_date_of_pms. "', frequency_of_pms = '" .$frequency_of_pms. "', qa_due_date = '" .$qa_due_date. "', warranty_last_date = '" .$warranty_last_date. "', amc_yes_no = '" .$amc_yes_no. "', amc_last_date = '" .$amc_last_date. "', cmc_yes_no = '" .$cmc_yes_no. "', cmc_last_date = '" .$cmc_last_date. "', sp_details = '" .$sp_details."' WHERE asset_id = '" .$asset_id. "' ";
 				$result = $mysqli->query($sql); 
 				$asset_id_temp = $asset_id;
 			}else{ 
-				$sql = "INSERT INTO asset_details (facility_id, department_id, equipment_name, asset_make, asset_model, slerial_number, asset_specifiaction, date_of_installation, asset_supplied_by, value_of_the_asset, total_year_in_service, technology, asset_status, asset_class, device_group, last_date_of_calibration, calibration_attachment, frequency_of_calibration, last_date_of_pms, pms_attachment, frequency_of_pms, qa_due_date, qa_attachment, warranty_last_date, amc_yes_no, amc_last_date, cmc_yes_no, cmc_last_date, sp_details) VALUES ('" .$facility_id. "', '" .$department_id. "', '" .$equipment_name. "', '" .$asset_make. "', '" .$asset_model. "', '" .$slerial_number. "', '" .$asset_specifiaction. "', '" .$date_of_installation. "', '" .$asset_supplied_by. "', '" .$value_of_the_asset. "', '" .$total_year_in_service. "', '" .$technology. "', '" .$asset_status. "', '" .$asset_class. "', '" .$device_group. "', '" .$last_date_of_calibration. "', '" .$calibration_attachment. "', '" .$frequency_of_calibration. "', '" .$last_date_of_pms. "', '" .$pms_attachment. "', '" .$frequency_of_pms. "', '" .$qa_due_date. "', '" .$qa_attachment. "', '" .$warranty_last_date. "', '" .$amc_yes_no. "', '" .$amc_last_date. "', '" .$cmc_yes_no. "', '" .$cmc_last_date. "', '" .$sp_details."')";
+				$sql = "INSERT INTO asset_details (facility_id, department_id, equipment_name, asset_make, asset_model, slerial_number, asset_specifiaction, date_of_installation, asset_supplied_by, value_of_the_asset, total_year_in_service, technology, asset_status, asset_class, device_group, last_date_of_calibration, frequency_of_calibration, last_date_of_pms, frequency_of_pms, qa_due_date, warranty_last_date, amc_yes_no, amc_last_date, cmc_yes_no, cmc_last_date, sp_details) VALUES ('" .$facility_id. "', '" .$department_id. "', '" .$equipment_name. "', '" .$asset_make. "', '" .$asset_model. "', '" .$slerial_number. "', '" .$asset_specifiaction. "', '" .$date_of_installation. "', '" .$asset_supplied_by. "', '" .$value_of_the_asset. "', '" .$total_year_in_service. "', '" .$technology. "', '" .$asset_status. "', '" .$asset_class. "', '" .$device_group. "', '" .$last_date_of_calibration. "', '" .$frequency_of_calibration. "', '" .$last_date_of_pms. "', '" .$frequency_of_pms. "', '" .$qa_due_date. "', '" .$warranty_last_date. "', '" .$amc_yes_no. "', '" .$amc_last_date. "', '" .$cmc_yes_no. "', '" .$cmc_last_date. "', '" .$sp_details."')";
 				$result = $mysqli->query($sql);
 				$asset_id_temp = $mysqli->insert_id;
 				if($asset_id_temp > 0){
@@ -268,14 +265,15 @@
 		$status = true;
 		$all_images = array();
 		$asset_id = $_POST["asset_id"];
+		$field_name = $_POST["field_name"];
 
-		$sql = "SELECT ins_certificate FROM asset_details WHERE asset_id = '".$asset_id."'";
+		$sql = "SELECT $field_name FROM asset_details WHERE asset_id = '".$asset_id."'";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
 			$slno = 1;
 			while($row = $result->fetch_array()){
-				$all_images_en = $row['ins_certificate']; 
+				$all_images_en = $row[$field_name]; 
 				if($all_images_en != ''){
 					$status = true;
 					$all_images = json_decode($all_images_en);
@@ -298,16 +296,17 @@
 		$all_images_temp = array();
 		$status = true;
 		$asset_id = $_POST["asset_id"];
+		$field_name = $_POST["field_name"];
 		$prod_iamge_name = $_POST["prod_iamge_name"];
 
 		//Unlink product image
-		$sql = "SELECT ins_certificate FROM asset_details WHERE asset_id = '".$asset_id."'";
+		$sql = "SELECT $field_name FROM asset_details WHERE asset_id = '".$asset_id."'";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
 			$slno = 1;
 			while($row = $result->fetch_array()){
-				$all_images_en = $row['ins_certificate']; 
+				$all_images_en = $row[$field_name]; 
 				if($all_images_en != ''){
 					$status = true;
 					$all_images = json_decode($all_images_en);
@@ -327,7 +326,7 @@
 			}//end while
 		} //end if
 
-		$sql = "UPDATE asset_details SET ins_certificate = '" .$all_images_en. "' WHERE asset_id = '".$asset_id."'";
+		$sql = "UPDATE asset_details SET $field_name = '" .$all_images_en. "' WHERE asset_id = '".$asset_id."'";
 		$mysqli->query($sql);
 
 		$return_result['status'] = $status;
