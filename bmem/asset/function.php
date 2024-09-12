@@ -39,17 +39,18 @@
 		$amc_yes_no = $_POST['amc_yes_no']; 
 		$amc_last_date = $_POST['amc_last_date']; 
 		$cmc_yes_no = $_POST['cmc_yes_no']; 
-		$cmc_last_date = $_POST['cmc_last_date']; 
+		$cmc_last_date = $_POST['cmc_last_date'];  
+		$asset_code = $_POST['asset_code'];
 		$sp_details = $_POST['sp_details'];
 		
 		try {
 			if($asset_id > 0){
 				$status = true;
-				$sql = "UPDATE asset_details SET facility_id = '" .$facility_id. "', department_id = '" .$department_id. "', equipment_name = '" .$equipment_name. "', asset_make = '" .$asset_make. "', asset_model = '" .$asset_model. "', slerial_number = '" .$slerial_number. "', asset_specifiaction = '" .$asset_specifiaction. "', date_of_installation = '" .$date_of_installation. "', asset_supplied_by = '" .$asset_supplied_by. "', value_of_the_asset = '" .$value_of_the_asset. "', total_year_in_service = '" .$total_year_in_service. "', technology = '" .$technology. "', asset_status = '" .$asset_status. "', asset_class = '" .$asset_class. "', device_group = '" .$device_group. "', last_date_of_calibration = '" .$last_date_of_calibration. "', frequency_of_calibration = '" .$frequency_of_calibration. "', last_date_of_pms = '" .$last_date_of_pms. "', frequency_of_pms = '" .$frequency_of_pms. "', qa_due_date = '" .$qa_due_date. "', warranty_last_date = '" .$warranty_last_date. "', amc_yes_no = '" .$amc_yes_no. "', amc_last_date = '" .$amc_last_date. "', cmc_yes_no = '" .$cmc_yes_no. "', cmc_last_date = '" .$cmc_last_date. "', sp_details = '" .$sp_details."' WHERE asset_id = '" .$asset_id. "' ";
+				$sql = "UPDATE asset_details SET facility_id = '" .$facility_id. "', department_id = '" .$department_id. "', equipment_name = '" .$equipment_name. "', asset_make = '" .$asset_make. "', asset_model = '" .$asset_model. "', slerial_number = '" .$slerial_number. "', asset_specifiaction = '" .$asset_specifiaction. "', date_of_installation = '" .$date_of_installation. "', asset_supplied_by = '" .$asset_supplied_by. "', value_of_the_asset = '" .$value_of_the_asset. "', total_year_in_service = '" .$total_year_in_service. "', technology = '" .$technology. "', asset_status = '" .$asset_status. "', asset_class = '" .$asset_class. "', device_group = '" .$device_group. "', last_date_of_calibration = '" .$last_date_of_calibration. "', frequency_of_calibration = '" .$frequency_of_calibration. "', last_date_of_pms = '" .$last_date_of_pms. "', frequency_of_pms = '" .$frequency_of_pms. "', qa_due_date = '" .$qa_due_date. "', warranty_last_date = '" .$warranty_last_date. "', amc_yes_no = '" .$amc_yes_no. "', amc_last_date = '" .$amc_last_date. "', cmc_yes_no = '" .$cmc_yes_no. "', cmc_last_date = '" .$cmc_last_date. "', asset_code = '" .$asset_code."', sp_details = '" .$sp_details."' WHERE asset_id = '" .$asset_id. "' ";
 				$result = $mysqli->query($sql); 
 				$asset_id_temp = $asset_id;
 			}else{ 
-				$sql = "INSERT INTO asset_details (facility_id, department_id, equipment_name, asset_make, asset_model, slerial_number, asset_specifiaction, date_of_installation, asset_supplied_by, value_of_the_asset, total_year_in_service, technology, asset_status, asset_class, device_group, last_date_of_calibration, frequency_of_calibration, last_date_of_pms, frequency_of_pms, qa_due_date, warranty_last_date, amc_yes_no, amc_last_date, cmc_yes_no, cmc_last_date, sp_details) VALUES ('" .$facility_id. "', '" .$department_id. "', '" .$equipment_name. "', '" .$asset_make. "', '" .$asset_model. "', '" .$slerial_number. "', '" .$asset_specifiaction. "', '" .$date_of_installation. "', '" .$asset_supplied_by. "', '" .$value_of_the_asset. "', '" .$total_year_in_service. "', '" .$technology. "', '" .$asset_status. "', '" .$asset_class. "', '" .$device_group. "', '" .$last_date_of_calibration. "', '" .$frequency_of_calibration. "', '" .$last_date_of_pms. "', '" .$frequency_of_pms. "', '" .$qa_due_date. "', '" .$warranty_last_date. "', '" .$amc_yes_no. "', '" .$amc_last_date. "', '" .$cmc_yes_no. "', '" .$cmc_last_date. "', '" .$sp_details."')";
+				$sql = "INSERT INTO asset_details (facility_id, department_id, equipment_name, asset_make, asset_model, slerial_number, asset_specifiaction, date_of_installation, asset_supplied_by, value_of_the_asset, total_year_in_service, technology, asset_status, asset_class, device_group, last_date_of_calibration, frequency_of_calibration, last_date_of_pms, frequency_of_pms, qa_due_date, warranty_last_date, amc_yes_no, amc_last_date, cmc_yes_no, cmc_last_date, asset_code, sp_details) VALUES ('" .$facility_id. "', '" .$department_id. "', '" .$equipment_name. "', '" .$asset_make. "', '" .$asset_model. "', '" .$slerial_number. "', '" .$asset_specifiaction. "', '" .$date_of_installation. "', '" .$asset_supplied_by. "', '" .$value_of_the_asset. "', '" .$total_year_in_service. "', '" .$technology. "', '" .$asset_status. "', '" .$asset_class. "', '" .$device_group. "', '" .$last_date_of_calibration. "', '" .$frequency_of_calibration. "', '" .$last_date_of_pms. "', '" .$frequency_of_pms. "', '" .$qa_due_date. "', '" .$warranty_last_date. "', '" .$amc_yes_no. "', '" .$amc_last_date. "', '" .$cmc_yes_no. "', '" .$cmc_last_date. "', '" .$asset_code."', '" .$sp_details."')";
 				$result = $mysqli->query($sql);
 				$asset_id_temp = $mysqli->insert_id;
 				if($asset_id_temp > 0){
@@ -76,7 +77,7 @@
 
 		$facility_id = $_GET['facility_id'];
 		$facility_code = $_GET['facility_code'];
-		$asset_code = $_GET['asset_code'];
+		$asset_code = $_GET['asset_code_sr'];
 		$condition = "WHERE row_status = 1";
 
 		if($facility_id > 0){
@@ -191,6 +192,7 @@
 			$amc_last_date = $row['amc_last_date']; 
 			$cmc_yes_no = $row['cmc_yes_no']; 
 			$cmc_last_date = $row['cmc_last_date']; 
+			$asset_code = $row['asset_code'];		
 			$sp_details = $row['sp_details'];		
 			
 		} else {
@@ -226,7 +228,8 @@
 		$return_array['amc_yes_no'] = $amc_yes_no; 
 		$return_array['amc_last_date'] = $amc_last_date; 
 		$return_array['cmc_yes_no'] = $cmc_yes_no; 
-		$return_array['cmc_last_date'] = $cmc_last_date; 
+		$return_array['cmc_last_date'] = $cmc_last_date;  
+		$return_array['asset_code'] = $asset_code;
 		$return_array['sp_details'] = $sp_details;
 		$return_array['status'] = $status;
     	echo json_encode($return_array);

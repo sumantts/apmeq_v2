@@ -46,13 +46,14 @@ $('#myForm').on('submit', function(){
     $amc_last_date = $('#amc_last_date').val(); 
     $cmc_yes_no = $('#cmc_yes_no').val(); 
     $cmc_last_date = $('#cmc_last_date').val(); 
+    $asset_code = $('#asset_code').val();
     $sp_details = $('#sp_details').val();
 
     $.ajax({
         type: "POST",
         url: "asset/function.php",
         dataType: "json",
-        data: { fn: "saveFormData", asset_id: $asset_id, facility_id: $facility_id, department_id: $department_id, equipment_name: $equipment_name, asset_make: $asset_make, asset_model: $asset_model, slerial_number: $slerial_number, asset_specifiaction: $asset_specifiaction, date_of_installation: $date_of_installation, asset_supplied_by: $asset_supplied_by, value_of_the_asset: $value_of_the_asset, total_year_in_service: $total_year_in_service, technology: $technology, asset_status: $asset_status, asset_class: $asset_class, device_group: $device_group, last_date_of_calibration: $last_date_of_calibration, frequency_of_calibration: $frequency_of_calibration, last_date_of_pms: $last_date_of_pms, frequency_of_pms: $frequency_of_pms, qa_due_date: $qa_due_date, warranty_last_date: $warranty_last_date, amc_yes_no: $amc_yes_no, amc_last_date: $amc_last_date, cmc_yes_no: $cmc_yes_no, cmc_last_date: $cmc_last_date, sp_details: $sp_details }
+        data: { fn: "saveFormData", asset_id: $asset_id, facility_id: $facility_id, department_id: $department_id, equipment_name: $equipment_name, asset_make: $asset_make, asset_model: $asset_model, slerial_number: $slerial_number, asset_specifiaction: $asset_specifiaction, date_of_installation: $date_of_installation, asset_supplied_by: $asset_supplied_by, value_of_the_asset: $value_of_the_asset, total_year_in_service: $total_year_in_service, technology: $technology, asset_status: $asset_status, asset_class: $asset_class, device_group: $device_group, last_date_of_calibration: $last_date_of_calibration, frequency_of_calibration: $frequency_of_calibration, last_date_of_pms: $last_date_of_pms, frequency_of_pms: $frequency_of_pms, qa_due_date: $qa_due_date, warranty_last_date: $warranty_last_date, amc_yes_no: $amc_yes_no, amc_last_date: $amc_last_date, cmc_yes_no: $cmc_yes_no, cmc_last_date: $cmc_last_date, asset_code: $asset_code, sp_details: $sp_details }
     })
     .done(function( res ) {
         if(res.status == true){
@@ -107,6 +108,7 @@ function editTableData($asset_id){
 			$('#amc_last_date').val($res1.amc_last_date); 
 			$('#cmc_yes_no').val($res1.cmc_yes_no).trigger('change'); 
 			$('#cmc_last_date').val($res1.cmc_last_date); 
+			$('#asset_code').val($res1.asset_code);	 
 			$('#sp_details').val($res1.sp_details);	
 
             
@@ -141,13 +143,13 @@ function populateDataTable(){
     $('#example').dataTable().fnDestroy();
     $facility_id_sr = $('#facility_id_sr').val();
     $facility_code = $('#facility_code').val();
-    $asset_code = $('#asset_code').val();
+    $asset_code_sr = $('#asset_code_sr').val();
 
     $('#example').DataTable({ 
         columnDefs: [{ width: 5, targets: 0 }],
         responsive: true,
         serverMethod: 'GET',
-        ajax: {'url': 'asset/function.php?fn=getTableData&facility_id='+$facility_id_sr+'&facility_code='+$facility_code+'&asset_code='+$asset_code },
+        ajax: {'url': 'asset/function.php?fn=getTableData&facility_id='+$facility_id_sr+'&facility_code='+$facility_code+'&asset_code_sr='+$asset_code_sr },
         dom: 'Bfrtip',
         buttons: [
             {
@@ -426,9 +428,9 @@ function deleteProdImage($prod_iamge_name){
 $('#submitFormSearch').on('click', function(){
     $facility_id_sr = $('#facility_id_sr').val();
     $facility_code = $('#facility_code').val();
-    $asset_code = $('#asset_code').val();
+    $asset_code_sr = $('#asset_code_sr').val();
 
-    if($facility_id_sr == '' && $facility_code == '' && $asset_code == ''){
+    if($facility_id_sr == '' && $facility_code == '' && $asset_code_sr == ''){
         alert('Please select/enter any search parameter');
     }else{
         $('#partTwo').removeClass('d-none').show();

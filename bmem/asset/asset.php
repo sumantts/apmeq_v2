@@ -66,11 +66,11 @@ include('common/head.php');
                                 </div>   
 
                                 <div class="col-md-4 mb-3">
-                                    <label for="asset_code">Asset code</label>
-                                    <input type="text" class="form-control" id="asset_code" value="" > 
+                                    <label for="asset_code_sr">Asset code</label>
+                                    <input type="text" class="form-control" id="asset_code_sr" value="" > 
                                 </div>   
 
-                                <div class="col-md-2 mt-4">
+                                <div class="col-md-1 mt-4 mr-3">
                                     <button class="btn  btn-primary" type="button" id="submitFormSearch">
                                         <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
                                         <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
@@ -78,7 +78,7 @@ include('common/head.php');
                                     </button>
                                 </div>  
                                 
-                                <div class="col-md-2 mt-4">
+                                <div class="col-md-2 mt-4 ">
                                     <button class="btn btn-dark" type="button" id="clearFormSearch">
                                         <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
                                         <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
@@ -380,29 +380,33 @@ include('common/head.php');
                                 <div class="col-md-4 mb-3">
                                     <label for="cmc_last_date">Last Date of CMC</label>
                                     <input type="date" class="form-control" id="cmc_last_date" value=""> 
-                                </div>  
+                                </div>   
+                                
+                                <div class="col-md-4 mb-3">
+                                    <label for="asset_code">Asset Code</label>
+                                    <input type="text" class="form-control" id="asset_code" value=""> 
+                                </div>
                                 
                                 <div class="col-md-12 mb-3">
                                     <label for="sp_details">Service Provider Details(Contact Number, Email Id) (in Warranty/AMC/CMC)</label> 
                                     <textarea class="form-control" id="sp_details" value="" ></textarea> 
-                                </div> 
+                                </div>  
                             </div>
 
-                            <div class="form-row">                                 
-                                <div class="col-md-2 mt-4">
-                                    <button class="btn btn-dark" type="button" id="clearForm">
-                                        <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
-                                        <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
-                                        <span class="btn-text" id="submitForm_text">Cancel</span>
-                                    </button>
-                                </div>     
-
-                                <div class="col-md-4 mt-4">
+                            <div class="form-row"> 
+                                <div class="col-md-1 mt-4">
                                     <input type="hidden" name="asset_id" id="asset_id" value="">
                                     <button class="btn  btn-primary" type="submit" id="submitForm">
                                         <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
                                         <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
                                         <span class="btn-text" id="submitForm_text">Save</span>
+                                    </button>
+                                </div>                                  
+                                <div class="col-md-2 mt-4">
+                                    <button class="btn btn-dark" type="button" id="clearForm">
+                                        <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
+                                        <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
+                                        <span class="btn-text" id="submitForm_text">Cancel</span>
                                     </button>
                                 </div> 
                             </div>
