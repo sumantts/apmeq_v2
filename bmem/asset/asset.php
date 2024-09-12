@@ -114,9 +114,6 @@ include('common/head.php');
                                         <th>Supplied by</th>
                                         <th>Value of the asset</th>
                                         <th>Total year in service</th>
-                                        <th>Technology</th>
-                                        <th>Asset status</th>
-                                        <th>Asset class</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -134,9 +131,6 @@ include('common/head.php');
                                         <th>Supplied by</th>
                                         <th>Value of the asset</th>
                                         <th>Total year in service</th>
-                                        <th>Technology</th>
-                                        <th>Asset status</th>
-                                        <th>Asset class</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>

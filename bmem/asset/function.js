@@ -119,12 +119,12 @@ function editTableData($asset_id){
 }//end func
 
 //Delete function	
-function deleteTableData($author_id){
+function deleteTableData($asset_id){
     if (confirm('Are you sure to delete the Data?')) {
         $.ajax({
             method: "POST",
             url: "asset/function.php",
-            data: { fn: "deleteTableData", author_id: $author_id }
+            data: { fn: "deleteTableData", asset_id: $asset_id }
         })
         .done(function( res ) {
             //console.log(res);

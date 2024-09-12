@@ -81,7 +81,7 @@
 		$condition = "WHERE row_status = 1";
 
 		if($facility_id > 0){
-			$condition .= " AND facility_id = '" .$facility_id. "' ";			
+			$condition .= " AND asset_details.facility_id = '" .$facility_id. "' ";			
 		}
 
 		/*if($facility_code != ''){
@@ -89,11 +89,11 @@
 		}*/
 
 		if($asset_code != ''){
-			$condition .= " AND asset_code = '" .$asset_code. "' ";			
+			$condition .= " AND asset_details.asset_code = '" .$asset_code. "' ";			
 		}
 
 
-		$sql = "SELECT * FROM asset_details $condition";
+		$sql = "SELECT asset_details.asset_id, asset_details.facility_id, asset_details.department_id, asset_details.equipment_name, asset_details.asset_make, asset_details.asset_model, asset_details.slerial_number, asset_details.asset_specifiaction, asset_details.date_of_installation, asset_details.ins_certificate, asset_details.asset_supplied_by, asset_details.value_of_the_asset, asset_details.total_year_in_service, asset_details.technology, asset_details.asset_status, asset_details.asset_class, asset_details.device_group, asset_details.last_date_of_calibration, asset_details.calibration_attachment, asset_details.frequency_of_calibration, asset_details.last_date_of_pms, asset_details.pms_attachment, asset_details.frequency_of_pms, asset_details.qa_due_date, asset_details.qa_attachment, asset_details.warranty_last_date, asset_details.amc_yes_no, asset_details.amc_last_date, asset_details.cmc_yes_no, asset_details.cmc_last_date, asset_details.asset_code, asset_details.sp_details, asset_details.row_status, facility_master.facility_name, department_list.department_name, department_list.department_code FROM asset_details JOIN facility_master ON asset_details.facility_id = facility_master.facility_id JOIN department_list ON asset_details.department_id = department_list.department_id $condition";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -102,8 +102,11 @@
 
 			while($row = $result->fetch_array()){
 				$asset_id = $row['asset_id'];		
-				$facility_id = $row['facility_id'];		
-				$department_id = $row['department_id']; 			
+				$facility_id = $row['facility_id'];				
+				$facility_name = $row['facility_name'];
+				$department_id = $row['department_id']; 	
+				$department_name = $row['department_name']; 
+				$department_code = $row['department_code']; 		
 				$equipment_name = $row['equipment_name'];		
 				$asset_make = $row['asset_make'];			
 				$asset_model = $row['asset_model'];	
@@ -118,21 +121,22 @@
 				$asset_class = $row['asset_class'];
 
 				$data[0] = $slno; 
-				$data[1] = $facility_id;
-				$data[2] = $department_id;
+				$data[1] = $facility_name;
+				$data[2] = $department_name.'('.$department_code.')';
 				$data[3] = $equipment_name;
 				$data[4] = $asset_make; 
 				$data[5] = $asset_model;
 				$data[6] = $slerial_number;
 				$data[7] = $asset_specifiaction;
-				$data[8] = $date_of_installation;
+				if($date_of_installation != '0000-00-00'){
+					$data[8] = date('d-F-Y', strtotime($date_of_installation));
+				}else{
+					$data[8] = '';
+				}
 				$data[9] = $asset_supplied_by;
 				$data[10] = $value_of_the_asset;
 				$data[11] = $total_year_in_service;
-				$data[12] = $technology;
-				$data[13] = $asset_status;
-				$data[14] = $asset_class;
-				$data[15] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$asset_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$asset_id.")'></i></a>";
+				$data[12] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$asset_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$asset_id.")'></i></a>";
 
 				array_push($mainData, $data);
 				$slno++;
@@ -238,15 +242,71 @@
 	//Delete function
 	if($fn == 'deleteTableData'){
 		$return_result = array();
-		$author_id = $_POST["author_id"];
+		$asset_id = $_POST["asset_id"];
 		$status = true;	
 
-		$sql = "DELETE FROM author_details WHERE author_id = '".$author_id."'";
+		//Unlink product image
+		$sql = "SELECT * FROM asset_details WHERE asset_id = '".$asset_id."'";
 		$result = $mysqli->query($sql);
 
-		//Delete from Login table
-		$sql1 = "DELETE FROM login WHERE author_id = '".$author_id."'";
-		$result1 = $mysqli->query($sql1);
+		if ($result->num_rows > 0) {
+			$slno = 1;
+			$row = $result->fetch_array();
+			$all_images_en = '';
+				$all_images_en = $row['ins_certificate']; 
+				if($all_images_en != ''){
+					$status = true;
+					$all_images = json_decode($all_images_en);
+					if(sizeof($all_images) > 0){
+						for($i = 0; $i < sizeof($all_images); $i++){ 
+							$file_path = ''.$all_images[$i];
+							unlink('photos/'.$file_path); 
+						}//end for 
+					}//end if
+				}//end if
+
+				$all_images_en = '';
+				$all_images_en = $row['calibration_attachment']; 
+				if($all_images_en != ''){
+					$status = true;
+					$all_images = json_decode($all_images_en);
+					if(sizeof($all_images) > 0){
+						for($i = 0; $i < sizeof($all_images); $i++){ 
+							$file_path = ''.$all_images[$i];
+							unlink('photos/'.$file_path); 
+						}//end for 
+					}//end if
+				}//end if
+
+				$all_images_en = '';
+				$all_images_en = $row['pms_attachment']; 
+				if($all_images_en != ''){
+					$status = true;
+					$all_images = json_decode($all_images_en);
+					if(sizeof($all_images) > 0){
+						for($i = 0; $i < sizeof($all_images); $i++){ 
+							$file_path = ''.$all_images[$i];
+							unlink('photos/'.$file_path); 
+						}//end for 
+					}//end if
+				}//end if
+
+				$all_images_en = '';
+				$all_images_en = $row['qa_attachment']; 
+				if($all_images_en != ''){
+					$status = true;
+					$all_images = json_decode($all_images_en);
+					if(sizeof($all_images) > 0){
+						for($i = 0; $i < sizeof($all_images); $i++){ 
+							$file_path = ''.$all_images[$i];
+							unlink('photos/'.$file_path); 
+						}//end for 
+					}//end if
+				}//end if 
+		} //end if
+
+		$sql = "DELETE FROM asset_details WHERE asset_id = '".$asset_id."'";
+		$result = $mysqli->query($sql);
 
 		$return_result['status'] = $status;
 		//sleep(1);

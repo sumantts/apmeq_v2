@@ -48,7 +48,7 @@ include('common/head.php'); ?>
 					<div class="col-sm-12 col-md-6">						 
 						<div class="card text-left">
 							<div class="card-body">
-								<h5 class="card-title">Total Asset</h5>
+								<h5 class="card-title" id="tot_aset">Total Asset</h5>
 								<p class="card-text">This value gives an overview of the financial strength and capacity of the lab, which can be used for budgeting, investment decisions, or financial reporting.</p>
 								<a href="?p=asset-facility-details&gr=setup" class="btn  btn-primary">Show Assets</a>
 							</div>
@@ -57,7 +57,7 @@ include('common/head.php'); ?>
 					<div class="col-sm-12 col-md-6">						 
 						<div class="card text-left">
 							<div class="card-body">
-								<h5 class="card-title">Total Asset Value</h5>
+								<h5 class="card-title" id="tot_aset_val">Total Asset Value</h5>
 								<p class="card-text">To calculate the Total Assets of a hospital lab, you would add up the value of all these assets: Total Assets = Tangible Assets + Intangible Assets + Current Assets + Other Assets  </p>
 								<a href="?p=asset-facility-details&gr=setup" class="btn  btn-primary">Show Assets</a>
 							</div>
