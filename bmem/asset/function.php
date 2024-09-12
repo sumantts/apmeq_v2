@@ -150,38 +150,84 @@
 		$return_array = array();
 		$status = true;
 		$mainData = array();
-		$author_id = $_POST['author_id'];
+		$asset_id = $_POST['asset_id'];
 
-		$sql = "SELECT * FROM author_details WHERE author_id = '" .$author_id. "'";
+		$sql = "SELECT * FROM asset_details WHERE asset_id = '" .$asset_id. "'";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
 			$status = true;	
 			$row = $result->fetch_array();
-			$author_id = $row['author_id'];		
-			$category_id = $row['category_id'];		
-			$for_the_year = $row['for_the_year'];			
-			$author_name = $row['author_name'];		
-			$email = $row['email'];				
-			$registration_number = $row['registration_number'];			
-			$author_status = $row['author_status'];	
-			if($row['author_photo'] != ''){
-				$author_photo = $row['author_photo'];	
-			}else{
-				$author_photo = '';
-			}
+
+			$asset_id = $row['asset_id']; 
+			$facility_id = $row['facility_id']; 
+			$department_id = $row['department_id']; 
+			$equipment_name = $row['equipment_name']; 
+			$asset_make = $row['asset_make']; 
+			$asset_model = $row['asset_model']; 
+			$slerial_number = $row['slerial_number']; 
+			$asset_specifiaction = $row['asset_specifiaction']; 
+			$date_of_installation = $row['date_of_installation']; 
+			$asset_supplied_by = $row['asset_supplied_by']; 
+			$value_of_the_asset = $row['value_of_the_asset']; 
+			$total_year_in_service = $row['total_year_in_service']; 
+			$technology = $row['technology']; 
+			$asset_status = $row['asset_status']; 
+			$asset_class = $row['asset_class']; 
+			$device_group = $row['device_group']; 
+			$last_date_of_calibration = $row['last_date_of_calibration'];  
+			$frequency_of_calibration = $row['frequency_of_calibration']; 
+			$frequency_of_calibration_sp = explode('|', $frequency_of_calibration);
+			$frequency_of_calibration_m = $frequency_of_calibration_sp[0];
+			$frequency_of_calibration_d = $frequency_of_calibration_sp[1];
+			$last_date_of_pms = $row['last_date_of_pms'];  
+			$frequency_of_pms = $row['frequency_of_pms']; 
+			$frequency_of_pms_st = explode('|', $frequency_of_pms);
+			$frequency_of_pms_m = $frequency_of_pms_st[0];
+			$frequency_of_pms_d = $frequency_of_pms_st[1];
+			$qa_due_date = $row['qa_due_date'];
+			$warranty_last_date = $row['warranty_last_date']; 
+			$amc_yes_no = $row['amc_yes_no']; 
+			$amc_last_date = $row['amc_last_date']; 
+			$cmc_yes_no = $row['cmc_yes_no']; 
+			$cmc_last_date = $row['cmc_last_date']; 
+			$sp_details = $row['sp_details'];		
+			
 		} else {
 			$status = false;
 		}
-		//$mysqli->close();
-
-		$return_array['author_name'] = $author_name;
-		$return_array['category_id'] = $category_id;
-		$return_array['for_the_year'] = $for_the_year;
-		$return_array['email'] = $email;
-		$return_array['registration_number'] = $registration_number;
-		$return_array['author_photo'] = $author_photo;
-		$return_array['author_status'] = $author_status;
+		
+		$return_array['asset_id'] = $asset_id; 
+		$return_array['facility_id'] = $facility_id; 
+		$return_array['department_id'] = $department_id; 
+		$return_array['equipment_name'] = $equipment_name; 
+		$return_array['asset_make'] = $asset_make; 
+		$return_array['asset_model'] = $asset_model; 
+		$return_array['slerial_number'] = $slerial_number; 
+		$return_array['asset_specifiaction'] = $asset_specifiaction; 
+		$return_array['date_of_installation'] = $date_of_installation; 
+		$return_array['asset_supplied_by'] = $asset_supplied_by; 
+		$return_array['value_of_the_asset'] = $value_of_the_asset; 
+		$return_array['total_year_in_service'] = $total_year_in_service; 
+		$return_array['technology'] = $technology; 
+		$return_array['asset_status'] = $asset_status; 
+		$return_array['asset_class'] = $asset_class; 
+		$return_array['device_group'] = $device_group; 
+		$return_array['last_date_of_calibration'] = $last_date_of_calibration;  
+		$return_array['frequency_of_calibration'] = $frequency_of_calibration; 
+		$return_array['frequency_of_calibration_m'] = $frequency_of_calibration_m; 
+		$return_array['frequency_of_calibration_d'] = $frequency_of_calibration_d; 
+		$return_array['last_date_of_pms'] = $last_date_of_pms;  
+		$return_array['frequency_of_pms'] = $frequency_of_pms; 
+		$return_array['frequency_of_pms_m'] = $frequency_of_pms_m; 
+		$return_array['frequency_of_pms_d'] = $frequency_of_pms_d; 
+		$return_array['qa_due_date'] = $qa_due_date;
+		$return_array['warranty_last_date'] = $warranty_last_date; 
+		$return_array['amc_yes_no'] = $amc_yes_no; 
+		$return_array['amc_last_date'] = $amc_last_date; 
+		$return_array['cmc_yes_no'] = $cmc_yes_no; 
+		$return_array['cmc_last_date'] = $cmc_last_date; 
+		$return_array['sp_details'] = $sp_details;
 		$return_array['status'] = $status;
     	echo json_encode($return_array);
 	}//function end

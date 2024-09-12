@@ -66,31 +66,55 @@ $('#myForm').on('submit', function(){
     return false;
 })
 
-function editTableData($author_id){
-    $('#exampleModalLong').modal('show');
+function editTableData($asset_id){
+    //$('#exampleModalLong').modal('show');
     $.ajax({
         method: "POST",
         url: "asset/function.php",
-        data: { fn: "getFormEditData", author_id: $author_id }
+        data: { fn: "getFormEditData", asset_id: $asset_id }
     })
     .done(function( res ) {
         //console.log(res);
         $res1 = JSON.parse(res);
         if($res1.status == true){
-            $('#category_id').val($res1.category_id).trigger('change');
-            $('#for_the_year').val($res1.for_the_year).trigger('change');
-            $('#author_name').val($res1.author_name);
-            $('#email').val($res1.email);            
-            $('#registration_number').val($res1.registration_number); 
-            let img = document.getElementById('image');
-            img.src = $res1.author_photo;
-            localStorage.setItem("author_photo", $res1.author_photo);
-            $('#author_status').val($res1.author_status).trigger('change');  
-            $('#author_id').val($author_id);
+            $('#asset_id').val($res1.asset_id); 
+			$('#facility_id_dd').val($res1.facility_id).trigger('change'); 
+			$('#department_id').val($res1.department_id).trigger('change'); 
+			$('#equipment_name').val($res1.equipment_name); 
+			$('#asset_make').val($res1.asset_make); 
+			$('#asset_model').val($res1.asset_model); 
+			$('#slerial_number').val($res1.slerial_number); 
+			$('#asset_specifiaction').val($res1.asset_specifiaction); 
+			$('#date_of_installation').val($res1.date_of_installation); 
+			$('#asset_supplied_by').val($res1.asset_supplied_by); 
+			$('#value_of_the_asset').val($res1.value_of_the_asset); 
+			$('#total_year_in_service').val($res1.total_year_in_service); 
+			$('#technology').val($res1.technology).trigger('change'); 
+			$('#asset_status').val($res1.asset_status).trigger('change'); 
+			$('#asset_class').val($res1.asset_class).trigger('change'); 
+			$('#device_group').val($res1.device_group).trigger('change'); 
+			$('#last_date_of_calibration').val($res1.last_date_of_calibration);  
+			$('#frequency_of_calibration').val($res1.frequency_of_calibration);   
+			$('#frequency_of_calibration_m').val($res1.frequency_of_calibration_m).trigger('change');   
+			$('#frequency_of_calibration_d').val($res1.frequency_of_calibration_d).trigger('change'); 
+			$('#last_date_of_pms').val($res1.last_date_of_pms);  
+			$('#frequency_of_pms').val($res1.frequency_of_pms);  
+			$('#frequency_of_pms_m').val($res1.frequency_of_pms_m).trigger('change');  
+			$('#frequency_of_pms_d').val($res1.frequency_of_pms_d).trigger('change'); 
+			$('#qa_due_date').val($res1.qa_due_date);
+			$('#warranty_last_date').val($res1.warranty_last_date); 
+			$('#amc_yes_no').val($res1.amc_yes_no).trigger('change'); 
+			$('#amc_last_date').val($res1.amc_last_date); 
+			$('#cmc_yes_no').val($res1.cmc_yes_no).trigger('change'); 
+			$('#cmc_last_date').val($res1.cmc_last_date); 
+			$('#sp_details').val($res1.sp_details);	
+
+            
+            $('#partTwo').addClass('d-none').hide();
+            $('#partThree').removeClass('d-none').show();
         }
     });//end ajax
-
-}
+}//end func
 
 //Delete function	
 function deleteTableData($author_id){
@@ -233,6 +257,9 @@ $('#ins_cert_attach').on('click', function(){
         $('#myFormModal').trigger('reset');
         $('#field_name').val('ins_certificate');
         $('#uploadMessage').html('');
+        
+        $field_name = $('#field_name').val();
+        getAllProductImages($asset_id, $field_name);
     }else{
         alert('Please add an Asset first');
     }
@@ -246,6 +273,9 @@ $('#calib_cert_attach').on('click', function(){
         $('#myFormModal').trigger('reset');
         $('#field_name').val('calibration_attachment');
         $('#uploadMessage').html('');
+        
+        $field_name = $('#field_name').val();
+        getAllProductImages($asset_id, $field_name);
     }else{
         alert('Please add an Asset first');
     }
@@ -259,6 +289,9 @@ $('#pms_cert_attach').on('click', function(){
         $('#myFormModal').trigger('reset');
         $('#field_name').val('pms_attachment');
         $('#uploadMessage').html('');
+        
+        $field_name = $('#field_name').val();
+        getAllProductImages($asset_id, $field_name);
     }else{
         alert('Please add an Asset first');
     }
@@ -272,6 +305,9 @@ $('#qa_cert_attach').on('click', function(){
         $('#myFormModal').trigger('reset');
         $('#field_name').val('qa_attachment');
         $('#uploadMessage').html('');
+        
+        $field_name = $('#field_name').val();
+        getAllProductImages($asset_id, $field_name);
     }else{
         alert('Please add an Asset first');
     }

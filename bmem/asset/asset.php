@@ -430,7 +430,7 @@ include('common/head.php');
                                     </div> 
 
                                     <div class="col-md-1 mt-4"> 
-                                        <button type="button" id="startUpload" class="btn btn-primary btn-sm">Upload</button>
+                                        
                                         <input type="hidden" name="field_name" id="field_name" value="">
                                     </div> 
                                 </div>
@@ -446,14 +446,9 @@ include('common/head.php');
                             </div>
 
                             <div class="modal-footer">
-                                <input type="hidden" id="user_id" value="0">
+                                <input type="hidden" id="user_id" value="0">                                
+                                <button type="button" id="startUpload" class="btn btn-primary">Upload</button>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                
-                                <!-- <button class="btn  btn-primary" type="submit" id="submitForm">
-                                    <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
-                                    <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
-                                    <span class="btn-text" id="submitForm_text">Save</span>
-                                </button> -->
                             </div>                        
                         </form>
                     </div>
