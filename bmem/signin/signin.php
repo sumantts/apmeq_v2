@@ -55,13 +55,14 @@
 <!-- [ auth-signin ] start -->
 <div class="auth-wrapper">
 	<div class="auth-content text-center">
-		<img src="assets/images/<?=$logo?>" width="100" alt="Fee Fusion" class="img-fluid mb-4">
+		<!-- <img src="assets/images/<?=$logo?>" width="100" alt="Fee Fusion" class="img-fluid mb-4"> -->
 		<div class="card borderless">
 			<div class="row align-items-center ">
 				<div class="col-md-12">
 							
 					<div class="card-body">
-						<h4 class="mb-3 f-w-400"><?php echo $title; ?></h4>
+						<!-- <h4 class="mb-3 f-w-400"><?php echo $title; ?></h4> -->
+						<img src="assets/images/<?=$logo?>" width="100" alt="Fee Fusion" class="img-fluid mb-4">
 						<hr>
 						<div class="form-group mb-3">
 							<input type="text" class="form-control" id="Email" placeholder="Email address">

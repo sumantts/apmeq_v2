@@ -3,7 +3,7 @@
             <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a>
             <a href="?p=dashboard" class="b-brand">
                 <!-- ========   change your logo hear   ============ -->
-                <img src="assets/images/<?=$logo?>" alt="" class="logo">
+                <img src="assets/images/logo_long_admin.png" alt="" class="logo" style="height: 45px;">
                 <img src="assets/images/logo-icon.png" alt="" class="logo-thumb">
             </a>
             <a href="#!" class="mob-toggler">

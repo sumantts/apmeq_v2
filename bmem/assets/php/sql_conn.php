@@ -47,8 +47,8 @@
 	$logo_text = 'APMEQ';
 
     $p_name = 'APMEQ';
-	$logo = 'apmeq_logo.png';
-	$ico = 'apmeq_logo.png';
+	$logo = 'apmeq_long.png';
+	$ico = 'favicon-16x16.png';
 	
 
 	//Social Media

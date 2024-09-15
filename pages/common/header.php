@@ -19,8 +19,9 @@
     <!-- <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicons/favicon-16x16.png"> -->
     <!-- <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicons/favicon.ico"> Fab Icon-->
     <!-- <link rel="manifest" href="assets/img/favicons/manifest.json"> -->
-    <meta name="msapplication-TileImage" content="assets/img/favicons/mstile-150x150.png">
+    <meta name="msapplication-TileImage" content="assets/img/favicons/favicon-16x16.png">
     <meta name="theme-color" content="#ffffff">
+    <link rel="icon" href="assets/img/favicons/favicon-16x16.png" type="image/x-icon">
 
     <!-- ===============================================-->
     <!--    Stylesheets-->
