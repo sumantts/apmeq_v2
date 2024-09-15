@@ -23,7 +23,7 @@
 		if ($result->num_rows > 0) {
 			$total_asset_count = $result->num_rows;
 			while($row = $result->fetch_array()){
-				$value_of_the_asset = $row['value_of_the_asset'];	
+				$value_of_the_asset = (float) $row['value_of_the_asset'];	
 				$sub_total_value_of_the_asset = $sub_total_value_of_the_asset + $value_of_the_asset;
 			}
 		} else {

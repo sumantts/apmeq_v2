@@ -240,14 +240,7 @@ include('common/head.php');
                             </div> 
                             </div>
 
-                            <div class="form-row">                                
-                                <div class="col-md-2 mt-4">
-                                    <button class="btn btn-dark" type="button" id="cancelForm">
-                                        <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
-                                        <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
-                                        <span class="btn-text" id="submitForm_text">Cancel</span>
-                                    </button>
-                                </div>                                
+                            <div class="form-row">                               
                                 <div class="col-md-2 mt-4">
                                     <input type="hidden" name="facility_id" id="facility_id">
                                     <!-- <input type="submit" class="btn  btn-primary" name="submitForm" id="submitForm" value="Save Changes"> -->
@@ -256,6 +249,13 @@ include('common/head.php');
                                         <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
                                         <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
                                         <span class="btn-text" id="submitForm_text">Save Changes</span>
+                                    </button>
+                                </div>                                 
+                                <div class="col-md-2 mt-4">
+                                    <button class="btn btn-dark" type="button" id="cancelForm">
+                                        <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
+                                        <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
+                                        <span class="btn-text" id="submitForm_text">Cancel</span>
                                     </button>
                                 </div> 
                             </div>
