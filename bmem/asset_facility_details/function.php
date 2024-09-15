@@ -14,8 +14,9 @@
 		$status = true;
 		$mainData = array();
 		$email1 = '';
+		$user_id = $_SESSION["user_id"];
 		
-		/*$sql = "SELECT author_details.author_id, author_details.for_the_year, author_details.category_id, author_details.author_name, author_details.email, author_details.registration_number, author_details.author_photo, author_details.author_status, category_list.category_name, login.user_level FROM author_details JOIN category_list ON author_details.category_id = category_list.category_id JOIN login ON author_details.author_id = login.author_id WHERE category_list.activity_status = 'active'";
+		$sql = "SELECT * FROM facility_master WHERE user_id = '" .$user_id. "' ";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -23,52 +24,86 @@
 			$slno = 1;
 
 			while($row = $result->fetch_array()){
-				$author_id = $row['author_id'];		
-				$category_name = $row['category_name'];		
-				$for_the_year = $row['for_the_year'];
-				$course_id = 0;//$row['course_id'];		
-				$course_name = '';//$row['course_name'];			
-				$author_name = $row['author_name'];		
-				$email = $row['email'];			
-				$registration_number = $row['registration_number'];	
-				$user_level = $row['user_level']; 
+				$total_assets = 0;
+				$verified_assets = 0;
+				$non_verified_assets = 0;
+				$total_rber = 0;
+				$working_assets = 0;
+				$non_working_assets = 0;
+				$critical_assets = 0;
+				$non_critical_assets = 0;
+				$facility_id = $row['facility_id'];		
+				$facility_name = $row['facility_name'];	
+				$facility_code = $row['facility_code'];	
+				
 
-				$data[0] = $slno; 
-				$data[1] = $author_name;
-				$data[2] = $email;
-				$data[3] = $registration_number;
-				$data[4] = "<img src='".$author_photo."' id='saved_image' width='75' style='border-radius: 15px'>"; 
-				$data[5] = $category_name;
-				$data[6] = $forTheYearsArr[$for_the_year]->text;
-				$data[7] = $author_status;
-				if($user_level == 1){
-					$data[8] = "Restricted";
-				}else{
-					$data[8] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$author_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$author_id.")'></i></a>";
-				}
+				//Total Assets
+				$sql1 = "SELECT * FROM asset_details WHERE facility_id = '" .$facility_id. "' ";
+				$result1 = $mysqli->query($sql1);
+				$total_assets = $result1->num_rows;
 
-				array_push($mainData, $data);
-				$slno++;
+				if($total_assets > 0){
+					while($row1 = $result1->fetch_array()){
+						$asset_status = $row1['asset_status'];
+						$asset_class = $row1['asset_class'];
+
+						//working_assets
+						if($asset_status == 1){
+							$working_assets++;
+						}//end if		
+
+						//not working_assets
+						if($asset_status == 2){
+							$non_working_assets++;
+						}//end if
+
+						//total_rber
+						if($asset_status == 5){
+							$total_rber++;
+						}//end if	
+
+						//verified_assets
+						if($asset_status == 6){
+							$verified_assets++;
+						}//end if
+
+						//non_verified_assets
+						if($asset_status == 7){
+							$non_verified_assets++;
+						}//end if
+
+						//critical_assets
+						if($asset_class == 1){
+							$critical_assets++;
+						}//end if	
+
+						//not critical_assets
+						if($asset_class == 2){
+							$non_critical_assets++;
+						}//end if
+					}//end while
+
+
+					$data[0] = $slno; 
+					$data[1] = $facility_name;
+					$data[2] = $facility_code;
+					$data[3] = $total_assets;
+					$data[4] = $verified_assets; 
+					$data[5] = $non_verified_assets;
+					$data[6] = $total_rber;
+					$data[7] = $working_assets;
+					$data[8] = $non_working_assets;
+					$data[9] = $critical_assets;
+					$data[10] = $non_critical_assets;
+					$data[11] = "<a href='?p=asset-data&gr=setup&facility_id=$facility_id'><i class='fa fa-filter fa-lg' aria-hidden='true'></i></a>";				
+
+					array_push($mainData, $data);
+					$slno++;
+				}//end if
 			}
 		} else {
 			$status = false;
-		}*/
-		//$mysqli->close();
-			$slno = 1; 
-
-			$data[0] = $slno; 
-			$data[1] = 'Facility 1';
-			$data[2] = '-';
-			$data[3] = '-';
-			$data[4] = '-'; 
-			$data[5] = '-';
-			$data[6] = '-';
-			$data[7] = '-';
-			$data[8] = '-';
-			$data[9] = '-';
-			$data[10] = '-';
-			$data[11] = "<a href='?p=asset-data&gr=setup'><i class='fa fa-filter fa-lg' aria-hidden='true'></i></a>";
-			array_push($mainData, $data);
+		} 
 
 		$return_array['data'] = $mainData;
     	echo json_encode($return_array);

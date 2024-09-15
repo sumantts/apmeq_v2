@@ -6,65 +6,7 @@
 	    $fn = $_GET["fn"];
 	}else if(isset($_POST["fn"])){
 	    $fn = $_POST["fn"];
-	}
-
-	//Save function start
-	if($fn == 'saveFormData'){
-		$return_result = array();
-		$insert_id1 = 0;
-		$password = '12345678';
-		$status = true;
-
-		$author_id = $_POST["author_id"];	
-		$category_id = $_POST["category_id"];	
-		$for_the_year = $_POST["for_the_year"];
-		$author_name = $_POST["author_name"];
-		$email = $_POST["email"];	
-		$registration_number = $_POST["registration_number"];
-		$author_photo = $_POST["author_photo"];	
-		$author_status = $_POST["author_status"];
-		
-		try {
-			if($author_id > 0){
-				$status = true;
-				$sql = "UPDATE author_details SET category_id = '" .$category_id. "', for_the_year = '" .$for_the_year. "', author_name = '" .$author_name. "', email = '" .$email. "', registration_number = '" .$registration_number. "', author_photo = '" .$author_photo. "', author_status = '" .$author_status. "' WHERE author_id = '" .$author_id. "' ";
-				$result = $mysqli->query($sql);
-
-				//Update login table
-				$sql1 = "UPDATE login SET profile_name = '" .$author_name. "', username = '" .$email. "', password = '" .$password. "' WHERE author_id = '" .$author_id. "' ";
-				$result1 = $mysqli->query($sql1);
-			}else{
-				$check_sql = "SELECT * FROM author_details WHERE email = '" .$email. "' ";
-				$check_result = $mysqli->query($check_sql);
-
-				if ($check_result->num_rows > 0) {
-					$return_result['error_message'] = 'This email already exist';
-					$status = false;
-				}else{
-					$sql = "INSERT INTO author_details (category_id, for_the_year, author_name, email, registration_number, author_photo) VALUES ('" .$category_id. "', '" .$for_the_year. "', '" .$author_name. "', '" .$email. "', '" .$registration_number. "', '" .$author_photo. "')";
-					$result = $mysqli->query($sql);
-					$insert_id = $mysqli->insert_id;
-					if($insert_id > 0){
-						$status = true;
-
-						//Insert into login table
-						$sql1 = "INSERT INTO login (author_id, profile_name, username, password) VALUES ('" .$insert_id. "', '" .$author_name. "', '" .$email. "', '" .$password. "')";
-						$result1 = $mysqli->query($sql1);
-						$insert_id1 = $mysqli->insert_id;
-					}else{
-						$return_result['error_message'] = 'Photo size is soo large';
-						$status = false;
-					}	
-				}//end if	
-			}	
-		} catch (PDOException $e) {
-			die("Error occurred:" . $e->getMessage());
-		}
-		$return_result['status'] = $status;
-		$return_result['login_id'] = $insert_id1;
-		//sleep(2);
-		echo json_encode($return_result);
-	}//Save function end	
+	} 
 
 	//function start
 	if($fn == 'getTableData'){
@@ -72,8 +14,9 @@
 		$status = true;
 		$mainData = array();
 		$email1 = '';
+		$facility_id = $_GET['facility_id'];
 		
-		/*$sql = "SELECT author_details.author_id, author_details.for_the_year, author_details.category_id, author_details.author_name, author_details.email, author_details.registration_number, author_details.author_photo, author_details.author_status, category_list.category_name, login.user_level FROM author_details JOIN category_list ON author_details.category_id = category_list.category_id JOIN login ON author_details.author_id = login.author_id WHERE category_list.activity_status = 'active'";
+		$sql = "SELECT asset_details.asset_id, asset_details.facility_id, asset_details.department_id, asset_details.equipment_name, asset_details.asset_make, asset_details.asset_model, asset_details.slerial_number, asset_details.asset_specifiaction, asset_details.date_of_installation, asset_details.ins_certificate, asset_details.asset_supplied_by, asset_details.value_of_the_asset, asset_details.total_year_in_service, asset_details.technology, asset_details.asset_status, asset_details.asset_class, asset_details.device_group, asset_details.last_date_of_calibration, asset_details.calibration_attachment, asset_details.frequency_of_calibration, asset_details.last_date_of_pms, asset_details.pms_attachment, asset_details.frequency_of_pms, asset_details.qa_due_date, asset_details.qa_attachment, asset_details.warranty_last_date, asset_details.amc_yes_no, asset_details.amc_last_date, asset_details.cmc_yes_no, asset_details.cmc_last_date, asset_details.asset_code, asset_details.sp_details, asset_details.asset_code, asset_details.row_status, facility_master.facility_name, facility_master.facility_code, department_list.department_name, department_list.department_code FROM asset_details JOIN facility_master ON asset_details.facility_id = facility_master.facility_id JOIN department_list ON asset_details.department_id = department_list.department_id WHERE row_status = 1 AND asset_details.facility_id = '" .$facility_id. "'";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -81,186 +24,98 @@
 			$slno = 1;
 
 			while($row = $result->fetch_array()){
-				$author_id = $row['author_id'];		
-				$category_name = $row['category_name'];		
-				$for_the_year = $row['for_the_year'];
-				$course_id = 0;//$row['course_id'];		
-				$course_name = '';//$row['course_name'];			
-				$author_name = $row['author_name'];		
-				$email = $row['email'];			
-				$registration_number = $row['registration_number'];	
-				$user_level = $row['user_level']; 
+				$asset_id = $row['asset_id'];		
+				$facility_id = $row['facility_id'];				
+				$facility_name = $row['facility_name'];				
+				$facility_code = $row['facility_code'];
+				$department_id = $row['department_id']; 	
+				$department_name = $row['department_name']; 
+				$department_code = $row['department_code']; 		
+				$equipment_name = $row['equipment_name'];		
+				$asset_make = $row['asset_make'];			
+				$asset_model = $row['asset_model'];	
+				$slerial_number = $row['slerial_number'];	  
+				$asset_specifiaction = $row['asset_specifiaction'];	
+				$date_of_installation = $row['date_of_installation'];	
+				$asset_supplied_by = $row['asset_supplied_by'];	
+				$value_of_the_asset = $row['value_of_the_asset'];	
+				$total_year_in_service = $row['total_year_in_service'];
+				$technology = $row['technology'];
+				$asset_status = $row['asset_status'];
+				$asset_code = $row['asset_code']; 
+				$asset_class = $row['asset_class']; 
+				$warranty_last_date = $row['warranty_last_date']; 
+				$amc_yes_no = $row['amc_yes_no']; 
+				$amc_last_date = $row['amc_last_date']; 
+				$cmc_yes_no = $row['cmc_yes_no']; 
+				$cmc_last_date = $row['cmc_last_date']; 
+
+				$asset_status_text = '-';
+				if($asset_status == 5){
+					$asset_status_text = 'RBER/Condemned';
+				} 
+
+				$maintanence_type = '';
+				if($warranty_last_date != '0000-00-00'){
+					$maintanence_type .= 'Warranty Date: '.date('d-F-Y', strtotime($warranty_last_date));
+				}
+				if($amc_yes_no == 1){
+					$maintanence_type .= '<br>AMC Last Date: '.date('d-F-Y', strtotime($amc_last_date));					
+				}
+				if($cmc_yes_no == 1){
+					$maintanence_type .= '<br>CMC Last Date: '.date('d-F-Y', strtotime($cmc_last_date));					
+				}
+				if($technology == 1){
+					$technology_text = 'Obsolute';					
+				}
+				if($technology == 2){
+					$technology_text = 'Running';					
+				}
+
+				
+				$asset_status_arr = ["Select", "Working", "Not Working", "Not in Use", "Packed", "RBER", "Verified Assets", "Non-Verified Assets"];
+
+				$asset_status_text1 = '';
+				if($asset_status >= 1 && $asset_status <= 5){
+					$asset_status_text1 = $asset_status_arr[$asset_status];
+				}
+
+				$asset_status_text2 = '';
+				if($asset_status >= 6 && $asset_status <= 7){
+					$asset_status_text2 = $asset_status_arr[$asset_status];
+				}
+
+				$asset_class_text = '';
+				if($asset_class == 1){
+					$asset_class_text = 'Critical';
+				}
+				if($asset_class == 2){
+					$asset_class_text = 'Non Critical';
+				}
 
 				$data[0] = $slno; 
-				$data[1] = $author_name;
-				$data[2] = $email;
-				$data[3] = $registration_number;
-				$data[4] = "<img src='".$author_photo."' id='saved_image' width='75' style='border-radius: 15px'>"; 
-				$data[5] = $category_name;
-				$data[6] = $forTheYearsArr[$for_the_year]->text;
-				$data[7] = $author_status;
-				if($user_level == 1){
-					$data[8] = "Restricted";
-				}else{
-					$data[8] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$author_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$author_id.")'></i></a>";
-				}
+				$data[1] = $facility_name;
+				$data[2] = $facility_code;
+				$data[3] = $asset_status_text;
+				$data[4] = $equipment_name; 
+				$data[5] = $asset_code;
+				$data[6] = $maintanence_type;
+				$data[7] = $technology_text;
+				$data[8] = $asset_status_text1;
+				$data[9] = $asset_status_text2;
+				$data[10] = $asset_class_text;  
 
 				array_push($mainData, $data);
 				$slno++;
-			}
-		} else {
-			$status = false;
-		}*/
-		//$mysqli->close();
-			$slno = 1; 
-
-			$data[0] = $slno; 
-			$data[1] = 'Facility 1';
-			$data[2] = '-';
-			$data[3] = '-';
-			$data[4] = '-'; 
-			$data[5] = '-';
-			$data[6] = '-';
-			$data[7] = '-';
-			$data[8] = '-';
-			$data[9] = '-';
-			$data[10] = '-'; 
-			array_push($mainData, $data);
-
-		$return_array['data'] = $mainData;
-    	echo json_encode($return_array);
-	}//function end	
-
-	//function start
-	if($fn == 'getFormEditData'){
-		$return_array = array();
-		$status = true;
-		$mainData = array();
-		$author_id = $_POST['author_id'];
-
-		$sql = "SELECT * FROM author_details WHERE author_id = '" .$author_id. "'";
-		$result = $mysqli->query($sql);
-
-		if ($result->num_rows > 0) {
-			$status = true;	
-			$row = $result->fetch_array();
-			$author_id = $row['author_id'];		
-			$category_id = $row['category_id'];		
-			$for_the_year = $row['for_the_year'];			
-			$author_name = $row['author_name'];		
-			$email = $row['email'];				
-			$registration_number = $row['registration_number'];			
-			$author_status = $row['author_status'];	
-			if($row['author_photo'] != ''){
-				$author_photo = $row['author_photo'];	
-			}else{
-				$author_photo = '';
 			}
 		} else {
 			$status = false;
 		}
-		//$mysqli->close();
 
-		$return_array['author_name'] = $author_name;
-		$return_array['category_id'] = $category_id;
-		$return_array['for_the_year'] = $for_the_year;
-		$return_array['email'] = $email;
-		$return_array['registration_number'] = $registration_number;
-		$return_array['author_photo'] = $author_photo;
-		$return_array['author_status'] = $author_status;
-		$return_array['status'] = $status;
+			
+
+		$return_array['data'] = $mainData;
     	echo json_encode($return_array);
-	}//function end
-
-	//Delete function
-	if($fn == 'deleteTableData'){
-		$return_result = array();
-		$author_id = $_POST["author_id"];
-		$status = true;	
-
-		$sql = "DELETE FROM author_details WHERE author_id = '".$author_id."'";
-		$result = $mysqli->query($sql);
-
-		//Delete from Login table
-		$sql1 = "DELETE FROM login WHERE author_id = '".$author_id."'";
-		$result1 = $mysqli->query($sql1);
-
-		$return_result['status'] = $status;
-		//sleep(1);
-		echo json_encode($return_result);
-	}//end function deleteItem
-
-	
-
-	//Get Category name
-	if($fn == 'getAllCategoryName'){
-		$return_array = array();
-		$status = true;
-		$mainData = array();
-		$parent_category_id = 0;
-
-		$sql = "SELECT * FROM category_list WHERE activity_status = 'active' ORDER BY category_name ASC";
-		$result = $mysqli->query($sql);
-
-		if ($result->num_rows > 0) {
-			$status = true;
-			$slno = 1;
-			while($row = $result->fetch_array()){
-				$category_id = $row['category_id'];	
-				$category_name = $row['category_name'];			
-				$category_slug = $row['category_slug'];
-				$data = new stdClass();
-
-				$data->category_id = $category_id;
-				$data->category_name = $category_name;
-				$data->category_slug = $category_slug;
-				
-				array_push($mainData, $data);
-				$slno++;
-			}
-		} else {
-			$status = false;
-		} 
-
-		$return_array['status'] = $status;
-		$return_array['data'] = $mainData;
-		echo json_encode($return_array);
-	}//end if
-
-	//Get Course name
-	if($fn == 'getAllCourseName'){
-		$return_array = array();
-		$status = true;
-		$mainData = array(); 
-
-		$sql = "SELECT * FROM course_fee_detail ORDER BY course_name ASC";
-		$result = $mysqli->query($sql);
-
-		if ($result->num_rows > 0) {
-			$status = true;
-			$slno = 1;
-			while($row = $result->fetch_array()){
-				$course_id = $row['course_id'];	
-				$course_name = $row['course_name'];			
-				$course_fee = $row['course_fee'];		
-				$course_duration = $row['course_duration'];
-				$data = new stdClass();
-
-				$data->course_id = $course_id;
-				$data->course_name = $course_name;
-				$data->course_fee = $course_fee;
-				$data->course_duration = $course_duration;
-				
-				array_push($mainData, $data);
-				$slno++;
-			}
-		} else {
-			$status = false;
-		} 
-
-		$return_array['status'] = $status;
-		$return_array['data'] = $mainData;
-		echo json_encode($return_array);
-	}//function end	
+	}//function end	 
 
 ?>

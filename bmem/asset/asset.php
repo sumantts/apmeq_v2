@@ -240,6 +240,8 @@ include('common/head.php');
                                         <option value="3">Not in Use</option>
                                         <option value="4">Packed</option>
                                         <option value="5">RBER</option>
+                                        <option value="6">Verified Assets</option>
+                                        <option value="7">Non-Verified Assets</option>
                                     </select> 
                                 </div>
                                 
