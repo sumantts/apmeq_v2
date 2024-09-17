@@ -20,11 +20,13 @@ $('#myForm').on("submit", function(){
     $department_id = $('#department_id').val();
     $hospital_id = $('#hospital_id').val();    
 
+    console.log('department_id:' + JSON.stringify($department_id));
+
     $.ajax({
         type: "POST",
         url: "user_facility/function.php",
         dataType: "json",
-        data: { fn: "saveFormData", facility_id: $facility_id, facility_name: $facility_name, facility_type: $facility_type, facility_code: $facility_code, facility_address: $facility_address, nabh_accrediated: $nabh_accrediated, nabl_accrediated: $nabl_accrediated, department_id: $department_id, hospital_id: $hospital_id }
+        data: { fn: "saveFormData", facility_id: $facility_id, facility_name: $facility_name, facility_type: $facility_type, facility_code: $facility_code, facility_address: $facility_address, nabh_accrediated: $nabh_accrediated, nabl_accrediated: $nabl_accrediated, department_id: JSON.stringify($department_id), hospital_id: $hospital_id }
     })
     .done(function( res ) {
         //$res1 = JSON.parse(res);
@@ -32,6 +34,8 @@ $('#myForm').on("submit", function(){
             $('#orgFormAlert1').css("display", "block");  
             $('#myForm').trigger('reset');
             $('#facility_id').val('');
+            $('#facility_type').val('').trigger('change');
+            $('#department_id').val('').trigger('change');
             configureFacilityDropDown(); 
         }else{
             alert(res.error_message);
@@ -179,4 +183,5 @@ $(document).ready(function () {
     configureDepartmentDropDown();
     configureHospitaDropDown();
     configureFacilityDropDown();    
+    $('.js-example-basic-single').select2();
 });

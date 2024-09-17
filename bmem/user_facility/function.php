@@ -64,7 +64,7 @@
 			$status = true;	
 			$row = $result->fetch_array();
 			$hospital_id = $row['hospital_id'];		
-			$department_id = $row['department_id'];		
+			$department_id = json_decode($row['department_id']);		
 			$facility_name = $row['facility_name'];			
 			$facility_type = $row['facility_type'];		
 			$facility_code = $row['facility_code'];				

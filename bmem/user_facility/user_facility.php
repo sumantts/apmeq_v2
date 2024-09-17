@@ -83,7 +83,7 @@ include('common/head.php');
                             <div class="form-row">
                                 <div class="col-md-4 mb-3">
                                     <label for="facility_id_dd" class="text-danger">Facilities*</label>
-                                    <select class="form-control" name="facility_id_dd" id="facility_id_dd">
+                                    <select class="form-control" name="facility_id_dd" id="facility_id_dd" >
                                         <option value="">Select</option>  
                                     </select>
                                     <div class="valid-feedback">
@@ -147,7 +147,7 @@ include('common/head.php');
                                 
                             <div class="col-md-4 mb-3">
                                 <label for="facility_type" class="text-danger">Facility Type*</label>
-                                <select class="form-control" name="facility_type" id="facility_type" required>
+                                <select class="form-control js-example-basic-single" name="facility_type" id="facility_type" required>
                                     <option value="">Select</option>
                                     <option value="1">Hospital</option>
                                     <option value="2">Lab</option>
@@ -185,7 +185,7 @@ include('common/head.php');
                                 
                             <div class="col-md-4 mb-3">
                                 <label for="nabh_accrediated" class="text-danger">NABH Accredited*</label>
-                                <select class="form-control" name="nabh_accrediated" id="nabh_accrediated" required>
+                                <select class="form-control js-example-basic-single" name="nabh_accrediated" id="nabh_accrediated" required>
                                     <option value="">Select</option>
                                     <option value="1">Yes</option>
                                     <option value="2">No</option>
@@ -200,7 +200,7 @@ include('common/head.php');
                                 
                             <div class="col-md-4 mb-3">
                                 <label for="nabl_accrediated" class="text-danger">NABL Accredited*</label>
-                                <select class="form-control" name="nabl_accrediated" id="nabl_accrediated" required>
+                                <select class="form-control js-example-basic-single" name="nabl_accrediated" id="nabl_accrediated" required>
                                     <option value="">Select</option>
                                     <option value="1">Yes</option>
                                     <option value="2">No</option>
@@ -215,7 +215,7 @@ include('common/head.php');
                                 
                             <div class="col-md-4 mb-3">
                                 <label for="department_id" class="text-danger">Department*</label>
-                                <select class="form-control" name="department_id" id="department_id" required>
+                                <select class="form-control js-example-basic-single" name="department_id" id="department_id" required multiple>
                                     <option value="">Select</option> 
                                 </select>
                                 <div class="valid-feedback">
@@ -228,7 +228,7 @@ include('common/head.php');
                                 
                             <div class="col-md-4 mb-3">
                                 <label for="hospital_id" class="text-danger">Hospital*</label>
-                                <select class="form-control" name="hospital_id" id="hospital_id" required>
+                                <select class="form-control js-example-basic-single" name="hospital_id" id="hospital_id" required>
                                     <option value="">Select</option> 
                                 </select>
                                 <div class="valid-feedback">
