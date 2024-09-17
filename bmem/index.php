@@ -48,6 +48,11 @@
 		case 'asset-type':
 			$title = "Asset Type";
 			include('setup/asset_type/asset_type.php');		
+		break;  
+					
+		case 'department':
+			$title = "Department";
+			include('setup/department/department.php');		
 		break; 
 						
 		//DETAILS	 	
