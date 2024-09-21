@@ -27,14 +27,19 @@
 		try {
 			if($facility_id > 0){
 				$status = true;
-				$sql = "UPDATE facility_master SET hospital_id = '" .$hospital_id. "', department_id = '" .$department_id. "', facility_name = '" .$facility_name. "', facility_type = '" .$facility_type. "', facility_code = '" .$facility_code. "', facility_address = '" .$facility_address. "', nabh_accrediated = '" .$nabh_accrediated. "', nabl_accrediated = '" .$nabl_accrediated. "' WHERE facility_id = '" .$facility_id. "' ";
+				$sql = "UPDATE facility_master SET hospital_id = '" .$hospital_id. "', department_id = '" .$department_id. "', facility_name = '" .$facility_name. "', facility_type = '" .$facility_type. "', facility_address = '" .$facility_address. "', nabh_accrediated = '" .$nabh_accrediated. "', nabl_accrediated = '" .$nabl_accrediated. "' WHERE facility_id = '" .$facility_id. "' ";
 				$result = $mysqli->query($sql); 
 			}else{
-				$sql = "INSERT INTO facility_master (hospital_id, department_id, facility_name, facility_type, facility_code, facility_address, nabh_accrediated, nabl_accrediated, user_id) VALUES ('" .$hospital_id. "', '" .$department_id. "', '" .$facility_name. "', '" .$facility_type. "', '" .$facility_code. "', '" .$facility_address. "', '" .$nabh_accrediated. "', '" .$nabl_accrediated. "', '" .$user_id. "')";
+				$sql = "INSERT INTO facility_master (hospital_id, department_id, facility_name, facility_type, facility_address, nabh_accrediated, nabl_accrediated, user_id) VALUES ('" .$hospital_id. "', '" .$department_id. "', '" .$facility_name. "', '" .$facility_type. "', '" .$facility_address. "', '" .$nabh_accrediated. "', '" .$nabl_accrediated. "', '" .$user_id. "')";
 				$result = $mysqli->query($sql);
 				$facility_id = $mysqli->insert_id;
 				if($facility_id > 0){
-					$status = true; 
+					$status = true;  
+					$facility_code = str_pad($facility_id, 4, '0', STR_PAD_LEFT);
+
+					$upd_sql = "UPDATE facility_master SET facility_code = '" .$facility_code. "' WHERE facility_id = '" .$facility_id. "' ";
+					$result_upd = $mysqli->query($upd_sql); 
+
 				}else{
 					$return_result['error_message'] = 'Data Insert Error';
 					$status = false;

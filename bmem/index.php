@@ -30,6 +30,11 @@
 			include('setup/department/department.php');		
 		break; 	
 
+		case 'device-group':
+			$title = "Device Group";
+			include('setup/device_group/device_group.php');		
+		break; 	
+
 		case 'hospital-details':
 			$title = "Hospital Details";
 			include('setup/hospital_details/hospital_details.php');		

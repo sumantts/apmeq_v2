@@ -11,10 +11,12 @@ $('#clearForm').on('click', function(){
     $('#technology').val('').trigger('change');
     $('#asset_class').val('').trigger('change'); 
     $('#device_group').val('').trigger('change'); 
-    $('#frequency_of_calibration_m').val('').trigger('change'); 
-    $('#frequency_of_calibration_d').val('').trigger('change');
-    $('#frequency_of_pms_m').val('').trigger('change');
-    $('#frequency_of_pms_d').val('').trigger('change');
+    $('#frequency_of_calibration_y').val('');
+    $('#frequency_of_calibration_m').val(''); 
+    $('#frequency_of_calibration_d').val('');
+    $('#frequency_of_pms_y').val('');
+    $('#frequency_of_pms_m').val('');
+    $('#frequency_of_pms_d').val('');
     $('#cmc_yes_no').val('').trigger('change');
     $('#asset_id').val('0'); 
 })
@@ -53,12 +55,15 @@ $('#myForm').on('submit', function(){
         type: "POST",
         url: "asset/function.php",
         dataType: "json",
-        data: { fn: "saveFormData", asset_id: $asset_id, facility_id: $facility_id, department_id: $department_id, equipment_name: $equipment_name, asset_make: $asset_make, asset_model: $asset_model, slerial_number: $slerial_number, asset_specifiaction: $asset_specifiaction, date_of_installation: $date_of_installation, asset_supplied_by: $asset_supplied_by, value_of_the_asset: $value_of_the_asset, total_year_in_service: $total_year_in_service, technology: $technology, asset_status: $asset_status, asset_class: $asset_class, device_group: $device_group, last_date_of_calibration: $last_date_of_calibration, frequency_of_calibration: $frequency_of_calibration, last_date_of_pms: $last_date_of_pms, frequency_of_pms: $frequency_of_pms, qa_due_date: $qa_due_date, warranty_last_date: $warranty_last_date, amc_yes_no: $amc_yes_no, amc_last_date: $amc_last_date, cmc_yes_no: $cmc_yes_no, cmc_last_date: $cmc_last_date, asset_code: $asset_code, sp_details: $sp_details }
+        data: { fn: "saveFormData", asset_id: $asset_id, facility_id: $facility_id, department_id: JSON.stringify($department_id), equipment_name: $equipment_name, asset_make: $asset_make, asset_model: $asset_model, slerial_number: $slerial_number, asset_specifiaction: $asset_specifiaction, date_of_installation: $date_of_installation, asset_supplied_by: $asset_supplied_by, value_of_the_asset: $value_of_the_asset, total_year_in_service: $total_year_in_service, technology: $technology, asset_status: $asset_status, asset_class: $asset_class, device_group: $device_group, last_date_of_calibration: $last_date_of_calibration, frequency_of_calibration: $frequency_of_calibration, last_date_of_pms: $last_date_of_pms, frequency_of_pms: $frequency_of_pms, qa_due_date: $qa_due_date, warranty_last_date: $warranty_last_date, amc_yes_no: $amc_yes_no, amc_last_date: $amc_last_date, cmc_yes_no: $cmc_yes_no, cmc_last_date: $cmc_last_date, asset_code: $asset_code, sp_details: $sp_details }
     })
     .done(function( res ) {
         if(res.status == true){
             $('#orgFormAlert1').css("display", "block");
             $('#asset_id').val(res.asset_id_temp); 
+            $('#asset_code').val(res.asset_code); 
+            $('#total_year_in_service').val(res.total_year_in_service);    
+            alert('Asset updated successfully');
         }else{
             alert($res1.error_message);
         }
@@ -95,13 +100,15 @@ function editTableData($asset_id){
 			$('#asset_class').val($res1.asset_class).trigger('change'); 
 			$('#device_group').val($res1.device_group).trigger('change'); 
 			$('#last_date_of_calibration').val($res1.last_date_of_calibration);  
-			$('#frequency_of_calibration').val($res1.frequency_of_calibration);   
-			$('#frequency_of_calibration_m').val($res1.frequency_of_calibration_m).trigger('change');   
-			$('#frequency_of_calibration_d').val($res1.frequency_of_calibration_d).trigger('change'); 
+			$('#frequency_of_calibration').val($res1.frequency_of_calibration);     
+			$('#frequency_of_calibration_y').val($res1.frequency_of_calibration_y); 
+			$('#frequency_of_calibration_m').val($res1.frequency_of_calibration_m);   
+			$('#frequency_of_calibration_d').val($res1.frequency_of_calibration_d); 
 			$('#last_date_of_pms').val($res1.last_date_of_pms);  
-			$('#frequency_of_pms').val($res1.frequency_of_pms);  
-			$('#frequency_of_pms_m').val($res1.frequency_of_pms_m).trigger('change');  
-			$('#frequency_of_pms_d').val($res1.frequency_of_pms_d).trigger('change'); 
+			$('#frequency_of_pms').val($res1.frequency_of_pms);   
+			$('#frequency_of_pms_y').val($res1.frequency_of_pms_y);  
+			$('#frequency_of_pms_m').val($res1.frequency_of_pms_m);  
+			$('#frequency_of_pms_d').val($res1.frequency_of_pms_d); 
 			$('#qa_due_date').val($res1.qa_due_date);
 			$('#warranty_last_date').val($res1.warranty_last_date); 
 			$('#amc_yes_no').val($res1.amc_yes_no).trigger('change'); 
@@ -209,6 +216,32 @@ function configureDepartmentDropDown(){
     });//end ajax
 }//end
 
+//DeviceGroup
+function configureDeviceGroupDropDown(){
+    $.ajax({
+        method: "POST",
+        url: "asset/function.php",
+        data: { fn: "getAllDeviceGroupName" }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res); 
+        if($res1.status == true){
+            $rows = $res1.data;
+
+            if($rows.length > 0){
+                $('#device_group').html('');
+                $html = "<option value=''>Select</option>";
+
+                for($i = 0; $i < $rows.length; $i++){
+                    $html += "<option value='"+$rows[$i].device_group_id+"'>"+$rows[$i].device_name+"</option>";                    
+                }//end for
+                
+                $('#device_group').html($html);
+            }//end if
+        }        
+    });//end ajax
+}//end
+
 //Facility
 function configureFacilityDropDown(){
     $.ajax({
@@ -237,17 +270,19 @@ function configureFacilityDropDown(){
     });//end ajax
 }//end
 
-$('#frequency_of_calibration_m, #frequency_of_calibration_d').on('change', function(){
+$('#frequency_of_calibration_y, #frequency_of_calibration_m, #frequency_of_calibration_d').on('change', function(){
+    $frequency_of_calibration_y = $('#frequency_of_calibration_y').val();
     $frequency_of_calibration_m = $('#frequency_of_calibration_m').val();
     $frequency_of_calibration_d = $('#frequency_of_calibration_d').val();
-    $frequency_of_calibration = $frequency_of_calibration_m+'|'+$frequency_of_calibration_d;
+    $frequency_of_calibration = $frequency_of_calibration_y+'|'+$frequency_of_calibration_m+'|'+$frequency_of_calibration_d;
     $('#frequency_of_calibration').val($frequency_of_calibration); 
 })
 
-$('#frequency_of_pms_m, #frequency_of_pms_d').on('change', function(){
+$('#frequency_of_pms_y, #frequency_of_pms_m, #frequency_of_pms_d').on('change', function(){
+    $frequency_of_pms_y = $('#frequency_of_pms_y').val();
     $frequency_of_pms_m = $('#frequency_of_pms_m').val();
     $frequency_of_pms_d = $('#frequency_of_pms_d').val();
-    $frequency_of_pms = $frequency_of_pms_m+'|'+$frequency_of_pms_d;
+    $frequency_of_pms = $frequency_of_pms_y+'|'+$frequency_of_pms_m+'|'+$frequency_of_pms_d;
     $('#frequency_of_pms').val($frequency_of_pms); 
 })
 
@@ -446,8 +481,29 @@ $('#clearFormSearch').on('click', function(){
     $('#searchForm').trigger('reset');
 })
 
+$('#amc_yes_no').on('change', function(){
+    $amc_yes_no = $('#amc_yes_no').val(); 
+    $('#block_amc').removeClass('d-block');
+    $('#block_amc').addClass('d-none');
+    if($amc_yes_no == 1){
+        $('#block_amc').removeClass('d-none');
+        $('#block_amc').addClass('d-block');
+    }
+})
+
+$('#cmc_yes_no').on('change', function(){
+    $cmc_yes_no = $('#cmc_yes_no').val(); 
+    $('#block_cmc').removeClass('d-block');
+    $('#block_cmc').addClass('d-none');
+    if($cmc_yes_no == 1){
+        $('#block_cmc').removeClass('d-none');
+        $('#block_cmc').addClass('d-block');
+    }
+})
+
 $(document).ready(function () {
     configureFacilityDropDown();
     configureDepartmentDropDown();
+    configureDeviceGroupDropDown();
     $('.js-example-basic-single').select2();
 });

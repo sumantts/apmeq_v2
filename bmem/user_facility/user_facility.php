@@ -161,8 +161,8 @@ include('common/head.php');
                             </div> 
                                 
                             <div class="col-md-4 mb-3">
-                                <label for="facility_code" class="text-danger">Facility code*</label>
-                                <input type="text" class="form-control" id="facility_code" value="" required> 
+                                <label for="facility_code">Facility code</label>
+                                <input type="text" class="form-control" id="facility_code" value="" readonly> 
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>                                    

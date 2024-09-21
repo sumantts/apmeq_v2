@@ -144,7 +144,7 @@ include('common/head.php');
             <div class="col-sm-12" id="partThree">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Add/update Asset </h5> 
+                        <h5>Add/Update Asset </h5> 
                     </div>
                     <div class="card-body">
                         <div class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;" id="orgFormAlert">
@@ -167,7 +167,7 @@ include('common/head.php');
                                 
                             <div class="col-md-4 mb-3">
                                 <label for="department_id" class="text-danger">Department*</label>
-                                <select class="form-control js-example-basic-single" name="department_id" id="department_id" required>
+                                <select class="form-control js-example-basic-single" name="department_id" id="department_id" required multiple>
                                     <option value="">Select</option> 
                                 </select> 
                             </div>
@@ -219,7 +219,7 @@ include('common/head.php');
                                 
                                 <div class="col-md-4 mb-3">
                                     <label for="total_year_in_service">Total year in service</label>
-                                    <input type="text" class="form-control" id="total_year_in_service" value=""> 
+                                    <input type="text" class="form-control" id="total_year_in_service" value="" readonly> 
                                 </div> 
                                 
                                 <div class="col-md-4 mb-3">
@@ -255,17 +255,9 @@ include('common/head.php');
                                 </div>
                                 
                                 <div class="col-md-4 mb-3">
-                                    <label for="device_group" class="text-danger">Device group*</label>
-                                    <select class="form-control js-example-basic-single" name="device_group" id="device_group" required>
-                                        <option value="">Select</option>
-                                        <option value="1">Scanner</option>
-                                        <option value="2">In vitro Diagnostics</option>
-                                        <option value="3">Readiology</option>
-                                        <option value="4">Monitors</option>
-                                        <option value="5">Crtitical care</option>
-                                        <option value="6">Opthalmology</option>
-                                        <option value="7">Surgical</option>
-                                        <option value="8">Drug Delivery</option> 
+                                    <label for="device_group">Device Group</label>
+                                    <select class="form-control js-example-basic-single" name="device_group" id="device_group">
+                                        <option value="">Select</option>  
                                     </select> 
                                 </div>    
                                 
@@ -283,21 +275,17 @@ include('common/head.php');
                                     <label for="frequency_of_calibration">Frequency of calibration</label>
                                     <input type="hidden" name="frequency_of_calibration" id="frequency_of_calibration" value="">
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <select class="form-control js-example-basic-single" name="frequency_of_calibration_m" id="frequency_of_calibration_m">
-                                                <?php if(sizeof($month_name) > 0){
-                                                    for($m = 0; $m < sizeof($month_name); $m++){ ?>
-                                                <option value="<?=$month_name[$m]->value?>"><?=$month_name[$m]->text?></option>
-                                                <?php } }?>
-                                            </select>
+                                        <div class="col-md-4">
+                                            <label for="y">Year(s)</label>
+                                            <input type="number" class="form-control form-control-sm" name="frequency_of_calibration_y" id="frequency_of_calibration_y">
                                         </div>
-                                        <div class="col-md-6">
-                                            <select class="form-control js-example-basic-single" name="frequency_of_calibration_d" id="frequency_of_calibration_d">
-                                                <?php if(sizeof($week_days) > 0){
-                                                    for($w1 = 0; $w1 < sizeof($week_days); $w1++){ ?>
-                                                <option value="<?=$week_days[$w1]->value?>"><?=$week_days[$w1]->text?></option>
-                                                <?php } }?>
-                                            </select>
+                                        <div class="col-md-4">
+                                            <label for="m">Month(s)</label>
+                                            <input type="number" class="form-control form-control-sm" name="frequency_of_calibration_m" id="frequency_of_calibration_m"> 
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="d">Day(s)</label>
+                                            <input type="number" class="form-control form-control-sm" name="frequency_of_calibration_d" id="frequency_of_calibration_d"> 
                                         </div>
                                     </div>
                                 </div>   
@@ -316,21 +304,17 @@ include('common/head.php');
                                     <label for="frequency_of_pms">Frequency of Preventive Maintenence(PMS)</label>
                                     <input type="hidden" name="frequency_of_pms" id="frequency_of_pms" value="">
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <select class="form-control js-example-basic-single" name="frequency_of_pms_m" id="frequency_of_pms_m">
-                                                <?php if(sizeof($month_name) > 0){
-                                                    for($m1 = 0; $m1 < sizeof($month_name); $m1++){ ?>
-                                                <option value="<?=$month_name[$m1]->value?>"><?=$month_name[$m1]->text?></option>
-                                                <?php } }?>
-                                            </select>
+                                        <div class="col-md-4">
+                                            <label for="y">Year(s)</label>
+                                            <input type="number" class="form-control form-control-sm" name="frequency_of_pms_y" id="frequency_of_pms_y"> 
                                         </div>
-                                        <div class="col-md-6">
-                                            <select class="form-control js-example-basic-single" name="frequency_of_pms_d" id="frequency_of_pms_d">
-                                                <?php if(sizeof($week_days) > 0){
-                                                    for($w = 0; $w < sizeof($week_days); $w++){ ?>
-                                                <option value="<?=$week_days[$w]->value?>"><?=$week_days[$w]->text?></option>
-                                                <?php } }?>
-                                            </select>
+                                        <div class="col-md-4">
+                                            <label for="m">Month(s)</label>
+                                            <input type="number" class="form-control form-control-sm" name="frequency_of_pms_m" id="frequency_of_pms_m"> 
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="d">Day(s)</label>
+                                            <input type="number" class="form-control form-control-sm" name="frequency_of_pms_d" id="frequency_of_pms_d"> 
                                         </div>
                                     </div>
                                 </div>   
@@ -359,7 +343,7 @@ include('common/head.php');
                                     </select> 
                                 </div>  
                                 
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-4 mb-3 d-none" id="block_amc">
                                     <label for="amc_last_date">Last Date of AMC</label>
                                     <input type="date" class="form-control" id="amc_last_date" value=""> 
                                 </div> 
@@ -373,14 +357,14 @@ include('common/head.php');
                                     </select> 
                                 </div>  
                                 
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-4 mb-3 d-none" id="block_cmc">
                                     <label for="cmc_last_date">Last Date of CMC</label>
                                     <input type="date" class="form-control" id="cmc_last_date" value=""> 
                                 </div>   
                                 
                                 <div class="col-md-4 mb-3">
                                     <label for="asset_code">Asset Code</label>
-                                    <input type="text" class="form-control" id="asset_code" value=""> 
+                                    <input type="text" class="form-control" id="asset_code" value="" readonly> 
                                 </div>
                                 
                                 <div class="col-md-12 mb-3">
