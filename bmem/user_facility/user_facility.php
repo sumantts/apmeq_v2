@@ -161,15 +161,15 @@ include('common/head.php');
                             </div> 
                                 
                             <div class="col-md-4 mb-3">
-                                <label for="facility_code">Facility code</label>
-                                <input type="text" class="form-control" id="facility_code" value="" readonly> 
+                                <label for="contact_person" class="text-danger">Contact Person(Phone)*</label>
+                                <input type="text" class="form-control" name="contact_person" id="contact_person" required>
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>                                    
                                 <div class="invalid-feedback">
-                                    Please provide Facility code.
+                                    Please Select Hospital.
                                 </div>
-                            </div>  
+                            </div>   
                                 
                             <div class="col-md-12 mb-3">
                                 <label for="facility_address" class="text-danger">Facility Address*</label>
@@ -227,17 +227,16 @@ include('common/head.php');
                             </div> 
                                 
                             <div class="col-md-4 mb-3">
-                                <label for="hospital_id" class="text-danger">Hospital*</label>
-                                <select class="form-control js-example-basic-single" name="hospital_id" id="hospital_id" required>
-                                    <option value="">Select</option> 
-                                </select>
+                                <label for="facility_code">Facility code</label>
+                                <input type="text" class="form-control" id="facility_code" value="" readonly> 
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>                                    
                                 <div class="invalid-feedback">
-                                    Please Select Hospital.
+                                    Please provide Facility code.
                                 </div>
-                            </div> 
+                            </div>
+
                             </div>
 
                             <div class="form-row">                               

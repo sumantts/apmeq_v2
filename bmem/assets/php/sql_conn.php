@@ -3,7 +3,7 @@
 		$host = 'localhost';
 		$username = 'root';
 		$password = '';
-		$dbname = 'apmeq_v2';
+		$dbname = 'apmeqcom_apmeq';
 	}else{
 		$host = 'localhost';
 		$username = 'apmeqcom_apmeq';

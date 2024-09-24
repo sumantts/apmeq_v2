@@ -21,16 +21,16 @@
 		$nabh_accrediated = $_POST['nabh_accrediated'];
 		$nabl_accrediated = $_POST['nabl_accrediated'];
 		$department_id = $_POST['department_id'];
-		$hospital_id = $_POST['hospital_id'];   
+		$contact_person = $_POST['contact_person'];   
 		$user_id = $_SESSION["user_id"];
 		
 		try {
 			if($facility_id > 0){
 				$status = true;
-				$sql = "UPDATE facility_master SET hospital_id = '" .$hospital_id. "', department_id = '" .$department_id. "', facility_name = '" .$facility_name. "', facility_type = '" .$facility_type. "', facility_address = '" .$facility_address. "', nabh_accrediated = '" .$nabh_accrediated. "', nabl_accrediated = '" .$nabl_accrediated. "' WHERE facility_id = '" .$facility_id. "' ";
+				$sql = "UPDATE facility_master SET contact_person = '" .$contact_person. "', department_id = '" .$department_id. "', facility_name = '" .$facility_name. "', facility_type = '" .$facility_type. "', facility_address = '" .$facility_address. "', nabh_accrediated = '" .$nabh_accrediated. "', nabl_accrediated = '" .$nabl_accrediated. "' WHERE facility_id = '" .$facility_id. "' ";
 				$result = $mysqli->query($sql); 
 			}else{
-				$sql = "INSERT INTO facility_master (hospital_id, department_id, facility_name, facility_type, facility_address, nabh_accrediated, nabl_accrediated, user_id) VALUES ('" .$hospital_id. "', '" .$department_id. "', '" .$facility_name. "', '" .$facility_type. "', '" .$facility_address. "', '" .$nabh_accrediated. "', '" .$nabl_accrediated. "', '" .$user_id. "')";
+				$sql = "INSERT INTO facility_master (contact_person, department_id, facility_name, facility_type, facility_address, nabh_accrediated, nabl_accrediated, user_id) VALUES ('" .$contact_person. "', '" .$department_id. "', '" .$facility_name. "', '" .$facility_type. "', '" .$facility_address. "', '" .$nabh_accrediated. "', '" .$nabl_accrediated. "', '" .$user_id. "')";
 				$result = $mysqli->query($sql);
 				$facility_id = $mysqli->insert_id;
 				if($facility_id > 0){
@@ -68,7 +68,7 @@
 		if ($result->num_rows > 0) {
 			$status = true;	
 			$row = $result->fetch_array();
-			$hospital_id = $row['hospital_id'];		
+			$contact_person = $row['contact_person'];		
 			$department_id = json_decode($row['department_id']);		
 			$facility_name = $row['facility_name'];			
 			$facility_type = $row['facility_type'];		
@@ -82,7 +82,7 @@
 		}
 		//$mysqli->close();
 
-		$return_array['hospital_id'] = $hospital_id;
+		$return_array['contact_person'] = $contact_person;
 		$return_array['department_id'] = $department_id;
 		$return_array['facility_name'] = $facility_name;
 		$return_array['facility_type'] = $facility_type;
@@ -143,13 +143,13 @@
 			$status = true;
 			$slno = 1;
 			while($row = $result->fetch_array()){
-				$hospital_id = $row['hospital_id'];	
+				$contact_person = $row['contact_person'];	
 				$hospital_name = $row['hospital_name'];			
 				$hospital_code = $row['hospital_code'];		
 				$hospital_address = $row['hospital_address'];
 				$data = new stdClass();
 
-				$data->hospital_id = $hospital_id;
+				$data->contact_person = $contact_person;
 				$data->hospital_name = $hospital_name;
 				$data->hospital_code = $hospital_code;
 				$data->hospital_address = $hospital_address;
