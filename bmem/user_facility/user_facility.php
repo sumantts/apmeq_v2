@@ -159,6 +159,7 @@ include('common/head.php');
                                     Please select Facility Type.
                                 </div>
                             </div> 
+                            
                                 
                             <div class="col-md-4 mb-3">
                                 <label for="contact_person" class="text-danger">Contact Person(Phone)*</label>
