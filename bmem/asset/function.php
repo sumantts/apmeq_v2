@@ -212,6 +212,13 @@
 		if ($result->num_rows > 0) {
 			$status = true;	
 			$row = $result->fetch_array();
+			$frequency_of_pms_y = 0;
+			$frequency_of_pms_m = 0;
+			$frequency_of_pms_d = 0;
+
+			$frequency_of_calibration_y = 0;
+			$frequency_of_calibration_m = 0;
+			$frequency_of_calibration_d = 0;
 
 			$asset_id = $row['asset_id']; 
 			$facility_id = $row['facility_id']; 
@@ -232,15 +239,27 @@
 			$last_date_of_calibration = $row['last_date_of_calibration'];  
 			$frequency_of_calibration = $row['frequency_of_calibration']; 
 			$frequency_of_calibration_sp = explode('|', $frequency_of_calibration);
-			$frequency_of_calibration_y = $frequency_of_calibration_sp[0];
-			$frequency_of_calibration_m = $frequency_of_calibration_sp[1];
-			$frequency_of_calibration_d = $frequency_of_calibration_sp[2];
+			if(sizeof($frequency_of_calibration_sp) > 0){
+				$frequency_of_calibration_y = $frequency_of_calibration_sp[0];
+			}
+			if(sizeof($frequency_of_calibration_sp) > 1){
+				$frequency_of_calibration_m = $frequency_of_calibration_sp[1];
+			}
+			if(sizeof($frequency_of_calibration_sp) > 2){
+				$frequency_of_calibration_d = $frequency_of_calibration_sp[2];
+			}
 			$last_date_of_pms = $row['last_date_of_pms'];  
 			$frequency_of_pms = $row['frequency_of_pms']; 
 			$frequency_of_pms_st = explode('|', $frequency_of_pms);
-			$frequency_of_pms_y = $frequency_of_pms_st[0];
-			$frequency_of_pms_m = $frequency_of_pms_st[1];
-			$frequency_of_pms_d = $frequency_of_pms_st[2];
+			if(sizeof($frequency_of_pms_st) > 0){
+				$frequency_of_pms_y = $frequency_of_pms_st[0];
+			}
+			if(sizeof($frequency_of_pms_st) > 1){
+				$frequency_of_pms_m = $frequency_of_pms_st[1];
+			}			
+			if(sizeof($frequency_of_pms_st) > 2){
+				$frequency_of_pms_d = $frequency_of_pms_st[2];
+			}
 			$qa_due_date = $row['qa_due_date'];
 			$warranty_last_date = $row['warranty_last_date']; 
 			$amc_yes_no = $row['amc_yes_no']; 

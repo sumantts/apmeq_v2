@@ -170,6 +170,7 @@ include('common/head.php');
                                 <select class="form-control js-example-basic-single" name="department_id" id="department_id" required multiple>
                                     <option value="">Select</option> 
                                 </select> 
+                                <input type="hidden" name="h_dept_edit_ids" id="h_dept_edit_ids" value="">
                             </div>
                                 
                             <div class="col-md-4 mb-3">

@@ -19,6 +19,7 @@ $('#clearForm').on('click', function(){
     $('#frequency_of_pms_d').val('');
     $('#cmc_yes_no').val('').trigger('change');
     $('#asset_id').val('0'); 
+    $('#h_dept_edit_ids').val('');
 })
 
 $('#myForm').on('submit', function(){
@@ -63,6 +64,7 @@ $('#myForm').on('submit', function(){
             $('#asset_id').val(res.asset_id_temp); 
             $('#asset_code').val(res.asset_code); 
             $('#total_year_in_service').val(res.total_year_in_service);    
+            $('#h_dept_edit_ids').val('');
             alert('Asset updated successfully');
         }else{
             alert($res1.error_message);
@@ -84,8 +86,9 @@ function editTableData($asset_id){
         $res1 = JSON.parse(res);
         if($res1.status == true){
             $('#asset_id').val($res1.asset_id); 
-			$('#facility_id_dd').val($res1.facility_id).trigger('change'); 
-			$('#department_id').val($res1.department_id).trigger('change'); 
+			$('#facility_id_dd').val($res1.facility_id).trigger('change');
+            //$('#department_id').val($res1.department_id).trigger('change'); 
+            $('#h_dept_edit_ids').val($res1.department_id)
 			$('#equipment_name').val($res1.equipment_name); 
 			$('#asset_make').val($res1.asset_make); 
 			$('#asset_model').val($res1.asset_model); 
@@ -192,6 +195,28 @@ function populateDataTable(){
 
 //Department
 function configureDepartmentDropDown(){
+    $.ajax({
+        method: "POST",
+        url: "user_facility/function.php",
+        data: { fn: "getAllDepartmentName"}
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res); 
+        if($res1.status == true){
+            $rows = $res1.data;
+
+            if($rows.length > 0){
+                $('#department_id').html('');
+                $html = "";
+
+                for($i = 0; $i < $rows.length; $i++){
+                    $html += "<option value='"+$rows[$i].department_id+"'>"+$rows[$i].department_name+"</option>";                    
+                }//end for
+                
+                $('#department_id').html($html);
+            }//end if
+        }        
+    });//end ajax
 }//end
 
 //DeviceGroup
@@ -457,6 +482,7 @@ $('#clearFormSearch').on('click', function(){
     $('#partThree').removeClass('d-none').show();
     $('#facility_id_sr').val('').trigger('change');
     $('#searchForm').trigger('reset');
+    $('#h_dept_edit_ids').val('');
 })
 
 $('#amc_yes_no').on('change', function(){
@@ -487,28 +513,37 @@ $(document).ready(function () {
 });
 
 $('#facility_id_dd').on('change', function(){
-    $facility_id_dd = $('#facility_id_dd').val();
+    setTimeout(function(){
+        $facility_id_dd = $('#facility_id_dd').val();
+        $h_dept_edit_ids = $('#h_dept_edit_ids').val();
+        console.log('function call with ids: ' + $h_dept_edit_ids);
 
-    $.ajax({
-        method: "POST",
-        url: "asset/function.php",
-        data: { fn: "getAllDepartmentName", facility_id_dd: $facility_id_dd }
-    })
-    .done(function( res ) {
-        $res1 = JSON.parse(res); 
-        if($res1.status == true){
-            $rows = $res1.data;
+        $.ajax({
+            method: "POST",
+            url: "asset/function.php",
+            data: { fn: "getAllDepartmentName", facility_id_dd: $facility_id_dd }
+        })
+        .done(function( res ) {
+            $res1 = JSON.parse(res); 
+            if($res1.status == true){
+                $rows = $res1.data;
 
-            if($rows.length > 0){
-                $('#department_id').html('');
-                $html = "<option value=''>Select</option>";
+                if($rows.length > 0){
+                    $('#department_id').html('');
+                    $html = "";
 
-                for($i = 0; $i < $rows.length; $i++){
-                    $html += "<option value='"+$rows[$i].department_id+"'>"+$rows[$i].department_name+"</option>";                    
-                }//end for
-                
-                $('#department_id').html($html);
-            }//end if
-        }        
-    });//end ajax
+                    $saved_ids = $h_dept_edit_ids.split(",");
+                    for($i = 0; $i < $rows.length; $i++){
+                        $saved_text = '';
+                        if($saved_ids.includes($rows[$i].department_id)){
+                            $saved_text = 'selected';
+                        }
+                        $html += "<option value='"+$rows[$i].department_id+"' "+$saved_text+">"+$rows[$i].department_name+"</option>";                    
+                    }//end for
+                    
+                    $('#department_id').html($html);
+                }//end if
+            }        
+        });//end ajax 
+    },500);
 })
