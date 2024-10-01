@@ -192,28 +192,6 @@ function populateDataTable(){
 
 //Department
 function configureDepartmentDropDown(){
-    $.ajax({
-        method: "POST",
-        url: "user_facility/function.php",
-        data: { fn: "getAllDepartmentName" }
-    })
-    .done(function( res ) {
-        $res1 = JSON.parse(res); 
-        if($res1.status == true){
-            $rows = $res1.data;
-
-            if($rows.length > 0){
-                $('#department_id').html('');
-                $html = "<option value=''>Select</option>";
-
-                for($i = 0; $i < $rows.length; $i++){
-                    $html += "<option value='"+$rows[$i].department_id+"'>"+$rows[$i].department_name+"</option>";                    
-                }//end for
-                
-                $('#department_id').html($html);
-            }//end if
-        }        
-    });//end ajax
 }//end
 
 //DeviceGroup
@@ -503,7 +481,34 @@ $('#cmc_yes_no').on('change', function(){
 
 $(document).ready(function () {
     configureFacilityDropDown();
-    configureDepartmentDropDown();
+    //configureDepartmentDropDown();
     configureDeviceGroupDropDown();
     $('.js-example-basic-single').select2();
 });
+
+$('#facility_id_dd').on('change', function(){
+    $facility_id_dd = $('#facility_id_dd').val();
+
+    $.ajax({
+        method: "POST",
+        url: "asset/function.php",
+        data: { fn: "getAllDepartmentName", facility_id_dd: $facility_id_dd }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res); 
+        if($res1.status == true){
+            $rows = $res1.data;
+
+            if($rows.length > 0){
+                $('#department_id').html('');
+                $html = "<option value=''>Select</option>";
+
+                for($i = 0; $i < $rows.length; $i++){
+                    $html += "<option value='"+$rows[$i].department_id+"'>"+$rows[$i].department_name+"</option>";                    
+                }//end for
+                
+                $('#department_id').html($html);
+            }//end if
+        }        
+    });//end ajax
+})

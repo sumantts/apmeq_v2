@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 24, 2024 at 10:26 PM
+-- Generation Time: Oct 01, 2024 at 08:00 AM
 -- Server version: 8.0.39
 -- PHP Version: 8.3.11
 
@@ -68,7 +68,22 @@ CREATE TABLE `asset_details` (
 --
 
 INSERT INTO `asset_details` (`asset_id`, `facility_id`, `department_id`, `equipment_name`, `asset_make`, `asset_model`, `slerial_number`, `asset_specifiaction`, `date_of_installation`, `ins_certificate`, `asset_supplied_by`, `value_of_the_asset`, `total_year_in_service`, `technology`, `asset_status`, `asset_class`, `device_group`, `last_date_of_calibration`, `calibration_attachment`, `frequency_of_calibration`, `last_date_of_pms`, `pms_attachment`, `frequency_of_pms`, `qa_due_date`, `qa_attachment`, `warranty_last_date`, `amc_yes_no`, `amc_last_date`, `cmc_yes_no`, `cmc_last_date`, `asset_code`, `sp_details`, `row_status`) VALUES
-(1, 2, '[\"1\"]', 'Autoclave', 'NAT Steel', 'ghhg', '1246598', 'NA', '2023-01-01', '', 'NAT steel', '450000', '+1 years 8 months', 2, 1, 2, 9, '2023-02-02', '', '1||', '2024-08-15', '', '|4|', '0000-00-00', '', '2024-07-10', 2, '0000-00-00', 1, '2024-11-21', '000200001', '8910420169', 1);
+(1, 2, '[\"1\"]', 'Autoclave', 'NAT Steel', 'ghhg', '1246598', 'NA', '2023-01-01', '', 'NAT steel', '450000', '+1 years 8 months', 2, 1, 2, 9, '2023-02-02', '', '1||', '2024-08-15', '', '|4|', '0000-00-00', '', '2024-07-10', 2, '0000-00-00', 1, '2024-11-21', '000200001', '8910420169', 1),
+(2, 1, '[\"1\"]', 'Radiant Warmer', 'Phoenix Medical', 'NW101', '1', '', '2024-01-01', '', 'ABC Limited', '40000', '+0 years 8 months', 2, 1, 1, 10, '2024-06-01', '', '1|0|0', '2024-08-20', '', '0|3|0', '2025-06-01', '', '2026-01-01', 2, '0000-00-00', 2, '0000-00-00', '000100002', 'ABC Limited', 1),
+(3, 1, '[\"\",\"1\"]', 'Radiant Warmer', 'Phoenix Medical', 'NW101', '2', '', '0000-00-00', '', 'ABC Limited', '40000', '-0 years 0 months', 2, 1, 1, 10, '0000-00-00', '', '1|0|0', '2024-08-20', '', '|3|', '2025-01-01', '', '2026-01-01', 0, '0000-00-00', 2, '0000-00-00', '000100003', 'ABC Limited', 1),
+(4, 1, '[\"1\"]', 'Radiant Warmer', 'Phoenix Medical', 'NW101', '3', '', '2024-01-01', '', 'ABC Limited', '40000', '+0 years 8 months', 2, 1, 1, 10, '0000-00-00', '', '1||', '2024-08-20', '', '|6|', '2025-06-20', '', '2026-01-01', 2, '0000-00-00', 2, '0000-00-00', '000200004', 'ABC Limited', 1),
+(5, 1, '[\"5\"]', 'USG', 'GE', 'Alpha', 'DF3508', '', '2013-09-05', '', 'GE', '500000', '+11 years 0 months', 2, 1, 2, 1, '2024-08-01', '', '1||', '2024-09-04', '', '|6|', '0000-00-00', '', '2014-09-28', 2, '0000-00-00', 1, '2024-11-02', '000100005', '8910420169', 1),
+(6, 4, '[\"5\"]', 'ECG', 'BPL', 'Caridiart 08T', 'CARD123456', 'NA', '2024-01-01', '', 'Electro care service pvt ltd', '65000', '+0 years 8 months', 2, 1, 2, 4, '2024-08-01', '', '1||', '2024-09-02', '', '|6|', '0000-00-00', '', '2025-02-01', 2, '0000-00-00', 2, '0000-00-00', '000400006', '8910420169', 1),
+(7, 4, '[\"1\"]', 'Baby Incubator ', 'Nice neo tech', 'Incubator T6', 'Incub12345678', 'With photo therapy ', '2023-09-20', '', 'Eastern meditech ', '100000', '+1 years 0 months', 2, 1, 1, 0, '2024-08-01', '', '1||', '0000-00-00', '', '', '0000-00-00', '', '2024-09-23', 0, '0000-00-00', 0, '0000-00-00', '000400007', '8910420169', 1),
+(8, 4, '[\"5\"]', 'Otoscope ', 'Hein', 'Oto34', '34561234', 'Manual', '2020-09-29', '', 'Eastern meditech ', '45000', '+4 years 0 months', 2, 1, 2, 1, '2024-02-01', '', '|6|', '2024-07-02', '', '|4|', '0000-00-00', '', '0000-00-00', 2, '0000-00-00', 2, '0000-00-00', '000400008', '8910420169', 1),
+(9, 2, '[\"1\"]', 'Ventilator ', 'Draegar', 'Babylog ', '3598456', '', '2020-09-29', '', 'Bhogilal India pvt.ltd', '1200000', '+4 years 0 months', 2, 1, 1, 5, '2023-08-01', '', '|4|', '2024-02-06', '', '|4|', '0000-00-00', '', '2021-09-14', 1, '2025-02-06', 0, '0000-00-00', '000200009', '8910420169', 1),
+(10, 2, '[\"5\"]', 'ECG', 'BPL', 'Caridiart 08T', 'CARD123457', 'NA', '2022-11-01', '', 'Electro care service pvt ltd', '65000', '+1 years 10 months', 2, 1, 2, 0, '2024-02-01', '', '1||', '0000-00-00', '', '|4|', '0000-00-00', '', '2023-11-30', 2, '0000-00-00', 2, '0000-00-00', '000200010', '8910420169', 1),
+(11, 3, '[\"5\"]', 'ECG', 'BPL', 'Caridiart 08T', 'CARD123458', 'NA', '2022-08-01', '', 'Electro care service pvt ltd', '65000', '+2 years 1 months', 2, 1, 2, 0, '2024-01-01', '', '1||', '2024-07-01', '', '1||', '0000-00-00', '', '2023-08-31', 0, '0000-00-00', 1, '2024-06-28', '000300011', '8910420169', 1),
+(12, 3, '[\"5\"]', 'ECG', 'BPL', 'Caridiart 01', 'CARD06123', 'NA', '2000-06-28', '', 'Electro care service pvt ltd', '15000', '+24 years 3 months', 1, 2, 2, 0, '0000-00-00', '', '1||', '0000-00-00', '', '1||', '0000-00-00', '', '0000-00-00', 0, '0000-00-00', 0, '0000-00-00', '000300012', '8910420169', 1),
+(13, 3, '[\"1\"]', 'Ventilator ', 'Draegar ', 'Babylog', 'Drg123456', 'NA', '2024-03-01', '', 'Eastern meditech ', '800000', '+0 years 6 months', 2, 1, 1, 0, '0000-00-00', '', '1||', '0000-00-00', '', '1||', '0000-00-00', '', '2026-09-29', 0, '0000-00-00', 0, '0000-00-00', '000300013', '8910420169', 1),
+(14, 3, '[\"1\"]', 'USG', 'GE', 'Sono View ', '76541234', 'CW, Linear probe, Convex Probe, cardiac probe, and micro convex probe', '2023-10-01', '', 'GE', '2000000', '+0 years 11 months', 2, 1, 2, 1, '0000-00-00', '', '1||', '0000-00-00', '', '1||', '0000-00-00', '', '2024-10-03', 0, '0000-00-00', 0, '0000-00-00', '000300014', '8910420169', 1),
+(15, 3, '[\"1\"]', 'Multi Para Monitor', 'Dot medical ', 'Dot MPM', '23457654', '', '2023-03-01', '', 'Eastern meditech ', '45000', '+1 years 6 months', 2, 1, 2, 4, '0000-00-00', '', '1||', '0000-00-00', '', '|4|', '0000-00-00', '', '2024-06-03', 0, '0000-00-00', 0, '0000-00-00', '000300015', '8910420169', 1),
+(16, 2, '[\"5\"]', 'ECG', 'BPL', 'Caridiart 08T', 'CARD123459', '', '2022-09-01', '', 'Electro care service pvt ltd', '65000', '+2 years 0 months', 2, 2, 1, 0, '2024-06-01', '', '1||', '2024-07-02', '', '|4|', '0000-00-00', '', '0000-00-00', 0, '0000-00-00', 1, '2024-06-04', '000200016', '8910420169', 1);
 
 -- --------------------------------------------------------
 
@@ -150,13 +165,14 @@ CREATE TABLE `device_group_list` (
 INSERT INTO `device_group_list` (`device_group_id`, `device_name`, `device_status`) VALUES
 (1, 'Scanner', 1),
 (2, 'In vitro Diagnostics', 1),
-(3, 'Readiology', 1),
+(3, 'Radiology', 1),
 (4, 'Monitors', 1),
 (5, 'Crtitical Care', 1),
 (6, 'Opthalmology', 1),
 (7, 'Surgical', 1),
 (8, 'Drug Delivery', 1),
-(9, 'Sterilization', 1);
+(9, 'Sterilization', 1),
+(10, 'Neonatal & Pediatric', 1);
 
 -- --------------------------------------------------------
 
@@ -174,6 +190,7 @@ CREATE TABLE `facility_master` (
   `facility_address` text COLLATE utf8mb4_general_ci NOT NULL,
   `nabh_accrediated` tinyint(1) NOT NULL,
   `nabl_accrediated` tinyint(1) NOT NULL,
+  `contact_person` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `user_id` int NOT NULL COMMENT 'PK of user_details'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -181,9 +198,11 @@ CREATE TABLE `facility_master` (
 -- Dumping data for table `facility_master`
 --
 
-INSERT INTO `facility_master` (`facility_id`, `hospital_id`, `department_id`, `facility_name`, `facility_type`, `facility_code`, `facility_address`, `nabh_accrediated`, `nabl_accrediated`, `user_id`) VALUES
-(1, 2, '[\"3\",\"1\"]', 'Radhanagar RH', 1, '0001', 'Radhanagr, Bishnupur, Bankura', 2, 2, 1),
-(2, 2, '[\"3\",\"5\",\"1\"]', 'Bangnur SSh', 1, '0002', 'yhjgsakuh', 1, 2, 1);
+INSERT INTO `facility_master` (`facility_id`, `hospital_id`, `department_id`, `facility_name`, `facility_type`, `facility_code`, `facility_address`, `nabh_accrediated`, `nabl_accrediated`, `contact_person`, `user_id`) VALUES
+(1, 2, '[\"5\",\"1\"]', 'Hospital 1', 1, '0001', 'Kolkata, 7123456', 1, 2, '+91 78901 32902', 1),
+(2, 2, '[\"5\",\"1\"]', 'Hospital 2', 1, '0002', 'Kolkata, 711340', 1, 2, '+91 78901 32902', 1),
+(3, 0, '[\"5\",\"1\"]', 'Hospital 3', 1, '0003', 'Howrah', 2, 2, '+91 78901 32902', 1),
+(4, 0, '[\"5\",\"1\"]', 'Hospital 4', 1, '0004', 'Kolkata 45', 1, 1, '+91 78901 32902', 1);
 
 -- --------------------------------------------------------
 
@@ -389,7 +408,7 @@ ALTER TABLE `user_type`
 -- AUTO_INCREMENT for table `asset_details`
 --
 ALTER TABLE `asset_details`
-  MODIFY `asset_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `asset_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `asset_type_list`
@@ -413,13 +432,13 @@ ALTER TABLE `department_list`
 -- AUTO_INCREMENT for table `device_group_list`
 --
 ALTER TABLE `device_group_list`
-  MODIFY `device_group_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `device_group_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `facility_master`
 --
 ALTER TABLE `facility_master`
-  MODIFY `facility_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `facility_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `hospital_list`

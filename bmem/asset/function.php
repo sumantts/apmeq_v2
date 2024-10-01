@@ -508,6 +508,52 @@
 		$return_result['status'] = $status;
 		//sleep(1);
 		echo json_encode($return_result);
-	}//end function deleteItem
+	}//end function deleteItem 
+	
+	//Get Dept name
+	if($fn == 'getAllDepartmentName'){
+		$return_array = array();
+		$status = true;
+		$mainData = array();
+		$ids = '';
+		$facility_id_dd = $_POST['facility_id_dd'];
+
+		$sql1 = "SELECT department_id FROM facility_master WHERE facility_id = '" .$facility_id_dd. "' ";
+		$result1 = $mysqli->query($sql1);
+		$row1 = $result1->fetch_array();
+		$department_ids = json_decode($row1['department_id']);
+		foreach($department_ids AS $key => $val){
+			$ids .= $val.',';
+		}
+		$ids = substr($ids, 0, -1);
+
+		$sql = "SELECT * FROM department_list WHERE department_id IN ($ids) ORDER BY department_name ASC";
+		$result = $mysqli->query($sql);
+
+		if ($result->num_rows > 0) {
+			$status = true;
+			$slno = 1;
+			while($row = $result->fetch_array()){
+				$department_id = $row['department_id'];	
+				$department_name = $row['department_name'];	
+				$department_code = $row['department_code'];	
+				$data = new stdClass();
+
+				$data->department_id = $department_id;
+				$data->department_name = $department_name;
+				$data->department_code = $department_code;
+				
+				array_push($mainData, $data);
+				$slno++;
+			}
+		} else {
+			$status = false;
+		}
+		//$mysqli->close();
+
+		$return_array['status'] = $status;
+		$return_array['data'] = $mainData;
+    	echo json_encode($return_array);
+	}//function end	
 
 ?>
