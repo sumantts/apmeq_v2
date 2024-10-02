@@ -2,34 +2,22 @@
 if(!$_SESSION["user_id"] || !$_SESSION["user_type_code"]){header('location:?p=signin');}
 include('common/head.php');  
 ?>
-<script type="text/javascript">   
-
-</script>
-<style>
-    /*table td {
-        word-break: break-word;
-        vertical-align: top;
-        white-space: normal !important;
-    }*/
-</style>
 
 <body class="">
-	<!-- [ Pre-loader ] start -->
-	<div class="loader-bg">
-		<div class="loader-track">
-			<div class="loader-fill"></div>
-		</div>
-	</div>
-	<!-- [ Pre-loader ] End -->
-	<!-- [ navigation menu ] start -->	
-	<?php include('common/nav.php'); ?>
-	<!-- [ navigation menu ] end -->
+<!-- [ Pre-loader ] start -->
+<div class="loader-bg">
+    <div class="loader-track">
+        <div class="loader-fill"></div>
+    </div>
+</div>
+<!-- [ Pre-loader ] End -->
+<!-- [ navigation menu ] start -->	
+<?php include('common/nav.php'); ?>
+<!-- [ navigation menu ] end -->
 
-	<!-- [ Header ] start -->
-	<?php include('common/top_bar.php'); ?>
-	<!-- [ Header ] end -->
-	
-	
+<!-- [ Header ] start -->
+<?php include('common/top_bar.php'); ?>
+<!-- [ Header ] end -->
 
 <!-- [ Main Content ] start -->
 <div class="pcoded-main-container">

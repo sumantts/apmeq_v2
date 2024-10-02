@@ -8,6 +8,42 @@
 	    $fn = $_POST["fn"];
 	}
 
+	//update Generated Form data
+	if($fn == 'updateGeneratedFormdata'){
+		$return_result = array();
+		$status = true;
+
+		$pms_info_id = $_POST['pms_info_id'];
+		$facility_id = $_POST['facility_id'];
+		$facility_code = $_POST['facility_code'];
+		$department_id = $_POST['department_id'];
+		$device_group = $_POST['device_group'];
+		$asset_class = $_POST['asset_class'];
+		$equipment_name = $_POST['equipment_name'];
+		$equipment_make_model = $_POST['equipment_make_model'];
+		$equipment_sl_no = $_POST['equipment_sl_no'];
+		$pms_due_date = $_POST['pms_due_date'];
+		$supplied_by = $_POST['supplied_by'];
+		$service_provider_details = $_POST['service_provider_details'];
+		$pms_planned_date = $_POST['pms_planned_date'];
+		
+		try {
+			if($pms_info_id > 0){
+				$status = true;
+				$pms_data_updated = date('Y-m-d H:i:s');
+				$row_status = 2;
+				$sql = "UPDATE pms_info SET facility_id = '" .$facility_id. "', facility_code = '" .$facility_code. "', department_id = '" .$department_id. "', device_group = '" .$device_group. "', asset_class = '" .$asset_class. "', equipment_name = '" .$equipment_name. "', equipment_make_model = '" .$equipment_make_model. "', equipment_sl_no = '" .$equipment_sl_no. "', pms_due_date = '" .$pms_due_date. "', supplied_by = '" .$supplied_by. "', service_provider_details = '" .$service_provider_details. "', pms_planned_date = '" .$pms_planned_date. "', facility_code = '" .$facility_code. "', pms_data_updated = '" .$pms_data_updated. "', row_status = '" .$row_status. "' WHERE pms_info_id = '" .$pms_info_id. "' ";
+				$result = $mysqli->query($sql);
+			}	
+		} catch (PDOException $e) {
+			die("Error occurred:" . $e->getMessage());
+		}
+		$return_result['status'] = $status;
+		
+		echo json_encode($return_result);
+	}//Save function end	
+
+
 	//Save function start
 	if($fn == 'saveFormData'){
 		$return_result = array();
@@ -236,6 +272,54 @@
     	echo json_encode($return_array);
 	}//function end
 
+	//function start
+	if($fn == 'loadFormdata'){
+		$return_array = array();
+		$status = true;
+		$mainData = array();
+		$pms_info_id = $_POST['pms_info_id'];
+
+		$sql = "SELECT * FROM pms_info WHERE pms_info_id = '" .$pms_info_id. "'";
+		$result = $mysqli->query($sql);
+
+		if ($result->num_rows > 0) {
+			$status = true;	
+			$row = $result->fetch_array();
+
+			$facility_id = $row['facility_id'];
+			$facility_code = $row['facility_code'];
+			$department_id = $row['department_id'];
+			$device_group = $row['device_group'];
+			$asset_class = $row['asset_class'];
+			$equipment_name = $row['equipment_name'];
+			$equipment_make_model = $row['equipment_make_model'];
+			$equipment_sl_no = $row['equipment_sl_no'];
+			$pms_due_date = $row['pms_due_date'];
+			$supplied_by = $row['supplied_by'];
+			$service_provider_details = $row['service_provider_details'];
+			$pms_planned_date = $row['pms_planned_date'];
+		} else {
+			$status = false;
+		}
+		//$mysqli->close();
+
+		$return_array['facility_id'] = $facility_id;
+		$return_array['facility_code'] = $facility_code;
+		$return_array['department_id'] = $department_id;
+		$return_array['device_group'] = $device_group;
+		$return_array['asset_class'] = $asset_class;
+		$return_array['equipment_name'] = $equipment_name;
+		$return_array['equipment_make_model'] = $equipment_make_model;		
+		$return_array['equipment_sl_no'] = $equipment_sl_no;
+		$return_array['pms_due_date'] = $pms_due_date;
+		$return_array['supplied_by'] = $supplied_by;
+		$return_array['service_provider_details'] = $service_provider_details;
+		$return_array['pms_planned_date'] = $pms_planned_date; 
+
+		$return_array['status'] = $status;
+    	echo json_encode($return_array);
+	}//function end
+
 	//Delete function
 	if($fn == 'deleteTableData'){
 		$return_result = array();
@@ -254,77 +338,37 @@
 		echo json_encode($return_result);
 	}//end function deleteItem
 
+	//generate Link
+	if($fn == 'generateLink'){
+		$return_result = array(); 
+		$status = true;	
+		$error_message = '';
+		$pms_id = 0;
+		$link_generated_by = $_SESSION["user_id"];
+		$link_generate_time = date('Y-m-d H:i:s');
+		
+		$sql = "INSERT INTO pms_info (link_generated_by, link_generate_time) VALUES ('" .$link_generated_by. "', '" .$link_generate_time. "')";
+		$result = $mysqli->query($sql);
+		$pms_id = $mysqli->insert_id;
+
+		if($pms_id > 0){
+			$status = true;  
+			$pms_info_id = str_pad($pms_id, 4, '0', STR_PAD_LEFT);
+
+			$upd_sql = "UPDATE pms_info SET pms_info_id = '" .$pms_info_id. "' WHERE pms_id = '" .$pms_id. "' ";
+			$result_upd = $mysqli->query($upd_sql); 
+
+		}else{
+			$return_result['error_message'] = 'Data Insert Error';
+			$status = false;
+		}
+
+		$return_result['error_message'] = $error_message; 
+		$return_result['status'] = $status; 
+		$return_result['pms_info_id'] = $pms_info_id; 
+		echo json_encode($return_result);
+	}//end function deleteItem
 	
-
-	//Get Category name
-	if($fn == 'getAllCategoryName'){
-		$return_array = array();
-		$status = true;
-		$mainData = array();
-		$parent_category_id = 0;
-
-		$sql = "SELECT * FROM category_list WHERE activity_status = 'active' ORDER BY category_name ASC";
-		$result = $mysqli->query($sql);
-
-		if ($result->num_rows > 0) {
-			$status = true;
-			$slno = 1;
-			while($row = $result->fetch_array()){
-				$category_id = $row['category_id'];	
-				$category_name = $row['category_name'];			
-				$category_slug = $row['category_slug'];
-				$data = new stdClass();
-
-				$data->category_id = $category_id;
-				$data->category_name = $category_name;
-				$data->category_slug = $category_slug;
-				
-				array_push($mainData, $data);
-				$slno++;
-			}
-		} else {
-			$status = false;
-		} 
-
-		$return_array['status'] = $status;
-		$return_array['data'] = $mainData;
-		echo json_encode($return_array);
-	}//end if
-
-	//Get Course name
-	if($fn == 'getAllCourseName'){
-		$return_array = array();
-		$status = true;
-		$mainData = array(); 
-
-		$sql = "SELECT * FROM course_fee_detail ORDER BY course_name ASC";
-		$result = $mysqli->query($sql);
-
-		if ($result->num_rows > 0) {
-			$status = true;
-			$slno = 1;
-			while($row = $result->fetch_array()){
-				$course_id = $row['course_id'];	
-				$course_name = $row['course_name'];			
-				$course_fee = $row['course_fee'];		
-				$course_duration = $row['course_duration'];
-				$data = new stdClass();
-
-				$data->course_id = $course_id;
-				$data->course_name = $course_name;
-				$data->course_fee = $course_fee;
-				$data->course_duration = $course_duration;
-				
-				array_push($mainData, $data);
-				$slno++;
-			}
-		} else {
-			$status = false;
-		} 
-
-		$return_array['status'] = $status;
-		$return_array['data'] = $mainData;
-		echo json_encode($return_array);
-	}//function end	
+	//pms_id, pms_info_id, facility_id, facility_code, department_id, device_group, asset_class, equipment_name, equipment_make_model, equipment_sl_no, pms_due_date, supplied_by, service_provider_details, pms_planned_date, pms_report_attached, link_generated_by, link_generate_time
 
 ?>

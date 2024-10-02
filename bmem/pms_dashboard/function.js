@@ -357,7 +357,19 @@ function configureCourseDropDown(){
 }//end
 
 $('#generateLink').on('click', function(){ 
-    window.open('pms_dashboard/pms_link.html', '_blank');
+    $.ajax({
+        method: "POST",
+        url: "pms_dashboard/function.php",
+        data: { fn: "generateLink" }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res);
+        if($res1.status == true){
+            window.open('pms_dashboard/pms_link.php?pms_info_id='+$res1.pms_info_id, '_blank');
+        }else{
+            alert($res1.error_message);
+        }  
+    });//end ajax
 });
 
 $(document).ready(function () {
