@@ -371,4 +371,79 @@
 	
 	//pms_id, pms_info_id, facility_id, facility_code, department_id, device_group, asset_class, equipment_name, equipment_make_model, equipment_sl_no, pms_due_date, supplied_by, service_provider_details, pms_planned_date, pms_report_attached, link_generated_by, link_generate_time
 
+	
+
+	//Get Product Images
+	if($fn == 'getAllProductImages'){
+		$return_array = array();
+		$status = true;
+		$all_images = array();
+		$pms_info_id = $_POST["pms_info_id"];
+
+		$sql = "SELECT pms_report_attached FROM pms_info WHERE pms_info_id = '".$pms_info_id."'";
+		$result = $mysqli->query($sql);
+
+		if ($result->num_rows > 0) {
+			$slno = 1;
+			while($row = $result->fetch_array()){
+				$all_images_en = $row['pms_report_attached']; 
+				if($all_images_en != ''){
+					$status = true;
+					$all_images = json_decode($all_images_en);
+				}
+			}
+		} else {
+			$status = false;
+		}
+		//$mysqli->close();
+
+		$return_array['status'] = $status;
+		$return_array['all_images'] = $all_images;
+    	echo json_encode($return_array);
+	}//function end		
+
+	//Delete Single Image
+	if($fn == 'deleteProdImage'){
+		$return_result = array();
+		$all_images = array();
+		$all_images_temp = array();
+		$status = true;
+		$pms_info_id = $_POST["pms_info_id"];
+		$prod_iamge_name = $_POST["prod_iamge_name"];
+
+		//Unlink product image
+		$sql = "SELECT pms_report_attached FROM pms_info WHERE pms_info_id = '".$pms_info_id."'";
+		$result = $mysqli->query($sql);
+
+		if ($result->num_rows > 0) {
+			$slno = 1;
+			while($row = $result->fetch_array()){
+				$all_images_en = $row['pms_report_attached']; 
+				if($all_images_en != ''){
+					$status = true;
+					$all_images = json_decode($all_images_en);
+					if(sizeof($all_images) > 0){
+						for($i = 0; $i < sizeof($all_images); $i++){
+							if($all_images[$i] == $prod_iamge_name){
+								$file_path = ''.$all_images[$i];
+								unlink('photos/'.$file_path);
+							}
+							if($all_images[$i] != $prod_iamge_name){
+								array_push($all_images_temp, $all_images[$i]); 
+							}
+						}//end for
+						$all_images_en = json_encode($all_images_temp);
+					}//end if
+				}//end if
+			}//end while
+		} //end if
+
+		$sql = "UPDATE pms_info SET pms_report_attached = '" .$all_images_en. "' WHERE pms_info_id = '".$pms_info_id."'";
+		$mysqli->query($sql);
+
+		$return_result['status'] = $status;
+		//sleep(1);
+		echo json_encode($return_result);
+	}//end function deleteItem
+
 ?>

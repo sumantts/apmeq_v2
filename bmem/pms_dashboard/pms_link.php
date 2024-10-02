@@ -202,12 +202,26 @@
                                 </div>
                             </div> 
         
-                            <div class="col-sm-6 mb-1">
+                            <!-- <div class="col-sm-6 mb-1">
                                 <div class="form-group">
                                     <label class="form-label" for="pms_report_attached">Upload report</label>
                                     <input type="file" class="form-control" id="pms_report_attached" name="pms_report_attached" />
                                 </div>
+                            </div>  -->
+                            <div class="col-sm-6 mb-1">
+                                <div class="rpw">
+                                <input type="file" id="multiupload" name="uploadFiledd[]" multiple accept=".jpg,.jpeg,.png" >
+                                <span id="uploadMessage"></span>
+                                
+                                <button type="button" id="startUpload" class="btn btn-primary btn-sm">Upload</button>
+                                </div>
                             </div> 
+
+                            <div class="form-row"> 
+                                <div class="col-md-12 mb-3">
+                                    <div class="text-center" id="product_gallery"> </div>
+                                </div>
+                            </div>
         
                             <div class="col-sm-12 mb-1">
                                 <input type="hidden" name="pms_info_id" id="pms_info_id" value="<?=$_GET['pms_info_id']?>">
@@ -380,7 +394,8 @@
             $res1 = JSON.parse(res);
             if($res1.status == true){
                 $('#facility_id').val($res1.facility_id).trigger('change');
-                loadDepartment($res1.facility_id, $res1.department_id)
+                loadDepartment($res1.facility_id, $res1.department_id);
+                getAllProductImages($pms_info_id);
                 $('#facility_code').val($res1.facility_code); 
                 $('#department_id').val($res1.department_id).trigger('change');   
                 $('#device_group').val($res1.device_group).trigger('change');            
@@ -396,12 +411,118 @@
         });//end ajax
     }
 
-        $(document).ready(function () {
-            configureFacilityDropDown(); 
-            configureDeviceGroupDropDown();
-            loadFormdata();
-            //$('.js-example-basic-single').select2();
-        });
+
+
+
+    //Multiple Photo Upload
+    function uploadajax(ttl,cl){
+        $pms_info_id = $('#pms_info_id').val();
+        var fileList = $('#multiupload').prop("files"); 
+        var form_data =  "";
+        form_data = new FormData();
+        form_data.append("upload_image", fileList[cl]);
+        form_data.append("pms_info_id", $pms_info_id);
+
+        var request = $.ajax({
+            url: "../pms_dashboard/upload.php",
+            cache: false,
+            contentType: false,
+            processData: false,
+            async: true,
+            data: form_data,
+            type: 'POST', 
+            success: function (res, status) {
+                console.log('return data: '+res + ' status: ' + status);
+                $res1 = JSON.parse(res);
+                if ($res1.status == true) {
+                    $upload_count++;
+                    percent = 0; 
+                    if (cl < ttl) {
+                        uploadajax(ttl, cl + 1);
+                    } else {
+                        console.log('Done');
+                        $('#uploadMessage').html($upload_count + ' Files Uploaded');
+                        getAllProductImages($pms_info_id);
+                    }
+                }
+            },
+            fail: function (res) {
+                console.log('Failed');
+            }    
+        })
+    }
+
+    $('#startUpload').on('click', function(){
+        console.log('upload start...');    
+        $pms_info_id = $('#pms_info_id').val();
+        $upload_count = 0;
+        if($pms_info_id > 0){
+            $('#uploadMessage').html('');
+            var fileList = $('#multiupload').prop("files"); 
+            var i;
+            for ( i = 0; i < fileList.length; i++) { 
+                if(i == fileList.length-1){
+                    uploadajax(fileList.length-1,0);
+                }
+            }
+        }else{
+            alert('Please enter procust name first');
+        }//end if
+    }); 
+
+    function getAllProductImages(pmsinfoid){
+        $('#product_gallery').html('');
+        $.ajax({
+            method: "POST",
+            url: "../pms_dashboard/function.php",
+            data: { fn: "getAllProductImages", pms_info_id: pmsinfoid }
+        })
+        .done(function( res ) {
+            $res1 = JSON.parse(res);
+            //console.log(JSON.stringify($res1));
+            if($res1.status == true){
+                $all_images = $res1.all_images;
+
+                if($all_images.length > 0){ 
+                    $html = "";
+                    console.log('all_images length: '+$all_images.length);
+                    for($i in $all_images ){
+                        $html += '<img src="./photos/'+$all_images[$i]+'" width="75" class="img-fluid img-thumbnail" alt="..."><a href="javascript: void(0)"> <i class="fa fa-trash" aria-hidden="true" onclick="deleteProdImage(\''+$all_images[$i]+'\')"></i></a>'; 
+                    }//end for
+                    
+                    $('#product_gallery').html($html);
+                }//end if
+            } //end if       
+        });//end ajax
+
+    }//end if
+
+    function deleteProdImage($prod_iamge_name){
+        console.log('prod_iamge_name: ' + $prod_iamge_name);
+        if (confirm('Are you sure to delete the Image?')) {
+            $pms_info_id = $('#pms_info_id').val();
+            $.ajax({
+                method: "POST",
+                url: "../pms_dashboard/function.php",
+                data: { fn: "deleteProdImage", pms_info_id: $pms_info_id, prod_iamge_name: $prod_iamge_name }
+            })
+            .done(function( res ) {
+                //console.log(res);
+                $res1 = JSON.parse(res);
+                if($res1.status == true){
+                    getAllProductImages($pms_info_id);
+                }
+            });//end ajax
+        }		
+    }//end fun
+    //End multiple pgoto upload
+
+    $(document).ready(function () {
+        configureFacilityDropDown(); 
+        configureDeviceGroupDropDown();
+        loadFormdata();
+        //$('.js-example-basic-single').select2();
+    });
     </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   </body>
