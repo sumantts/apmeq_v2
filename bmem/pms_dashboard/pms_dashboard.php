@@ -103,7 +103,7 @@ include('common/head.php');
                                         <th>Facility name/code</th>
                                         <th>PMS due</th>
                                         <th>PMS done</th>
-                                        <th>PMS planned</th> 
+                                        <th>PMS planned</th>
                                     </tr>
                                 </thead>
                                 <tfoot>

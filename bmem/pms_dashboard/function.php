@@ -109,7 +109,9 @@
 		$mainData = array();
 		$email1 = '';
 		
-		/*$sql = "SELECT author_details.author_id, author_details.for_the_year, author_details.category_id, author_details.author_name, author_details.email, author_details.registration_number, author_details.author_photo, author_details.author_status, category_list.category_name, login.user_level FROM author_details JOIN category_list ON author_details.category_id = category_list.category_id JOIN login ON author_details.author_id = login.author_id WHERE category_list.activity_status = 'active'";
+		//$sql = "SELECT pms_info.pms_id, pms_info.pms_info_id, pms_info.facility_id, pms_info.facility_code, pms_info.department_id, pms_info.device_group, pms_info.asset_class, pms_info.equipment_name, pms_info.equipment_make_model, pms_info.equipment_sl_no, pms_info.pms_due_date, pms_info.supplied_by, pms_info.service_provider_details, pms_info.pms_planned_date, pms_info.pms_report_attached, pms_info.link_generated_by, pms_info.link_generate_time, pms_info.row_status, pms_info.pms_data_updated, facility_master.facility_name, department_list.department_name FROM pms_info JOIN facility_master ON pms_info.facility_id = facility_master.facility_id JOIN department_list ON pms_info.department_id = department_list.department_id WHERE category_list.activity_status = 'active'";
+
+		$sql = "SELECT * FROM facility_master LIMIT 0, 50";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -117,45 +119,41 @@
 			$slno = 1;
 
 			while($row = $result->fetch_array()){
-				$author_id = $row['author_id'];		
-				$category_name = $row['category_name'];		
-				$for_the_year = $row['for_the_year'];
-				$course_id = 0;//$row['course_id'];		
-				$course_name = '';//$row['course_name'];			
-				$author_name = $row['author_name'];		
-				$email = $row['email'];			
-				$registration_number = $row['registration_number'];	
-				$user_level = $row['user_level']; 
+				$facility_id = $row['facility_id'];	
+				$facility_name = $row['facility_name'];	
 
-				$data[0] = $slno; 
-				$data[1] = $author_name;
-				$data[2] = $email;
-				$data[3] = $registration_number;
-				$data[4] = "<img src='".$author_photo."' id='saved_image' width='75' style='border-radius: 15px'>"; 
-				$data[5] = $category_name;
-				$data[6] = $forTheYearsArr[$for_the_year]->text;
-				$data[7] = $author_status;
-				if($user_level == 1){
-					$data[8] = "Restricted";
-				}else{
-					$data[8] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$author_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$author_id.")'></i></a>";
-				}
+				$sql1 = "SELECT COUNT(row_status) AS count_row_status FROM pms_info WHERE facility_id = '" .$facility_id. "' GROUP BY facility_id";
+				$result1 = $mysqli->query($sql1);		
+				if ($result1->num_rows > 0) {
+					while($row1 = $result1->fetch_array()){
+						$pms_planed = 0;
+						$row_status = $row1['count_row_status'];
 
-				array_push($mainData, $data);
-				$slno++;
-			}
+						$data[0] = $slno; 
+						$data[1] = $facility_name;
+						$data[2] = $row_status;
+						$data[3] = $row_status;
+						$data[4] = $pms_planed;
+						//$data[5] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$facility_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$facility_id.")'></i></a>";
+		
+						array_push($mainData, $data);
+						$slno++;
+					}//end while
+				}//end if
+			}//end while
 		} else {
 			$status = false;
-		}*/
+		}
 		//$mysqli->close();
-			$slno = 1; 
 
-			$data[0] = $slno; 
-			$data[1] = 'Facility 1';
-			$data[2] = '-';
-			$data[3] = '-';
-			$data[4] = '-';  
-			array_push($mainData, $data);
+		/*$slno = 1; 
+
+		$data[0] = $slno; 
+		$data[1] = 'Facility 1';
+		$data[2] = '-';
+		$data[3] = '-';
+		$data[4] = '-';  
+		array_push($mainData, $data);*/
 
 		$return_array['data'] = $mainData;
     	echo json_encode($return_array);
