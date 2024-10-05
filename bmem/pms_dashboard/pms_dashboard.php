@@ -139,40 +139,30 @@ include('common/head.php');
 						</div>
                          
 
-                        <form class="needs-validation" novalidate>
+                        <form class="needs-validation" id="pmsSerForm">
                             <div class="form-row">                               
                                 <div class="col-md-3 mb-3">
-                                    <label for="author_name">Facility Name</label>
-                                    <select class="form-control" id="author_name">
-                                        <option value="0">Select</option>
-                                        <option value="1">Facility 1</option>
-                                        <option value="2">Facility 2</option>
+                                    <label for="facility_id">Facility Name</label>
+                                    <select class="form-control" id="facility_id">
+                                        <option value="0">Select</option> 
                                     </select> 
                                 </div>     
 
                                 <div class="col-md-3 mb-3">
-                                    <label for="author_name">Facility code</label>
-                                    <input type="text" class="form-control" id="author_name"> 
+                                    <label for="facility_code">Facility code</label>
+                                    <input type="text" class="form-control" id="facility_code"> 
                                 </div>    
 
                                 <div class="col-md-3 mb-3">
-                                    <label for="author_name">Device Group</label>
-                                    <select class="form-control" id="author_name">
-                                        <option value="0">Select</option>
-                                        <option value="1">Scanner</option>
-                                        <option value="2">In vitro Diagnostics</option>
-                                        <option value="3">Readiology</option>
-                                        <option value="4">Monitors</option>
-                                        <option value="5">Crtitical care</option>
-                                        <option value="6">Opthalmology</option>
-                                        <option value="7">Surgical</option>
-                                        <option value="8">Drug Delivery</option> 
+                                    <label for="device_group">Device Group</label>
+                                    <select class="form-control" id="device_group">
+                                        <option value="0">Select</option> 
                                     </select> 
                                 </div>     
 
                                 <div class="col-md-3 mb-3">
-                                    <label for="author_name">Asset Class</label>
-                                    <select class="form-control" id="author_name">
+                                    <label for="asset_class">Asset Class</label>
+                                    <select class="form-control" id="asset_class">
                                         <option value="0">Select</option>
                                         <option value="1">critical</option>
                                         <option value="2">Non Critical</option>
@@ -180,17 +170,15 @@ include('common/head.php');
                                 </div>
 
                                 <div class="col-md-3 mb-3">
-                                    <label for="author_name">Department</label>
-                                    <select class="form-control" id="author_name">
-                                        <option value="0">Select</option>
-                                        <option value="1">Department 1</option>
-                                        <option value="2">Department 2</option>
+                                    <label for="department_id">Department</label>
+                                    <select class="form-control" id="department_id">
+                                        <option value="0">Select</option> 
                                     </select> 
                                 </div>    
 
                                 <div class="col-md-3 mb-3">
-                                    <label for="author_name">PMS Status</label>
-                                    <select class="form-control" id="author_name">
+                                    <label for="PMSStatus">PMS Status</label>
+                                    <select class="form-control" id="PMSStatus">
                                         <option value="0">Select</option>
                                         <option value="1">DONE</option>
                                         <option value="2">DUE</option> 
@@ -198,8 +186,8 @@ include('common/head.php');
                                 </div>      
 
                                 <div class="col-md-3 mb-3">
-                                    <label for="author_name">PMS Required</label>
-                                    <select class="form-control" id="author_name">
+                                    <label for="PMSRequired">PMS Required</label>
+                                    <select class="form-control" id="PMSRequired">
                                         <option value="0">Select</option>
                                         <option value="1">> 1 Week</option>
                                         <option value="2">> 2 Weeks</option> 
@@ -207,41 +195,39 @@ include('common/head.php');
                                 </div>        
                                 
                                 <div class="col-md-4 mb-3">
-                                    <label for="registration_number">Date from - Date to</label>
+                                    <label for="date_from_to">Date from - Date to</label>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <input type="date" class="form-control" id="author_name">
+                                            <input type="date" class="form-control" id="from_date">
                                         </div>
                                         <div class="col-md-6">
-                                            <input type="date" class="form-control" id="author_name">
+                                            <input type="date" class="form-control" id="to_date">
                                         </div>
                                     </div>
                                 </div>     
 
-                                <div class="col-md-2 mt-4">
-                                    <button class="btn  btn-primary" type="button" id="submitForm">
-                                        <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
-                                        <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
+                                <div class="col-md-4 mt-4">
+                                    <button class="btn  btn-primary" type="button" id="filterPMS">
                                         <span class="btn-text" id="submitForm_text">Search</span>
                                     </button>
-                                </div>  
-
-                                <div class="col-md-2 mt-4">
-                                    <button class="btn btn-dark" type="button" id="submitForm">
-                                        <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
-                                        <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
-                                        <span class="btn-text" id="submitForm_text">Clear</span>
+                                    
+                                    <button class="btn btn-dark" type="button" id="clearSearchForm">
+                                        <span class="btn-text" id="submitForm_text1">Clear</span>
                                     </button>
                                 </div> 
+
+                                <div class="col-md-4 mt-4">
+                                    <button type="button" class="btn btn-primary mb-2 float-right" id="generateLink">Generate Link <i class="fa fa-external-link" aria-hidden="true"></i></button>
+                                </div> 
+
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
             <!-- [ sample-table ] start --> 
-            <div class="col-sm-12">
+            <div class="col-sm-12 d-none" id="searchResDiv">
                 <div class="card">
-
                     <div class="card-header">
                         <h5>Filter Result</h5>
                         <div class="card-header-right">
@@ -250,7 +236,7 @@ include('common/head.php');
                         </div>
                     </div>
                     <div class="card-body">
-                        <button type="button" class="btn btn-primary mb-2 float-right" id="generateLink">Generate Link <i class="fa fa-external-link" aria-hidden="true"></i></button>                        
+                        <!-- <button type="button" class="btn btn-primary mb-2 float-right" id="generateLink">Generate Link <i class="fa fa-external-link" aria-hidden="true"></i></button>                         -->
                         <div class="table-responsive">
                             <table id="example_1" class="table table-striped" style="width:100%">
                                 <thead>

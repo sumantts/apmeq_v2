@@ -162,11 +162,40 @@
 	//function start
 	if($fn == 'getTableData_1'){
 		$return_array = array();
-		$status = true;
 		$mainData = array();
-		$email1 = '';
+		$status = true;
+
+		$facility_id = $_GET['facility_id'];
+		$facility_code = $_GET['facility_code'];
+		$device_group = $_GET['device_group'];
+		$asset_class = $_GET['asset_class'];
+	
+		$department_id = $_GET['department_id'];
+		$PMSStatus = $_GET['PMSStatus'];
+		$PMSRequired = $_GET['PMSRequired'];
+	
+		$from_date = $_GET['from_date'];
+		$to_date = $_GET['to_date'];
+
+		$row_status = 2;
+		$where_condition = "WHERE pms_info.row_status = '" .$row_status. "' ";
+		if($facility_id > 0){
+			$where_condition .= " AND pms_info.facility_id = '" .$facility_id. "' ";
+		}
+		if($facility_code != ''){
+			$where_condition .= " AND pms_info.facility_code = '" .$facility_code. "' ";
+		}
+		if($device_group != ''){
+			$where_condition .= " AND pms_info.device_group = '" .$device_group. "' ";
+		}
+		if($asset_class > 0){
+			$where_condition .= " AND pms_info.asset_class = '" .$asset_class. "' ";
+		}
+		if($department_id > 0){
+			$where_condition .= " AND pms_info.department_id = '" .$department_id. "' ";
+		}
 		
-		/*$sql = "SELECT author_details.author_id, author_details.for_the_year, author_details.category_id, author_details.author_name, author_details.email, author_details.registration_number, author_details.author_photo, author_details.author_status, category_list.category_name, login.user_level FROM author_details JOIN category_list ON author_details.category_id = category_list.category_id JOIN login ON author_details.author_id = login.author_id WHERE category_list.activity_status = 'active'";
+		$sql = "SELECT pms_info.pms_id, pms_info.pms_info_id, pms_info.facility_id, pms_info.facility_code, pms_info.department_id, pms_info.device_group, pms_info.asset_class, pms_info.equipment_name, pms_info.equipment_make_model, pms_info.equipment_sl_no, pms_info.pms_due_date, pms_info.supplied_by, pms_info.service_provider_details, pms_info.pms_planned_date, facility_master.facility_name, department_list.department_name, device_group_list.device_name FROM pms_info JOIN facility_master ON pms_info.facility_id = facility_master.facility_id JOIN department_list ON pms_info.department_id = department_list.department_id JOIN device_group_list ON pms_info.device_group = device_group_list.device_group_id $where_condition";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -174,56 +203,63 @@
 			$slno = 1;
 
 			while($row = $result->fetch_array()){
-				$author_id = $row['author_id'];		
-				$category_name = $row['category_name'];		
-				$for_the_year = $row['for_the_year'];
-				$course_id = 0;//$row['course_id'];		
-				$course_name = '';//$row['course_name'];			
-				$author_name = $row['author_name'];		
-				$email = $row['email'];			
-				$registration_number = $row['registration_number'];	
-				$user_level = $row['user_level']; 
+				$pms_info_id = $row['pms_info_id'];
+				$facility_name = $row['facility_name'];	
+				$facility_code = $row['facility_code'];	
+				$department_name = $row['department_name'];	 	
+				$device_name = $row['device_name'];	 	
+				$asset_class = $row['asset_class'];	 
+				$asset_class_text = '';
+				if($asset_class == 1){
+					$asset_class_text = 'Critical';
+				}else if($asset_class == 2){
+					$asset_class_text = 'Non Critical';
+				}else{} 	
+				$equipment_name = $row['equipment_name'];	
+				$equipment_make_model = $row['equipment_make_model'];	
+				$equipment_sl_no = $row['equipment_sl_no'];	
+				if($row['pms_due_date'] != '0000-00-00'){
+					$pms_due_date = date('d-m-Y', strtotime($row['pms_due_date']));
+				}else{
+					$pms_due_date = '';
+				}	
+				$supplied_by = $row['supplied_by'];		
+				$service_provider_details = $row['service_provider_details'];
+				if($row['pms_planned_date'] != '0000-00-00'){
+					$pms_planned_date = date('d-m-Y', strtotime($row['pms_planned_date']));
+				}else{
+					$pms_planned_date = '';
+				}	
+
+				$view_link = "<a href='pms_dashboard/pms_link.php?pms_info_id=$pms_info_id', target='_blank'>View Link</a>";
 
 				$data[0] = $slno; 
-				$data[1] = $author_name;
-				$data[2] = $email;
-				$data[3] = $registration_number;
-				$data[4] = "<img src='".$author_photo."' id='saved_image' width='75' style='border-radius: 15px'>"; 
-				$data[5] = $category_name;
-				$data[6] = $forTheYearsArr[$for_the_year]->text;
-				$data[7] = $author_status;
-				if($user_level == 1){
-					$data[8] = "Restricted";
-				}else{
-					$data[8] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$author_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$author_id.")'></i></a>";
-				}
+				$data[1] = $facility_name;
+				$data[2] = $facility_code;
+				$data[3] = $department_name;
+				$data[4] = $device_name; 
+				$data[5] = $asset_class_text;
+				$data[6] = $equipment_name;
+				$data[7] = $equipment_make_model;
+				$data[8] = $equipment_sl_no;
+				$data[9] = $pms_due_date;
+				$data[10] = $supplied_by;
+				$data[11] = $service_provider_details;
+				$data[12] = $pms_planned_date;
+				$data[13] = '-';
+				$data[14] = $view_link;
+				$data[15] = 'Resolved'; 
+				
+				//$data[8] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$author_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$author_id.")'></i></a>";
+				
 
 				array_push($mainData, $data);
 				$slno++;
 			}
 		} else {
 			$status = false;
-		}*/
-		//$mysqli->close();
-			$slno = 1; 
-
-			$data[0] = $slno; 
-			$data[1] = 'Facility 1';
-			$data[2] = '-';
-			$data[3] = '-';
-			$data[4] = '-'; 
-			$data[5] = '-';
-			$data[6] = '-';
-			$data[7] = '-';
-			$data[8] = '-';
-			$data[9] = '-';
-			$data[10] = '-';
-			$data[11] = '-';
-			$data[12] = '-';
-			$data[13] = '-';
-			$data[14] = '-';
-			$data[15] = '-'; 
-			array_push($mainData, $data);
+		}
+			
 
 		$return_array['data'] = $mainData;
     	echo json_encode($return_array);
