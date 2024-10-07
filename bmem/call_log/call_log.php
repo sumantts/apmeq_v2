@@ -2,16 +2,6 @@
 if(!$_SESSION["user_id"] || !$_SESSION["user_type_code"]){header('location:?p=signin');}
 include('common/head.php');  
 ?>
-<script type="text/javascript">   
-
-</script>
-<style>
-    /*table td {
-        word-break: break-word;
-        vertical-align: top;
-        white-space: normal !important;
-    }*/
-</style>
 
 <body class="">
 	<!-- [ Pre-loader ] start -->
@@ -71,33 +61,41 @@ include('common/head.php');
 						</div>
                          
 
-                        <form class="needs-validation" novalidate>
+                        <form class="needs-validation" action="#" id="myForm">
                             <div class="form-row">    
 
-                                <div class="col-md-4 mb-3">
+                                <!-- <div class="col-md-4 mb-3">
                                     <label for="author_name">Scan QR Code</label>
                                     <input type="text" class="form-control" id="author_name"> 
-                                </div>      
+                                </div>       -->
 
                                 <div class="col-md-4 mb-3">
-                                    <label for="author_name">Asset Code</label>
-                                    <input type="text" class="form-control" id="author_name"> 
+                                    <label for="asset_code">Asset Code</label>
+                                    <input type="number" class="form-control" id="asset_code" required> 
                                 </div>   
 
                                 <div class="col-md-4 mb-3">
-                                    <label for="author_name">Contact Number</label>
-                                    <input type="tel" class="form-control" id="author_name"> 
+                                    <label for="ticket_raiser_name">Ticket Raiser Name</label>
+                                    <input type="hidden" name="user_id" id="user_id" value="<?=$_SESSION["user_id"]?>">
+                                    <input type="text" class="form-control" id="ticket_raiser_name" value="<?=$_SESSION["user_name"]?>" required readonly> 
+                                </div>  
+
+                                <div class="col-md-4 mb-3">
+                                    <label for="ticket_raiser_contact">Ticket Raiser Contact Number</label>
+                                    <input type="number" class="form-control" id="ticket_raiser_contact" value="<?=$_SESSION["user_mobile"]?>" required readonly> 
                                 </div>     
 
                                 <div class="col-md-12 mb-3">
-                                    <label for="author_name">Issue Description</label>
-                                    <textarea class="form-control" id="author_name"> </textarea>
+                                    <label for="issue_description">Issue Description</label>
+                                    <textarea class="form-control" id="issue_description" required> </textarea>
                                 </div> 
                             </div>  
 
-                            <div class="form-row">
+                            <div class="row d-none" id="asset_detail"> </div>
+
+                            <div class="form-row d-none" id="s_button_div">
                                 <div class="col-md-2 mt-4">
-                                    <button class="btn  btn-primary" type="button" id="submitForm">
+                                    <button class="btn  btn-primary" type="submit" id="submitForm">
                                         <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
                                         <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
                                         <span class="btn-text" id="submitForm_text">Log a Call</span>

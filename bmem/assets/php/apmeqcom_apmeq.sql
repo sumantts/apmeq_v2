@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Oct 01, 2024 at 08:00 AM
--- Server version: 8.0.39
--- PHP Version: 8.3.11
+-- Host: 127.0.0.1
+-- Generation Time: Oct 07, 2024 at 06:12 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,39 +28,39 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `asset_details` (
-  `asset_id` int NOT NULL,
-  `facility_id` int NOT NULL COMMENT 'PK of facility_master',
-  `department_id` text COLLATE utf8mb4_general_ci NOT NULL COMMENT 'PK of department_list',
-  `equipment_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `asset_make` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `asset_model` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `slerial_number` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `asset_specifiaction` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `asset_id` int(11) NOT NULL,
+  `facility_id` int(11) NOT NULL COMMENT 'PK of facility_master',
+  `department_id` text NOT NULL COMMENT 'PK of department_list',
+  `equipment_name` varchar(255) NOT NULL,
+  `asset_make` varchar(255) NOT NULL,
+  `asset_model` varchar(255) NOT NULL,
+  `slerial_number` varchar(255) NOT NULL,
+  `asset_specifiaction` varchar(255) NOT NULL,
   `date_of_installation` date NOT NULL,
-  `ins_certificate` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `asset_supplied_by` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `value_of_the_asset` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `total_year_in_service` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `ins_certificate` varchar(255) NOT NULL,
+  `asset_supplied_by` varchar(255) NOT NULL,
+  `value_of_the_asset` varchar(255) NOT NULL,
+  `total_year_in_service` varchar(255) NOT NULL,
   `technology` tinyint(1) NOT NULL,
   `asset_status` tinyint(1) NOT NULL,
   `asset_class` tinyint(1) NOT NULL,
   `device_group` tinyint(1) NOT NULL,
   `last_date_of_calibration` date NOT NULL,
-  `calibration_attachment` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `frequency_of_calibration` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `calibration_attachment` varchar(255) NOT NULL,
+  `frequency_of_calibration` varchar(255) NOT NULL,
   `last_date_of_pms` date NOT NULL,
-  `pms_attachment` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `frequency_of_pms` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `pms_attachment` varchar(255) NOT NULL,
+  `frequency_of_pms` varchar(255) NOT NULL,
   `qa_due_date` date NOT NULL,
-  `qa_attachment` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `qa_attachment` varchar(255) NOT NULL,
   `warranty_last_date` date NOT NULL,
   `amc_yes_no` tinyint(1) NOT NULL,
   `amc_last_date` date NOT NULL,
   `cmc_yes_no` tinyint(1) NOT NULL,
   `cmc_last_date` date NOT NULL,
-  `asset_code` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
-  `sp_details` text COLLATE utf8mb4_general_ci NOT NULL,
-  `row_status` tinyint(1) NOT NULL DEFAULT '1'
+  `asset_code` varchar(10) NOT NULL,
+  `sp_details` text NOT NULL,
+  `row_status` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -69,8 +69,8 @@ CREATE TABLE `asset_details` (
 
 INSERT INTO `asset_details` (`asset_id`, `facility_id`, `department_id`, `equipment_name`, `asset_make`, `asset_model`, `slerial_number`, `asset_specifiaction`, `date_of_installation`, `ins_certificate`, `asset_supplied_by`, `value_of_the_asset`, `total_year_in_service`, `technology`, `asset_status`, `asset_class`, `device_group`, `last_date_of_calibration`, `calibration_attachment`, `frequency_of_calibration`, `last_date_of_pms`, `pms_attachment`, `frequency_of_pms`, `qa_due_date`, `qa_attachment`, `warranty_last_date`, `amc_yes_no`, `amc_last_date`, `cmc_yes_no`, `cmc_last_date`, `asset_code`, `sp_details`, `row_status`) VALUES
 (1, 2, '[\"1\"]', 'Autoclave', 'NAT Steel', 'ghhg', '1246598', 'NA', '2023-01-01', '', 'NAT steel', '450000', '+1 years 8 months', 2, 1, 2, 9, '2023-02-02', '', '1||', '2024-08-15', '', '|4|', '0000-00-00', '', '2024-07-10', 2, '0000-00-00', 1, '2024-11-21', '000200001', '8910420169', 1),
-(2, 1, '[\"1\"]', 'Radiant Warmer', 'Phoenix Medical', 'NW101', '1', '', '2024-01-01', '', 'ABC Limited', '40000', '+0 years 8 months', 2, 1, 1, 10, '2024-06-01', '', '1|0|0', '2024-08-20', '', '0|3|0', '2025-06-01', '', '2026-01-01', 2, '0000-00-00', 2, '0000-00-00', '000100002', 'ABC Limited', 1),
-(3, 1, '[\"\",\"1\"]', 'Radiant Warmer', 'Phoenix Medical', 'NW101', '2', '', '0000-00-00', '', 'ABC Limited', '40000', '-0 years 0 months', 2, 1, 1, 10, '0000-00-00', '', '1|0|0', '2024-08-20', '', '|3|', '2025-01-01', '', '2026-01-01', 0, '0000-00-00', 2, '0000-00-00', '000100003', 'ABC Limited', 1),
+(2, 1, '[\"5\",\"1\"]', 'Radiant Warmer', 'Phoenix Medical', 'NW101', '1', '', '2024-01-01', '', 'ABC Limited', '40000', '+0 years 8 months', 2, 1, 1, 10, '2024-06-01', '', '1|0|0', '2024-08-20', '', '0|3|0', '2025-06-01', '', '2026-01-01', 2, '0000-00-00', 2, '0000-00-00', '000100002', 'ABC Limited', 1),
+(3, 1, '[\"1\"]', 'Radiant Warmer', 'Phoenix Medical', 'NW101', '2', '', '0000-00-00', '', 'ABC Limited', '40000', '-0 years 0 months', 2, 1, 1, 10, '0000-00-00', '', '1|0|0', '2024-08-20', '', '|3|', '2025-01-01', '', '2026-01-01', 0, '0000-00-00', 2, '0000-00-00', '000100003', 'ABC Limited', 1),
 (4, 1, '[\"1\"]', 'Radiant Warmer', 'Phoenix Medical', 'NW101', '3', '', '2024-01-01', '', 'ABC Limited', '40000', '+0 years 8 months', 2, 1, 1, 10, '0000-00-00', '', '1||', '2024-08-20', '', '|6|', '2025-06-20', '', '2026-01-01', 2, '0000-00-00', 2, '0000-00-00', '000200004', 'ABC Limited', 1),
 (5, 1, '[\"5\"]', 'USG', 'GE', 'Alpha', 'DF3508', '', '2013-09-05', '', 'GE', '500000', '+11 years 0 months', 2, 1, 2, 1, '2024-08-01', '', '1||', '2024-09-04', '', '|6|', '0000-00-00', '', '2014-09-28', 2, '0000-00-00', 1, '2024-11-02', '000100005', '8910420169', 1),
 (6, 4, '[\"5\"]', 'ECG', 'BPL', 'Caridiart 08T', 'CARD123456', 'NA', '2024-01-01', '', 'Electro care service pvt ltd', '65000', '+0 years 8 months', 2, 1, 2, 4, '2024-08-01', '', '1||', '2024-09-02', '', '|6|', '0000-00-00', '', '2025-02-01', 2, '0000-00-00', 2, '0000-00-00', '000400006', '8910420169', 1),
@@ -92,9 +92,9 @@ INSERT INTO `asset_details` (`asset_id`, `facility_id`, `department_id`, `equipm
 --
 
 CREATE TABLE `asset_reallocate` (
-  `reallocate_id` int NOT NULL,
-  `department_from` int NOT NULL,
-  `department_to` int NOT NULL
+  `reallocate_id` int(11) NOT NULL,
+  `department_from` int(11) NOT NULL,
+  `department_to` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -104,11 +104,42 @@ CREATE TABLE `asset_reallocate` (
 --
 
 CREATE TABLE `asset_type_list` (
-  `asset_type_id` int NOT NULL,
-  `asset_type_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `asset_type_code` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `asset_type_status` tinyint(1) NOT NULL DEFAULT '1'
+  `asset_type_id` int(11) NOT NULL,
+  `asset_type_name` varchar(255) NOT NULL,
+  `asset_type_code` varchar(255) NOT NULL,
+  `asset_type_status` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `call_log_register`
+--
+
+CREATE TABLE `call_log_register` (
+  `call_log_id` int(11) NOT NULL,
+  `token_id` varchar(10) NOT NULL,
+  `asset_code` varchar(10) NOT NULL,
+  `user_id` int(11) NOT NULL COMMENT 'PK of user_details',
+  `ticket_raiser_name` varchar(255) NOT NULL,
+  `ticket_raiser_contact` varchar(10) NOT NULL,
+  `issue_description` text NOT NULL,
+  `call_log_date_time` datetime NOT NULL,
+  `resolved_date_time` datetime NOT NULL,
+  `assign_to` tinyint(1) NOT NULL COMMENT '1-Engineer 2=ServiceProvider',
+  `eng_contact_no` varchar(10) NOT NULL,
+  `uploaded_report` text NOT NULL,
+  `call_log_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0=Raised 1=WIP \r\n 2=Resolved 3=Closed 4=Rejected'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `call_log_register`
+--
+
+INSERT INTO `call_log_register` (`call_log_id`, `token_id`, `asset_code`, `user_id`, `ticket_raiser_name`, `ticket_raiser_contact`, `issue_description`, `call_log_date_time`, `resolved_date_time`, `assign_to`, `eng_contact_no`, `uploaded_report`, `call_log_status`) VALUES
+(2, '0002', '000100002', 1, 'Mr. Superadmin', '9733935161', 'System Power is not okay', '2024-10-07 09:39:32', '0000-00-00 00:00:00', 0, '', '', 0),
+(3, '0003', '000100003', 1, 'Mr. Superadmin', '9733935161', ' not ok', '2024-10-07 09:40:04', '0000-00-00 00:00:00', 0, '', '', 0),
+(4, '0004', '000100002', 1, 'Mr. Superadmin', '9733935161', ' not ok', '2024-10-07 09:41:13', '0000-00-00 00:00:00', 0, '', '', 0);
 
 -- --------------------------------------------------------
 
@@ -117,10 +148,10 @@ CREATE TABLE `asset_type_list` (
 --
 
 CREATE TABLE `category_list` (
-  `category_id` int NOT NULL,
-  `category_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `category_slug` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `activity_status` varchar(10) COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'active'
+  `category_id` int(11) NOT NULL,
+  `category_name` varchar(255) NOT NULL,
+  `category_slug` varchar(255) NOT NULL,
+  `activity_status` varchar(10) NOT NULL DEFAULT 'active'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -130,10 +161,10 @@ CREATE TABLE `category_list` (
 --
 
 CREATE TABLE `department_list` (
-  `department_id` int NOT NULL,
-  `department_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `department_code` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `department_status` tinyint(1) NOT NULL DEFAULT '1'
+  `department_id` int(11) NOT NULL,
+  `department_name` varchar(255) NOT NULL,
+  `department_code` varchar(255) NOT NULL,
+  `department_status` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -153,9 +184,9 @@ INSERT INTO `department_list` (`department_id`, `department_name`, `department_c
 --
 
 CREATE TABLE `device_group_list` (
-  `device_group_id` int NOT NULL,
-  `device_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `device_status` tinyint(1) NOT NULL DEFAULT '1'
+  `device_group_id` int(11) NOT NULL,
+  `device_name` varchar(255) NOT NULL,
+  `device_status` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -181,17 +212,17 @@ INSERT INTO `device_group_list` (`device_group_id`, `device_name`, `device_statu
 --
 
 CREATE TABLE `facility_master` (
-  `facility_id` int NOT NULL,
-  `hospital_id` int NOT NULL COMMENT 'PK of hospital_list',
-  `department_id` text COLLATE utf8mb4_general_ci NOT NULL COMMENT 'PK of department_list',
-  `facility_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `facility_id` int(11) NOT NULL,
+  `hospital_id` int(11) NOT NULL COMMENT 'PK of hospital_list',
+  `department_id` text NOT NULL COMMENT 'PK of department_list',
+  `facility_name` varchar(255) NOT NULL,
   `facility_type` tinyint(1) NOT NULL,
-  `facility_code` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `facility_address` text COLLATE utf8mb4_general_ci NOT NULL,
+  `facility_code` varchar(255) NOT NULL,
+  `facility_address` text NOT NULL,
   `nabh_accrediated` tinyint(1) NOT NULL,
   `nabl_accrediated` tinyint(1) NOT NULL,
-  `contact_person` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `user_id` int NOT NULL COMMENT 'PK of user_details'
+  `contact_person` varchar(255) NOT NULL,
+  `user_id` int(11) NOT NULL COMMENT 'PK of user_details'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -211,11 +242,11 @@ INSERT INTO `facility_master` (`facility_id`, `hospital_id`, `department_id`, `f
 --
 
 CREATE TABLE `hospital_list` (
-  `hospital_id` int NOT NULL,
-  `hospital_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `hospital_code` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `hospital_address` text COLLATE utf8mb4_general_ci NOT NULL,
-  `hospital_status` tinyint(1) NOT NULL DEFAULT '1'
+  `hospital_id` int(11) NOT NULL,
+  `hospital_name` varchar(255) NOT NULL,
+  `hospital_code` varchar(255) NOT NULL,
+  `hospital_address` text NOT NULL,
+  `hospital_status` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -232,13 +263,51 @@ INSERT INTO `hospital_list` (`hospital_id`, `hospital_name`, `hospital_code`, `h
 --
 
 CREATE TABLE `manufacturer_list` (
-  `manufacturer_id` int NOT NULL,
-  `manufacturer_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `manufacturer_code` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `primary_contact_number` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
-  `secondary_contact_number` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
-  `manufacturer_status` tinyint(1) NOT NULL DEFAULT '1'
+  `manufacturer_id` int(11) NOT NULL,
+  `manufacturer_name` varchar(255) NOT NULL,
+  `manufacturer_code` varchar(255) NOT NULL,
+  `primary_contact_number` varchar(10) NOT NULL,
+  `secondary_contact_number` varchar(10) NOT NULL,
+  `manufacturer_status` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pms_info`
+--
+
+CREATE TABLE `pms_info` (
+  `pms_id` int(11) NOT NULL,
+  `pms_info_id` varchar(10) NOT NULL,
+  `facility_id` int(11) NOT NULL,
+  `facility_code` varchar(255) NOT NULL,
+  `department_id` text NOT NULL,
+  `device_group` tinyint(1) NOT NULL,
+  `asset_class` tinyint(1) NOT NULL,
+  `equipment_name` varchar(255) NOT NULL,
+  `equipment_make_model` varchar(255) NOT NULL,
+  `equipment_sl_no` varchar(255) NOT NULL,
+  `pms_due_date` date NOT NULL,
+  `supplied_by` varchar(255) NOT NULL,
+  `service_provider_details` varchar(255) NOT NULL,
+  `pms_planned_date` date NOT NULL,
+  `pms_report_attached` text NOT NULL,
+  `link_generated_by` int(11) NOT NULL,
+  `link_generate_time` datetime NOT NULL,
+  `row_status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1=pending, 2=done',
+  `pms_data_updated` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `pms_info`
+--
+
+INSERT INTO `pms_info` (`pms_id`, `pms_info_id`, `facility_id`, `facility_code`, `department_id`, `device_group`, `asset_class`, `equipment_name`, `equipment_make_model`, `equipment_sl_no`, `pms_due_date`, `supplied_by`, `service_provider_details`, `pms_planned_date`, `pms_report_attached`, `link_generated_by`, `link_generate_time`, `row_status`, `pms_data_updated`) VALUES
+(1, '0001', 1, '0001', '1', 5, 1, 'Radiant Warmer', '0001', '0001', '2024-10-02', 'SJ', '9733935161', '2024-10-02', '', 1, '2024-10-02 19:45:58', 2, '2024-10-05 09:10:55'),
+(2, '0002', 2, '0002', '5', 2, 2, 'Radiant Warmer', '0001', '0001', '2024-10-02', 'SJ', 'ok', '2024-10-02', '[\"6700b3704dc1a.jpg\"]', 1, '2024-10-02 19:47:21', 2, '2024-10-05 09:03:00'),
+(3, '0003', 1, '0003', '5', 3, 1, 'Radiant Warmer', '0001', '0001', '2024-10-02', 'SJ', 'ok', '2024-10-02', '', 1, '2024-10-02 19:49:16', 2, '2024-10-02 19:49:42'),
+(4, '0004', 0, '', '', 0, 0, '', '', '', '0000-00-00', '', '', '0000-00-00', '', 1, '2024-10-05 07:01:23', 1, '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -247,12 +316,12 @@ CREATE TABLE `manufacturer_list` (
 --
 
 CREATE TABLE `service_providers_list` (
-  `service_providers_id` int NOT NULL,
-  `service_providers_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `service_providers_code` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `primary_contact_number` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
-  `secondary_contact_number` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
-  `service_providers_status` tinyint(1) NOT NULL DEFAULT '1'
+  `service_providers_id` int(11) NOT NULL,
+  `service_providers_name` varchar(255) NOT NULL,
+  `service_providers_code` varchar(255) NOT NULL,
+  `primary_contact_number` varchar(10) NOT NULL,
+  `secondary_contact_number` varchar(10) NOT NULL,
+  `service_providers_status` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -262,12 +331,12 @@ CREATE TABLE `service_providers_list` (
 --
 
 CREATE TABLE `supplier_list` (
-  `supplier_id` int NOT NULL,
-  `supplier_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `supplier_code` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `primary_contact_number` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
-  `secondary_contact_number` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
-  `supplier_status` tinyint(1) NOT NULL DEFAULT '1'
+  `supplier_id` int(11) NOT NULL,
+  `supplier_name` varchar(255) NOT NULL,
+  `supplier_code` varchar(255) NOT NULL,
+  `primary_contact_number` varchar(10) NOT NULL,
+  `secondary_contact_number` varchar(10) NOT NULL,
+  `supplier_status` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -277,18 +346,18 @@ CREATE TABLE `supplier_list` (
 --
 
 CREATE TABLE `user_details` (
-  `user_id` int NOT NULL,
-  `user_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `user_type_id` int NOT NULL COMMENT 'PK of user_type',
-  `hospital_id` int NOT NULL COMMENT 'PK of hospital_list',
-  `user_mobile` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
-  `user_phone` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
-  `user_email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `user_name` varchar(255) NOT NULL,
+  `user_type_id` int(11) NOT NULL COMMENT 'PK of user_type',
+  `hospital_id` int(11) NOT NULL COMMENT 'PK of hospital_list',
+  `user_mobile` varchar(10) NOT NULL,
+  `user_phone` varchar(10) NOT NULL,
+  `user_email` varchar(255) NOT NULL,
   `user_dob` date NOT NULL,
-  `user_address` text COLLATE utf8mb4_general_ci NOT NULL,
-  `user_user_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `user_password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `user_status` tinyint(1) NOT NULL DEFAULT '1'
+  `user_address` text NOT NULL,
+  `user_user_name` varchar(255) NOT NULL,
+  `user_password` varchar(255) NOT NULL,
+  `user_status` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -308,10 +377,10 @@ INSERT INTO `user_details` (`user_id`, `user_name`, `user_type_id`, `hospital_id
 --
 
 CREATE TABLE `user_type` (
-  `user_type_id` int NOT NULL,
-  `user_type_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `user_type_code` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `user_type_status` tinyint(1) NOT NULL DEFAULT '1'
+  `user_type_id` int(11) NOT NULL,
+  `user_type_name` varchar(255) NOT NULL,
+  `user_type_code` varchar(255) NOT NULL,
+  `user_type_status` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -339,6 +408,12 @@ ALTER TABLE `asset_details`
 --
 ALTER TABLE `asset_type_list`
   ADD PRIMARY KEY (`asset_type_id`);
+
+--
+-- Indexes for table `call_log_register`
+--
+ALTER TABLE `call_log_register`
+  ADD PRIMARY KEY (`call_log_id`);
 
 --
 -- Indexes for table `category_list`
@@ -377,6 +452,12 @@ ALTER TABLE `manufacturer_list`
   ADD PRIMARY KEY (`manufacturer_id`);
 
 --
+-- Indexes for table `pms_info`
+--
+ALTER TABLE `pms_info`
+  ADD PRIMARY KEY (`pms_id`);
+
+--
 -- Indexes for table `service_providers_list`
 --
 ALTER TABLE `service_providers_list`
@@ -408,73 +489,85 @@ ALTER TABLE `user_type`
 -- AUTO_INCREMENT for table `asset_details`
 --
 ALTER TABLE `asset_details`
-  MODIFY `asset_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `asset_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `asset_type_list`
 --
 ALTER TABLE `asset_type_list`
-  MODIFY `asset_type_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `asset_type_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `call_log_register`
+--
+ALTER TABLE `call_log_register`
+  MODIFY `call_log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `category_list`
 --
 ALTER TABLE `category_list`
-  MODIFY `category_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `department_list`
 --
 ALTER TABLE `department_list`
-  MODIFY `department_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `department_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `device_group_list`
 --
 ALTER TABLE `device_group_list`
-  MODIFY `device_group_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `device_group_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `facility_master`
 --
 ALTER TABLE `facility_master`
-  MODIFY `facility_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `facility_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `hospital_list`
 --
 ALTER TABLE `hospital_list`
-  MODIFY `hospital_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `hospital_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `manufacturer_list`
 --
 ALTER TABLE `manufacturer_list`
-  MODIFY `manufacturer_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `manufacturer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `pms_info`
+--
+ALTER TABLE `pms_info`
+  MODIFY `pms_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `service_providers_list`
 --
 ALTER TABLE `service_providers_list`
-  MODIFY `service_providers_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `service_providers_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `supplier_list`
 --
 ALTER TABLE `supplier_list`
-  MODIFY `supplier_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `supplier_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `user_details`
 --
 ALTER TABLE `user_details`
-  MODIFY `user_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `user_type`
 --
 ALTER TABLE `user_type`
-  MODIFY `user_type_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `user_type_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
