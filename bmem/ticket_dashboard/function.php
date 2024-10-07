@@ -73,60 +73,110 @@
 		$mainData = array();
 		$email1 = '';
 		
-		/*$sql = "SELECT author_details.author_id, author_details.for_the_year, author_details.category_id, author_details.author_name, author_details.email, author_details.registration_number, author_details.author_photo, author_details.author_status, category_list.category_name, login.user_level FROM author_details JOIN category_list ON author_details.category_id = category_list.category_id JOIN login ON author_details.author_id = login.author_id WHERE category_list.activity_status = 'active'";
+		
+		$sql = "SELECT * FROM facility_master LIMIT 0, 50";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
 			$status = true;
 			$slno = 1;
 
-			while($row = $result->fetch_array()){
-				$author_id = $row['author_id'];		
-				$category_name = $row['category_name'];		
-				$for_the_year = $row['for_the_year'];
-				$course_id = 0;//$row['course_id'];		
-				$course_name = '';//$row['course_name'];			
-				$author_name = $row['author_name'];		
-				$email = $row['email'];			
-				$registration_number = $row['registration_number'];	
-				$user_level = $row['user_level']; 
 
-				$data[0] = $slno; 
-				$data[1] = $author_name;
-				$data[2] = $email;
-				$data[3] = $registration_number;
-				$data[4] = "<img src='".$author_photo."' id='saved_image' width='75' style='border-radius: 15px'>"; 
-				$data[5] = $category_name;
-				$data[6] = $forTheYearsArr[$for_the_year]->text;
-				$data[7] = $author_status;
-				if($user_level == 1){
-					$data[8] = "Restricted";
-				}else{
-					$data[8] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$author_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$author_id.")'></i></a>";
-				}
+			while($row = $result->fetch_array()){				
+				$facility_id = $row['facility_id'];		
+				$facility_name = $row['facility_name'];	
+				$facility_code = $row['facility_code'];					
 
-				array_push($mainData, $data);
-				$slno++;
-			}
-		} else {
-			$status = false;
-		}*/
-		//$mysqli->close();
-			$slno = 1; 
+				$total_ticket = 0;
+				//Total Assets
+				$sql1 = "SELECT COUNT(call_log_id) AS total_ticket_count FROM call_log_register WHERE facility_id = '" .$facility_id. "' GROUP BY facility_id";
+				$result1 = $mysqli->query($sql1);
+				$total_ticket = $result1->num_rows;
 
-			$data[0] = $slno; 
-			$data[1] = 'Facility 1';
-			$data[2] = '-';
-			$data[3] = '-';
-			$data[4] = '-'; 
-			$data[5] = '-';
-			$data[6] = '-';
-			$data[7] = '-';
-			$data[8] = '-';
-			$data[9] = '-';
-			$data[10] = '-';
-			$data[11] = '-';
-			array_push($mainData, $data);
+				if($total_ticket > 0){
+					while($row1 = $result1->fetch_array()){
+						$total_ticket_count = $row1['total_ticket_count'];
+						$resolved_ticket = 0;
+						$closed_ticket = 0;
+						$open_ticket = 0;
+						$wip_ticket = 0;
+						$critical_ticket = 0;
+						$non_critical_ticket = 0;
+						$below_three_days = 0;
+						$below_five_days = 0;
+						$below_seven_days = 0;
+						$above_seven_days = 0;
+						$today = date('Y-m-d H:i:s');
+						$three_day_prev = date('Y-m-d H:i:s',(strtotime ( '-3 day' , strtotime($today))));
+						$five_day_prev = date('Y-m-d H:i:s',(strtotime ( '-5 day' , strtotime($today))));
+						$seven_day_prev = date('Y-m-d H:i:s',(strtotime ( '-7 day' , strtotime($today))));
+
+						$sql_0 = "SELECT * FROM call_log_register WHERE call_log_status = '0' AND facility_id = '" .$facility_id. "'";
+						$result_0 = $mysqli->query($sql_0);
+						$open_ticket = $result_0->num_rows;
+
+						$sql_1 = "SELECT * FROM call_log_register WHERE call_log_status = '1' AND facility_id = '" .$facility_id. "'";
+						$result_1 = $mysqli->query($sql_1);
+						$wip_ticket = $result_1->num_rows;
+
+						$sql_2 = "SELECT * FROM call_log_register WHERE call_log_status = '2' AND facility_id = '" .$facility_id. "'";
+						$result_2 = $mysqli->query($sql_2);
+						$resolved_ticket = $result_2->num_rows;
+
+						$sql_3 = "SELECT * FROM call_log_register WHERE call_log_status = '3' AND facility_id = '" .$facility_id. "'";
+						$result_3 = $mysqli->query($sql_3);
+						$closed_ticket = $result_3->num_rows;
+
+						$sql_c = "SELECT * FROM call_log_register WHERE ticket_class = '1' AND facility_id = '" .$facility_id. "'";
+						$result_c = $mysqli->query($sql_c);
+						$critical_ticket = $result_c->num_rows;
+
+						$sql_nc = "SELECT * FROM call_log_register WHERE ticket_class = '2' AND facility_id = '" .$facility_id. "'";
+						$result_nc = $mysqli->query($sql_nc);
+						$non_critical_ticket = $result_nc->num_rows;
+
+						//Less than 3
+						$sql_3d = "SELECT * FROM call_log_register WHERE call_log_date_time > '" .$three_day_prev. "' AND call_log_date_time < '" .$today. "' AND facility_id = '" .$facility_id. "'";
+						$result_3d = $mysqli->query($sql_3d);
+						$below_three_days = $result_3d->num_rows;
+
+						//within 3 to 5 days
+						$sql_5d = "SELECT * FROM call_log_register WHERE call_log_date_time > '" .$five_day_prev. "' AND call_log_date_time < '" .$three_day_prev. "' AND facility_id = '" .$facility_id. "'";
+						$result_5d = $mysqli->query($sql_5d);
+						$below_five_days = $result_5d->num_rows;
+
+						//within 5 to 7 days
+						$sql_7d = "SELECT * FROM call_log_register WHERE call_log_date_time > '" .$seven_day_prev. "' AND call_log_date_time < '" .$five_day_prev. "' AND facility_id = '" .$facility_id. "'";
+						$result_7d = $mysqli->query($sql_7d);
+						$below_seven_days = $result_7d->num_rows;
+
+						//above 7 days
+						$sql_7d_a = "SELECT * FROM call_log_register WHERE call_log_date_time < '" .$five_day_prev. "' AND facility_id = '" .$facility_id. "'";
+						$result_7d_a = $mysqli->query($sql_7d_a);
+						$above_seven_days = $result_7d_a->num_rows;
+						
+						$data[0] = $slno; 
+						$data[1] = $facility_name.'/'.$facility_code;
+						$data[2] = $total_ticket_count;
+						$data[3] = $critical_ticket;
+						$data[4] = $non_critical_ticket; 
+						$data[5] = $closed_ticket;
+						$data[6] = $resolved_ticket;
+						$data[7] = $open_ticket;
+						$data[8] = $wip_ticket;
+						$data[9] = $below_three_days;
+						$data[10] = $below_five_days;
+						$data[11] = $below_seven_days;
+						$data[12] = $above_seven_days;
+						array_push($mainData, $data);
+					}//end inner while
+				}//end if
+			}//end outer while
+		}//end if
+
+			
+
+			
 
 		$return_array['data'] = $mainData;
     	echo json_encode($return_array);

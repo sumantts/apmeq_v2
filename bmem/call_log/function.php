@@ -162,6 +162,7 @@
 		$token_id = '';
 		$status = true;
 
+		$facility_id = $_POST['facility_id'];
 		$asset_code = $_POST['asset_code'];
 		$user_id = $_POST['user_id'];
 		$ticket_raiser_name = $_POST['ticket_raiser_name']; 
@@ -170,20 +171,25 @@
 		$call_log_date_time = date('Y-m-d H:i:s');
 		
 		try {
-			//Insert into table
-			$sql1 = "INSERT INTO call_log_register (asset_code, user_id, ticket_raiser_name, ticket_raiser_contact, issue_description, call_log_date_time) VALUES ('" .$asset_code. "', '" .$user_id. "', '" .$ticket_raiser_name. "', '" .$ticket_raiser_contact. "', '" .$issue_description. "', '" .$call_log_date_time. "')";
-			$result1 = $mysqli->query($sql1);
-			$insert_id = $mysqli->insert_id;	
-
-			if($insert_id > 0){
-				$status = true;  
-				$token_id = str_pad($insert_id, 4, '0', STR_PAD_LEFT);
-
-				$upd_sql = "UPDATE call_log_register SET token_id = '" .$token_id. "' WHERE call_log_id = '" .$insert_id. "' ";
-				$result_upd = $mysqli->query($upd_sql); 
-			}else{
-				$return_result['error_message'] = 'Data Insert Error';
+			if($issue_description == ''){
+				$return_result['error_message'] = 'Please write the issue description';
 				$status = false;
+			}else{
+				//Insert into table
+				$sql1 = "INSERT INTO call_log_register (facility_id, asset_code, user_id, ticket_raiser_name, ticket_raiser_contact, issue_description, call_log_date_time) VALUES ('" .$facility_id. "', '" .$asset_code. "', '" .$user_id. "', '" .$ticket_raiser_name. "', '" .$ticket_raiser_contact. "', '" .$issue_description. "', '" .$call_log_date_time. "')";
+				$result1 = $mysqli->query($sql1);
+				$insert_id = $mysqli->insert_id;	
+
+				if($insert_id > 0){
+					$status = true;  
+					$token_id = str_pad($insert_id, 4, '0', STR_PAD_LEFT);
+
+					$upd_sql = "UPDATE call_log_register SET token_id = '" .$token_id. "' WHERE call_log_id = '" .$insert_id. "' ";
+					$result_upd = $mysqli->query($upd_sql); 
+				}else{
+					$return_result['error_message'] = 'Data Insert Error';
+					$status = false;
+				}
 			}
 		} catch (PDOException $e) {
 			die("Error occurred:" . $e->getMessage());

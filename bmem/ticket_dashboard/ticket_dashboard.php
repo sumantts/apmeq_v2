@@ -116,7 +116,8 @@ include('common/head.php');
                                         <th>Total Tickets</th>
                                         <th>Critical Tickets</th>
                                         <th>Non Critical Tickets</th>
-                                        <th>Closed/Resolved Tickets</th>
+                                        <th>Closed</th>
+                                        <th>Resolved Tickets</th>
                                         <th>Open Tickets</th>
                                         <th>WIP Tickets</th>
                                         <th>< 3 Days</th>
@@ -132,7 +133,8 @@ include('common/head.php');
                                         <th>Total Tickets</th>
                                         <th>Critical Tickets</th>
                                         <th>Non Critical Tickets</th>
-                                        <th>Closed/Resolved Tickets</th>
+                                        <th>Closed</th>
+                                        <th>Resolved Tickets</th>
                                         <th>Open Tickets</th>
                                         <th>WIP Tickets</th>
                                         <th>< 3 Days</th>

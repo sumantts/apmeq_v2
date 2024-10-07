@@ -70,12 +70,13 @@ include('common/head.php');
                                 </div>       -->
 
                                 <div class="col-md-4 mb-3">
-                                    <label for="asset_code">Asset Code</label>
+                                    <label for="asset_code" class="text-danger">Asset Code*</label>
                                     <input type="number" class="form-control" id="asset_code" required> 
                                 </div>   
 
                                 <div class="col-md-4 mb-3">
                                     <label for="ticket_raiser_name">Ticket Raiser Name</label>
+                                    <input type="hidden" name="facility_id" id="facility_id" value="0">
                                     <input type="hidden" name="user_id" id="user_id" value="<?=$_SESSION["user_id"]?>">
                                     <input type="text" class="form-control" id="ticket_raiser_name" value="<?=$_SESSION["user_name"]?>" required readonly> 
                                 </div>  
@@ -86,8 +87,8 @@ include('common/head.php');
                                 </div>     
 
                                 <div class="col-md-12 mb-3">
-                                    <label for="issue_description">Issue Description</label>
-                                    <textarea class="form-control" id="issue_description" required> </textarea>
+                                    <label for="issue_description" class="text-danger">Issue Description*</label>
+                                    <textarea class="form-control" id="issue_description" required></textarea>
                                 </div> 
                             </div>  
 
