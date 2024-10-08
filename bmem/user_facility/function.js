@@ -167,7 +167,7 @@ function configureFacilityDropDown(){
 
             if($rows.length > 0){
                 $('#facility_id_dd').html('');
-                $html = "<option value=''>Select</option>";
+                $html = "<option value='0'>Select</option>";
 
                 for($i = 0; $i < $rows.length; $i++){
                     $html += "<option value='"+$rows[$i].facility_id+"'>"+$rows[$i].facility_name+"</option>";                    

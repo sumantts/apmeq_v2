@@ -167,48 +167,42 @@ include('common/head.php');
 						</div>
                          
 
-                        <form class="needs-validation" novalidate>
+                        <form class="needs-validation" id="myFormS" action="#" method="POST">
                             <div class="form-row">                               
                                 <div class="col-md-3 mb-3">
-                                    <label for="author_name">Facility Name</label>
-                                    <select class="form-control" id="author_name">
+                                    <label for="facility_id_s">Facility Name</label>
+                                    <select class="form-control js-example-basic-single" id="facility_id_s" name="facility_id_s">
                                         <option value="0">Select</option>
-                                        <option value="1">Facility 1</option>
-                                        <option value="2">Facility 2</option>
                                     </select> 
                                 </div>  
 
                                 <div class="col-md-3 mb-3">
-                                    <label for="author_name">Department</label>
-                                    <select class="form-control" id="author_name">
-                                        <option value="0">Select</option>
-                                        <option value="1">Department 1</option>
-                                        <option value="2">Department 2</option>
+                                    <label for="department_id">Department</label>
+                                    <select class="form-control js-example-basic-single" id="department_id" name="department_id">
+                                        <option value="0">Select</option> 
                                     </select> 
                                 </div>    
 
                                 <div class="col-md-3 mb-3">
-                                    <label for="author_name">Status</label>
-                                    <select class="form-control" id="author_name">
-                                        <option value="0">Select</option>
-                                        <option value="1">Assigned</option>
-                                        <option value="2">Open</option>
-                                        <option value="3">Resolved</option>
-                                        <option value="4">WIP</option>
-                                        <option value="5">Incident report</option>
-                                        <option value="6">Standby</option>
-                                        <option value="7">RBER</option>
+                                    <label for="call_log_status">Ticket Status</label>
+                                    <select class="form-control js-example-basic-single" id="call_log_status" name="call_log_status">
+                                        <option value="-1">Select</option>
+                                        <option value="0">Raised</option>
+                                        <option value="1">Work In Progress</option>
+                                        <option value="2">Resolved </option>
+                                        <option value="3">Closed </option>
+                                        <option value="4">Rejected</option>
                                     </select> 
                                 </div>    
 
                                 <div class="col-md-3 mb-3">
-                                    <label for="author_name">Ticket Id</label>
-                                    <input type="text" class="form-control" id="author_name"> 
+                                    <label for="token_id">Ticket/Token Id</label>
+                                    <input type="text" class="form-control form-control-sm" id="token_id" name="token_id"> 
                                 </div>     
 
                                 <div class="col-md-3 mb-3">
-                                    <label for="author_name">Day Wise</label>
-                                    <select class="form-control" id="author_name">
+                                    <label for="day_wise">Day Wise</label>
+                                    <select class="form-control js-example-basic-single" id="day_wise" name="day_wise">
                                         <option value="0">Select</option>
                                         <option value="1">< 3days</option>
                                         <option value="2">> 3days</option>
@@ -217,34 +211,26 @@ include('common/head.php');
                                     </select> 
                                 </div>    
 
-                                <div class="col-md-3 mb-3">
+                                <!-- <div class="col-md-3 mb-3">
                                     <label for="author_name">Enter Barcode</label>
                                     <input type="text" class="form-control" id="author_name"> 
-                                </div>     
+                                </div>      -->
 
                                 <div class="col-md-3 mb-3">
-                                    <label for="author_name">Device Group</label>
-                                    <select class="form-control" id="author_name">
-                                        <option value="0">Select</option>
-                                        <option value="1">Scanner</option>
-                                        <option value="2">In vitro Diagnostics</option>
-                                        <option value="3">Readiology</option>
-                                        <option value="4">Monitors</option>
-                                        <option value="5">Crtitical care</option>
-                                        <option value="6">Opthalmology</option>
-                                        <option value="7">Surgical</option>
-                                        <option value="8">Drug Delivery</option> 
+                                    <label for="device_group">Device Group</label>
+                                    <select class="form-control js-example-basic-single" id="device_group" name="device_group">
+                                        <option value="0">Select</option> 
                                     </select> 
                                 </div>     
 
                                 <div class="col-md-3 mb-3">
-                                    <label for="author_name">Device Name</label>
-                                    <input type="text" class="form-control" id="author_name"> 
+                                    <label for="equipment_name">Device Name</label>
+                                    <input type="text" class="form-control form-control-sm" id="equipment_name" name="equipment_name"> 
                                 </div>  
 
                                 <div class="col-md-3 mb-3">
-                                    <label for="author_name">Ticket Class</label>
-                                    <select class="form-control" id="author_name">
+                                    <label for="ticket_class">Ticket Class</label>
+                                    <select class="form-control js-example-basic-single" id="ticket_class" name="ticket_class">
                                         <option value="0">Select</option>
                                         <option value="1">critical</option>
                                         <option value="2">Non Critical</option>
@@ -255,28 +241,18 @@ include('common/head.php');
                                     <label for="registration_number">Date Wise (From date to To date)</label>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <input type="date" class="form-control" name="from_dt" id="from_dt"> 
+                                            <input type="date" class="form-control form-control-sm" name="from_dt" id="from_dt"> 
                                         </div>
                                         <div class="col-md-6">
-                                            <input type="date" class="form-control" name="to_dt" id="to_dt"> 
+                                            <input type="date" class="form-control form-control-sm" name="to_dt" id="to_dt"> 
                                         </div>
                                     </div>
                                 </div> 
 
-                                <div class="col-md-2 mt-4">
-                                    <button class="btn  btn-primary" type="button" id="submitForm">
-                                        <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
-                                        <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
-                                        <span class="btn-text" id="submitForm_text">Search</span>
-                                    </button>
-                                </div>  
-
-                                <div class="col-md-2 mt-4">
-                                    <button class="btn btn-dark" type="button" id="submitForm">
-                                        <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
-                                        <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
-                                        <span class="btn-text" id="submitForm_text">Clear</span>
-                                    </button>
+                                <div class="col-md-4 mt-4">
+                                    <button class="btn btn-sm  btn-primary" type="submit" id="submitForm"> Search </button>
+                                    
+                                    <button class="btn btn-sm btn-dark" type="button" id="clearForm"> Clear </button>
                                 </div>
                             </div>
                         </form>
@@ -284,7 +260,7 @@ include('common/head.php');
                 </div>
             </div>
             <!-- [ sample-table ] start --> 
-            <div class="col-sm-12">
+            <div class="col-sm-12 d-none" id="filteredTicketDiv">
                 <div class="card">
 
                     <div class="card-header">
@@ -318,6 +294,7 @@ include('common/head.php');
                                         <th>Report Upload</th>
                                         <th>Report view</th>
                                         <th>Status<br>(WIP/Resolved/closed)</th> 
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -340,6 +317,7 @@ include('common/head.php');
                                         <th>Report Upload</th>
                                         <th>Report view</th>
                                         <th>Status<br>(WIP/Resolved/closed)</th> 
+                                        <th>Action</th>
                                     </tr>
                                 </tfoot>
                             </table>
