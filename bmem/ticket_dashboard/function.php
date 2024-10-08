@@ -199,13 +199,13 @@
 		$from_dt = $_GET['from_dt'];  
 		$to_dt = $_GET['to_dt']; 
 
-		$where_condition = "WHERE call_log_id > 0";
+		$where_condition = "WHERE call_log_register.call_log_id > 0";
 
 		if($token_id != ''){
-			$where_condition .= " AND token_id = '" .$token_id. "' ";
+			$where_condition .= " AND call_log_register.token_id = '" .$token_id. "' ";
 		}
 		
-		$sql = "SELECT * FROM call_log_register $where_condition LIMIT 0, 50";
+		$sql = "SELECT call_log_register.call_log_id, call_log_register.token_id, call_log_register.issue_description, call_log_register.call_log_date_time, call_log_register.resolved_date_time, call_log_register.ticket_raiser_contact, call_log_register.assign_to, call_log_register.call_log_status, asset_details.equipment_name, asset_details.department_id, asset_details.asset_supplied_by, asset_details.sp_details, facility_master.facility_code, facility_master.facility_name FROM call_log_register JOIN asset_details ON call_log_register.asset_code = asset_details.asset_code JOIN facility_master ON call_log_register.facility_id = facility_master.facility_id $where_condition LIMIT 0, 50";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -213,36 +213,84 @@
 			$slno = 1;
 
 			while($row = $result->fetch_array()){
-				$token_id = $row['token_id'];		
-				/*$category_name = $row['category_name'];		
-				$for_the_year = $row['for_the_year'];
-				$course_id = 0;//$row['course_id'];		
-				$course_name = '';//$row['course_name'];			
-				$author_name = $row['author_name'];		
-				$email = $row['email'];			
-				$registration_number = $row['registration_number'];	
-				$user_level = $row['user_level']; */
+				$token_id = $row['token_id'];	
+				$issue_description = $row['issue_description'];			
+				$equipment_name = $row['equipment_name'];				
+				$facility_code = $row['facility_code'];					
+				$facility_name = $row['facility_name'];					
+				$department_id = $row['department_id'];					
+				$asset_supplied_by = $row['asset_supplied_by'];				
+				$sp_details = $row['sp_details'];					
+				$call_log_date_time = date('d-F-Y h:i A', strtotime($row['call_log_date_time']));	
+				$resolved_date_time = '';
+				if($row['resolved_date_time'] != '0000-00-00 00:00:00'){			
+					$resolved_date_time = date('d-F-Y h:i A', strtotime($row['resolved_date_time']));
+				}				
+				$ticket_raiser_contact = $row['ticket_raiser_contact'];		
+							
+				$assign_to = $row['assign_to'];	
+				$assign_to_text = '';
+				if($assign_to == 1){
+					$assign_to_text = 'Engineer';					
+				}else if($assign_to == 2){
+					$assign_to_text = 'ServiceProvider';
+				}else{
+					$assign_to_text = '';
+				}	
+
+				$call_log_status = $row['call_log_status'];	
+				$call_log_status_text = '';
+				if($call_log_status == 0){
+					$call_log_status_text = 'Raised';					
+				}else if($call_log_status == 1){
+					$call_log_status_text = 'WIP';
+				}else if($call_log_status == 2){
+					$call_log_status_text = 'Resolved';
+				}else if($call_log_status == 3){
+					$call_log_status_text = 'Closed';
+				}else if($call_log_status == 4){
+					$call_log_status_text = 'Rejected';
+				}else{
+					$call_log_status_text = 'Raised';
+				}
+				
+				//get all depertment name	
+				$dept_names = '';	
+				$ids = '';	 
+				$ids_str = json_decode($department_id);
+				foreach($ids_str as $key => $val){
+					$ids .= $val.',';
+				} 				
+				$ids = rtrim($ids, ",");
+				$sql_get = "SELECT * FROM department_list WHERE department_id IN ($ids)";
+				$result_get = $mysqli->query($sql_get);
+		
+				if ($result_get->num_rows > 0) {
+					$status = true;	
+					while($row_get = $result_get->fetch_array()){
+						$dept_names .= $row_get['department_name'].', ';	
+					}				
+					$dept_names = rtrim($dept_names, ", ");
+				} 
 
 				
 				$data[0] = $slno; 
 				$data[1] = $token_id;
-				$data[2] = '-';
+				$data[2] = $issue_description;
 				$data[3] = '-';
-				$data[4] = '-'; 
-				$data[5] = '-';
-				$data[6] = '-';
-				$data[7] = '-';
-				$data[8] = '-';
-				$data[9] = '-';
-				$data[10] = '-';
-				$data[11] = '-';
-				$data[12] = '-';
-				$data[13] = '-';
+				$data[4] = $equipment_name; 
+				$data[5] = $facility_code;
+				$data[6] = $facility_name;
+				$data[7] = $dept_names;
+				$data[8] = $asset_supplied_by;
+				$data[9] = $sp_details;
+				$data[10] = $call_log_date_time;
+				$data[11] = $resolved_date_time;
+				$data[12] = $ticket_raiser_contact;
+				$data[13] = $assign_to_text;
 				$data[14] = '-';
-				$data[15] = '-';
-				$data[16] = '-';
-				$data[17] = '-';
-				$data[18] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$slno.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$slno.")'></i></a>";						
+				$data[15] = $call_log_status_text;
+				$data[16] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$slno.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$slno.")'></i></a>";						
 
 				array_push($mainData, $data);
 				$slno++;

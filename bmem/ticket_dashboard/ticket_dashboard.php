@@ -291,9 +291,7 @@ include('common/head.php');
                                         <th>Contact details <br>of <br>ticket raiser</th>
                                         <th>Assign Service provider/<br>Junior enhgineer</th>
                                         <th>Engineer Contact No</th>
-                                        <th>Report Upload</th>
-                                        <th>Report view</th>
-                                        <th>Status<br>(WIP/Resolved/closed)</th> 
+                                        <th>Call Log Status </th> 
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -314,9 +312,7 @@ include('common/head.php');
                                         <th>Contact details <br>of <br>ticket raiser</th>
                                         <th>Assign Service provider/<br>Junior enhgineer</th>
                                         <th>Engineer Contact No</th>
-                                        <th>Report Upload</th>
-                                        <th>Report view</th>
-                                        <th>Status<br>(WIP/Resolved/closed)</th> 
+                                        <th>Call Log Status </th> 
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
