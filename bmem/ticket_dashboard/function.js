@@ -12,6 +12,9 @@ $('#clearForm').on('click', function(){
     $('#filteredTicketDiv').addClass('d-none');
 })
 
+$("#partTwoSwitch").click(function(){
+    $("#partTwoBoard").toggle('slow');
+});
 
 $('#myFormS').on('submit', function(){    
     $facility_id_s = $('#facility_id_s').val();
@@ -32,35 +35,54 @@ $('#myFormS').on('submit', function(){
     }else{
         alert('Please choose search parameter');
     }
-    return false;      
-            
+    return false;
 })
 
-function editTableData($author_id){
-    $('#exampleModalLong').modal('show');
+$('#myFormM').on('submit', function(){    
+    $assign_to = $('#assign_to').val();
+    $eng_contact_no = $('#eng_contact_no').val(); 
+    $call_log_status = $('#call_log_status').val();
+    $resolved_date_time = $('#resolved_date_time').val(); 
+    $call_log_id = $('#call_log_id').val(); 
+    
     $.ajax({
         method: "POST",
         url: "ticket_dashboard/function.php",
-        data: { fn: "getFormEditData", author_id: $author_id }
+        data: { fn: "updateTicketInfo", assign_to: $assign_to, eng_contact_no: $eng_contact_no, call_log_status: $call_log_status, resolved_date_time: $resolved_date_time, call_log_id: $call_log_id }
     })
     .done(function( res ) {
         //console.log(res);
         $res1 = JSON.parse(res);
         if($res1.status == true){
-            $('#category_id').val($res1.category_id).trigger('change');
-            $('#for_the_year').val($res1.for_the_year).trigger('change');
-            $('#author_name').val($res1.author_name);
-            $('#email').val($res1.email);            
-            $('#registration_number').val($res1.registration_number); 
-            let img = document.getElementById('image');
-            img.src = $res1.author_photo;
-            localStorage.setItem("author_photo", $res1.author_photo);
-            $('#author_status').val($res1.author_status).trigger('change');  
-            $('#author_id').val($author_id);
+            alert('Data updated successfully');
         }
     });//end ajax
+    
+    return false;
+})
 
-}
+function editTableData($call_log_id){
+    $('#exampleModalLong').modal('show');
+    $.ajax({
+        method: "POST",
+        url: "ticket_dashboard/function.php",
+        data: { fn: "getFormEditData", call_log_id: $call_log_id }
+    })
+    .done(function( res ) {
+        //console.log(res);
+        $res1 = JSON.parse(res);
+        if($res1.status == true){
+            $('#call_log_id').val($call_log_id);  
+            $('#assign_to').val($res1.assign_to).trigger('change');
+            $('#eng_contact_no').val($res1.eng_contact_no);
+            $('#call_log_status').val($res1.call_log_status).trigger('change');
+            $('#resolved_date_time').val($res1.resolved_date_time); 
+            $html = '';
+            $html += '<div><strong>Issue Description: </strong>'+$res1.issue_description+'</div>';
+            $('#ticket_data').html($html);
+        }
+    });//end ajax
+}//end functon
 
 //Delete function	
 function deleteTableData($author_id){
@@ -263,6 +285,6 @@ $(document).ready(function () {
     configureFacilityDropDown(); 
     configureDeviceGroupDropDown();
     populateDataTable();
-    //populateDataTable_1();
+    $("#partTwoBoard").hide();
     $('.js-example-basic-single').select2();
 });

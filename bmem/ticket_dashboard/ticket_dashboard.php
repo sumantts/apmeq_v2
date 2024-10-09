@@ -2,34 +2,22 @@
 if(!$_SESSION["user_id"] || !$_SESSION["user_type_code"]){header('location:?p=signin');}
 include('common/head.php');  
 ?>
-<script type="text/javascript">   
-
-</script>
-<style>
-    /*table td {
-        word-break: break-word;
-        vertical-align: top;
-        white-space: normal !important;
-    }*/
-</style>
 
 <body class="">
-	<!-- [ Pre-loader ] start -->
-	<div class="loader-bg">
-		<div class="loader-track">
-			<div class="loader-fill"></div>
-		</div>
-	</div>
-	<!-- [ Pre-loader ] End -->
-	<!-- [ navigation menu ] start -->	
-	<?php include('common/nav.php'); ?>
-	<!-- [ navigation menu ] end -->
+<!-- [ Pre-loader ] start -->
+<div class="loader-bg">
+    <div class="loader-track">
+        <div class="loader-fill"></div>
+    </div>
+</div>
+<!-- [ Pre-loader ] End -->
+<!-- [ navigation menu ] start -->	
+<?php include('common/nav.php'); ?>
+<!-- [ navigation menu ] end -->
 
-	<!-- [ Header ] start -->
-	<?php include('common/top_bar.php'); ?>
-	<!-- [ Header ] end -->
-	
-	
+<!-- [ Header ] start -->
+<?php include('common/top_bar.php'); ?>
+<!-- [ Header ] end -->
 
 <!-- [ Main Content ] start -->
 <div class="pcoded-main-container">
@@ -323,6 +311,69 @@ include('common/head.php');
                 </div>
             </div>
 
+            <!-- Modal start -->
+            <div id="exampleModalLong" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle"><?=$title?></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="needs-validation" method="POST" id="myFormM" action="#">
+                                <a href="javascript: void(0);" id="partTwoSwitch" class="float-right">Show Ticket Description</a>
+                                <br>
+                                <hr>
+                                <div class="form-row" id="partTwoBoard"> 
+                                    <div class="col-md-12 mb-3" id="ticket_data">
+                                        
+                                    </div>  
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col-md-4 mb-3">
+                                        <label for="assign_to" class="text-danger">Assign To*</label>
+                                        <select class="form-control" name="assign_to" id="assign_to" required>
+                                            <option value="0">Select</option> 
+                                            <option value="1">Engineer</option> 
+                                            <option value="2">Service Provider</option> 
+                                        </select> 
+                                    </div>
+                                    
+                                    <div class="col-md-4 mb-3">
+                                        <label for="eng_contact_no" class="text-danger">Engineer Contact Number</label>
+                                        <input type="tel" class="form-control" id="eng_contact_no" value="" > 
+                                    </div> 
+
+                                    <div class="col-md-4 mb-3">
+                                        <label for="call_log_status" class="text-danger">Call Log Status*</label>
+                                        <select class="form-control" name="call_log_status" id="call_log_status" required> 
+                                            <option value="0">Raised</option> 
+                                            <option value="1">Work in Progress</option> 
+                                            <option value="2">Resolved</option> 
+                                            <option value="3">Closed</option> 
+                                            <option value="4">Rejected</option> 
+                                        </select> 
+                                    </div>
+                                    
+                                    <div class="col-md-4 mb-3">
+                                        <label for="resolved_date_time" >Resolved Date Time</label>
+                                        <input type="date" class="form-control" id="resolved_date_time" value="" > 
+                                    </div>
+                                </div>
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <input type="hidden" id="call_log_id" value="0">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            
+                            <button class="btn btn-primary" type="submit" id="submitFormM"> Save Changes </button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal end -->
             <!-- [ sample-page ] end -->
         </div>
         <!-- [ Main Content ] end -->
