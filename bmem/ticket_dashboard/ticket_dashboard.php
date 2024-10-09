@@ -46,7 +46,7 @@ include('common/head.php');
             <div class="col-md-12 col-xl-12">
                 <div class="card support-bar overflow-hidden">
                     <div class="card-body pb-0 text-center">
-                        <h2 class="m-0">350</h2>
+                        <h2 class="m-0" id="total_ticket">000</h2>
                         <span class="text-c-blue">Support Requests</span>
                         <p class="mb-3 mt-3">Total number of support requests that come in.</p>
                     </div>
@@ -54,15 +54,15 @@ include('common/head.php');
                     <div class="card-footer bg-primary text-white">
                         <div class="row text-center">
                             <div class="col">
-                                <h4 class="m-0 text-white">10</h4>
+                                <h4 class="m-0 text-white" id="total_ticket1">000</h4>
                                 <span>Total Ticket</span>
                             </div>
                             <div class="col">
-                                <h4 class="m-0 text-white">5</h4>
+                                <h4 class="m-0 text-white" id="resolved_ticket">000</h4>
                                 <span>Resolved</span>
                             </div>
                             <div class="col">
-                                <h4 class="m-0 text-white">3</h4>
+                                <h4 class="m-0 text-white" id="open_ticket">000</h4>
                                 <span>Open / Assign / WIP</span>
                             </div>
                         </div>

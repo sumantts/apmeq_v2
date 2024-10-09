@@ -182,10 +182,11 @@
 	if($fn == 'getTableData_1'){
 		$return_array = array();
 		$status = true;
+		$dept_match = true;
 		$mainData = array();    
 
 		$facility_id_s = $_GET['facility_id_s'];
-		$department_id = $_GET['department_id']; 
+		$department_id_s = $_GET['department_id']; 
 		$call_log_status = $_GET['call_log_status'];
 		$token_id = $_GET['token_id']; 
 		$day_wise = $_GET['day_wise']; 
@@ -197,9 +198,26 @@
 
 		$where_condition = "WHERE call_log_register.call_log_id > 0";
 
+		if($facility_id_s > 0){
+			$where_condition .= " AND call_log_register.facility_id = '" .$facility_id_s. "' ";
+		}
+		if($call_log_status > 0){
+			$where_condition .= " AND call_log_register.call_log_status = '" .$call_log_status. "' ";
+		}
 		if($token_id != ''){
 			$where_condition .= " AND call_log_register.token_id = '" .$token_id. "' ";
 		}
+		if($device_group > 0){
+			$where_condition .= " AND asset_details.device_group = '" .$device_group. "' ";
+		}
+		if($equipment_name != ''){
+			$where_condition .= " AND asset_details.equipment_name = '" .$equipment_name. "' ";
+		}
+		if($from_dt != '' && $to_dt != ''){
+			$from_dt1 = $from_dt.' 00:01:01';
+			$to_dt1 = $to_dt.' 23:58:00';
+			$where_condition .= " AND call_log_register.call_log_date_time > '" .$from_dt1. "' AND call_log_register.call_log_date_time < '" .$to_dt1. "' ";			
+		}		
 		
 		$sql = "SELECT call_log_register.call_log_id, call_log_register.token_id, call_log_register.issue_description, call_log_register.call_log_date_time, call_log_register.resolved_date_time, call_log_register.ticket_raiser_contact, call_log_register.assign_to, call_log_register.call_log_status, call_log_register.eng_contact_no, asset_details.equipment_name, asset_details.department_id, asset_details.asset_supplied_by, asset_details.sp_details, facility_master.facility_code, facility_master.facility_name FROM call_log_register JOIN asset_details ON call_log_register.asset_code = asset_details.asset_code JOIN facility_master ON call_log_register.facility_id = facility_master.facility_id $where_condition LIMIT 0, 50";
 		$result = $mysqli->query($sql);
@@ -252,12 +270,21 @@
 					$call_log_status_text = 'Raised';
 				}
 				
-				//get all depertment name	
+				//get all depertment name
+				if($department_id_s > 0){
+					$dept_match = false;
+				}
 				$dept_names = '';	
 				$ids = '';	 
 				$ids_str = json_decode($department_id);
 				foreach($ids_str as $key => $val){
 					$ids .= $val.',';
+
+					if($department_id_s > 0){
+						if($department_id_s == $val){
+							$dept_match = true;
+						}	
+					}//end if
 				} 				
 				$ids = rtrim($ids, ",");
 				$sql_get = "SELECT * FROM department_list WHERE department_id IN ($ids)";
@@ -271,27 +298,28 @@
 					$dept_names = rtrim($dept_names, ", ");
 				} 
 
-				
-				$data[0] = $slno; 
-				$data[1] = $token_id;
-				$data[2] = $issue_description;
-				$data[3] = '-';
-				$data[4] = $equipment_name; 
-				$data[5] = $facility_code;
-				$data[6] = $facility_name;
-				$data[7] = $dept_names;
-				$data[8] = $asset_supplied_by;
-				$data[9] = $sp_details;
-				$data[10] = $call_log_date_time;
-				$data[11] = $resolved_date_time;
-				$data[12] = $ticket_raiser_contact;
-				$data[13] = $assign_to_text;
-				$data[14] = $eng_contact_no;
-				$data[15] = $call_log_status_text;
-				$data[16] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$call_log_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$call_log_id.")'></i></a>";						
+				if($dept_match == true){
+					$data[0] = $slno; 
+					$data[1] = $token_id;
+					$data[2] = $issue_description;
+					$data[3] = '-';
+					$data[4] = $equipment_name; 
+					$data[5] = $facility_code;
+					$data[6] = $facility_name;
+					$data[7] = $dept_names;
+					$data[8] = $asset_supplied_by;
+					$data[9] = $sp_details;
+					$data[10] = $call_log_date_time;
+					$data[11] = $resolved_date_time;
+					$data[12] = $ticket_raiser_contact;
+					$data[13] = $assign_to_text;
+					$data[14] = $eng_contact_no;
+					$data[15] = $call_log_status_text;
+					$data[16] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$call_log_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$call_log_id.")'></i></a>";						
 
-				array_push($mainData, $data);
-				$slno++;
+					array_push($mainData, $data);
+					$slno++;
+				}//end if
 			}
 		} else {
 			$status = false;
@@ -420,82 +448,7 @@
 		$return_result['status'] = $status;
 		//sleep(1);
 		echo json_encode($return_result);
-	}//end function deleteItem
-
-	
-
-	//Get Category name
-	if($fn == 'getAllCategoryName'){
-		$return_array = array();
-		$status = true;
-		$mainData = array();
-		$parent_category_id = 0;
-
-		$sql = "SELECT * FROM category_list WHERE activity_status = 'active' ORDER BY category_name ASC";
-		$result = $mysqli->query($sql);
-
-		if ($result->num_rows > 0) {
-			$status = true;
-			$slno = 1;
-			while($row = $result->fetch_array()){
-				$category_id = $row['category_id'];	
-				$category_name = $row['category_name'];			
-				$category_slug = $row['category_slug'];
-				$data = new stdClass();
-
-				$data->category_id = $category_id;
-				$data->category_name = $category_name;
-				$data->category_slug = $category_slug;
-				
-				array_push($mainData, $data);
-				$slno++;
-			}
-		} else {
-			$status = false;
-		} 
-
-		$return_array['status'] = $status;
-		$return_array['data'] = $mainData;
-		echo json_encode($return_array);
-	}//end if
-
-	//Get Course name
-	if($fn == 'getAllCourseName'){
-		$return_array = array();
-		$status = true;
-		$mainData = array(); 
-
-		$sql = "SELECT * FROM course_fee_detail ORDER BY course_name ASC";
-		$result = $mysqli->query($sql);
-
-		if ($result->num_rows > 0) {
-			$status = true;
-			$slno = 1;
-			while($row = $result->fetch_array()){
-				$course_id = $row['course_id'];	
-				$course_name = $row['course_name'];			
-				$course_fee = $row['course_fee'];		
-				$course_duration = $row['course_duration'];
-				$data = new stdClass();
-
-				$data->course_id = $course_id;
-				$data->course_name = $course_name;
-				$data->course_fee = $course_fee;
-				$data->course_duration = $course_duration;
-				
-				array_push($mainData, $data);
-				$slno++;
-			}
-		} else {
-			$status = false;
-		} 
-
-		$return_array['status'] = $status;
-		$return_array['data'] = $mainData;
-		echo json_encode($return_array);
-	}//function end	
-
-	
+	}//end function deleteItem	
 
 	//Get Course name
 	if($fn == 'updateTicketInfo'){
@@ -512,6 +465,35 @@
 		$result = $mysqli->query($sql);
 
 		$return_array['status'] = $status;
+		
+		echo json_encode($return_array);
+	}//function end	
+
+	//Get Ticket Counter
+	if($fn == 'initTicketCounter'){
+		$return_array = array();
+		$status = true;
+		$mainData = array(); 
+		$total_ticket = 0; 
+		$resolved_ticket = 0;
+		$open_ticket = 0;
+
+
+		//Total Assets
+		$sql1 = "SELECT * FROM call_log_register";
+		$result1 = $mysqli->query($sql1);
+		$total_ticket = $result1->num_rows; 
+
+		$sql_2 = "SELECT * FROM call_log_register WHERE call_log_status = '2' ";
+		$result_2 = $mysqli->query($sql_2);
+		$resolved_ticket = $result_2->num_rows;
+
+		$open_ticket = $total_ticket - $resolved_ticket;
+
+		$return_array['status'] = $status;
+		$return_array['total_ticket'] = $total_ticket;
+		$return_array['resolved_ticket'] = $resolved_ticket;
+		$return_array['open_ticket'] = $open_ticket;
 		
 		echo json_encode($return_array);
 	}//function end	

@@ -28,7 +28,7 @@ $('#myFormS').on('submit', function(){
     $from_dt = $('#from_dt').val();  
     $to_dt = $('#to_dt').val(); 
     
-    if($facility_id_s > 0 || $department_id > 0 || $call_log_status > 0 || $token_id != '' || $day_wise > 0 || $device_group > 0 || $equipment_name != '' || $ticket_class > 0 || $from_dt != '' || $to_dt != ''){
+    if($facility_id_s > 0 || $department_id > 0 || $call_log_status > 0 || $token_id != '' || $day_wise > 0 || $device_group > 0 || $equipment_name != '' || $ticket_class >= 0 || $from_dt != '' || $to_dt != ''){
         populateDataTable_1();
         $('#filteredTicketDiv').removeClass('d-none');
         $('#filteredTicketDiv').addClass('d-block');
@@ -280,8 +280,26 @@ function configureDeviceGroupDropDown(){
     });//end ajax
 }//end
 
+function initTicketCounter(){   
+    $.ajax({
+        method: "POST",
+        url: "ticket_dashboard/function.php",
+        data: { fn: "initTicketCounter"}
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res); 
+        if($res1.status == true){
+            $total_ticket = $res1.total_ticket; 
+            $('#total_ticket').html($total_ticket); 
+            $('#total_ticket1').html($total_ticket);
+            $('#resolved_ticket').html($res1.resolved_ticket);
+            $('#open_ticket').html($res1.open_ticket);
+        }        
+    });//end ajax 
+}
 
 $(document).ready(function () {
+    initTicketCounter();
     configureFacilityDropDown(); 
     configureDeviceGroupDropDown();
     populateDataTable();
