@@ -108,8 +108,6 @@
 		$status = true;
 		$mainData = array();
 		$email1 = '';
-		
-		//$sql = "SELECT pms_info.pms_id, pms_info.pms_info_id, pms_info.facility_id, pms_info.facility_code, pms_info.department_id, pms_info.device_group, pms_info.asset_class, pms_info.equipment_name, pms_info.equipment_make_model, pms_info.equipment_sl_no, pms_info.pms_due_date, pms_info.supplied_by, pms_info.service_provider_details, pms_info.pms_planned_date, pms_info.pms_report_attached, pms_info.link_generated_by, pms_info.link_generate_time, pms_info.row_status, pms_info.pms_data_updated, facility_master.facility_name, department_list.department_name FROM pms_info JOIN facility_master ON pms_info.facility_id = facility_master.facility_id JOIN department_list ON pms_info.department_id = department_list.department_id WHERE category_list.activity_status = 'active'";
 
 		$sql = "SELECT * FROM facility_master LIMIT 0, 50";
 		$result = $mysqli->query($sql);
@@ -127,13 +125,23 @@
 				if ($result1->num_rows > 0) {
 					while($row1 = $result1->fetch_array()){
 						$pms_planed = 0;
-						$row_status = $row1['count_row_status'];
+						$pending_pms = 0;
+						$pms_done = 0;
+						$row_status = $row1['count_row_status'];						 
+
+						$sql_2 = "SELECT * FROM pms_info WHERE row_status = '1' AND facility_id = '" .$facility_id. "'";
+						$result_2 = $mysqli->query($sql_2);
+						$pending_pms = $result_2->num_rows;						 
+
+						$sql_3 = "SELECT * FROM pms_info WHERE row_status = '2' AND facility_id = '" .$facility_id. "'";
+						$result_3 = $mysqli->query($sql_3);
+						$pms_done = $result_3->num_rows;
 
 						$data[0] = $slno; 
 						$data[1] = $facility_name;
-						$data[2] = $row_status;
-						$data[3] = $row_status;
-						$data[4] = $pms_planed;
+						$data[2] = $pending_pms;
+						$data[3] = $pms_done;
+						$data[4] = $pending_pms;
 						//$data[5] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$facility_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$facility_id.")'></i></a>";
 		
 						array_push($mainData, $data);
@@ -144,16 +152,6 @@
 		} else {
 			$status = false;
 		}
-		//$mysqli->close();
-
-		/*$slno = 1; 
-
-		$data[0] = $slno; 
-		$data[1] = 'Facility 1';
-		$data[2] = '-';
-		$data[3] = '-';
-		$data[4] = '-';  
-		array_push($mainData, $data);*/
 
 		$return_array['data'] = $mainData;
     	echo json_encode($return_array);
@@ -178,7 +176,7 @@
 		$to_date = $_GET['to_date'];
 
 		$row_status = 2;
-		$where_condition = "WHERE pms_info.row_status = '" .$row_status. "' ";
+		$where_condition = "WHERE pms_info.pms_id > '0' ";
 		if($facility_id > 0){
 			$where_condition .= " AND pms_info.facility_id = '" .$facility_id. "' ";
 		}
@@ -484,5 +482,34 @@
 		//sleep(1);
 		echo json_encode($return_result);
 	}//end function deleteItem
+
+	//Get Ticket Counter
+	if($fn == 'initTicketCounter'){
+		$return_array = array();
+		$status = true;
+		$mainData = array(); 
+		$total_ticket = 0; 
+		$pending_pms = 0;
+		$pms_done = 0;
+
+
+		//Total Assets
+		$sql1 = "SELECT * FROM pms_info";
+		$result1 = $mysqli->query($sql1);
+		$total_ticket = $result1->num_rows; 
+
+		$sql_2 = "SELECT * FROM pms_info WHERE row_status = '1' ";
+		$result_2 = $mysqli->query($sql_2);
+		$pending_pms = $result_2->num_rows;
+
+		$pms_done = $total_ticket - $pending_pms;
+
+		$return_array['status'] = $status;
+		$return_array['total_ticket'] = $total_ticket;
+		$return_array['pending_pms'] = $pending_pms;
+		$return_array['pms_done'] = $pms_done;
+		
+		echo json_encode($return_array);
+	}//function end	
 
 ?>

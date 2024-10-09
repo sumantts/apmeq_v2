@@ -210,9 +210,26 @@ $('#clearSearchForm').on('click', function(){
     $('#searchResDiv').addClass('d-none');
 })
 
+function initTicketCounter(){   
+    $.ajax({
+        method: "POST",
+        url: "pms_dashboard/function.php",
+        data: { fn: "initTicketCounter"}
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res); 
+        if($res1.status == true){ 
+            $('#total_ticket').html($res1.total_ticket); 
+            $('#pending_pms').html($res1.pending_pms);
+            $('#pending_pms1').html($res1.pending_pms);
+            $('#pms_done').html($res1.pms_done); 
+        }        
+    });//end ajax 
+}
+
 $(document).ready(function () {
+    initTicketCounter();
     configureDeviceGroupDropDown();
     configureFacilityDropDown();
-    populateDataTable();
-    //populateDataTable_1();
+    populateDataTable(); 
 });

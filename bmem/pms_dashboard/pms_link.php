@@ -191,7 +191,7 @@
                             <div class="col-sm-12 mb-1">
                                 <div class="form-group">
                                     <label class="required-field" for="service_provider_details">Service Provider Details</label>
-                                    <textarea class="form-control" id="service_provider_details" name="service_provider_details" rows="4" placeholder="Name, Email, Phone Number" required></textarea>
+                                    <textarea class="form-control" id="service_provider_details" name="service_provider_details" rows="4" placeholder="Name, Email, Phone Number"> </textarea>
                                 </div>
                             </div>
         
