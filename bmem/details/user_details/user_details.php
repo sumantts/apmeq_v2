@@ -237,13 +237,6 @@ include('common/head.php');
                                         </div>
                                     </div> 
                                     
-                                    <!-- <div class="col-md-4 mb-2 mt-4">
-                                        <input type="file" accept="image/*" class="custom-file-input" id="author_photo" aria-describedby="author_photo"  onchange="savePhoto()">
-                                        <label class="custom-file-label" for="validatedCustomFile">Choose image...</label>
-                                        <small id="author_photoError" class="form-text text-danger"> </small>
-                                        <img src="" id="image" width="100">
-                                    </div>  -->
-                                    
                                     <div class="col-md-4 mb-3">
                                         <label for="user_status" class="text-danger">Status*</label>
                                         <select class="form-control" name="user_status" id="user_status">
@@ -263,7 +256,7 @@ include('common/head.php');
                         <div class="modal-footer">
                             <input type="hidden" id="user_id" value="0">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                            
                             <button class="btn  btn-primary" type="submit" id="submitForm">
                                 <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
                                 <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>

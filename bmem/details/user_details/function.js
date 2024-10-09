@@ -1,7 +1,11 @@
 $('#onMyModal').on('click', function(){
     localStorage.setItem('author_photo', '');
-    //clearForm();
-    $('#exampleModalLong').modal('show');
+    $('#exampleModalLong').modal('show'); 
+    $(".form-control").prop("readonly", false);
+    $('#submitForm').removeClass('d-none');
+    $('#submitForm').addClass('d-block');
+    $('#myForm').trigger('reset');
+    $('#user_id').val('0');
 })
 
 
@@ -52,8 +56,18 @@ $('#myForm').on("submit", function(){
     return false;
 })
 
-function editTableData($user_id){
-    $('#exampleModalLong').modal('show');
+function editTableData($user_id, $access_mode){
+    $('#exampleModalLong').modal('show'); 
+    if($access_mode == 1){
+        $(".form-control").prop("readonly", true);
+        $('#submitForm').removeClass('d-block');
+        $('#submitForm').addClass('d-none');
+    }else{
+        $(".form-control").prop("readonly", false);
+        $('#submitForm').removeClass('d-none');
+        $('#submitForm').addClass('d-block');
+    }
+
     $.ajax({
         method: "POST",
         url: "details/user_details/function.php",

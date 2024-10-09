@@ -94,10 +94,12 @@
 				$data[5] = $user_email;
 				$data[6] = $user_address;
 				$data[7] = $activity_status[$user_status]; 
+				$view_params = $user_id.', 1';
+				$edit_params = $user_id.', 2';
 				if($_SESSION["user_type_code"] != 'super'){
-					$data[8] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$user_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$user_id.")'></i></a>";
+					$data[8] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-eye' aria-hidden='true' onclick='editTableData(".$view_params.")'></i></a>  <a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$user_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$user_id.")'></i></a>";
 				}else{
-					$data[8] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$user_id.")'></i></a>";
+					$data[8] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-eye' aria-hidden='true' onclick='editTableData(".$view_params.")'></i></a>  <a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$edit_params.")'></i></a>";
 				} 
 				array_push($mainData, $data);
 				$slno++;

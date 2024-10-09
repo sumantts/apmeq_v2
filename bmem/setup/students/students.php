@@ -2,16 +2,6 @@
 if(!$_SESSION["user_id"] || !$_SESSION["user_type_code"]){header('location:?p=signin');}
 include('common/head.php');  
 ?>
-<script type="text/javascript">   
-
-</script>
-<style>
-    /*table td {
-        word-break: break-word;
-        vertical-align: top;
-        white-space: normal !important;
-    }*/
-</style>
 
 <body class="">
 	<!-- [ Pre-loader ] start -->
