@@ -52,11 +52,13 @@
 				$device_group_id = $row['device_group_id'];		
 				$device_name = $row['device_name']; 	
 				$device_status = $row['device_status'];	
+				$view_params = $device_group_id.', 1';
+				$edit_params = $device_group_id.', 2';
 
 				$data[0] = $slno;
 				$data[1] = $device_name; 
 				$data[2] =  $activity_status[$device_status];
-				$data[3] = "<a href='javascript: void(0)' data-device_group_id='.$device_group_id.'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$device_group_id.")'></i></a> <a href='javascript: void(0)' data-device_group_id='.$device_group_id.'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$device_group_id.")'></i></a>";
+				$data[3] = "<a href='javascript: void(0)' data-device_group_id='.$device_group_id.'><i class='fa fa-eye' aria-hidden='true' onclick='editTableData(".$view_params.")'></i></a> <a href='javascript: void(0)' data-device_group_id='.$device_group_id.'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$edit_params.")'></i></a> <a href='javascript: void(0)' data-device_group_id='.$device_group_id.'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$device_group_id.")'></i></a>";
 
 				array_push($mainData, $data);
 				$slno++;

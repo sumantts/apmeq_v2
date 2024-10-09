@@ -1,18 +1,6 @@
 <?php
 if(!$_SESSION["user_id"] || !$_SESSION["user_type_code"]){header('location:?p=signin');}
-include('common/head.php'); ?>
-
-<style>
-    /*table td {
-        word-break: break-word;
-        vertical-align: top;
-        white-space: normal !important;
-    }
-
-    .myclass {
-        text-transform: lowercase;
-    }*/
-</style>
+include('common/head.php'); ?> 
 
 <body class="">
 	<!-- [ Pre-loader ] start -->
@@ -132,7 +120,7 @@ include('common/head.php'); ?>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                            
                             <button class="btn  btn-primary" type="button" id="submitForm">
                                 <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
                                 <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>

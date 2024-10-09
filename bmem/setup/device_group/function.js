@@ -2,6 +2,12 @@ $('#onMyModal').on('click', function(){
     $('#device_group_id').val('0');
     $('#device_name').val(''); 
     $('#exampleModalLong').modal('show');
+
+    $(".form-control").prop("readonly", false);
+    $('#submitForm').removeClass('d-none');
+    $('#submitForm').addClass('d-block');
+    $('#myForm').trigger('reset');
+    $('#device_group_id').val('0');
 }) 
 
 function validateForm(){
@@ -62,9 +68,18 @@ $('#submitForm').click(function(){
     //}, 500)    
 })
 
-function editTableData($device_group_id){
+function editTableData($device_group_id, $access_mode){
     $('#myForm')[0].reset();
     $("#post_video_link").hide();
+    if($access_mode == 1){
+        $(".form-control").prop("readonly", true);
+        $('#submitForm').removeClass('d-block');
+        $('#submitForm').addClass('d-none');
+    }else{
+        $(".form-control").prop("readonly", false);
+        $('#submitForm').removeClass('d-none');
+        $('#submitForm').addClass('d-block');
+    }
 
     $.ajax({
         method: "POST",

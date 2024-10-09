@@ -2,7 +2,13 @@ $('#onMyModal').on('click', function(){
     $('#department_id').val('0');
     $('#department_name').val('');
     $('#department_code').val('');
-    $('#exampleModalLong').modal('show');
+    $('#exampleModalLong').modal('show'); 
+
+    $(".form-control").prop("readonly", false);
+    $('#submitForm').removeClass('d-none');
+    $('#submitForm').addClass('d-block');
+    $('#myForm').trigger('reset');
+    $('#department_id').val('0');
 })
 
 $('#department_name').on('blur', function(){
@@ -79,9 +85,18 @@ $('#submitForm').click(function(){
     //}, 500)    
 })
 
-function editTableData($department_id){
+function editTableData($department_id, $access_mode){
     $('#myForm')[0].reset();
-    $("#post_video_link").hide();
+    $("#post_video_link").hide(); 
+    if($access_mode == 1){
+        $(".form-control").prop("readonly", true);
+        $('#submitForm').removeClass('d-block');
+        $('#submitForm').addClass('d-none');
+    }else{
+        $(".form-control").prop("readonly", false);
+        $('#submitForm').removeClass('d-none');
+        $('#submitForm').addClass('d-block');
+    }
 
     $.ajax({
         method: "POST",
