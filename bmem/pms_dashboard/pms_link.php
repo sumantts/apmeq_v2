@@ -13,57 +13,56 @@
     <title>PMS Soft Link</title> 
     <style>
         body{
-    margin-top:20px;
-    background:#eee;
-}
-.gradient-brand-color {
-    background-image: -webkit-linear-gradient(0deg, #376be6 0%, #6470ef 100%);
-    background-image: -ms-linear-gradient(0deg, #376be6 0%, #6470ef 100%);
-    color: #fff;
-}
-.contact-info__wrapper {
-    overflow: hidden;
-    border-radius: .625rem .625rem 0 0
-}
+            margin-top:20px;
+            background:#eee;
+        }
+        .gradient-brand-color {
+            background-image: -webkit-linear-gradient(0deg, #376be6 0%, #6470ef 100%);
+            background-image: -ms-linear-gradient(0deg, #376be6 0%, #6470ef 100%);
+            color: #fff;
+        }
+        .contact-info__wrapper {
+            overflow: hidden;
+            border-radius: .625rem .625rem 0 0
+        }
 
-@media (min-width: 1024px) {
-    .contact-info__wrapper {
-        border-radius: 0 .625rem .625rem 0;
-        padding: 5rem !important
-    }
-}
-.contact-info__list span.position-absolute {
-    left: 0
-}
-.z-index-101 {
-    z-index: 101;
-}
-.list-style--none {
-    list-style: none;
-}
-.contact__wrapper {
-    background-color: #fff;
-    border-radius: 0 0 .625rem .625rem
-}
+        @media (min-width: 1024px) {
+            .contact-info__wrapper {
+                border-radius: 0 .625rem .625rem 0;
+                padding: 5rem !important
+            }
+        }
+        .contact-info__list span.position-absolute {
+            left: 0
+        }
+        .z-index-101 {
+            z-index: 101;
+        }
+        .list-style--none {
+            list-style: none;
+        }
+        .contact__wrapper {
+            background-color: #fff;
+            border-radius: 0 0 .625rem .625rem
+        }
 
-@media (min-width: 1024px) {
-    .contact__wrapper {
-        border-radius: .625rem 0 .625rem .625rem
-    }
-}
-@media (min-width: 1024px) {
-    .contact-form__wrapper {
-        padding: 5rem !important
-    }
-}
-.shadow-lg, .shadow-lg--on-hover:hover {
-    box-shadow: 0 1rem 3rem rgba(132,138,163,0.1) !important;
-}
+        @media (min-width: 1024px) {
+            .contact__wrapper {
+                border-radius: .625rem 0 .625rem .625rem
+            }
+        }
+        @media (min-width: 1024px) {
+            .contact-form__wrapper {
+                padding: 5rem !important
+            }
+        }
+        .shadow-lg, .shadow-lg--on-hover:hover {
+            box-shadow: 0 1rem 3rem rgba(132,138,163,0.1) !important;
+        }
 
-    </style>
-
-    
+    </style>    
   </head>
+  
   <body>
     <div class="container">
         <div class="contact__wrapper shadow-lg mt-n9">
@@ -111,7 +110,7 @@
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
                                     <label class="required-field" for="facility_id">Facility name</label>
-                                    <select class="form-control" name="facility_id" id="facility_id" required>
+                                    <select class="form-control" name="facility_id" id="facility_id" required >
                                         <option value="">Select</option> 
                                     </select>
                                 </div>
@@ -127,7 +126,7 @@
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
                                     <label class="required-field" for="department_id">Department</label>
-                                    <select class="form-control" name="department_id" id="department_id" required>
+                                    <select class="form-control" name="department_id" id="department_id" required >
                                         <option value="">Select</option>
                                     </select>
                                 </div>
@@ -136,7 +135,7 @@
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
                                     <label for="device_group">Device group</label>
-                                    <select class="form-control" name="device_group" id="device_group" required>
+                                    <select class="form-control" name="device_group" id="device_group" required >
                                         <option value="">Select</option> 
                                     </select>
                                 </div>
@@ -145,7 +144,7 @@
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
                                     <label for="asset_class">Asset class</label>
-                                    <select class="form-control" name="asset_class" id="asset_class" required>
+                                    <select class="form-control" name="asset_class" id="asset_class" required >
                                         <option value="">Select</option>
                                         <option value="1">Critical</option>
                                         <option value="2">Non Critical</option> 
@@ -156,35 +155,35 @@
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
                                     <label for="equipment_name">Equpment Name</label>
-                                    <input type="text" class="form-control" id="equipment_name" name="equipment_name" required>
+                                    <input type="text" class="form-control" id="equipment_name" name="equipment_name" required >
                                 </div>
                             </div>
         
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
                                     <label for="equipment_make_model">Equipment Make/Model</label>
-                                    <input type="text" class="form-control" id="equipment_make_model" name="equipment_make_model" required>
+                                    <input type="text" class="form-control" id="equipment_make_model" name="equipment_make_model" required >
                                 </div>
                             </div>
         
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
                                     <label for="equipment_sl_no">Equipment sl no</label>
-                                    <input type="text" class="form-control" id="equipment_sl_no" name="equipment_sl_no" required>
+                                    <input type="text" class="form-control" id="equipment_sl_no" name="equipment_sl_no" required >
                                 </div>
                             </div>
         
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
                                     <label for="pms_due_date">PMS due date</label>
-                                    <input type="date" class="form-control" id="pms_due_date" name="pms_due_date" required>
+                                    <input type="date" class="form-control" id="pms_due_date" name="pms_due_date" required >
                                 </div>
                             </div>
         
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
                                     <label for="supplied_by">Supplied by</label>
-                                    <input type="text" class="form-control" id="supplied_by" name="supplied_by" required>
+                                    <input type="text" class="form-control" id="supplied_by" name="supplied_by" required >
                                 </div>
                             </div> 
         
@@ -198,7 +197,7 @@
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
                                     <label for="pms_planned_date">PMS planned date</label>
-                                    <input type="date" class="form-control" id="pms_planned_date" name="pms_planned_date" required>
+                                    <input type="date" class="form-control" id="pms_planned_date" name="pms_planned_date" required >
                                 </div>
                             </div> 
         
@@ -208,12 +207,15 @@
                                     <input type="file" class="form-control" id="pms_report_attached" name="pms_report_attached" />
                                 </div>
                             </div>  -->
-                            <div class="col-sm-6 mb-1">
-                                <div class="rpw">
-                                <input type="file" id="multiupload" name="uploadFiledd[]" multiple accept=".jpg,.jpeg,.png" >
-                                <span id="uploadMessage"></span>
-                                
-                                <button type="button" id="startUpload" class="btn btn-primary btn-sm">Upload</button>
+                            <div class="col-md-6 mt-4">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <input type="file" id="multiupload" name="uploadFiledd[]" multiple accept=".jpg,.jpeg,.png" >
+                                        <span id="uploadMessage"></span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button type="button" id="startUpload" class="btn btn-primary btn-sm">Upload</button>
+                                    </div>
                                 </div>
                             </div> 
 
@@ -302,56 +304,59 @@
 
         $('#facility_id').on('change', function(){ 
             $facility_id = $('#facility_id').val(); 
-            console.log('function calling.........')
-            $.ajax({
-                method: "POST",
-                url: "../asset/function.php",
-                data: { fn: "getAllDepartmentName", facility_id_dd: $facility_id }
-            })
-            .done(function( res ) {
-                $res1 = JSON.parse(res); 
-                if($res1.status == true){
-                    $rows = $res1.data;
+            console.log('function calling.........');
+            if($facility_id > 0){
+                $.ajax({
+                    method: "POST",
+                    url: "../asset/function.php",
+                    data: { fn: "getAllDepartmentName", facility_id_dd: $facility_id }
+                })
+                .done(function( res ) {
+                    $res1 = JSON.parse(res); 
+                    if($res1.status == true){
+                        $rows = $res1.data;
 
-                    if($rows.length > 0){
-                        $('#department_id').html('');
-                        $html = "<option value=''>Select</option>";                             
-                        for($i = 0; $i < $rows.length; $i++){                                 
-                            $html += "<option value='"+$rows[$i].department_id+"'>"+$rows[$i].department_name+"</option>";                    
-                        }//end for
-                        console.log($html);
-                        $('#department_id').html($html);
-                    }//end if
-                }        
-            });//end ajax  
+                        if($rows.length > 0){
+                            $('#department_id').html('');
+                            $html = "<option value=''>Select</option>";                             
+                            for($i = 0; $i < $rows.length; $i++){                                 
+                                $html += "<option value='"+$rows[$i].department_id+"'>"+$rows[$i].department_name+"</option>";                    
+                            }//end for
+                            console.log($html);
+                            $('#department_id').html($html);
+                        }//end if
+                    }        
+                });//end ajax  
+            }
         })
 
         function loadDepartment(facilityid, departmentid){ 
             console.log('loadDepartment.........')
-            $.ajax({
-                method: "POST",
-                url: "../asset/function.php",
-                data: { fn: "getAllDepartmentName", facility_id_dd: facilityid }
-            })
-            .done(function( res ) {
-                $res1 = JSON.parse(res); 
-                if($res1.status == true){
-                    $rows = $res1.data;
+            if(facilityid > 0){
+                $.ajax({
+                    method: "POST",
+                    url: "../asset/function.php",
+                    data: { fn: "getAllDepartmentName", facility_id_dd: facilityid }
+                })
+                .done(function( res ) {
+                    $res1 = JSON.parse(res); 
+                    if($res1.status == true){
+                        $rows = $res1.data;
 
-                    if($rows.length > 0){
-                        $('#department_id').html('');
-                        $html = "<option value=''>Select</option>";                             
-                        for($i = 0; $i < $rows.length; $i++){                                 
-                            $html += "<option value='"+$rows[$i].department_id+"'>"+$rows[$i].department_name+"</option>";                    
-                        }//end for
-                        console.log($html);
-                        $('#department_id').html($html);
-                        $('#department_id').val(departmentid).trigger('change');
-                    }//end if
-                }        
-            });//end ajax  
+                        if($rows.length > 0){
+                            $('#department_id').html('');
+                            $html = "<option value=''>Select</option>";                             
+                            for($i = 0; $i < $rows.length; $i++){                                 
+                                $html += "<option value='"+$rows[$i].department_id+"'>"+$rows[$i].department_name+"</option>";                    
+                            }//end for
+                            console.log($html);
+                            $('#department_id').html($html);
+                            $('#department_id').val(departmentid).trigger('change');
+                        }//end if
+                    }        
+                });//end ajax  
+            }
             console.log('departmentid: ' + departmentid);
-
         }
 
         //DeviceGroup
@@ -521,7 +526,24 @@
         configureFacilityDropDown(); 
         configureDeviceGroupDropDown();
         loadFormdata();
-        //$('.js-example-basic-single').select2();
+
+        $user_id = window.localStorage.getItem('user_id');
+        console.log('user_id: ' + $user_id);
+        if($user_id == null){
+            //$("input").prop('disabled', true);
+            $('#facility_id').prop('disabled', true); 
+            $('#facility_code').prop('readonly', true);
+            $('#department_id').prop('disabled', true);   
+            $('#device_group').prop('disabled', true);             
+            $('#asset_class').prop('disabled', true); 
+            $('#equipment_name').prop('readonly', true);  
+            $('#equipment_make_model').prop('readonly', true);
+            $('#equipment_sl_no').prop('readonly', true);  
+            $('#pms_due_date').prop('readonly', true);   
+            $('#supplied_by').prop('readonly', true);    
+            $('#pms_planned_date').prop('readonly', true);  
+        }
+        
     });
     </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>

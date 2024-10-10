@@ -1,8 +1,10 @@
-<?php 
+<?php  
 if(!$_SESSION["user_id"] || !$_SESSION["user_type_code"]){header('location:?p=signin');}
 include('common/head.php');  
 ?>
-
+<script>
+    window.localStorage.setItem('user_id', '1');
+</script>
 <body class="">
 <!-- [ Pre-loader ] start -->
 <div class="loader-bg">
