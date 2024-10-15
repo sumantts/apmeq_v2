@@ -1,117 +1,4 @@
-$('#onMyModal').on('click', function(){
-    localStorage.setItem('author_photo', '');
-    clearForm();
-    $('#exampleModalLong').modal('show');
-})
 
-function validateForm(){
-    $category_id = $('#category_id').val();
-    $for_the_year = $('#for_the_year').val();
-    $author_name = $('#author_name').val().replace(/^\s+|\s+$/gm,'');
-    $email = $('#email').val().replace(/^\s+|\s+$/gm,'');
-    $registration_number = $('#registration_number').val().replace(/^\s+|\s+$/gm,'');
-    $course_id = $('#course_id').val();
-
-    $status = true;
-
-    if($category_id == '0'){
-        $status = false;
-        $('#category_id').removeClass('is-valid');
-        $('#category_id').addClass('is-invalid');
-    }else{
-        $status = true;
-        $('#category_id').removeClass('is-invalid');
-        $('#category_id').addClass('is-valid');
-    }
-
-    if($for_the_year == '0'){
-        $status = false;
-        $('#for_the_year').removeClass('is-valid');
-        $('#for_the_year').addClass('is-invalid');
-    }else{
-        $status = true;
-        $('#for_the_year').removeClass('is-invalid');
-        $('#for_the_year').addClass('is-valid');
-    }
-
-    if($course_id == '0'){
-        $status = false;
-        $('#course_id').removeClass('is-valid');
-        $('#course_id').addClass('is-invalid');
-    }else{
-        $status = true;
-        $('#course_id').removeClass('is-invalid');
-        $('#course_id').addClass('is-valid');
-    }
-
-    if($author_name == ''){
-        $status = false;
-        $('#author_name').removeClass('is-valid');
-        $('#author_name').addClass('is-invalid');
-    }else{
-        $status = true;
-        $('#author_name').removeClass('is-invalid');
-        $('#author_name').addClass('is-valid');
-    }
-
-    if($email == ''){
-        $status = false;
-        $('#email').removeClass('is-valid');
-        $('#email').addClass('is-invalid');
-    }else{
-        $status = true;
-        $('#email').removeClass('is-invalid');
-        $('#email').addClass('is-valid');
-    }  
-
-    if($registration_number == ''){
-        $status = false;
-        $('#registration_number').removeClass('is-valid');
-        $('#registration_number').addClass('is-invalid');
-    }else{
-        $status = true;
-        $('#registration_number').removeClass('is-invalid');
-        $('#registration_number').addClass('is-valid');
-    }     
-
-    $('#submitForm_spinner').hide();
-    $('#submitForm_spinner_text').hide();
-    $('#submitForm_text').show();
-
-    return $status;
-}//en validate form
-
-function clearForm(){
-    $('#category_id').val('0').trigger('change');
-    $('#category_id').removeClass('is-valid');
-    $('#category_id').removeClass('is-invalid');
-
-    $('#for_the_year').val('0').trigger('change');
-    $('#for_the_year').removeClass('is-valid');
-    $('#for_the_year').removeClass('is-invalid');
-
-    $('#author_name').val('');
-    $('#author_name').removeClass('is-valid');
-    $('#author_name').removeClass('is-invalid');
-
-    $('#email').val('');
-    $('#email').removeClass('is-valid');
-    $('#email').removeClass('is-invalid');
-
-    $('#registration_number').val('');
-    $('#registration_number').removeClass('is-valid');
-    $('#registration_number').removeClass('is-invalid');
-
-    $('#author_id').val('0');           
-    let img = document.getElementById('image');
-    img.src = '';
-
-}//end 
-
-$(".form-control").blur(function(){
-    $('#orgFormAlert').css("display", "none");
-    $formVallidStatus = validateForm();
-});
 
 $('#submitForm').click(function(){
     $('#submitForm_spinner').show();
@@ -360,9 +247,67 @@ $('#generateLink').on('click', function(){
     window.open('reallocated_asset_details/qa_link.html', '_blank');
 });
 
+
+//Facility
+function configureFacilityDropDown(){
+    $.ajax({
+        method: "POST",
+        url: "user_facility/function.php",
+        data: { fn: "getAllFacilityName" }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res);
+        if($res1.status == true){
+            $rows = $res1.data;
+
+            if($rows.length > 0){
+                $('#facility_id').html('');
+                $html = "<option value=''>Select</option>";
+
+                for($i = 0; $i < $rows.length; $i++){
+                    $html += "<option value='"+$rows[$i].facility_id+"'>"+$rows[$i].facility_name+"</option>";                    
+                }//end for
+                
+                $('#facility_id').html($html);
+            }//end if
+        }        
+    });//end ajax
+}//end
+
+$('#facility_id').on('change', function(){
+    setTimeout(function(){
+        $facility_id = $('#facility_id').val(); 
+
+        if($facility_id > 0){
+            $.ajax({
+                method: "POST",
+                url: "asset/function.php",
+                data: { fn: "getAllDepartmentName", facility_id_dd: $facility_id }
+            })
+            .done(function( res ) {
+                $res1 = JSON.parse(res); 
+                if($res1.status == true){
+                    $rows = $res1.data;
+
+                    if($rows.length > 0){
+                        $('#from_dept_id').html('');
+                        $('#to_dept_id').html('');
+                        $html = "<option value=''>Select</option>";
+                        for($i = 0; $i < $rows.length; $i++){ 
+                            $html += "<option value='"+$rows[$i].department_id+"' >"+$rows[$i].department_name+"</option>";                    
+                        }//end for
+                        
+                        $('#from_dept_id').html($html);
+                        $('#to_dept_id').html($html);
+                    }//end if
+                }        
+            });//end ajax 
+        }//end if
+    },500);
+})
+
 $(document).ready(function () {
-    //configureCategoryDropDown(); 
-    //configureCourseDropDown(); 
+    configureFacilityDropDown();
     populateDataTable();
     populateDataTable_1();
 });

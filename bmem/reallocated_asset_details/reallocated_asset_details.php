@@ -1,17 +1,7 @@
 <?php 
 if(!$_SESSION["user_id"] || !$_SESSION["user_type_code"]){header('location:?p=signin');}
 include('common/head.php');  
-?>
-<script type="text/javascript">   
-
-</script>
-<style>
-    /*table td {
-        word-break: break-word;
-        vertical-align: top;
-        white-space: normal !important;
-    }*/
-</style>
+?> 
 
 <body class="">
 	<!-- [ Pre-loader ] start -->
@@ -218,67 +208,55 @@ include('common/head.php');
 						</div>
                          
 
-                        <form class="needs-validation" novalidate>
+                        <form class="needs-validation" method="POST" action="#" id="myForm">
                             <div class="form-row">                               
                                 <div class="col-md-3 mb-3">
-                                    <label for="author_name" class="text-danger">Facility Name*</label>
-                                    <select class="form-control" id="author_name">
-                                        <option value="0">Select</option>
-                                        <option value="1">Facility 1</option>
-                                        <option value="2">Facility 2</option>
+                                    <label for="facility_id" class="text-danger">Facility Name*</label>
+                                    <select class="form-control" id="facility_id" required>
+                                        <option value="">Select</option> 
                                     </select> 
                                 </div>     
 
                                 <div class="col-md-3 mb-3">
-                                    <label for="author_name">Facility code</label>
-                                    <input type="text" class="form-control" id="author_name"> 
+                                    <label for="facility_code">Facility code</label>
+                                    <input type="text" class="form-control" id="facility_code"> 
                                 </div>   
 
                                 <div class="col-md-3 mb-3">
-                                    <label for="author_name" class="text-danger">Department*</label>
-                                    <select class="form-control" id="author_name">
-                                        <option value="0">Select</option>
-                                        <option value="1">Department 1</option>
-                                        <option value="2">Department 2</option>
+                                    <label for="from_dept_id" class="text-danger">Department*</label>
+                                    <select class="form-control" id="from_dept_id" required>
+                                        <option value="">Select</option> 
                                     </select> 
                                 </div>    
 
                                 <div class="col-md-3 mb-3">
-                                    <label for="author_name" class="text-danger">Aseet Name*</label>
-                                    <select class="form-control" id="author_name">
-                                        <option value="0">Select</option>
-                                        <option value="1">Aseet 1</option>
-                                        <option value="2">Aseet 2</option>
+                                    <label for="asset_id" class="text-danger">Asset Name*</label>
+                                    <select class="form-control" id="asset_id" required>
+                                        <option value="">Select</option> 
                                     </select> 
                                 </div>     
 
                                 <div class="col-md-3 mb-3">
-                                    <label for="author_name">Aseet code</label>
-                                    <input type="text" class="form-control" id="author_name"> 
+                                    <label for="asset_code">Asset code</label>
+                                    <input type="text" class="form-control" id="asset_code"> 
                                 </div>    
 
                                 <div class="col-md-3 mb-3">
-                                    <label for="author_name" class="text-danger">Reallocated to Department*</label>
-                                    <select class="form-control" id="author_name">
-                                        <option value="0">Select</option>
-                                        <option value="1">Department 1</option>
-                                        <option value="2">Department 2</option>
+                                    <label for="to_dept_id" class="text-danger">Reallocated to Department*</label>
+                                    <select class="form-control" id="to_dept_id" required>
+                                        <option value="">Select</option> 
                                     </select> 
                                 </div>    
 
                                 <div class="col-md-3 mb-3">
-                                    <label for="author_name">Relocate Date</label>
-                                    <input type="date" class="form-control" id="author_name"> 
+                                    <label for="relocate_date_time" class="text-danger">Relocate Date*</label>
+                                    <input type="date" class="form-control" id="relocate_date_time" required> 
                                 </div>
                             </div>  
 
                             <div class="form-row">
                                 <div class="col-md-2 mt-4">
-                                    <button class="btn  btn-primary" type="button" id="submitForm">
-                                        <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
-                                        <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
-                                        <span class="btn-text" id="submitForm_text">Initiate</span>
-                                    </button>
+                                    <button class="btn btn-primary" type="submit" id="submitForm"> Initiate </button>
                                 </div> 
                             </div>
                         </form>
