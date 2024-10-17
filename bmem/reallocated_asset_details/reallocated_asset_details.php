@@ -109,36 +109,23 @@ include('common/head.php');
 						</div>
                          
 
-                        <form class="needs-validation" novalidate>
+                        <form class="needs-validation" method="POST" action="#" id="myFormS">
                             <div class="form-row">                               
                                 <div class="col-md-3 mb-3">
-                                    <label for="author_name">Facility Name</label>
-                                    <select class="form-control" id="author_name">
-                                        <option value="0">Select</option>
-                                        <option value="1">Facility 1</option>
-                                        <option value="2">Facility 2</option>
+                                    <label for="facility_idS">Facility Name</label>
+                                    <select class="form-control" id="facility_idS">
+                                        <option value="0">Select</option> 
                                     </select> 
                                 </div>     
 
                                 <div class="col-md-3 mb-3">
-                                    <label for="author_name">Facility code</label>
-                                    <input type="text" class="form-control" id="author_name"> 
+                                    <label for="facility_codeS">Facility code</label>
+                                    <input type="text" class="form-control" id="facility_codeS"> 
                                 </div>   
 
-                                <div class="col-md-2 mt-4">
-                                    <button class="btn  btn-primary" type="button" id="submitForm">
-                                        <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
-                                        <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
-                                        <span class="btn-text" id="submitForm_text">Search</span>
-                                    </button>
-                                </div>  
-
-                                <div class="col-md-2 mt-4">
-                                    <button class="btn btn-dark" type="button" id="submitForm">
-                                        <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
-                                        <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
-                                        <span class="btn-text" id="submitForm_text">Clear</span>
-                                    </button>
+                                <div class="col-md-4 mt-4">
+                                    <button class="btn  btn-primary" type="button" id="submitFormS">Search</button>
+                                    <button class="btn btn-dark" type="button" id="clearForm">Clear</button>
                                 </div> 
                             </div>
                         </form>
@@ -146,7 +133,7 @@ include('common/head.php');
                 </div>
             </div>
             <!-- [ sample-table ] start --> 
-            <div class="col-sm-12">
+            <div class="col-sm-12 d-none" id="s_div">
                 <div class="card">
 
                     <div class="card-header">
@@ -170,6 +157,7 @@ include('common/head.php');
                                         <th>All asset related details</th> 
                                         <th>Date</th>
                                         <th>Status<br>(i.e Shifted to parent depratment)</th> 
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -182,6 +170,7 @@ include('common/head.php');
                                         <th>All asset related details</th> 
                                         <th>Date</th>
                                         <th>Status<br>(i.e Shifted to parent depratment)</th>
+                                        <th>Action</th>
                                     </tr>
                                 </tfoot>
                             </table>

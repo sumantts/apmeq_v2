@@ -1,43 +1,47 @@
+$('#clearForm').on('click', function(){
+    $('#myFormS').trigger('reset');
+    $('#s_div').removeClass('d-block');
+    $('#s_div').addClass('d-none');
+})
 
+$('#myForm').on('submit', function(){ 
+    $facility_id = $('#facility_id').val();
+    $facility_code = $('#facility_code').val(); 
+    $from_dept_id = $('#from_dept_id').val();
+    $asset_id = $('#asset_id').val(); 
+    $asset_code = $('#asset_code').val(); 
+    $to_dept_id = $('#to_dept_id').val(); 
+    $relocate_date_time = $('#relocate_date_time').val();  
 
-$('#submitForm').click(function(){
-    $('#submitForm_spinner').show();
-    $('#submitForm_spinner_text').show();
-    $('#submitForm_text').hide();
-    //setTimeout(function(){
-        $formVallidStatus = validateForm();
-
-        if($formVallidStatus == true){
-            $category_id = $('#category_id').val();
-            $author_id = $('#author_id').val();
-            $author_photo = localStorage.getItem('author_photo');
-            $author_status = $('#author_status').val();
-            $for_the_year = $('#for_the_year').val();
-            $course_id = 0;//$('#course_id').val();
-
-            $.ajax({
-                method: "POST",
-                url: "reallocated_asset_details/function.php",
-                data: { fn: "saveFormData", category_id: $category_id, for_the_year: $for_the_year, course_id: $course_id, author_id: $author_id, author_name: $author_name, email: $email, registration_number: $registration_number, author_photo: $author_photo, author_status: $author_status }
-            })
-            .done(function( res ) {
-                //console.log(res);
-                $res1 = JSON.parse(res);
-                if($res1.status == true){
-                    $('#orgFormAlert1').css("display", "block");
-                    $('.toast-right').toast('show');
-                    //$('#liveToast').toast('show');
-                    clearForm();
-                    localStorage.setItem('author_photo', '');
-                    $('#exampleModalLong').modal('hide');
-                    populateDataTable();
-                }else{
-                    alert($res1.error_message);
-                }
-            });//end ajax
+    $.ajax({
+        method: "POST",
+        url: "reallocated_asset_details/function.php",
+        data: { fn: "saveFormData", facility_id: $facility_id, facility_code: $facility_code, from_dept_id: $from_dept_id, asset_id: $asset_id, asset_code: $asset_code, to_dept_id: $to_dept_id, relocate_date_time: $relocate_date_time }
+    })
+    .done(function( res ) { 
+        $res1 = JSON.parse(res);
+        if($res1.status == true){  
+            alert('Asset Relocated Successfully');
+            $('#myForm').trigger('reset');
+        }else{
+            alert($res1.error_message);
         }
+    });//end ajax 
 
-    //}, 500)    
+    return false;
+})
+
+$('#submitFormS').on('click', function(){
+    $facility_idS = $('#facility_idS').val();
+    $facility_codeS = $('#facility_codeS').val();
+
+    if($facility_idS == '' && $facility_codeS == ''){
+        alert('Please selecte Facility Name or Enter Facility Code');
+    }else{
+        $('#s_div').removeClass('d-none');
+        $('#s_div').addClass('d-block');
+        populateDataTable_1();
+    }
 })
 
 function editTableData($author_id){
@@ -69,7 +73,7 @@ function editTableData($author_id){
 //Delete function	
 function deleteTableData($author_id){
     if (confirm('Are you sure to delete the Data?')) {
-        $.ajax({
+        /*$.ajax({
             method: "POST",
             url: "reallocated_asset_details/function.php",
             data: { fn: "deleteTableData", author_id: $author_id }
@@ -81,7 +85,7 @@ function deleteTableData($author_id){
                 $('#orgFormAlert').show();
                 populateDataTable();
             }
-        });//end ajax
+        });*/ //end ajax
     }		
 }//end delete
 
@@ -152,12 +156,14 @@ function populateDataTable(){
 function populateDataTable_1(){
     $('#example_1').dataTable().fnClearTable();
     $('#example_1').dataTable().fnDestroy();
+    $facility_idS = $('#facility_idS').val();
+    $facility_codeS = $('#facility_codeS').val();
 
     $('#example_1').DataTable({ 
-        columnDefs: [{ width: 5, targets: 0 }, { width: 5, targets: 1 }, { width: 150, targets: 2 }, { width: 200, targets: 3 }, { width: 10, targets: 4 }, { width: 10, targets: 5 }],
+        columnDefs: [{ width: 5, targets: 0 }],
         responsive: true,
         serverMethod: 'GET',
-        ajax: {'url': 'reallocated_asset_details/function.php?fn=getTableData_1' },
+        ajax: {'url': 'reallocated_asset_details/function.php?fn=getTableData_1&facility_idS='+$facility_idS+'&facility_codeS='+$facility_codeS },
         dom: 'Bfrtip',
         buttons: [
             {
@@ -186,7 +192,7 @@ function populateDataTable_1(){
                 titleAttr: 'Print'
             },
         ],
-        order: [[0, 'desc']],
+        order: [[0, 'asc']],
 
     });
 }//end fun
@@ -247,7 +253,6 @@ $('#generateLink').on('click', function(){
     window.open('reallocated_asset_details/qa_link.html', '_blank');
 });
 
-
 //Facility
 function configureFacilityDropDown(){
     $.ajax({
@@ -262,6 +267,7 @@ function configureFacilityDropDown(){
 
             if($rows.length > 0){
                 $('#facility_id').html('');
+                $('#facility_idS').html('');
                 $html = "<option value=''>Select</option>";
 
                 for($i = 0; $i < $rows.length; $i++){
@@ -269,14 +275,44 @@ function configureFacilityDropDown(){
                 }//end for
                 
                 $('#facility_id').html($html);
+                $('#facility_idS').html($html);
             }//end if
         }        
     });//end ajax
 }//end
 
+//Asset
+function configureAssetDropDown(facilityid){ 
+    if(facilityid > 0){
+        $.ajax({
+            method: "POST",
+            url: "reallocated_asset_details/function.php",
+            data: { fn: "getAllAssetName", facility_id: facilityid }
+        })
+        .done(function( res ) {
+            $res1 = JSON.parse(res);
+            if($res1.status == true){
+                $rows = $res1.data;
+
+                if($rows.length > 0){
+                    $('#asset_id').html('');
+                    $html = "<option value=''>Select</option>";
+
+                    for($i = 0; $i < $rows.length; $i++){
+                        $html += "<option value='"+$rows[$i].asset_id+"'>"+$rows[$i].equipment_name+"</option>";                    
+                    }//end for
+                    
+                    $('#asset_id').html($html);
+                }//end if
+            }        
+        });//end ajax
+    }//end if
+}//end
+
 $('#facility_id').on('change', function(){
-    setTimeout(function(){
+    setTimeout(function(){        
         $facility_id = $('#facility_id').val(); 
+        configureAssetDropDown($facility_id);
 
         if($facility_id > 0){
             $.ajax({
@@ -308,6 +344,7 @@ $('#facility_id').on('change', function(){
 
 $(document).ready(function () {
     configureFacilityDropDown();
+    configureAssetDropDown();
     populateDataTable();
-    populateDataTable_1();
+    //populateDataTable_1();
 });
