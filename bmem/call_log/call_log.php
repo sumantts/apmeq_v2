@@ -77,13 +77,13 @@ include('common/head.php');
                                 <div class="col-md-4 mb-3">
                                     <label for="ticket_raiser_name">Ticket Raiser Name</label>
                                     <input type="hidden" name="facility_id" id="facility_id" value="0">
-                                    <input type="hidden" name="user_id" id="user_id" value="<?=$_SESSION["user_id"]?>">
-                                    <input type="text" class="form-control" id="ticket_raiser_name" value="<?=$_SESSION["user_name"]?>" required readonly> 
+                                    <input type="hidden" name="user_id" id="user_id" value="<?=$_SESSION["user_id"]?>" >
+                                    <input type="text" class="form-control" id="ticket_raiser_name" value="<?=$_SESSION["user_name"]?>" required > 
                                 </div>  
 
                                 <div class="col-md-4 mb-3">
                                     <label for="ticket_raiser_contact">Ticket Raiser Contact Number</label>
-                                    <input type="number" class="form-control" id="ticket_raiser_contact" value="<?=$_SESSION["user_mobile"]?>" required readonly> 
+                                    <input type="number" class="form-control" id="ticket_raiser_contact" value="<?=$_SESSION["user_mobile"]?>" required > 
                                 </div>     
 
                                 <div class="col-md-12 mb-3">

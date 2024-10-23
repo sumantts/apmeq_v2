@@ -168,8 +168,8 @@
                                 </a>
                             </div>
                             <ul class="pro-body">
-                                <li><a href="javascript: void(0)" data-toggle="modal" data-target="#updateProfileModal" class="dropdown-item"><i class="feather icon-user"></i> Profile</a></li>
-                                <!-- <li><a href="#!" class="dropdown-item"><i class="feather icon-mail"></i> My Messages</a></li>
+                                 <!-- <li><a href="javascript: void(0)" data-toggle="modal" data-target="#updateProfileModal" class="dropdown-item"><i class="feather icon-user"></i> Profile</a></li>
+                               <li><a href="#!" class="dropdown-item"><i class="feather icon-mail"></i> My Messages</a></li>
                                 <li><a href="#!" class="dropdown-item"><i class="feather icon-lock"></i> Lock Screen</a></li> -->
                             </ul>
                         </div>
