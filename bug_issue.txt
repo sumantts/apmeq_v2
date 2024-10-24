@@ -1,18 +1,18 @@
 1. Asset search option from asset dash board (asset search er je filter use korbe seitate warranty and without warranty ta die dite hobe and Jodi possible warranty sesh hoe jaoar kichudin agaey ekta information bar or blink kichu ekta dile bhalo hoy ) 
-Response:
+Response: Please send me screenshow where you want this functionality.
 
 2. PMS & Calibration date plan option ta nei
 Response: PMS Plan date available: https://prnt.sc/atQ6qN7Xw_uV
 Planed date for calibration available: https://prnt.sc/hETVjEAan553
 
-3. Ticket dash board e jakhon call log hoye asbe takhon jegulo warranty te ache seigulo ke differentiate korar kono option nei.
-Response:
+3. Ticket dash board e jakhon call log hote asbe takhon jegulo warranty te ache seigulo ke differentiate korar kono option nei.
+Response: Warrenty is showing here: https://prnt.sc/V844vhSjx-EZ If you want anything different then please explain with a screen.
 
 4. Ticket raiser er contact number change hochhena
 Response: Now this is editable: https://prnt.sc/WaSkX-NGpUWN
 
 5. Generate link option ta easy to use korle bhalo hoy
-Response:
+Response: Please mention the menu name, or send me a screenshot.
 
 6. total facility view option
-Response:
+Response: Please explain more with a screenshot.
