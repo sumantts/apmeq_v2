@@ -506,6 +506,7 @@ $('#cmc_yes_no').on('change', function(){
 })
 
 $(document).ready(function () {
+    populateDataTable();
     configureFacilityDropDown();
     //configureDepartmentDropDown();
     configureDeviceGroupDropDown();
@@ -548,4 +549,13 @@ $('#facility_id_dd').on('change', function(){
             });//end ajax 
         }//end if
     },500);
+})
+
+$('#clearFilter').on('click', function(){
+    $('#searchForm').trigger('reset');
+    populateDataTable();    
+})
+
+$('#openCSVModal').on('click', function(){
+    $('#exampleModalLong_1').modal('show');
 })

@@ -16,3 +16,12 @@ Response: Please mention the menu name, or send me a screenshot.
 
 6. total facility view option
 Response: Please explain more with a screenshot.
+
+********** 25-10-2024 **************
+1. https://apmeq.com/bmem/?p=asset&gr=setup Import Asset with a sample csv
+
+2. https://apmeq.com/bmem/?p=asset&gr=setup 
+By default : https://prnt.sc/Tuy5vayODNW_ this table wll be shown. Filter will be applied, and search will be applied. Asset list table view
+Add new button click Add Form will be displayed
+
+3. Asset >> QR Code print and scanning

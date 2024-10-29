@@ -1,6 +1,60 @@
 <?php 
 if(!$_SESSION["user_id"] || !$_SESSION["user_type_code"]){header('location:?p=signin');}
 include('common/head.php');  
+
+if(isset($_POST["importSubmit"])){    
+    // Allowed mime types
+    $csvMimes = array('text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain');
+      
+    // Validate whether selected file is a CSV file
+    if(!empty($_FILES['file']['name']) && in_array($_FILES['file']['type'], $csvMimes)){      
+        // If the file is uploaded
+        if(is_uploaded_file($_FILES['file']['tmp_name'])){
+            //echo 'inside 1.1';
+            // Open uploaded CSV file with read-only mode
+            $csvFile = fopen($_FILES['file']['tmp_name'], 'r');          
+            $data_saved = 0;
+  
+            // Parse data from CSV file line by line
+            while(($line = fgetcsv($csvFile)) !== FALSE){
+              // Get row data
+              $GroupId = $line[0];
+              $GroupNm = $line[1];
+              $GroupAdd = $line[2];
+              $SBAnNo = $line[3];
+              $MemSav = 0.0;
+              $StfId = date('Y-m-d', strtotime($line[4]));                     
+  
+              //Call SP to save data into DB
+              if($data_saved > 0){
+                $sql = "INSERT INTO asset_details (facility_id, department_id, equipment_name, asset_make, asset_model, slerial_number, asset_specifiaction, date_of_installation, asset_supplied_by, value_of_the_asset, technology, asset_status, asset_class, device_group, last_date_of_calibration, frequency_of_calibration, last_date_of_pms, frequency_of_pms, qa_due_date, warranty_last_date, amc_yes_no, amc_last_date, cmc_yes_no, cmc_last_date, sp_details) VALUES ('" .$facility_id. "', '" .$department_id. "', '" .$equipment_name. "', '" .$asset_make. "', '" .$asset_model. "', '" .$slerial_number. "', '" .$asset_specifiaction. "', '" .$date_of_installation. "', '" .$asset_supplied_by. "', '" .$value_of_the_asset. "', '" .$technology. "', '" .$asset_status. "', '" .$asset_class. "', '" .$device_group. "', '" .$last_date_of_calibration. "', '" .$frequency_of_calibration. "', '" .$last_date_of_pms. "', '" .$frequency_of_pms. "', '" .$qa_due_date. "', '" .$warranty_last_date. "', '" .$amc_yes_no. "', '" .$amc_last_date. "', '" .$cmc_yes_no. "', '" .$cmc_last_date. "', '" .$sp_details."')";
+				$result = $mysqli->query($sql);
+				$asset_id_temp = $mysqli->insert_id;
+                if($asset_id_temp > 0){
+                    $data_saved++;
+                }
+              }
+            }//end while
+            
+            // Close opened CSV file
+            fclose($csvFile);
+            
+            $qstring = 'success';
+        }else{
+            $qstring = 'error';
+        }
+    }else{
+        $qstring = 'invalid_file';
+    }
+  
+    //header("location: ?p=group-upload&qstring=$qstring&data_saved=$data_saved");
+    ?>
+    <script>
+     window.location.href = '?p=asset&gr=setup&qstring=<?=$qstring?>&data_saved=<?=$data_saved?>';
+    </script>
+    <?php
+    
+  }//end isset
 ?> 
 
 <body class="">
@@ -82,9 +136,13 @@ include('common/head.php');
                                     <button class="btn btn-dark" type="button" id="clearFormSearch">
                                         <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
                                         <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
-                                        <span class="btn-text" id="submitForm_text">Clear</span>
+                                        <span class="btn-text" id="clearFilter">Clear Filter</span>
                                     </button>
-                                </div> 
+                                </div>   
+                                
+                                <div class="col-md-2 mt-4 ">
+                                    <button class="btn btn-dark" type="button" id="openCSVModal"> Upload CSV </button>
+                                </div>
 
                             </div>
                         </form>
@@ -92,7 +150,7 @@ include('common/head.php');
                 </div>
             </div>
             <!-- [ sample-table ] start -->
-            <div class="col-sm-12 d-none" id="partTwo">
+            <div class="col-sm-12 d-block" id="_partTwo">
                 <div class="card">
                     <div class="card-header">
                         <h5>Filtered Table Data</h5>                        
@@ -433,6 +491,47 @@ include('common/head.php');
                             <div class="modal-footer">
                                 <input type="hidden" id="user_id" value="0">                                
                                 <button type="button" id="startUpload" class="btn btn-primary">Upload</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>                        
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal end --> 
+
+
+            <!-- 2. Modal start -->
+            <div id="exampleModalLong_1" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLong_1Title" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLong_1Title">Upload CSV</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="POST" id="myFormModal_1" enctype="multipart/form-data">
+                                <div class="form-row">                                    
+                                    <div class="col-md-4 mt-4 mr-2">
+                                        <input type="file" id="multiupload" name="uploadFiledd[]" multiple accept=".csv" >
+                                        <span id="uploadMessage_1"></span>
+                                    </div>
+                                    <div class="col-md-3 mt-4 mr-2">
+                                        <input type="submit" class="btn btn-primary mb-3" name="importSubmit" value="Import">
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="form-row"> 
+                                    <div class="col-md-12 mb-3">
+                                        <div class="text-center"> 
+                                            <h5>You can download the sample file from Here</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <input type="hidden" id="user_id" value="0">                                
+                                <!-- <button type="button" id="startUpload1" class="btn btn-primary">Upload</button> -->
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             </div>                        
                         </form>
