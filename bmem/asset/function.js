@@ -559,3 +559,13 @@ $('#clearFilter').on('click', function(){
 $('#openCSVModal').on('click', function(){
     $('#exampleModalLong_1').modal('show');
 })
+
+$('#generateBarcode').on('click', function(){
+    $facility_id_sr = $('#facility_id_sr').val();
+    if($facility_id_sr == ''){
+        alert('Please Select a Facility')
+    }else{
+        window.location.href = '?p=asset-barcode&facility_id='+$facility_id_sr;
+    }
+})
+

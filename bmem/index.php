@@ -112,7 +112,11 @@
 		case 'asset-data':
 			$title = "Asset Data";
 			include('asset_data/asset_data.php');		
-		break; 	 	 		 	
+		break; 	 		 	
+		case 'asset-barcode':
+			$title = "Asset Barcode";
+			include('asset/asset_barcode.php');		
+		break; 	 		 	
 		case 'ticket-dashboard':
 			$title = "Ticket Dashboard";
 			include('ticket_dashboard/ticket_dashboard.php');		

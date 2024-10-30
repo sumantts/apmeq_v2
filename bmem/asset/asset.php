@@ -262,6 +262,10 @@ if(isset($_POST["importSubmit"])){
                                 
                                 <div class="col-md-2 mt-4 ">
                                     <button class="btn btn-dark" type="button" id="openCSVModal"> Upload CSV </button>
+                                </div> 
+                                
+                                <div class="col-md-4 mt-4 ">
+                                    <button class="btn btn-dark" type="button" id="generateBarcode">Generate Barcode</button>
                                 </div>
 
                             </div>
