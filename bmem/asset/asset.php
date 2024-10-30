@@ -2,38 +2,163 @@
 if(!$_SESSION["user_id"] || !$_SESSION["user_type_code"]){header('location:?p=signin');}
 include('common/head.php');  
 
-if(isset($_POST["importSubmit"])){    
+if(isset($_POST["importSubmit"])){  
     // Allowed mime types
-    $csvMimes = array('text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain');
-      
+    $csvMimes = array('text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain'); 
+
     // Validate whether selected file is a CSV file
     if(!empty($_FILES['file']['name']) && in_array($_FILES['file']['type'], $csvMimes)){      
         // If the file is uploaded
-        if(is_uploaded_file($_FILES['file']['tmp_name'])){
-            //echo 'inside 1.1';
+        if(is_uploaded_file($_FILES['file']['tmp_name'])){ 
             // Open uploaded CSV file with read-only mode
             $csvFile = fopen($_FILES['file']['tmp_name'], 'r');          
-            $data_saved = 0;
-  
+            $data_saved = 0; 
             // Parse data from CSV file line by line
             while(($line = fgetcsv($csvFile)) !== FALSE){
               // Get row data
-              $GroupId = $line[0];
-              $GroupNm = $line[1];
-              $GroupAdd = $line[2];
-              $SBAnNo = $line[3];
-              $MemSav = 0.0;
-              $StfId = date('Y-m-d', strtotime($line[4]));                     
+              $facility_name = $line[0]; 
+              $department_name = $line[1]; //sql
+              $equipment_name = $line[2];
+              $asset_make = $line[3]; 
+              $asset_model = $line[4];      
+              $slerial_number = $line[5]; 
+              $asset_specifiaction = $line[6];  
+              $date_of_installation = date('Y-m-d', strtotime($line[7]));  
+              // total_year_in_service
+                $total_year_in_service = '';
+                $today = date('Y-m-d');
+                $datetime1 = date_create($date_of_installation);
+                $datetime2 = date_create($today);
+
+                // Calculates the difference between DateTime objects
+                $interval = date_diff($datetime1, $datetime2);
+
+                // Printing result in years & months format
+                $total_year_in_service = $interval->format('%R%y years %m months');
+                
+              $asset_supplied_by = $line[8];  
+              $value_of_the_asset = $line[9]; 
+              $technology = 0;
+              if($line[10] == 'Obsolute') {
+                $technology = 1; 
+              }
+              if($line[10] == 'Running') {
+                $technology = 2; 
+              }
+                
+
+              $as_name = $line[11];   
+              if($line[12] == 'Critical'){
+                $asset_class = 1;   
+              }
+              if($line[12] == 'Non Critical'){
+                $asset_class = 2;   
+              }
+
+              $device_name = $line[13];  
+              $last_date_of_calibration = date('Y-m-d', strtotime($line[14]));  
+              $frequency_of_calibrationY = $line[15];  
+              $frequency_of_calibrationM = $line[16];  
+              $frequency_of_calibrationD = $line[17];  
+              $last_date_of_pms = date('Y-m-d', strtotime($line[18]));
+              $frequency_of_pmsY = $line[19];   
+              $frequency_of_pmsM = $line[20]; 
+              $frequency_of_pmsD = $line[21];  
+
+              $qa_due_date = date('Y-m-d', strtotime($line[22]));  
+              $warranty_last_date = date('Y-m-d', strtotime($line[23]));  
+
+              if($line[24] == 'Yes'){
+                $amc_yes_no = 1;  
+              }
+              if($line[24] == 'NO'){
+                $amc_yes_no = 2;  
+              }
+              $amc_last_date = date('Y-m-d', strtotime($line[25]));
+              
+              if($line[26] == 'Yes'){
+                $cmc_yes_no = 1;  
+              }
+              if($line[26] == 'NO'){
+                $cmc_yes_no = 2;  
+              }
+              $cmc_last_date = date('Y-m-d', strtotime($line[27]));  
+              $sp_details = $line[28];       
+
+              //Facility ID Name 
+              $select_sql1 = "SELECT facility_id FROM facility_master WHERE facility_name = '" .$facility_name. "' ";
+              $select_result1 = $mysqli->query($select_sql1); 
+              if ($select_result1->num_rows > 0) {
+                  $row_get1 = $select_result1->fetch_array();
+                  $facility_id = $row_get1['facility_id']; 
+              } 
+
+              //Department
+              $department_id = '';
+              $all_dept = array();
+              $dept_str = explode(",", $department_name);              
+
+              foreach($dept_str AS $key => $val){
+                $dept_name = $val;
+
+                $select_sql = "SELECT department_id FROM department_list WHERE department_name = '" .$dept_name. "' ";
+				$select_result = $mysqli->query($select_sql); 
+                if ($select_result->num_rows > 0) {
+                    $row_get = $select_result->fetch_array();
+                    $department_id_temp = $row_get['department_id'];	
+                    if($department_id_temp != ''){
+                        array_push($all_dept, $department_id_temp);
+                    }
+                }
+              }//end foreach
+              $department_id = json_encode($all_dept); 
+
+              //Asset Status
+              $asset_status = 0;
+              $sql_get1 = "SELECT * FROM asset_status_code WHERE as_name = '" .$as_name. "'";
+              $sql_get_res1 = $mysqli->query($sql_get1); 
+              if ($sql_get_res1->num_rows > 0) {
+                $sql_get_row1 = $sql_get_res1->fetch_array();
+                $asset_status = $sql_get_row1['id'];
+              }
+
+              //Device Group
+              $device_group = 0;
+              $sql_get2 = "SELECT * FROM device_group_list WHERE device_name = '" .$device_name. "'";
+              $sql_get_res2 = $mysqli->query($sql_get2); 
+              if ($sql_get_res2->num_rows > 0) {
+                $sql_get_row2 = $sql_get_res2->fetch_array();
+                $device_group = $sql_get_row2['device_group_id'];
+              }
+
+              //Frequency of calibration
+              $frequency_of_calibration = $frequency_of_calibrationY.'|'.$frequency_of_calibrationM.'|'.$frequency_of_calibrationD;
+
+              //Frequency of PMS
+              $frequency_of_pms = $frequency_of_pmsY.'|'.$frequency_of_pmsM.'|'.$frequency_of_pmsD;
+
   
               //Call SP to save data into DB
               if($data_saved > 0){
-                $sql = "INSERT INTO asset_details (facility_id, department_id, equipment_name, asset_make, asset_model, slerial_number, asset_specifiaction, date_of_installation, asset_supplied_by, value_of_the_asset, technology, asset_status, asset_class, device_group, last_date_of_calibration, frequency_of_calibration, last_date_of_pms, frequency_of_pms, qa_due_date, warranty_last_date, amc_yes_no, amc_last_date, cmc_yes_no, cmc_last_date, sp_details) VALUES ('" .$facility_id. "', '" .$department_id. "', '" .$equipment_name. "', '" .$asset_make. "', '" .$asset_model. "', '" .$slerial_number. "', '" .$asset_specifiaction. "', '" .$date_of_installation. "', '" .$asset_supplied_by. "', '" .$value_of_the_asset. "', '" .$technology. "', '" .$asset_status. "', '" .$asset_class. "', '" .$device_group. "', '" .$last_date_of_calibration. "', '" .$frequency_of_calibration. "', '" .$last_date_of_pms. "', '" .$frequency_of_pms. "', '" .$qa_due_date. "', '" .$warranty_last_date. "', '" .$amc_yes_no. "', '" .$amc_last_date. "', '" .$cmc_yes_no. "', '" .$cmc_last_date. "', '" .$sp_details."')";
+                $sql = "INSERT INTO asset_details (facility_id, department_id, equipment_name, asset_make, asset_model, slerial_number, asset_specifiaction, date_of_installation, asset_supplied_by, value_of_the_asset, total_year_in_service, technology, asset_status, asset_class, device_group, last_date_of_calibration, frequency_of_calibration, last_date_of_pms, frequency_of_pms, qa_due_date, warranty_last_date, amc_yes_no, amc_last_date, cmc_yes_no, cmc_last_date, sp_details) VALUES ('" .$facility_id. "', '" .$department_id. "', '" .$equipment_name. "', '" .$asset_make. "', '" .$asset_model. "', '" .$slerial_number. "', '" .$asset_specifiaction. "', '" .$date_of_installation. "', '" .$asset_supplied_by. "', '" .$value_of_the_asset. "', '" .$total_year_in_service. "', '" .$technology. "', '" .$asset_status. "', '" .$asset_class. "', '" .$device_group. "', '" .$last_date_of_calibration. "', '" .$frequency_of_calibration. "', '" .$last_date_of_pms. "', '" .$frequency_of_pms. "', '" .$qa_due_date. "', '" .$warranty_last_date. "', '" .$amc_yes_no. "', '" .$amc_last_date. "', '" .$cmc_yes_no. "', '" .$cmc_last_date. "', '" .$sp_details."')";
 				$result = $mysqli->query($sql);
 				$asset_id_temp = $mysqli->insert_id;
-                if($asset_id_temp > 0){
-                    $data_saved++;
+                if($asset_id_temp > 0){ 
+					//Get facility Code
+					$sql_get3 = "SELECT facility_code FROM facility_master WHERE facility_id = '" .$facility_id. "'";
+					$result_get3 = $mysqli->query($sql_get3);
+			
+					if ($result_get3->num_rows > 0) { 
+						$row_get3 = $result_get3->fetch_array();
+						$facility_code = $row_get3['facility_code'];	
+					}
+					$asset_code = $facility_code.''.str_pad($asset_id_temp, 5, '0', STR_PAD_LEFT);
+
+					$upd_sql = "UPDATE asset_details SET asset_code = '" .$asset_code. "' WHERE asset_id = '" .$asset_id_temp. "' ";
+					$result_upd = $mysqli->query($upd_sql);                     
                 }
               }
+              $data_saved++;
             }//end while
             
             // Close opened CSV file
@@ -46,15 +171,10 @@ if(isset($_POST["importSubmit"])){
     }else{
         $qstring = 'invalid_file';
     }
-  
-    //header("location: ?p=group-upload&qstring=$qstring&data_saved=$data_saved");
-    ?>
-    <script>
-     window.location.href = '?p=asset&gr=setup&qstring=<?=$qstring?>&data_saved=<?=$data_saved?>';
-    </script>
-    <?php
     
   }//end isset
+
+   //exit();
 ?> 
 
 <body class="">
@@ -294,13 +414,23 @@ if(isset($_POST["importSubmit"])){
                                     <label for="asset_status" class="text-danger">Asset status*</label>
                                     <select class="form-control js-example-basic-single" name="asset_status" id="asset_status" required>
                                         <option value="">Select</option>
-                                        <option value="1">Working</option>
+                                        <?php
+                                        $sql_get = "SELECT * FROM asset_status_code";
+                                        $sql_get_res = $mysqli->query($sql_get); 
+                                        if ($sql_get_res->num_rows > 0) {
+                                            while($sql_get_row = $sql_get_res->fetch_array()){
+                                            $id = $sql_get_row['id'];
+                                            $as_name = $sql_get_row['as_name'];
+                                        ?>
+                                        <option value="<?=$id?>"><?=$as_name?></option>
+                                        <?php } } ?>
+                                        <!-- <option value="1">Working</option>
                                         <option value="2">Not Working</option>
                                         <option value="3">Not in Use</option>
                                         <option value="4">Packed</option>
                                         <option value="5">RBER</option>
                                         <option value="6">Verified Assets</option>
-                                        <option value="7">Non-Verified Assets</option>
+                                        <option value="7">Non-Verified Assets</option> -->
                                     </select> 
                                 </div>
                                 
@@ -509,10 +639,10 @@ if(isset($_POST["importSubmit"])){
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         </div>
                         <div class="modal-body">
-                            <form action="" method="POST" id="myFormModal_1" enctype="multipart/form-data">
+                            <form action="" method="POST" id="myFormModal_1" name="myFormModal_1" enctype="multipart/form-data">
                                 <div class="form-row">                                    
                                     <div class="col-md-4 mt-4 mr-2">
-                                        <input type="file" id="multiupload" name="uploadFiledd[]" multiple accept=".csv" >
+                                        <input type="file" name="file" id="file" multiple accept=".csv" >
                                         <span id="uploadMessage_1"></span>
                                     </div>
                                     <div class="col-md-3 mt-4 mr-2">
