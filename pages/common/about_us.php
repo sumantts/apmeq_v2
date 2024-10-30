@@ -19,8 +19,15 @@
           <div class="row align-items-center">
             <div class="col-md-6 order-lg-1 mb-5 mb-lg-0"><img class="fit-cover rounded-circle w-100" src="assets/img/gallery/health-care.png" alt="..." /></div>
             <div class="col-md-6 text-center text-md-start">
-              <h2 class="fw-bold mb-4">We are developing a healthcare <br class="d-none d-sm-block" />system around you</h2>
-              <p>We think that everyone should have easy access to excellent <br class="d-none d-sm-block" />healthcare. Our aim is to make the procedure as simple as <br class="d-none d-sm-block" />possible for our patients and to offer treatment no matter<br class="d-none d-sm-block" />where they are — in person or at their convenience. </p>
+              <h2 class="fw-bold mb-4">Simplify Your Biomedical  <br class="d-none d-sm-block" />Equipment Management</h2>
+              <p><strong>Real-Time Visibility:</strong> Track your equipment's location and status instantly.</p>
+              <p><strong>Proactive Maintenance:</strong> Schedule and manage maintenance tasks efficiently.</p>
+              <p><strong>Data-Driven Insights:</strong> Gain valuable insights into equipment performance.</p>
+              <p><strong>Streamlined Reporting:</strong> Generate comprehensive reports with ease.</p>
+
+              <p>Take control of your biomedical equipment today.</p>
+
+        
               <div class="py-3"><button class="btn btn-lg btn-outline-primary rounded-pill" type="submit">Learn more </button></div>
             </div>
           </div>

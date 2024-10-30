@@ -18,6 +18,16 @@
 			include('pages/about_us.php');		
 		break; 
 				
+		case 'departments':
+			$title = "Departments";
+			include('pages/departments.php');		
+		break; 
+				
+		case 'membership':
+			$title = "Membership";
+			include('pages/membership.php');		
+		break;
+				
 		case 'contact-us':
 			$title = "Contact Us";
 			include('pages/contact_us.php');		
