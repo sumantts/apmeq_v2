@@ -642,7 +642,7 @@ if(isset($_POST["importSubmit"])){
                             <form action="" method="POST" id="myFormModal_1" name="myFormModal_1" enctype="multipart/form-data">
                                 <div class="form-row">                                    
                                     <div class="col-md-4 mt-4 mr-2">
-                                        <input type="file" name="file" id="file" multiple accept=".csv" >
+                                        <input type="file" name="file" id="file" accept=".csv" required>
                                         <span id="uploadMessage_1"></span>
                                     </div>
                                     <div class="col-md-3 mt-4 mr-2">
@@ -654,6 +654,7 @@ if(isset($_POST["importSubmit"])){
                                     <div class="col-md-12 mb-3">
                                         <div class="text-center"> 
                                             <h5>You can download the sample file from Here</h5>
+                                            <a href="./assets/csv/AssetCSV.csv" download>Download Link</a>
                                         </div>
                                     </div>
                                 </div>
