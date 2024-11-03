@@ -61,7 +61,7 @@
 		$status = true;
 		$mainData = array();
 		$email1 = '';
-		$sql = "SELECT user_details.user_id, user_details.user_name, user_details.user_type_id, user_details.hospital_id, user_details.user_mobile, user_details.user_phone, user_details.user_email, user_details.user_dob, user_details.user_address, user_details.user_user_name, user_details.user_password, user_details.user_status, user_type.user_type_name, user_type.user_type_code, hospital_list.hospital_name, hospital_list.hospital_code FROM user_details JOIN user_type ON user_details.user_type_id = user_type.user_type_id JOIN hospital_list ON user_details.hospital_id = hospital_list.hospital_id";
+		$sql = "SELECT user_details.user_id, user_details.user_name, user_details.user_type_id, user_details.hospital_id, user_details.user_mobile, user_details.user_phone, user_details.user_email, user_details.user_dob, user_details.user_address, user_details.user_user_name, user_details.user_password, user_details.user_status, user_type.user_type_name, user_type.user_type_code, hospital_list.hospital_name, hospital_list.hospital_code FROM user_details JOIN user_type ON user_details.user_type_id = user_type.user_type_id JOIN hospital_list ON user_details.hospital_id = hospital_list.hospital_id ORDER BY user_details.user_id DESC LIMIT 0, 100";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {

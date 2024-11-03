@@ -219,7 +219,7 @@
 			$where_condition .= " AND call_log_register.call_log_date_time > '" .$from_dt1. "' AND call_log_register.call_log_date_time < '" .$to_dt1. "' ";			
 		}		
 		
-		$sql = "SELECT call_log_register.call_log_id, call_log_register.token_id, call_log_register.issue_description, call_log_register.call_log_date_time, call_log_register.resolved_date_time, call_log_register.ticket_raiser_contact, call_log_register.assign_to, call_log_register.call_log_status, call_log_register.eng_contact_no, asset_details.equipment_name, asset_details.department_id, asset_details.asset_supplied_by, asset_details.sp_details, facility_master.facility_code, facility_master.facility_name FROM call_log_register JOIN asset_details ON call_log_register.asset_code = asset_details.asset_code JOIN facility_master ON call_log_register.facility_id = facility_master.facility_id $where_condition LIMIT 0, 50";
+		$sql = "SELECT call_log_register.call_log_id, call_log_register.token_id, call_log_register.issue_description, call_log_register.call_log_date_time, call_log_register.resolved_date_time, call_log_register.ticket_raiser_contact, call_log_register.assign_to, call_log_register.call_log_status, call_log_register.eng_contact_no, asset_details.equipment_name, asset_details.department_id, asset_details.asset_supplied_by, asset_details.sp_details, facility_master.facility_code, facility_master.facility_name FROM call_log_register JOIN asset_details ON call_log_register.asset_code = asset_details.asset_code JOIN facility_master ON call_log_register.facility_id = facility_master.facility_id $where_condition ORDER BY call_log_register.call_log_id DESC LIMIT 0, 50";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {

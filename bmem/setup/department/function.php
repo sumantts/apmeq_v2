@@ -43,7 +43,7 @@
 		$status = true;
 		$mainData = array();
 		$author_bio1 = '';
-		$sql = "SELECT * FROM department_list ORDER BY department_name";
+		$sql = "SELECT * FROM department_list ORDER BY department_id DESC";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {

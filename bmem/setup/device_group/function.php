@@ -42,7 +42,7 @@
 		$status = true;
 		$mainData = array();
 		$author_bio1 = '';
-		$sql = "SELECT * FROM device_group_list ORDER BY device_name";
+		$sql = "SELECT * FROM device_group_list ORDER BY device_group_id DESC LIMIT 0, 50";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {

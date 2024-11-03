@@ -177,9 +177,7 @@ function populateDataTable(){
                 text: '<i class="fa fa-print"></i>',
                 titleAttr: 'Print'
             },
-        ],
-        order: [[1, 'asc']],
-
+        ]
     });
 }//end fun
 

@@ -122,7 +122,7 @@
 		}
 		
 		
-		$sql = "SELECT reloc_asset_detail.reloc_id, reloc_asset_detail.facility_id, reloc_asset_detail.from_dept_id, reloc_asset_detail.to_dept_id, reloc_asset_detail.asset_id, reloc_asset_detail.relocate_date_time, reloc_asset_detail.relocated_by, facility_master.facility_name, facility_master.facility_code, department_list.department_name FROM reloc_asset_detail JOIN facility_master ON reloc_asset_detail.facility_id = facility_master.facility_id JOIN department_list ON reloc_asset_detail.from_dept_id = department_list.department_id $where_condition";
+		$sql = "SELECT reloc_asset_detail.reloc_id, reloc_asset_detail.facility_id, reloc_asset_detail.from_dept_id, reloc_asset_detail.to_dept_id, reloc_asset_detail.asset_id, reloc_asset_detail.relocate_date_time, reloc_asset_detail.relocated_by, facility_master.facility_name, facility_master.facility_code, department_list.department_name FROM reloc_asset_detail JOIN facility_master ON reloc_asset_detail.facility_id = facility_master.facility_id JOIN department_list ON reloc_asset_detail.from_dept_id = department_list.department_id $where_condition ORDER BY reloc_asset_detail.reloc_id DESC LIMIT 0, 50";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {

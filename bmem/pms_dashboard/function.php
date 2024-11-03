@@ -198,7 +198,7 @@
 			$where_condition .= " AND pms_info.pms_data_updated > '" .$from_date1. "' AND pms_info.pms_data_updated < '" .$to_date1. "' ";
 		}
 		
-		$sql = "SELECT pms_info.pms_id, pms_info.pms_info_id, pms_info.facility_id, pms_info.facility_code, pms_info.department_id, pms_info.device_group, pms_info.asset_class, pms_info.equipment_name, pms_info.equipment_make_model, pms_info.equipment_sl_no, pms_info.pms_due_date, pms_info.supplied_by, pms_info.service_provider_details, pms_info.pms_planned_date, facility_master.facility_name, department_list.department_name, device_group_list.device_name FROM pms_info JOIN facility_master ON pms_info.facility_id = facility_master.facility_id JOIN department_list ON pms_info.department_id = department_list.department_id JOIN device_group_list ON pms_info.device_group = device_group_list.device_group_id $where_condition";
+		$sql = "SELECT pms_info.pms_id, pms_info.pms_info_id, pms_info.facility_id, pms_info.facility_code, pms_info.department_id, pms_info.device_group, pms_info.asset_class, pms_info.equipment_name, pms_info.equipment_make_model, pms_info.equipment_sl_no, pms_info.pms_due_date, pms_info.supplied_by, pms_info.service_provider_details, pms_info.pms_planned_date, facility_master.facility_name, department_list.department_name, device_group_list.device_name FROM pms_info JOIN facility_master ON pms_info.facility_id = facility_master.facility_id JOIN department_list ON pms_info.department_id = department_list.department_id JOIN device_group_list ON pms_info.device_group = device_group_list.device_group_id $where_condition ORDER BY pms_info.pms_id DESC LIMIT 0, 50";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {

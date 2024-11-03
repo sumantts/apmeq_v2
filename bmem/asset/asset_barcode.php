@@ -94,10 +94,13 @@ if(!$_SESSION["user_id"] || !$_SESSION["user_type_code"]){header('location:?p=si
                                     <li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>
                                     <li class="dropdown-item close-card"><a href="#!"><i class="feather icon-trash"></i> remove</a></li>
                                 </ul>
+                                <button type="button" class="btn btn-primary mb-2 float-right" id="printBarcode">Print Barcode</button>
                             </div>
                         </div>
                     </div>
-                    <div class="card-body">
+
+
+                    <div class="card-body" id="barcodeList">
                         <div class="row">
                         <?php 
                             $sql1 = "SELECT * FROM asset_details WHERE facility_id = '" .$facility_id. "' ";
@@ -105,10 +108,12 @@ if(!$_SESSION["user_id"] || !$_SESSION["user_type_code"]){header('location:?p=si
                             if ($result1->num_rows > 0) {
                                 while($row1 = $result1->fetch_array()){
                                     $asset_code1 = $row1['asset_code']; 
+                                    $equipment_name = $row1['equipment_name']; 
                             ?>
-                            <div class="col-2">
+                            <div class="col-md-2">
                             <img src="<?=$file_path.''.$asset_code1.'.jpg'?>" class="card-img-top" alt="<?=$asset_code1?>" width="302" height="50"> 
-                            <h5 class="text-center"><?=$asset_code1?></h5>
+                            <div class="text-center"><?=$asset_code1?></div> 
+                            <div class="text-center"><?=$equipment_name?></div>
                             </div>
                         <?php } } ?>
                         </div>
@@ -124,4 +129,4 @@ if(!$_SESSION["user_id"] || !$_SESSION["user_type_code"]){header('location:?p=si
 <!-- [ Main Content ] end -->
 	<?php include('common/footer.php'); ?>
     
-    <script src="books/accession/function.js"></script>
+    <script src="asset/function.js?d=<?=date('Ymdhis')?>"></script>

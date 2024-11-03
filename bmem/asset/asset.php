@@ -140,23 +140,32 @@ if(isset($_POST["importSubmit"])){
   
               //Call SP to save data into DB
               if($data_saved > 0){
-                $sql = "INSERT INTO asset_details (facility_id, department_id, equipment_name, asset_make, asset_model, slerial_number, asset_specifiaction, date_of_installation, asset_supplied_by, value_of_the_asset, total_year_in_service, technology, asset_status, asset_class, device_group, last_date_of_calibration, frequency_of_calibration, last_date_of_pms, frequency_of_pms, qa_due_date, warranty_last_date, amc_yes_no, amc_last_date, cmc_yes_no, cmc_last_date, sp_details) VALUES ('" .$facility_id. "', '" .$department_id. "', '" .$equipment_name. "', '" .$asset_make. "', '" .$asset_model. "', '" .$slerial_number. "', '" .$asset_specifiaction. "', '" .$date_of_installation. "', '" .$asset_supplied_by. "', '" .$value_of_the_asset. "', '" .$total_year_in_service. "', '" .$technology. "', '" .$asset_status. "', '" .$asset_class. "', '" .$device_group. "', '" .$last_date_of_calibration. "', '" .$frequency_of_calibration. "', '" .$last_date_of_pms. "', '" .$frequency_of_pms. "', '" .$qa_due_date. "', '" .$warranty_last_date. "', '" .$amc_yes_no. "', '" .$amc_last_date. "', '" .$cmc_yes_no. "', '" .$cmc_last_date. "', '" .$sp_details."')";
-				$result = $mysqli->query($sql);
-				$asset_id_temp = $mysqli->insert_id;
-                if($asset_id_temp > 0){ 
-					//Get facility Code
-					$sql_get3 = "SELECT facility_code FROM facility_master WHERE facility_id = '" .$facility_id. "'";
-					$result_get3 = $mysqli->query($sql_get3);
-			
-					if ($result_get3->num_rows > 0) { 
-						$row_get3 = $result_get3->fetch_array();
-						$facility_code = $row_get3['facility_code'];	
-					}
-					$asset_code = $facility_code.''.str_pad($asset_id_temp, 5, '0', STR_PAD_LEFT);
-
-					$upd_sql = "UPDATE asset_details SET asset_code = '" .$asset_code. "' WHERE asset_id = '" .$asset_id_temp. "' ";
-					$result_upd = $mysqli->query($upd_sql);                     
+                $duplicate_name = false;
+                $sql_get4 = "SELECT asset_id FROM asset_details WHERE equipment_name = '" .$equipment_name. "'";
+                $result_get4 = $mysqli->query($sql_get4);        
+                if ($result_get4->num_rows > 0) { 
+                    $duplicate_name = true;
                 }
+
+                if($duplicate_name == false){
+                    $sql = "INSERT INTO asset_details (facility_id, department_id, equipment_name, asset_make, asset_model, slerial_number, asset_specifiaction, date_of_installation, asset_supplied_by, value_of_the_asset, total_year_in_service, technology, asset_status, asset_class, device_group, last_date_of_calibration, frequency_of_calibration, last_date_of_pms, frequency_of_pms, qa_due_date, warranty_last_date, amc_yes_no, amc_last_date, cmc_yes_no, cmc_last_date, sp_details) VALUES ('" .$facility_id. "', '" .$department_id. "', '" .$equipment_name. "', '" .$asset_make. "', '" .$asset_model. "', '" .$slerial_number. "', '" .$asset_specifiaction. "', '" .$date_of_installation. "', '" .$asset_supplied_by. "', '" .$value_of_the_asset. "', '" .$total_year_in_service. "', '" .$technology. "', '" .$asset_status. "', '" .$asset_class. "', '" .$device_group. "', '" .$last_date_of_calibration. "', '" .$frequency_of_calibration. "', '" .$last_date_of_pms. "', '" .$frequency_of_pms. "', '" .$qa_due_date. "', '" .$warranty_last_date. "', '" .$amc_yes_no. "', '" .$amc_last_date. "', '" .$cmc_yes_no. "', '" .$cmc_last_date. "', '" .$sp_details."')";
+                    $result = $mysqli->query($sql);
+                    $asset_id_temp = $mysqli->insert_id;
+                    if($asset_id_temp > 0){ 
+                        //Get facility Code
+                        $sql_get3 = "SELECT facility_code FROM facility_master WHERE facility_id = '" .$facility_id. "'";
+                        $result_get3 = $mysqli->query($sql_get3);
+                
+                        if ($result_get3->num_rows > 0) { 
+                            $row_get3 = $result_get3->fetch_array();
+                            $facility_code = $row_get3['facility_code'];	
+                        }
+                        $asset_code = $facility_code.''.str_pad($asset_id_temp, 5, '0', STR_PAD_LEFT);
+
+                        $upd_sql = "UPDATE asset_details SET asset_code = '" .$asset_code. "' WHERE asset_id = '" .$asset_id_temp. "' ";
+                        $result_upd = $mysqli->query($upd_sql);                     
+                    }
+                }//end duplicate checking if
               }
               $data_saved++;
             }//end while

@@ -25,3 +25,36 @@ By default : https://prnt.sc/Tuy5vayODNW_ this table wll be shown. Filter will b
 Add new button click Add Form will be displayed
 
 3. Asset >> QR Code print and scanning
+
+
+******* 31-10-2024 *************
+1. all table order by id desc - DONE
+
+2. csv import, asset name duplicate check - DONE
+
+3. add asset name below barcode - DONE
+
+4. print button in barcode list 
+
+5. call log -> scan barcode and search, all others are having asset code search
+https://stackoverflow.com/questions/21633537/javascript-how-to-read-a-hand-held-barcode-scanner-best
+
+6. after clear filter remove old edit data: https://apmeq.com/bmem/?p=asset&gr=setup - No need
+
+7. All facility table view: https://apmeq.com/bmem/?p=facility&gr=setup
+
+8. make dynamic the first table: https://apmeq.com/bmem/?p=reallocated-asset-details&gr=setup
+
+9. in android website is logging out automatically, please stop redirection if already logged in
+
+10. make an appoinntment link with contact us also change the button text - DONE
+
+11. create email ids - DONE
+https://srv50.bharatdns.com:2096/webmaillogout.cgi
+support@apmeq.com / 8x%F)5&C9dpC
+help@apmeq.com / hwktxrDTkpqU
+contact@apmeq.com / !W^stQ@)o~e0
+admin@apmeq.com / ?cgdbTDDNCLf
+developer@apmeq.com / ^~nUMZSF}!uJ
+
+12. check user permission roal based access

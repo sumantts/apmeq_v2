@@ -22,17 +22,17 @@
 		$equipment_name = $_POST['equipment_name'];
 		$equipment_make_model = $_POST['equipment_make_model'];
 		$equipment_sl_no = $_POST['equipment_sl_no'];
-		$pms_due_date = $_POST['pms_due_date'];
+		//$pms_due_date = $_POST['pms_due_date'];
 		$supplied_by = $_POST['supplied_by'];
-		$service_provider_details = $_POST['service_provider_details'];
-		$pms_planned_date = $_POST['pms_planned_date'];
+		//$service_provider_details = $_POST['service_provider_details'];
+		//$pms_planned_date = $_POST['pms_planned_date'];
 		
 		try {
 			if($rber_info_id > 0){
 				$status = true;
 				$pms_data_updated = date('Y-m-d H:i:s');
 				$row_status = 2;
-				$sql = "UPDATE rber_info SET facility_id = '" .$facility_id. "', facility_code = '" .$facility_code. "', department_id = '" .$department_id. "', device_group = '" .$device_group. "', asset_class = '" .$asset_class. "', equipment_name = '" .$equipment_name. "', equipment_make_model = '" .$equipment_make_model. "', equipment_sl_no = '" .$equipment_sl_no. "', pms_due_date = '" .$pms_due_date. "', supplied_by = '" .$supplied_by. "', service_provider_details = '" .$service_provider_details. "', pms_planned_date = '" .$pms_planned_date. "', facility_code = '" .$facility_code. "', pms_data_updated = '" .$pms_data_updated. "', row_status = '" .$row_status. "' WHERE rber_info_id = '" .$rber_info_id. "' ";
+				$sql = "UPDATE rber_info SET facility_id = '" .$facility_id. "', facility_code = '" .$facility_code. "', department_id = '" .$department_id. "', device_group = '" .$device_group. "', asset_class = '" .$asset_class. "', equipment_name = '" .$equipment_name. "', equipment_make_model = '" .$equipment_make_model. "', equipment_sl_no = '" .$equipment_sl_no. "', supplied_by = '" .$supplied_by. "', facility_code = '" .$facility_code. "', pms_data_updated = '" .$pms_data_updated. "', row_status = '" .$row_status. "' WHERE rber_info_id = '" .$rber_info_id. "' ";
 				$result = $mysqli->query($sql);
 			}	
 		} catch (PDOException $e) {
@@ -198,7 +198,7 @@
 			$where_condition .= " AND rber_info.pms_data_updated > '" .$from_date1. "' AND rber_info.pms_data_updated < '" .$to_date1. "' ";
 		}
 		
-		$sql = "SELECT rber_info.rber_id, rber_info.rber_info_id, rber_info.facility_id, rber_info.facility_code, rber_info.department_id, rber_info.device_group, rber_info.asset_class, rber_info.equipment_name, rber_info.equipment_make_model, rber_info.equipment_sl_no, rber_info.pms_due_date, rber_info.supplied_by, rber_info.service_provider_details, rber_info.pms_planned_date, facility_master.facility_name, department_list.department_name, device_group_list.device_name FROM rber_info JOIN facility_master ON rber_info.facility_id = facility_master.facility_id JOIN department_list ON rber_info.department_id = department_list.department_id JOIN device_group_list ON rber_info.device_group = device_group_list.device_group_id $where_condition";
+		$sql = "SELECT rber_info.rber_id, rber_info.rber_info_id, rber_info.facility_id, rber_info.facility_code, rber_info.department_id, rber_info.device_group, rber_info.asset_class, rber_info.equipment_name, rber_info.equipment_make_model, rber_info.equipment_sl_no, rber_info.pms_due_date, rber_info.supplied_by, rber_info.service_provider_details, rber_info.pms_planned_date, facility_master.facility_name, department_list.department_name, device_group_list.device_name FROM rber_info JOIN facility_master ON rber_info.facility_id = facility_master.facility_id JOIN department_list ON rber_info.department_id = department_list.department_id JOIN device_group_list ON rber_info.device_group = device_group_list.device_group_id $where_condition ORDER BY rber_info.rber_id DESC LIMIT 0, 50";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
