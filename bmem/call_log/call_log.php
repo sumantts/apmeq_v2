@@ -64,10 +64,10 @@ include('common/head.php');
                         <form class="needs-validation" action="#" id="myForm">
                             <div class="form-row">    
 
-                                <!-- <div class="col-md-4 mb-3">
-                                    <label for="author_name">Scan QR Code</label>
-                                    <input type="text" class="form-control" id="author_name"> 
-                                </div>       -->
+                                <div class="col-md-4 mb-3">
+                                    <label for="qr_code">Scan QR Code</label>
+                                    <input type="text" class="form-control" id="qr_code"> 
+                                </div>      
 
                                 <div class="col-md-4 mb-3">
                                     <label for="asset_code" class="text-danger">Asset Code*</label>
