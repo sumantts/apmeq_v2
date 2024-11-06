@@ -41,7 +41,7 @@ https://stackoverflow.com/questions/21633537/javascript-how-to-read-a-hand-held-
 
 6. after clear filter remove old edit data: https://apmeq.com/bmem/?p=asset&gr=setup - No need
 
-7. All facility table view: https://apmeq.com/bmem/?p=facility&gr=setup
+7. All facility table view: https://apmeq.com/bmem/?p=facility&gr=setup - DONE https://prnt.sc/3EUdWoYw06i3
 
 8. make dynamic the first table: https://apmeq.com/bmem/?p=reallocated-asset-details&gr=setup
 

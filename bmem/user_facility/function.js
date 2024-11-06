@@ -75,30 +75,28 @@ $('#getFacility').on('click', function(){
 })
  
 
-function editTableData($author_id){
+function editTableData(facility_id){
     $('#exampleModalLong').modal('show');
     $.ajax({
         method: "POST",
         url: "user_facility/function.php",
-        data: { fn: "getFormEditData", author_id: $author_id }
+        data: { fn: "getFormEditData", facility_id_dd: facility_id }
     })
     .done(function( res ) {
         //console.log(res);
         $res1 = JSON.parse(res);
         if($res1.status == true){
-            $('#category_id').val($res1.category_id).trigger('change');
-            $('#for_the_year').val($res1.for_the_year).trigger('change');
-            $('#author_name').val($res1.author_name);
-            $('#email').val($res1.email);            
-            $('#registration_number').val($res1.registration_number); 
-            let img = document.getElementById('image');
-            img.src = $res1.author_photo;
-            localStorage.setItem("author_photo", $res1.author_photo);
-            $('#author_status').val($res1.author_status).trigger('change');  
-            $('#author_id').val($author_id);
+            $('#facility_id').val(facility_id);
+            $('#facility_name').val($res1.facility_name);
+            $('#facility_type').val($res1.facility_type).trigger('change');
+            $('#facility_code').val($res1.facility_code);   
+            $('#facility_address').val($res1.facility_address);          
+            $('#nabh_accrediated').val($res1.nabh_accrediated).trigger('change');
+            $('#nabl_accrediated').val($res1.nabl_accrediated).trigger('change');
+            $('#department_id').val($res1.department_id).trigger('change');
+            $('#contact_person').val($res1.contact_person);
         }
     });//end ajax
-
 } 
 
 //Department
@@ -179,9 +177,50 @@ function configureFacilityDropDown(){
     });//end ajax
 }//end
 
+
+function populateDataTable(){
+    $('#example').dataTable().fnClearTable();
+    $('#example').dataTable().fnDestroy();
+
+    $('#example').DataTable({ 
+        responsive: true,
+        serverMethod: 'GET',
+        ajax: {'url': 'user_facility/function.php?fn=getTableData' },
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend:    'copyHtml5',
+                text:      '<i class="fa fa-files-o"></i>',
+                titleAttr: 'Copy'
+            },
+            {
+                extend:    'excelHtml5',
+                text:      '<i class="fa fa-file-excel-o"></i>',
+                titleAttr: 'Excel'
+            },
+            {
+                extend:    'csvHtml5',
+                text:      '<i class="fa fa-file-text-o"></i>',
+                titleAttr: 'CSV'
+            },
+            {
+                extend:    'pdfHtml5',
+                text:      '<i class="fa fa-file-pdf-o"></i>',
+                titleAttr: 'PDF'
+            },
+            {
+                extend: 'print',
+                text: '<i class="fa fa-print"></i>',
+                titleAttr: 'Print'
+            },
+        ] 
+
+    });
+}//end fun
+
 $(document).ready(function () {
+    populateDataTable();
     configureDepartmentDropDown();
-    //configureHospitaDropDown();
     configureFacilityDropDown();    
     $('.js-example-basic-single').select2();
 });

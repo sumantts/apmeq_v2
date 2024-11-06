@@ -198,4 +198,94 @@
 		$return_array['data'] = $mainData;
 		echo json_encode($return_array);
 	}//function end	
+
+		
+
+	//function start
+	if($fn == 'getTableData'){
+		$return_array = array();
+		$status = true;
+		$mainData = array();
+		$author_bio1 = '';
+		$sql = "SELECT * FROM facility_master ORDER BY facility_id DESC limit 0, 50";
+		$result = $mysqli->query($sql);
+
+		if ($result->num_rows > 0) {
+			$status = true;
+			$slno = 1;
+			while($row = $result->fetch_array()){		
+				$facility_id = $row['facility_id'];		
+				$facility_name = $row['facility_name'];		
+				$facility_code = $row['facility_code'];	
+				$facility_type = $row['facility_type'];	
+				$contact_person = $row['contact_person'];
+				$facility_address = $row['facility_address'];
+				$nabh_accrediated = $row['nabh_accrediated'];
+				$nabl_accrediated = $row['nabl_accrediated'];
+				$department_id = $row['department_id'];		
+				$view_params = $department_id.', 1';
+				$edit_params = $department_id.', 2';
+
+				$facility_type_text = '';
+				if($facility_type == 1){
+					$facility_type_text = 'Hospital';
+				}else{
+					$facility_type_text = 'Lab';
+				}
+
+				$nabh_accrediated_text = '';
+				if($nabh_accrediated == 1){
+					$nabh_accrediated_text = 'Yes';
+				}else{
+					$nabh_accrediated_text = 'NO';
+				}
+
+				$nabl_accrediated_text = '';
+				if($nabl_accrediated == 1){
+					$nabl_accrediated_text = 'Yes';
+				}else{
+					$nabl_accrediated_text = 'NO';
+				}
+
+				//get all depertment name	
+				$dept_names = '';	
+				$ids = '';	 
+				$ids_str = json_decode($department_id);
+				foreach($ids_str as $key => $val){
+					$ids .= $val.',';
+				} 				
+				$ids = rtrim($ids, ",");
+				$sql_get = "SELECT * FROM department_list WHERE department_id IN ($ids)";
+				$result_get = $mysqli->query($sql_get);
+		
+				if ($result_get->num_rows > 0) {
+					$status = true;	
+					while($row_get = $result_get->fetch_array()){
+						$dept_names .= $row_get['department_name'].', ';	
+					}
+				} 				
+				$dept_names = rtrim($dept_names, ", ");
+
+				$data[0] = $slno;
+				$data[1] = $facility_name;
+				$data[2] = $facility_code;
+				$data[3] = $facility_type_text;
+				$data[4] = $contact_person;
+				$data[5] = $facility_address;
+				$data[6] =  $nabh_accrediated_text;
+				$data[7] =  $nabl_accrediated_text;
+				$data[8] =  $dept_names;
+				$data[9] = "<a href='javascript: void(0)'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$facility_id.")'></i></a>";
+
+				array_push($mainData, $data);
+				$slno++;
+			}
+		} else {
+			$status = false;
+		}
+		//$mysqli->close();
+
+		$return_array['data'] = $mainData;
+    	echo json_encode($return_array);
+	}//function end	
 ?>

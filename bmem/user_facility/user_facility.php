@@ -97,6 +97,61 @@ include('common/head.php');
                 </div>
             </div>
             <!-- [ sample-table ] start -->
+
+            
+            <!-- [ sample-table ] start -->
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>All Facility List</h5>
+                        <div class="card-header-right">
+                            <div class="btn-group card-option">
+                                <button type="button" class="btn dropdown-toggle btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="feather icon-more-horizontal"></i>
+                                </button>
+                                <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right"> 
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">  
+                        <div class="table-responsive">
+                            <table id="example" class="table table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Sl.No.</th>
+                                        <th>Facility<br> name</th>
+                                        <th>Facility<br> code</th>
+                                        <th>Facility<br> Type</th>
+                                        <th>Contact<br> Person(Phone)</th>
+                                        <th>Facility<br> Address</th>
+                                        <th>NABH<br> Accredited</th>
+                                        <th>NABL<br> Accredited</th>
+                                        <th>Department</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Sl.No.</th>
+                                        <th>Facility<br> name</th>
+                                        <th>Facility<br> code</th>
+                                        <th>Facility<br> Type</th>
+                                        <th>Contact<br> Person(Phone)</th>
+                                        <th>Facility<br> Address</th>
+                                        <th>NABH<br> Accredited</th>
+                                        <th>NABL<br> Accredited</th>
+                                        <th>Department</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+            <!-- [ sample-table ] end -->
+             
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
@@ -111,6 +166,8 @@ include('common/head.php');
                             </div>
                         </div>
                     </div>
+
+
                     <div class="card-body">
                         <div class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;" id="orgFormAlert">
 							<strong>Success!</strong> Your Data Deleted successfully.
