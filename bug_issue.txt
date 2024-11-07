@@ -43,7 +43,7 @@ https://stackoverflow.com/questions/21633537/javascript-how-to-read-a-hand-held-
 
 7. All facility table view: https://apmeq.com/bmem/?p=facility&gr=setup - DONE https://prnt.sc/3EUdWoYw06i3
 
-8. make dynamic the first table: https://apmeq.com/bmem/?p=reallocated-asset-details&gr=setup
+8. make dynamic the first table: https://apmeq.com/bmem/?p=reallocated-asset-details&gr=setup - DONE
 
 9. in android website is logging out automatically, please stop redirection if already logged in
 
@@ -57,4 +57,4 @@ contact@apmeq.com / !W^stQ@)o~e0
 admin@apmeq.com / ?cgdbTDDNCLf
 developer@apmeq.com / ^~nUMZSF}!uJ
 
-12. check user permission roal based access
+12. check user permission roal based access - Tested
