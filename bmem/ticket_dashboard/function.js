@@ -26,9 +26,10 @@ $('#myFormS').on('submit', function(){
     $equipment_name = $('#equipment_name').val(); 
     $ticket_class = $('#ticket_class').val();  
     $from_dt = $('#from_dt').val();  
-    $to_dt = $('#to_dt').val(); 
+    $to_dt = $('#to_dt').val();  
+    $warranty_sr = $('#warranty_sr').val(); 
     
-    if($facility_id_s > 0 || $department_id > 0 || $call_log_status > 0 || $token_id != '' || $day_wise > 0 || $device_group > 0 || $equipment_name != '' || $ticket_class >= 0 || $from_dt != '' || $to_dt != ''){
+    if($facility_id_s > 0 || $department_id > 0 || $call_log_status > 0 || $token_id != '' || $day_wise > 0 || $device_group > 0 || $equipment_name != '' || $ticket_class >= 0 || $from_dt != '' || $to_dt != '' || $warranty_sr != ''){
         populateDataTable_1();
         $('#filteredTicketDiv').removeClass('d-none');
         $('#filteredTicketDiv').addClass('d-block');
@@ -41,14 +42,14 @@ $('#myFormS').on('submit', function(){
 $('#myFormM').on('submit', function(){    
     $assign_to = $('#assign_to').val();
     $eng_contact_no = $('#eng_contact_no').val(); 
-    $call_log_status = $('#call_log_status').val();
+    $call_log_statusM = $('#call_log_statusM').val();
     $resolved_date_time = $('#resolved_date_time').val(); 
     $call_log_id = $('#call_log_id').val(); 
     
     $.ajax({
         method: "POST",
         url: "ticket_dashboard/function.php",
-        data: { fn: "updateTicketInfo", assign_to: $assign_to, eng_contact_no: $eng_contact_no, call_log_status: $call_log_status, resolved_date_time: $resolved_date_time, call_log_id: $call_log_id }
+        data: { fn: "updateTicketInfo", assign_to: $assign_to, eng_contact_no: $eng_contact_no, call_log_statusM: $call_log_statusM, resolved_date_time: $resolved_date_time, call_log_id: $call_log_id }
     })
     .done(function( res ) {
         //console.log(res);
@@ -75,7 +76,7 @@ function editTableData($call_log_id){
             $('#call_log_id').val($call_log_id);  
             $('#assign_to').val($res1.assign_to).trigger('change');
             $('#eng_contact_no').val($res1.eng_contact_no);
-            $('#call_log_status').val($res1.call_log_status).trigger('change');
+            $('#call_log_statusM').val($res1.call_log_status).trigger('change');
             $('#resolved_date_time').val($res1.resolved_date_time); 
             $html = '';
             $html += '<div><strong>Issue Description: </strong>'+$res1.issue_description+'</div>';
@@ -85,19 +86,19 @@ function editTableData($call_log_id){
 }//end functon
 
 //Delete function	
-function deleteTableData($author_id){
+function deleteTableData($call_log_id){
     if (confirm('Are you sure to delete the Data?')) {
         $.ajax({
             method: "POST",
             url: "ticket_dashboard/function.php",
-            data: { fn: "deleteTableData", author_id: $author_id }
+            data: { fn: "deleteTableData", call_log_id: $call_log_id }
         })
         .done(function( res ) {
             //console.log(res);
             $res1 = JSON.parse(res);
             if($res1.status == true){
                 $('#orgFormAlert').show();
-                populateDataTable();
+                populateDataTable_1();
             }
         });//end ajax
     }		
@@ -158,13 +159,14 @@ function populateDataTable_1(){
     $equipment_name = $('#equipment_name').val(); 
     $ticket_class = $('#ticket_class').val();  
     $from_dt = $('#from_dt').val();  
-    $to_dt = $('#to_dt').val();     
+    $to_dt = $('#to_dt').val(); 
+    $warranty_sr = $('#warranty_sr').val();     
 
     $('#example_1').DataTable({ 
         columnDefs: [{ width: 5, targets: 0 } ],
         responsive: true,
         serverMethod: 'GET',
-        ajax: {'url': 'ticket_dashboard/function.php?fn=getTableData_1&facility_id_s='+$facility_id_s+'&department_id='+$department_id+'&call_log_status='+$call_log_status+'&token_id='+$token_id+'&day_wise='+$day_wise+'&device_group='+$device_group+'&equipment_name='+$equipment_name+'&ticket_class='+$ticket_class+'&from_dt='+$from_dt+'&to_dt='+$to_dt },
+        ajax: {'url': 'ticket_dashboard/function.php?fn=getTableData_1&facility_id_s='+$facility_id_s+'&department_id='+$department_id+'&call_log_status='+$call_log_status+'&token_id='+$token_id+'&day_wise='+$day_wise+'&device_group='+$device_group+'&equipment_name='+$equipment_name+'&ticket_class='+$ticket_class+'&from_dt='+$from_dt+'&to_dt='+$to_dt+'&warranty_sr='+$warranty_sr },
         dom: 'Bfrtip',
         buttons: [
             {

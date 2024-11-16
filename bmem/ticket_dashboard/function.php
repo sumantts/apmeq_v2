@@ -194,7 +194,8 @@
 		$equipment_name = $_GET['equipment_name']; 
 		$ticket_class = $_GET['ticket_class'];  
 		$from_dt = $_GET['from_dt'];  
-		$to_dt = $_GET['to_dt']; 
+		$to_dt = $_GET['to_dt'];  
+		$warranty_sr = $_GET['warranty_sr']; 
 
 		$where_condition = "WHERE call_log_register.call_log_id > 0";
 
@@ -217,9 +218,18 @@
 			$from_dt1 = $from_dt.' 00:01:01';
 			$to_dt1 = $to_dt.' 23:58:00';
 			$where_condition .= " AND call_log_register.call_log_date_time > '" .$from_dt1. "' AND call_log_register.call_log_date_time < '" .$to_dt1. "' ";			
-		}		
+		}	
+
+		if($warranty_sr != ''){
+			$today = date('Y-m-d'); 
+			if($warranty_sr == 1){
+				$where_condition .= " AND asset_details.warranty_last_date > '" .$today. "' ";
+			}else{
+				$where_condition .= " AND asset_details.warranty_last_date < '" .$today. "' ";
+			}			
+		}	
 		
-		$sql = "SELECT call_log_register.call_log_id, call_log_register.token_id, call_log_register.issue_description, call_log_register.call_log_date_time, call_log_register.resolved_date_time, call_log_register.ticket_raiser_contact, call_log_register.assign_to, call_log_register.call_log_status, call_log_register.eng_contact_no, asset_details.equipment_name, asset_details.department_id, asset_details.asset_supplied_by, asset_details.sp_details, facility_master.facility_code, facility_master.facility_name FROM call_log_register JOIN asset_details ON call_log_register.asset_code = asset_details.asset_code JOIN facility_master ON call_log_register.facility_id = facility_master.facility_id $where_condition ORDER BY call_log_register.call_log_id DESC LIMIT 0, 50";
+		$sql = "SELECT call_log_register.call_log_id, call_log_register.token_id, call_log_register.issue_description, call_log_register.call_log_date_time, call_log_register.resolved_date_time, call_log_register.ticket_raiser_contact, call_log_register.assign_to, call_log_register.call_log_status, call_log_register.eng_contact_no, asset_details.equipment_name, asset_details.department_id, asset_details.asset_supplied_by, asset_details.sp_details, asset_details.warranty_last_date, facility_master.facility_code, facility_master.facility_name FROM call_log_register JOIN asset_details ON call_log_register.asset_code = asset_details.asset_code JOIN facility_master ON call_log_register.facility_id = facility_master.facility_id $where_condition ORDER BY call_log_register.call_log_id DESC LIMIT 0, 50";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -297,6 +307,8 @@
 					}				
 					$dept_names = rtrim($dept_names, ", ");
 				} 
+				
+				$warranty_last_date = $row['warranty_last_date'];
 
 				if($dept_match == true){
 					$data[0] = $slno; 
@@ -314,8 +326,13 @@
 					$data[12] = $ticket_raiser_contact;
 					$data[13] = $assign_to_text;
 					$data[14] = $eng_contact_no;
-					$data[15] = $call_log_status_text;
-					$data[16] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$call_log_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$call_log_id.")'></i></a>";						
+					$data[15] = $call_log_status_text;			
+					if($warranty_last_date != '0000-00-00'){
+						$data[16] = date('d-F-Y', strtotime($warranty_last_date));
+					}else{
+						$data[16] = '';
+					}
+					$data[17] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$call_log_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$call_log_id.")'></i></a>";						
 
 					array_push($mainData, $data);
 					$slno++;
@@ -435,18 +452,14 @@
 	//Delete function
 	if($fn == 'deleteTableData'){
 		$return_result = array();
-		$author_id = $_POST["author_id"];
-		$status = true;	
+		$call_log_id = $_POST["call_log_id"];
+		$status = true;	 
 
-		$sql = "DELETE FROM author_details WHERE author_id = '".$author_id."'";
-		$result = $mysqli->query($sql);
-
-		//Delete from Login table
-		$sql1 = "DELETE FROM login WHERE author_id = '".$author_id."'";
+		//Delete from table
+		$sql1 = "DELETE FROM call_log_register WHERE call_log_id = '".$call_log_id."'";
 		$result1 = $mysqli->query($sql1);
 
-		$return_result['status'] = $status;
-		//sleep(1);
+		$return_result['status'] = $status; 
 		echo json_encode($return_result);
 	}//end function deleteItem	
 
@@ -457,11 +470,11 @@
 		   
 		$assign_to = $_POST['assign_to'];
 		$eng_contact_no = $_POST['eng_contact_no']; 
-		$call_log_status = $_POST['call_log_status'];
+		$call_log_statusM = $_POST['call_log_statusM'];
 		$resolved_date_time = $_POST['resolved_date_time'].' '.date('H:i:s'); 
 		$call_log_id = $_POST['call_log_id']; 
 
-		$sql = "UPDATE call_log_register SET assign_to = '" .$assign_to. "', eng_contact_no = '" .$eng_contact_no. "', call_log_status = '" .$call_log_status. "', resolved_date_time = '" .$resolved_date_time. "' WHERE call_log_id = '" .$call_log_id. "' ";
+		$sql = "UPDATE call_log_register SET assign_to = '" .$assign_to. "', eng_contact_no = '" .$eng_contact_no. "', call_log_status = '" .$call_log_statusM. "', resolved_date_time = '" .$resolved_date_time. "' WHERE call_log_id = '" .$call_log_id. "' ";
 		$result = $mysqli->query($sql);
 
 		$return_array['status'] = $status;

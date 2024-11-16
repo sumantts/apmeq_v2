@@ -106,6 +106,7 @@
 		$mainData = array(); 
 
 		$facility_id = $_GET['facility_id'];
+		$warranty_sr = $_GET['warranty_sr'];
 		$facility_code = $_GET['facility_code'];
 		$asset_code = $_GET['asset_code_sr'];
 		$condition = "WHERE row_status = 1";
@@ -114,9 +115,14 @@
 			$condition .= " AND asset_details.facility_id = '" .$facility_id. "' ";			
 		}
 
-		/*if($facility_code != ''){
-			$condition .= " AND facility_code = '" .$facility_code. "' ";			
-		}*/
+		if($warranty_sr != ''){
+			$today = date('Y-m-d'); 
+			if($warranty_sr == 1){
+				$condition .= " AND asset_details.warranty_last_date > '" .$today. "' ";
+			}else{
+				$condition .= " AND asset_details.warranty_last_date < '" .$today. "' ";
+			}			
+		}
 
 		if($asset_code != ''){
 			$condition .= " AND asset_details.asset_code = '" .$asset_code. "' ";			
@@ -149,6 +155,7 @@
 				$technology = $row['technology'];
 				$asset_status = $row['asset_status'];
 				$asset_class = $row['asset_class'];
+				$warranty_last_date = $row['warranty_last_date'];
 
 				//get all depertment name	
 				$dept_names = '';	
@@ -184,8 +191,13 @@
 				}
 				$data[9] = $asset_supplied_by;
 				$data[10] = $value_of_the_asset;
-				$data[11] = $total_year_in_service;
-				$data[12] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$asset_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$asset_id.")'></i></a>";
+				$data[11] = $total_year_in_service;				
+				if($warranty_last_date != '0000-00-00'){
+					$data[12] = date('d-F-Y', strtotime($warranty_last_date));
+				}else{
+					$data[12] = '';
+				}
+				$data[13] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$asset_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$asset_id.")'></i></a>";
 
 				array_push($mainData, $data);
 				$slno++;

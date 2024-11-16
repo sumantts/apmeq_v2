@@ -223,7 +223,16 @@ include('common/head.php');
                                         <option value="1">critical</option>
                                         <option value="2">Non Critical</option>
                                     </select> 
-                                </div>           
+                                </div>     
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="warranty">Warranty</label>
+                                    <select class="form-control form-control-sm" name="warranty_sr" id="warranty_sr">
+                                        <option value="">Select</option> 
+                                        <option value="1">Warranty</option> 
+                                        <option value="2">Without Warranty</option> 
+                                    </select> 
+                                </div>       
                                 
                                 <div class="col-md-4 mb-3">
                                     <label for="registration_number">Date Wise (From date to To date)</label>
@@ -280,6 +289,7 @@ include('common/head.php');
                                         <th>Assign Service provider/<br>Junior enhgineer</th>
                                         <th>Engineer Contact No</th>
                                         <th>Call Log Status </th> 
+                                        <th>Warrenty last date</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -301,6 +311,7 @@ include('common/head.php');
                                         <th>Assign Service provider/<br>Junior enhgineer</th>
                                         <th>Engineer Contact No</th>
                                         <th>Call Log Status </th> 
+                                        <th>Warrenty last date</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
@@ -346,8 +357,8 @@ include('common/head.php');
                                     </div> 
 
                                     <div class="col-md-4 mb-3">
-                                        <label for="call_log_status" class="text-danger">Call Log Status*</label>
-                                        <select class="form-control" name="call_log_status" id="call_log_status" required> 
+                                        <label for="call_log_statusM" class="text-danger">Call Log Status*</label>
+                                        <select class="form-control" name="call_log_statusM" id="call_log_statusM" required> 
                                             <option value="0">Raised</option> 
                                             <option value="1">Work in Progress</option> 
                                             <option value="2">Resolved</option> 

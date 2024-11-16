@@ -12,9 +12,10 @@
 					<li class="nav-item pcoded-menu-caption" id="setup">
 						<label>SETUP </label>
 					</li>
-					<li class="nav-item pcoded-hasmenu <?php if($p == 'user-details' || $p == 'facility' || $p == 'asset' || $p == 'asset-barcode' || $p == 'department' || $p == 'device-group'){ ?> active pcoded-trigger <?php } ?>">
+					<li class="nav-item pcoded-hasmenu <?php if($p == 'hospital-details' || $p == 'user-details' || $p == 'facility' || $p == 'asset' || $p == 'asset-barcode' || $p == 'department' || $p == 'device-group'){ ?> active pcoded-trigger <?php } ?>">
 						<a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Manage</span></a>
-						<ul class="pcoded-submenu">								
+						<ul class="pcoded-submenu">							
+							<li <?php if($p == 'hospital-details'){ ?> class="active" <?php } ?>><a href="?p=hospital-details&gr=setup">Hospital Management</a></li>								
 							<li <?php if($p == 'user-details'){ ?> class="active" <?php } ?>><a href="?p=user-details&gr=setup">Users</a></li>									
 							<li <?php if($p == 'facility'){ ?> class="active" <?php } ?>><a href="?p=facility&gr=setup">Facility</a></li>								
 							<li <?php if($p == 'department'){ ?> class="active" <?php } ?>><a href="?p=department&gr=setup">Department</a></li>								

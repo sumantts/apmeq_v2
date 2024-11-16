@@ -152,6 +152,7 @@ function populateDataTable(){
     $('#example').dataTable().fnClearTable();
     $('#example').dataTable().fnDestroy();
     $facility_id_sr = $('#facility_id_sr').val();
+    $warranty_sr = $('#warranty_sr').val();
     $facility_code = $('#facility_code').val();
     $asset_code_sr = $('#asset_code_sr').val();
 
@@ -159,7 +160,7 @@ function populateDataTable(){
         columnDefs: [{ width: 5, targets: 0 }],
         responsive: true,
         serverMethod: 'GET',
-        ajax: {'url': 'asset/function.php?fn=getTableData&facility_id='+$facility_id_sr+'&facility_code='+$facility_code+'&asset_code_sr='+$asset_code_sr },
+        ajax: {'url': 'asset/function.php?fn=getTableData&facility_id='+$facility_id_sr+'&warranty_sr='+$warranty_sr+'&facility_code='+$facility_code+'&asset_code_sr='+$asset_code_sr },
         dom: 'Bfrtip',
         buttons: [
             {
@@ -465,10 +466,11 @@ function deleteProdImage($prod_iamge_name){
 //Search Function
 $('#submitFormSearch').on('click', function(){
     $facility_id_sr = $('#facility_id_sr').val();
+    $warranty_sr = $('#warranty_sr').val();
     $facility_code = $('#facility_code').val();
     $asset_code_sr = $('#asset_code_sr').val();
 
-    if($facility_id_sr == '' && $facility_code == '' && $asset_code_sr == ''){
+    if($facility_id_sr == '' && $warranty_sr == '' &&  $facility_code == '' && $asset_code_sr == ''){
         alert('Please select/enter any search parameter');
     }else{
         $('#partTwo').removeClass('d-none').show();

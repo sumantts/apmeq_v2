@@ -241,6 +241,15 @@ if(isset($_POST["importSubmit"])){
                                     <select class="form-control js-example-basic-single" name="facility_id_sr" id="facility_id_sr" required>
                                         <option value="">Select</option> 
                                     </select> 
+                                </div>       
+
+                                <div class="col-md-4 mb-3">
+                                    <label for="warranty">Warranty</label>
+                                    <select class="form-control" name="warranty_sr" id="warranty_sr" required>
+                                        <option value="">Select</option> 
+                                        <option value="1">Warranty</option> 
+                                        <option value="2">Without Warranty</option> 
+                                    </select> 
                                 </div>  
 
                                 <div class="col-md-4 mb-3">
@@ -305,6 +314,7 @@ if(isset($_POST["importSubmit"])){
                                         <th>Supplied by</th>
                                         <th>Value of the asset</th>
                                         <th>Total year in service</th>
+                                        <th>Warrenty last date</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -322,6 +332,7 @@ if(isset($_POST["importSubmit"])){
                                         <th>Supplied by</th>
                                         <th>Value of the asset</th>
                                         <th>Total year in service</th>
+                                        <th>Warrenty last date</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>

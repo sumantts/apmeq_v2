@@ -173,7 +173,7 @@ include('common/head.php');
                                     
                                     <div class="col-md-4 mb-3">
                                         <label for="user_phone" >Phone Number</label>
-                                        <input type="text" class="form-control" id="user_phone" value="" required> 
+                                        <input type="text" class="form-control" id="user_phone" value=""> 
                                         <div class="valid-feedback">
                                             Looks good!
                                         </div>                                    
