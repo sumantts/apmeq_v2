@@ -132,10 +132,13 @@
 				$row1 = $result1->fetch_array();
 				$to_department_name = $row1['department_name'];	
 
+				$equipment_name = '';
 				$sql2 = "SELECT equipment_name FROM asset_details WHERE asset_id = '" .$asset_id. "' AND facility_id = '" .$facility_id. "' ";
 				$result2 = $mysqli->query($sql2);
-				$row2 = $result2->fetch_array();
-				$equipment_name = $row2['equipment_name'];	
+				if ($result2->num_rows > 0) {
+					$row2 = $result2->fetch_array();
+					$equipment_name = $row2['equipment_name'];	
+				}
 
 				$data[0] = $slno; 
 				$data[1] = $facility_name;
@@ -215,18 +218,13 @@
 	//Delete function
 	if($fn == 'deleteTableData'){
 		$return_result = array();
-		$author_id = $_POST["author_id"];
+		$reloc_id = $_POST["reloc_id"];
 		$status = true;	
 
-		$sql = "DELETE FROM author_details WHERE author_id = '".$author_id."'";
-		$result = $mysqli->query($sql);
+		$sql = "DELETE FROM reloc_asset_detail WHERE reloc_id = '".$reloc_id."'";
+		$result = $mysqli->query($sql); 
 
-		//Delete from Login table
-		$sql1 = "DELETE FROM login WHERE author_id = '".$author_id."'";
-		$result1 = $mysqli->query($sql1);
-
-		$return_result['status'] = $status;
-		//sleep(1);
+		$return_result['status'] = $status; 
 		echo json_encode($return_result);
 	}//end function deleteItem
 
@@ -334,6 +332,53 @@
 
 		$return_array['status'] = $status;
 		$return_array['data'] = $mainData;
+		echo json_encode($return_array);
+	}//function end
+	
+	// Get Facility ID
+	if($fn == 'getFacilityID'){
+		$return_array = array();
+		$status = true;
+		$mainData = array(); 
+		$facility_id = $_POST['facility_id_dd'];
+		$facility_code = '';
+
+		$sql = "SELECT * FROM facility_master WHERE facility_id = '" .$facility_id. "'";
+		$result = $mysqli->query($sql);
+
+		if ($result->num_rows > 0) {
+			$status = true;
+			$row = $result->fetch_array();
+			$facility_code = $row['facility_code']; 			
+		} else {
+			$status = false;
+		} 
+
+		$return_array['status'] = $status;
+		$return_array['facility_code'] = $facility_code;
+		echo json_encode($return_array);
+	}//function end
+	
+	//Get Asset Code
+	if($fn == 'getAssetCode'){
+		$return_array = array();
+		$status = true;
+		$asset_id = $_POST['asset_id'];
+		$asset_code = '';
+
+		$sql = "SELECT * FROM asset_details WHERE asset_id = '" .$asset_id. "'";
+		$result = $mysqli->query($sql);
+
+		if ($result->num_rows > 0) {
+			$status = true;
+			$row = $result->fetch_array();
+			$asset_code = $row['asset_code']; 			
+		} else {
+			$status = false;
+		} 
+
+		$return_array['status'] = $status;
+		$return_array['asset_code'] = $asset_code;
 		echo json_encode($return_array);
 	}//function end
 

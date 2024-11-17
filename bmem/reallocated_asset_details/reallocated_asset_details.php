@@ -133,11 +133,11 @@ include('common/head.php');
                 </div>
             </div>
             <!-- [ sample-table ] start --> 
-            <div class="col-sm-12 d-none" id="s_div">
+            <div class="col-sm-12 d-block" id="s_div">
                 <div class="card">
 
                     <div class="card-header">
-                        <h5>Filter Result</h5>
+                        <h5 id="heading_1">Relocated Asset List</h5>
                         <div class="card-header-right">
                             <div class="btn-group card-option"> 
                             </div>
@@ -201,45 +201,45 @@ include('common/head.php');
                             <div class="form-row">                               
                                 <div class="col-md-3 mb-3">
                                     <label for="facility_id" class="text-danger">Facility Name*</label>
-                                    <select class="form-control" id="facility_id" required>
+                                    <select class="form-control js-example-basic-single" id="facility_id" required>
                                         <option value="">Select</option> 
                                     </select> 
                                 </div>     
 
                                 <div class="col-md-3 mb-3">
                                     <label for="facility_code">Facility code</label>
-                                    <input type="text" class="form-control" id="facility_code"> 
+                                    <input type="text" class="form-control form-control-sm" id="facility_code"> 
                                 </div>   
 
                                 <div class="col-md-3 mb-3">
                                     <label for="from_dept_id" class="text-danger">Department*</label>
-                                    <select class="form-control" id="from_dept_id" required>
+                                    <select class="form-control js-example-basic-single" id="from_dept_id" required>
                                         <option value="">Select</option> 
                                     </select> 
                                 </div>    
 
                                 <div class="col-md-3 mb-3">
                                     <label for="asset_id" class="text-danger">Asset Name*</label>
-                                    <select class="form-control" id="asset_id" required>
+                                    <select class="form-control js-example-basic-single" id="asset_id" required>
                                         <option value="">Select</option> 
                                     </select> 
                                 </div>     
 
                                 <div class="col-md-3 mb-3">
                                     <label for="asset_code">Asset code</label>
-                                    <input type="text" class="form-control" id="asset_code"> 
+                                    <input type="text" class="form-control form-control-sm" id="asset_code"> 
                                 </div>    
 
                                 <div class="col-md-3 mb-3">
                                     <label for="to_dept_id" class="text-danger">Reallocated to Department*</label>
-                                    <select class="form-control" id="to_dept_id" required>
+                                    <select class="form-control js-example-basic-single" id="to_dept_id" required>
                                         <option value="">Select</option> 
                                     </select> 
                                 </div>    
 
                                 <div class="col-md-3 mb-3">
                                     <label for="relocate_date_time" class="text-danger">Relocate Date*</label>
-                                    <input type="date" class="form-control" id="relocate_date_time" required> 
+                                    <input type="date" class="form-control form-control-sm" id="relocate_date_time" required> 
                                 </div>
                             </div>  
 

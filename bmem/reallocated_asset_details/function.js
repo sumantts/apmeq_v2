@@ -1,7 +1,10 @@
 $('#clearForm').on('click', function(){
     $('#myFormS').trigger('reset');
-    $('#s_div').removeClass('d-block');
-    $('#s_div').addClass('d-none');
+    populateDataTable_1();
+    $('#heading_1').html('Relocated Asset List');
+
+    //$('#s_div').removeClass('d-block');
+    //$('#s_div').addClass('d-none');
 })
 
 $('#myForm').on('submit', function(){ 
@@ -38,8 +41,9 @@ $('#submitFormS').on('click', function(){
     if($facility_idS == '' && $facility_codeS == ''){
         alert('Please selecte Facility Name or Enter Facility Code');
     }else{
-        $('#s_div').removeClass('d-none');
-        $('#s_div').addClass('d-block');
+        //$('#s_div').removeClass('d-none');
+        //$('#s_div').addClass('d-block');
+        $('#heading_1').html('Relocated Asset List (Filtered)');
         populateDataTable_1();
     }
 })
@@ -71,21 +75,21 @@ function editTableData($author_id){
 }
 
 //Delete function	
-function deleteTableData($author_id){
+function deleteTableData($reloc_id){
     if (confirm('Are you sure to delete the Data?')) {
-        /*$.ajax({
+        $.ajax({
             method: "POST",
             url: "reallocated_asset_details/function.php",
-            data: { fn: "deleteTableData", author_id: $author_id }
+            data: { fn: "deleteTableData", reloc_id: $reloc_id }
         })
         .done(function( res ) {
             //console.log(res);
             $res1 = JSON.parse(res);
             if($res1.status == true){
                 $('#orgFormAlert').show();
-                populateDataTable();
+                populateDataTable_1();
             }
-        });*/ //end ajax
+        }); //end ajax
     }		
 }//end delete
 
@@ -334,13 +338,43 @@ $('#facility_id').on('change', function(){
                     }//end if
                 }        
             });//end ajax 
+
+            //Get Facility ID            
+            $.ajax({
+                method: "POST",
+                url: "reallocated_asset_details/function.php",
+                data: { fn: "getFacilityID", facility_id_dd: $facility_id }
+            })
+            .done(function( res ) {
+                $res1 = JSON.parse(res); 
+                if($res1.status == true){
+                    $('#facility_code').val($res1.facility_code);                    
+                }        
+            });//end ajax 
         }//end if
     },500);
+})
+
+//Get Asset Code
+$('#asset_id').on('change', function(){
+    $asset_id = $('#asset_id').val(); 
+    $.ajax({
+        method: "POST",
+        url: "reallocated_asset_details/function.php",
+        data: { fn: "getAssetCode", asset_id: $asset_id }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res); 
+        if($res1.status == true){
+            $('#asset_code').val($res1.asset_code);                    
+        }        
+    });//end ajax     
 })
 
 $(document).ready(function () {
     configureFacilityDropDown();
     configureAssetDropDown();
     populateDataTable();
-    //populateDataTable_1();
+    populateDataTable_1();
+    $('.js-example-basic-single').select2();
 });
