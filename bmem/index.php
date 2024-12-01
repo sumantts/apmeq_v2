@@ -114,7 +114,7 @@
 			include('asset_data/asset_data.php');		
 		break; 	 		 	
 		case 'asset-barcode':
-			$title = "Asset Barcode";
+			$title = "Asset QR Code";
 			include('asset/asset_barcode.php');		
 		break; 	 		 	
 		case 'ticket-dashboard':

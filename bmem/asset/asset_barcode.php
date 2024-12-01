@@ -123,7 +123,7 @@ if(!$_SESSION["user_id"] || !$_SESSION["user_type_code"]){header('location:?p=si
                 <div class="card">
 
                     <div class="card-header">
-                        <h5>Barcode List</h5>
+                        <h5>QR Code List</h5>
                         <div class="card-header-right">
                             <div class="btn-group card-option">
                                 <button type="button" class="btn dropdown-toggle btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -135,7 +135,7 @@ if(!$_SESSION["user_id"] || !$_SESSION["user_type_code"]){header('location:?p=si
                                     <li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>
                                     <li class="dropdown-item close-card"><a href="#!"><i class="feather icon-trash"></i> remove</a></li>
                                 </ul>
-                                <button type="button" class="btn btn-primary mb-2 float-right" id="printBarcode">Print Barcode</button>
+                                <!-- <button type="button" class="btn btn-primary mb-2 float-right" id="printBarcode">Print Barcode</button> -->
                             </div>
                         </div>
                     </div>
@@ -152,7 +152,7 @@ if(!$_SESSION["user_id"] || !$_SESSION["user_type_code"]){header('location:?p=si
                                     $equipment_name = $row1['equipment_name']; 
                             ?>
                             <div class="col-md-2">
-                            <img src="<?=$file_path.''.$asset_code1.'.png'?>" class="card-img-top" alt="<?=$asset_code1?>" width="302" height="100"> 
+                            <img src="<?=$file_path.''.$asset_code1.'.png'?>" class="card-img-top" alt="<?=$asset_code1?>" height="120"> 
                             <div class="text-center"><?=$asset_code1?></div> 
                             <div class="text-center"><?=$equipment_name?></div>
                             </div>

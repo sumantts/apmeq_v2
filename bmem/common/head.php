@@ -21,6 +21,10 @@
 
     <!-- vendor css -->
     <link rel="stylesheet" href="assets/css/style.css">
+
+	<!-- QR Code Reader -->
+	<link rel="stylesheet" href="qrcode_reader/dist/css/qrcode-reader.css">
+
 	<!-- Spinner Loader -->
 	<style>
 		.modalSpinner {

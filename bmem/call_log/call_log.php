@@ -65,8 +65,14 @@ include('common/head.php');
                             <div class="form-row">    
 
                                 <div class="col-md-4 mb-3">
-                                    <label for="qr_code">Scan QR Code</label>
-                                    <input type="text" class="form-control" id="qr_code"> 
+                                    <!-- <label for="qr_code">Scan QR Code</label>
+                                    <input type="text" class="form-control" id="qr_code">  -->
+                                    <textarea class="form-control" id="multiple"></textarea>
+                                    <button class="qrcode-reader" type="button" id="openreader-multi" 
+                                        data-qrr-multiple="true" 
+                                        data-qrr-repeat-timeout="0"
+                                        data-qrr-line-color="#00FF00"
+                                        data-qrr-target="#multiple">Read QRCode</button> 
                                 </div>      
 
                                 <div class="col-md-4 mb-3">
@@ -117,3 +123,36 @@ include('common/head.php');
 	<?php include('common/footer.php'); ?>
     
     <script src="call_log/function.js?d=<?=date('Ymdhis')?>"></script>
+    
+    <!-- QR Code Scanner Start -->
+    <script src="qrcode_reader/dist/js/qrcode-reader.min.js?v=20190604"></script>
+
+    <script>  
+    $(function(){
+        // overriding path of JS script and audio 
+        $.qrCodeReader.jsQRpath = "qrcode_reader/dist/js/jsQR/jsQR.min.js";
+        $.qrCodeReader.beepPath = "qrcode_reader/dist/audio/beep.mp3";
+
+        // bind all elements of a given class
+        $(".qrcode-reader").qrCodeReader();
+
+        // bind elements by ID with specific options
+        $("#openreader-multi2").qrCodeReader({multiple: true, target: "#multiple2", skipDuplicates: false});
+        $("#openreader-multi3").qrCodeReader({multiple: true, target: "#multiple3"});
+
+        // read or follow qrcode depending on the content of the target input
+        $("#openreader-single2").qrCodeReader({callback: function(code) {
+        if (code) {
+            window.location.href = code;
+        }  
+        }}).off("click.qrCodeReader").on("click", function(){
+        var qrcode = $("#single2").val().trim();
+        if (qrcode) {
+            window.location.href = qrcode;
+        } else {
+            $.qrCodeReader.instance.open.call(this);
+        }
+        });
+    });
+    </script>
+    <!-- QR Code Scanner End -->

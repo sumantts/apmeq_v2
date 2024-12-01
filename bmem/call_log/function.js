@@ -80,3 +80,8 @@ $('#myForm').on('submit', function(){
     
     return false;
 })  
+
+//qrcode-reader
+//https://github.com/mauntrelio/qrcode-reader
+
+
