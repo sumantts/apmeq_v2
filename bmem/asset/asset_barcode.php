@@ -3,6 +3,46 @@ if(!$_SESSION["user_id"] || !$_SESSION["user_type_code"]){header('location:?p=si
     include('common/head.php'); 
     $facility_id = $_GET['facility_id'];
 
+    #https://phpgurukul.com/how-to-generate-qr-code-in-php/
+    #How to generate QR code in PHP
+    //load the ar library
+    include 'phpqrcode/qrlib.php';
+    $file_path = 'phpqrcode/qrcode_images/'.$facility_id.'/';
+    function folder_exist($folder){
+        // Get canonicalized absolute pathname
+        $path = realpath($folder);
+        // If it exist, check if it's a directory
+        return ($path !== false AND is_dir($path)) ? true : false;
+    }
+
+    $is_exist = folder_exist($file_path);
+    if($is_exist == false){
+        //echo 'create a new directory';
+        mkdir("phpqrcode/qrcode_images/" . $facility_id, 0777);
+    }
+  
+    //file path
+    //$file = "images/qr1.png";
+      
+    //other parameters
+    $ecc = 'H';
+    $pixel_size = 20;
+    $frame_size = 5;
+      
+    // Generates QR Code and Save as PNG
+    $sql = "SELECT * FROM asset_details WHERE facility_id = '" .$facility_id. "' ";
+    $result = $mysqli->query($sql);
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_array()){
+            $asset_code = $row['asset_code']; 
+            $item = $asset_code; //Supported 
+            $file = $file_path.''.$asset_code.'.png';
+            QRcode::png($item, $file, $ecc, $pixel_size, $frame_size);
+        }
+    }//end if 
+
+
+    /*********************
     #php-barcode-generator
     #https://github.com/picqer/php-barcode-generator
 
@@ -35,6 +75,7 @@ if(!$_SESSION["user_id"] || !$_SESSION["user_type_code"]){header('location:?p=si
             file_put_contents($file_path.''.$asset_code.'.jpg', $generator->getBarcode($stored_data_str, $generator::TYPE_CODE_128));
         }
     }//end if 
+    **********/
 ?>
 
 <body class="">
@@ -111,7 +152,7 @@ if(!$_SESSION["user_id"] || !$_SESSION["user_type_code"]){header('location:?p=si
                                     $equipment_name = $row1['equipment_name']; 
                             ?>
                             <div class="col-md-2">
-                            <img src="<?=$file_path.''.$asset_code1.'.jpg'?>" class="card-img-top" alt="<?=$asset_code1?>" width="302" height="50"> 
+                            <img src="<?=$file_path.''.$asset_code1.'.png'?>" class="card-img-top" alt="<?=$asset_code1?>" width="302" height="100"> 
                             <div class="text-center"><?=$asset_code1?></div> 
                             <div class="text-center"><?=$equipment_name?></div>
                             </div>
