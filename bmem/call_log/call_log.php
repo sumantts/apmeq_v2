@@ -64,30 +64,30 @@ include('common/head.php');
                         <form class="needs-validation" action="#" id="myForm">
                             <div class="form-row">    
 
-                                <div class="col-md-4 mb-3">
-                                    <!-- <label for="qr_code">Scan QR Code</label>
-                                    <input type="text" class="form-control" id="qr_code">  -->
-                                    <textarea class="form-control" id="multiple"></textarea>
-                                    <button class="qrcode-reader" type="button" id="openreader-multi" 
+                                <div class="col-md-3 mb-3">
+                                      <label for="qr_code">Scan QR Code</label></br>
+                                   <!--<input type="text" class="form-control" id="qr_code"> 
+                                    <textarea class="form-control" id="multiple"></textarea> -->
+                                    <button class="qrcode-reader btn  btn-primary" type="button" id="openreader-multi" 
                                         data-qrr-multiple="true" 
                                         data-qrr-repeat-timeout="0"
                                         data-qrr-line-color="#00FF00"
-                                        data-qrr-target="#multiple">Read QRCode</button> 
+                                        data-qrr-target="#asset_code">Read QRCode</button> 
                                 </div>      
 
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-3 mb-3">
                                     <label for="asset_code" class="text-danger">Asset Code*</label>
                                     <input type="number" class="form-control" id="asset_code" required> 
                                 </div>   
 
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-3 mb-3">
                                     <label for="ticket_raiser_name">Ticket Raiser Name</label>
                                     <input type="hidden" name="facility_id" id="facility_id" value="0">
                                     <input type="hidden" name="user_id" id="user_id" value="<?=$_SESSION["user_id"]?>" >
                                     <input type="text" class="form-control" id="ticket_raiser_name" value="<?=$_SESSION["user_name"]?>" required > 
                                 </div>  
 
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-3 mb-3">
                                     <label for="ticket_raiser_contact">Ticket Raiser Contact Number</label>
                                     <input type="number" class="form-control" id="ticket_raiser_contact" value="<?=$_SESSION["user_mobile"]?>" required > 
                                 </div>     
@@ -102,7 +102,7 @@ include('common/head.php');
 
                             <div class="form-row d-none" id="s_button_div">
                                 <div class="col-md-2 mt-4">
-                                    <button class="btn  btn-primary" type="submit" id="submitForm">
+                                    <button class="btn btn-primary" type="submit" id="submitForm">
                                         <span class="spinner-border spinner-border-sm" role="status" style="display: none;" id="submitForm_spinner"></span>
                                         <span class="load-text" style="display: none;" id="submitForm_spinner_text">Loading...</span>
                                         <span class="btn-text" id="submitForm_text">Log a Call</span>
