@@ -19,6 +19,7 @@
 		$user_name = $_POST['user_name'];
 		$user_type_id = $_POST['user_type_id'];
 		$hospital_id = $_POST['hospital_id'];
+		$facility_id = $_POST['facility_id'];
 		$user_mobile = $_POST['user_mobile'];
 		$user_phone = $_POST['user_phone'];
 		$user_email = $_POST['user_email'];
@@ -31,7 +32,7 @@
 		try {
 			if($user_id > 0){
 				$status = true;
-				$sql = "UPDATE user_details SET user_name = '" .$user_name. "', user_type_id = '" .$user_type_id. "', hospital_id = '" .$hospital_id. "', user_mobile = '" .$user_mobile. "', user_phone = '" .$user_phone. "', user_email = '" .$user_email. "', user_dob = '" .$user_dob. "', user_address = '" .$user_address. "', user_user_name = '" .$user_user_name. "', user_password = '" .$user_password. "', user_status = '" .$user_status. "' WHERE user_id = '" .$user_id. "' ";
+				$sql = "UPDATE user_details SET user_name = '" .$user_name. "', user_type_id = '" .$user_type_id. "', hospital_id = '" .$hospital_id. "',  facility_id = '" .$facility_id. "', user_mobile = '" .$user_mobile. "', user_phone = '" .$user_phone. "', user_email = '" .$user_email. "', user_dob = '" .$user_dob. "', user_address = '" .$user_address. "', user_user_name = '" .$user_user_name. "', user_password = '" .$user_password. "', user_status = '" .$user_status. "' WHERE user_id = '" .$user_id. "' ";
 				$result = $mysqli->query($sql); 
 			}else{
 				$check_sql = "SELECT * FROM user_details WHERE user_email = '" .$user_email. "' AND user_mobile = '" .$user_mobile. "'";
@@ -41,7 +42,7 @@
 					$return_result['error_message'] = 'This email and phone number already exist';
 					$status = false;
 				}else{
-					$sql = "INSERT INTO user_details (user_name, user_type_id, hospital_id, user_mobile, user_phone, user_email, user_dob, user_address, user_user_name, user_password, user_status) VALUES ('" .$user_name. "', '" .$user_type_id. "', '" .$hospital_id. "', '" .$user_mobile. "', '" .$user_phone. "', '" .$user_email. "', '" .$user_dob. "', '" .$user_address. "', '" .$user_user_name. "', '" .$user_password. "', '" .$user_status. "')";
+					$sql = "INSERT INTO user_details (user_name, user_type_id, hospital_id, facility_id, user_mobile, user_phone, user_email, user_dob, user_address, user_user_name, user_password, user_status) VALUES ('" .$user_name. "', '" .$user_type_id. "', '" .$hospital_id. "', '" .$facility_id. "', '" .$user_mobile. "', '" .$user_phone. "', '" .$user_email. "', '" .$user_dob. "', '" .$user_address. "', '" .$user_user_name. "', '" .$user_password. "', '" .$user_status. "')";
 					$result = $mysqli->query($sql);
 					$user_id = $mysqli->insert_id; 
 				}//end if	
@@ -61,7 +62,7 @@
 		$status = true;
 		$mainData = array();
 		$email1 = '';
-		$sql = "SELECT user_details.user_id, user_details.user_name, user_details.user_type_id, user_details.hospital_id, user_details.user_mobile, user_details.user_phone, user_details.user_email, user_details.user_dob, user_details.user_address, user_details.user_user_name, user_details.user_password, user_details.user_status, user_type.user_type_name, user_type.user_type_code, hospital_list.hospital_name, hospital_list.hospital_code FROM user_details JOIN user_type ON user_details.user_type_id = user_type.user_type_id JOIN hospital_list ON user_details.hospital_id = hospital_list.hospital_id ORDER BY user_details.user_id DESC LIMIT 0, 100";
+		$sql = "SELECT user_details.user_id, user_details.user_name, user_details.user_type_id, user_details.hospital_id, user_details.facility_id, user_details.user_mobile, user_details.user_phone, user_details.user_email, user_details.user_dob, user_details.user_address, user_details.user_user_name, user_details.user_password, user_details.user_status, user_type.user_type_name, user_type.user_type_code, hospital_list.hospital_name, hospital_list.hospital_code, facility_master.facility_name FROM user_details JOIN user_type ON user_details.user_type_id = user_type.user_type_id JOIN hospital_list ON user_details.hospital_id = hospital_list.hospital_id JOIN facility_master ON user_details.facility_id = facility_master.facility_id  ORDER BY user_details.user_id DESC LIMIT 0, 100";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -75,7 +76,9 @@
 				$user_type_name = $row['user_type_name'];
 				$user_type_code = $row['user_type_code'];
 				$hospital_id = $row['hospital_id'];
+				$facility_id = $row['facility_id'];
 				$hospital_name = $row['hospital_name'];
+				$facility_name = $row['facility_name'];
 				$hospital_code = $row['hospital_code'];
 				$user_mobile = $row['user_mobile'];
 				$user_phone = $row['user_phone'];
@@ -92,14 +95,15 @@
 				$data[3] = $user_mobile;
 				$data[4] = $user_phone; 
 				$data[5] = $user_email;
-				$data[6] = $user_address;
-				$data[7] = $activity_status[$user_status]; 
+				$data[6] = $facility_name;
+				$data[7] = $user_address;
+				$data[8] = $activity_status[$user_status]; 
 				$view_params = $user_id.', 1';
 				$edit_params = $user_id.', 2';
 				if($_SESSION["user_type_code"] != 'super'){
-					$data[8] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-eye' aria-hidden='true' onclick='editTableData(".$view_params.")'></i></a>  <a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$user_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$user_id.")'></i></a>";
+					$data[9] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-eye' aria-hidden='true' onclick='editTableData(".$view_params.")'></i></a>  <a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$user_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$user_id.")'></i></a>";
 				}else{
-					$data[8] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-eye' aria-hidden='true' onclick='editTableData(".$view_params.")'></i></a>  <a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$edit_params.")'></i></a>";
+					$data[9] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-eye' aria-hidden='true' onclick='editTableData(".$view_params.")'></i></a>  <a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$edit_params.")'></i></a>";
 				} 
 				array_push($mainData, $data);
 				$slno++;
@@ -130,6 +134,7 @@
 			$user_name = $row['user_name'];
 			$user_type_id = $row['user_type_id']; 
 			$hospital_id = $row['hospital_id']; 
+			$facility_id = $row['facility_id']; 
 			$user_mobile = $row['user_mobile'];
 			$user_phone = $row['user_phone'];
 			$user_email = $row['user_email'];
@@ -148,6 +153,7 @@
 		$return_array['user_name'] = $user_name;
 		$return_array['user_type_id'] = $user_type_id;
 		$return_array['hospital_id'] = $hospital_id;
+		$return_array['facility_id'] = $facility_id;
 		$return_array['user_mobile'] = $user_mobile;
 		$return_array['user_phone'] = $user_phone;
 		$return_array['user_email'] = $user_email;

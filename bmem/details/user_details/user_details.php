@@ -86,6 +86,7 @@ include('common/head.php');
                                         <th>Mobile Number</th>
                                         <th>Phone Number</th>
                                         <th>Email ID</th>
+                                        <th>Facility Name</th>
                                         <th>Address</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -99,6 +100,7 @@ include('common/head.php');
                                         <th>Mobile Number</th>
                                         <th>Phone Number</th>
                                         <th>Email ID</th>
+                                        <th>Facility Name</th>
                                         <th>Address</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -159,6 +161,19 @@ include('common/head.php');
                                             Please select Hospital Name.
                                         </div>
                                     </div> 
+
+                                    <div class="col-md-4 mb-3">
+                                        <label for="facility_id" class="text-danger">Facility Name*</label>
+                                        <select class="form-control js-example-basic-single" id="facility_id" required>
+                                            <option value="">Select</option> 
+                                        </select> 
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>                                    
+                                        <div class="invalid-feedback">
+                                            Please select Facility Name.
+                                        </div>
+                                    </div> 
                                     
                                     <div class="col-md-4 mb-3">
                                         <label for="user_mobile" class="text-danger">Mobile Number*</label>
@@ -204,7 +219,7 @@ include('common/head.php');
                                         </div>
                                     </div> 
 
-                                    <div class="col-md-8 mb-3">
+                                    <div class="col-md-12 mb-3">
                                         <label for="user_address" class="text-danger">Address*</label>
                                         <textarea class="form-control" name="user_address" id="user_address" required> </textarea>
                                         <div class="valid-feedback">

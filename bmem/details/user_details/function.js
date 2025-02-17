@@ -18,6 +18,7 @@ $('#myForm').on("submit", function(){
     $user_id = $('#user_id').val();
     $user_name = $('#user_name').val();
     $user_type_id = $('#user_type_id').val();
+    $facility_id = $('#facility_id').val();
     $hospital_id = $('#hospital_id').val();
     $user_mobile = $('#user_mobile').val();
     $user_phone = $('#user_phone').val();
@@ -32,7 +33,7 @@ $('#myForm').on("submit", function(){
         type: "POST",
         dataType: "json",
         url: "details/user_details/function.php",
-        data: { fn: "saveFormData", user_id: $user_id, user_name: $user_name, user_type_id: $user_type_id, hospital_id: $hospital_id, user_mobile: $user_mobile, user_phone: $user_phone, user_email: $user_email, user_dob: $user_dob, user_address: $user_address, user_user_name: $user_user_name, user_password: $user_password, user_status: $user_status }
+        data: { fn: "saveFormData", user_id: $user_id, user_name: $user_name, user_type_id: $user_type_id, hospital_id: $hospital_id, facility_id: $facility_id, user_mobile: $user_mobile, user_phone: $user_phone, user_email: $user_email, user_dob: $user_dob, user_address: $user_address, user_user_name: $user_user_name, user_password: $user_password, user_status: $user_status }
     })
     .done(function( res ) {
         console.log(res);
@@ -81,6 +82,7 @@ function editTableData($user_id, $access_mode){
             $('#user_name').val($res1.user_name);
             $('#user_type_id').val($res1.user_type_id).trigger('change');
             $('#hospital_id').val($res1.hospital_id).trigger('change');
+            $('#facility_id').val($res1.facility_id).trigger('change');
             $('#user_mobile').val($res1.user_mobile);
             $('#user_phone').val($res1.user_phone);
             $('#user_email').val($res1.user_email);
@@ -232,7 +234,36 @@ function configureHospitaDropDown(){
     });//end ajax
 }//end
 
+//Facility
+function configureFacilityDropDown(){
+    $.ajax({
+        method: "POST",
+        url: "user_facility/function.php",
+        data: { fn: "getAllFacilityName" }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res);
+        if($res1.status == true){
+            $rows = $res1.data;
+
+            if($rows.length > 0){
+                $('#facility_id').html('');
+                $('#facility_idS').html('');
+                $html = "<option value=''>Select</option>";
+
+                for($i = 0; $i < $rows.length; $i++){
+                    $html += "<option value='"+$rows[$i].facility_id+"'>"+$rows[$i].facility_name+"</option>";                    
+                }//end for
+                
+                $('#facility_id').html($html);
+                $('#facility_idS').html($html);
+            }//end if
+        }        
+    });//end ajax
+}//end
+
 $(document).ready(function () {
+    configureFacilityDropDown();
     configureUserTypeDropDown(); 
     configureHospitaDropDown(); 
     populateDataTable();
