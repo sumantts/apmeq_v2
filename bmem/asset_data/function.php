@@ -49,6 +49,11 @@
 				$amc_last_date = $row['amc_last_date']; 
 				$cmc_yes_no = $row['cmc_yes_no']; 
 				$cmc_last_date = $row['cmc_last_date']; 
+				$frequency_of_calibration = $row['frequency_of_calibration']; 
+				$qa_due_date = $row['qa_due_date']; 
+				$frequency_of_pms = $row['frequency_of_pms']; 
+				$last_date_of_calibration = $row['last_date_of_calibration']; 
+				$last_date_of_pms = $row['last_date_of_pms']; 
 
 				$asset_status_text = '-';
 				if($asset_status == 5){
@@ -93,6 +98,60 @@
 					$asset_class_text = 'Non Critical';
 				}
 
+				# Calibration Frequency Calculation
+				$calib_frequency = '';
+				$next_calib_date = '';
+
+				if($last_date_of_calibration != '0000-00-00'){
+					$last_date_of_calibration1 = date('Y-m-d', strtotime($last_date_of_calibration));
+					$date = new DateTime($last_date_of_calibration1);				
+					
+					$calib_freq_str = explode("|", $frequency_of_calibration);
+					if($calib_freq_str[0] > 0){
+						$y = $calib_freq_str[0];
+						$calib_frequency = 'Each '.$y.' Year(s)';
+						$next_calib_date = date('d-F-Y', strtotime('+'.$y.' year', strtotime($last_date_of_calibration)));
+					}else if($calib_freq_str[1] > 0){
+						$m = $calib_freq_str[0];
+						$calib_frequency = 'Each '.$m.' Month(s)';
+						$next_calib_date = date('d-F-Y', strtotime('+'.$m.' month', strtotime($last_date_of_calibration)));
+					}else if($calib_freq_str[2] > 0){
+						$d = $calib_freq_str[2];
+						$calib_frequency = 'Each '.$d.' Day(s)';
+						$next_calib_date = date('d-F-Y', strtotime('+'.$d.' day', strtotime($last_date_of_calibration)));
+					}else{
+						$calib_frequency = '';
+						$next_calib_date = '';
+					}  
+				}
+
+				# PMS Frequency Calculation
+				$pms_frequency = '';
+				$next_pms_date = '';
+
+				if($last_date_of_pms != '0000-00-00'){
+					$last_date_of_pms1 = date('Y-m-d', strtotime($last_date_of_pms));
+					$date = new DateTime($last_date_of_pms1); 
+						
+					$pms_freq_str = explode("|", $frequency_of_pms);
+					if($pms_freq_str[0] > 0){
+						$y1 = $pms_freq_str[0];
+						$pms_frequency = 'Each '.$y1.' Year(s)';
+						$next_pms_date = date('d-F-Y', strtotime('+'.$y1.' year', strtotime($last_date_of_pms)));
+					}else if($pms_freq_str[1] > 0){
+						$m1 = $pms_freq_str[1];
+						$pms_frequency = 'Each '.$m1.' Month(s)';
+						$next_pms_date = date('d-F-Y', strtotime('+'.$m1.' month', strtotime($last_date_of_pms)));
+					}else if($pms_freq_str[2] > 0){
+						$d1 = $pms_freq_str[2];
+						$pms_frequency = 'Each '.$d1.' Day(s)';
+						$next_pms_date = date('d-F-Y', strtotime('+'.$d1.' day', strtotime($last_date_of_pms)));
+					}else{
+						$pms_frequency = '';
+						$next_pms_date = '';
+					} 
+				}//ennd if
+
 				$data[0] = $slno; 
 				$data[1] = $facility_name;
 				$data[2] = $facility_code;
@@ -100,10 +159,14 @@
 				$data[4] = $equipment_name; 
 				$data[5] = $asset_code;
 				$data[6] = $maintanence_type;
-				$data[7] = $technology_text;
-				$data[8] = $asset_status_text1;
-				$data[9] = $asset_status_text2;
-				$data[10] = $asset_class_text;  
+				$data[7] = $calib_frequency;
+				$data[8] = $next_calib_date;
+				$data[9] = $pms_frequency;
+				$data[10] = $next_pms_date;
+				$data[11] = $technology_text;
+				$data[12] = $asset_status_text1;
+				$data[13] = $asset_status_text2;
+				$data[14] = $asset_class_text;  
 
 				array_push($mainData, $data);
 				$slno++;

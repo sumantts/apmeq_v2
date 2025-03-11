@@ -79,6 +79,10 @@ include('common/head.php');
                                         <th>Equipment name</th>
                                         <th>Equipment code/Id</th>
                                         <th>Maintanence Type<br>(i.e. under warranty/AMC/CMC/No <br>information etc)</th>
+                                        <th>Calibration<br> Frequency</th>
+                                        <th>Next Calibration <br>Date</th>
+                                        <th>PMS <br>Frequency</th>
+                                        <th>Next PMS <br>Date</th>
                                         <th>Technology<br>(i.e obsolute/running)</th>
                                         <th>Asset status<br>(Working/not working/<br>not in use/packed/RBER)</th>
                                         <th>Verified(Yes/No)</th>
@@ -94,6 +98,10 @@ include('common/head.php');
                                         <th>Equipment name</th>
                                         <th>Equipment code/Id</th>
                                         <th>Maintanence Type<br>(i.e. under warranty/AMC/CMC/No <br>information etc)</th>
+                                        <th>Calibration<br> Frequency</th>
+                                        <th>Next Calibration <br>Date</th>
+                                        <th>PMS <br>Frequency</th>
+                                        <th>Next PMS <br>Date</th>
                                         <th>Technology<br>(i.e obsolute/running)</th>
                                         <th>Asset status<br>(Working/not working/<br>not in use/packed/RBER)</th>
                                         <th>Verified(Yes/No)</th>
