@@ -124,6 +124,30 @@
 						$next_calib_date = '';
 					}  
 				}
+				
+
+				if($next_calib_date != ''){					
+					$fifteen_day_prev = date('Y-m-d H:i:s',(strtotime ( '-15 day' , strtotime($next_calib_date))));
+					
+					// Create two DateTime objects
+					$today = date('Y-m-d');
+					$date1 = new DateTime($today);
+					$date2 = new DateTime($fifteen_day_prev);
+					$date3 = new DateTime($next_calib_date);
+
+
+					// Compare the dates
+					if ($date1 > $date2 && $date1 < $date3) {
+						//PMS within 15 days
+						$next_calib_date = '<span class="text-warning blink">'.$next_calib_date.'</span>';
+					} elseif ($date1 > $date3) {
+						//PMS Date over
+						$next_calib_date = '<span class="text-danger blink">'.$next_calib_date.'</span>';
+					} else {
+						// cool PMS
+						$next_calib_date = '<span class="text-primary">'.$next_calib_date.'</span>';
+					}
+				}//end if
 
 				# PMS Frequency Calculation
 				$pms_frequency = '';
@@ -151,6 +175,29 @@
 						$next_pms_date = '';
 					} 
 				}//ennd if
+
+				if($next_pms_date != ''){					
+					$fifteen_day_prev = date('Y-m-d H:i:s',(strtotime ( '-15 day' , strtotime($next_pms_date))));
+					
+					// Create two DateTime objects
+					$today = date('Y-m-d');
+					$date1 = new DateTime($today);
+					$date2 = new DateTime($fifteen_day_prev);
+					$date3 = new DateTime($next_pms_date);
+
+
+					// Compare the dates
+					if ($date1 > $date2 && $date1 < $date3) {
+						//PMS within 15 days
+						$next_pms_date = '<span class="text-warning blink">'.$next_pms_date.'</span>';
+					} elseif ($date1 > $date3) {
+						//PMS Date over
+						$next_pms_date = '<span class="text-danger blink">'.$next_pms_date.'</span>';
+					} else {
+						// cool PMS
+						$next_pms_date = '<span class="text-primary">'.$next_pms_date.'</span>';
+					}
+				}//end if
 
 				$data[0] = $slno; 
 				$data[1] = $facility_name;
