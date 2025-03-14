@@ -317,11 +317,13 @@
 			$slno = 1;
 			while($row = $result->fetch_array()){
 				$asset_id = $row['asset_id'];	
+				$asset_code = $row['asset_code'];	
 				$equipment_name = $row['equipment_name']; 
 				$data = new stdClass();
 
 				$data->asset_id = $asset_id;
 				$data->equipment_name = $equipment_name; 
+				$data->asset_code = $asset_code; 
 				
 				array_push($mainData, $data);
 				$slno++;

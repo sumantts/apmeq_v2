@@ -149,7 +149,7 @@ include('common/head.php');
                                         </div>
                                     </div>
 
-                                    <div class="col-md-4 mb-3">
+                                    <!-- <div class="col-md-4 mb-3">
                                         <label for="hospital_id" class="text-danger">Hospital Name*</label>
                                         <select class="form-control" name="hospital_id" id="hospital_id" required>
                                             <option value="">Select</option>                                             
@@ -160,7 +160,7 @@ include('common/head.php');
                                         <div class="invalid-feedback">
                                             Please select Hospital Name.
                                         </div>
-                                    </div> 
+                                    </div>  -->
 
                                     <div class="col-md-4 mb-3">
                                         <label for="facility_id" class="text-danger">Facility Name*</label>

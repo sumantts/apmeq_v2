@@ -246,12 +246,14 @@
 				$data[7] = $equipment_make_model;
 				$data[8] = $equipment_sl_no;
 				$data[9] = $pms_due_date;
-				$data[10] = $supplied_by;
-				$data[11] = $service_provider_details;
-				$data[12] = $pms_planned_date;
-				$data[13] = '-';
-				$data[14] = $view_link;
-				$data[15] = 'Resolved'; 
+				$data[10] = '-';
+				$data[11] = '-';
+				$data[12] = $supplied_by;
+				$data[13] = $service_provider_details;
+				$data[14] = $pms_planned_date;
+				$data[15] = '-';
+				$data[16] = $view_link;
+				$data[17] = 'Resolved'; 
 				
 				//$data[8] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$author_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$author_id.")'></i></a>";
 				

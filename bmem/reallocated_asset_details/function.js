@@ -299,7 +299,7 @@ function configureAssetDropDown(facilityid){
                     $html = "<option value=''>Select</option>";
 
                     for($i = 0; $i < $rows.length; $i++){
-                        $html += "<option value='"+$rows[$i].asset_id+"'>"+$rows[$i].equipment_name+"</option>";                    
+                        $html += "<option value='"+$rows[$i].asset_id+"'>"+$rows[$i].equipment_name+"("+$rows[$i].asset_code+")</option>";                    
                     }//end for
                     
                     $('#asset_id').html($html);

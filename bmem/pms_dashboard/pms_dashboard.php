@@ -252,7 +252,9 @@ include('common/head.php');
                                         <th>Equpment Name</th>
                                         <th>Equipment Make/Model</th>
                                         <th>Equipment sl no</th>
-                                        <th>PMS due date</th> 
+                                        <th>Last PMS Done</th> 
+                                        <th>PMS Frequency</th> 
+                                        <th>Next PMS Date</th> 
                                         <th>Supplied by</th>
                                         <th>Service provider details<br> if it is in Warranty/AMC/CMC</th>
                                         <th>PMS planned date</th>
@@ -273,7 +275,9 @@ include('common/head.php');
                                         <th>Equpment Name</th>
                                         <th>Equipment Make/Model</th>
                                         <th>Equipment sl no</th>
-                                        <th>PMS due date</th> 
+                                        <th>Last PMS Done</th> 
+                                        <th>PMS Frequency</th> 
+                                        <th>Next PMS Date</th> 
                                         <th>Supplied by</th>
                                         <th>Service provider details<br> if it is in Warranty/AMC/CMC</th>
                                         <th>PMS planned date</th>
