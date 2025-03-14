@@ -327,8 +327,28 @@
 					$data[13] = $assign_to_text;
 					$data[14] = $eng_contact_no;
 					$data[15] = $call_log_status_text;			
-					if($warranty_last_date != '0000-00-00'){
-						$data[16] = date('d-F-Y', strtotime($warranty_last_date));
+					if($warranty_last_date != '0000-00-00'){										
+						$fifteen_day_prev = date('Y-m-d H:i:s',(strtotime ( '-15 day' , strtotime($warranty_last_date))));
+						
+						// Create two DateTime objects
+						$today = date('Y-m-d');
+						$date1 = new DateTime($today);
+						$date2 = new DateTime($fifteen_day_prev);
+						$date3 = new DateTime($warranty_last_date);
+
+
+						// Compare the dates
+						if ($date1 > $date2 && $date1 < $date3) {
+							//PMS within 15 days
+							$warranty_last_date = '<span class="text-warning blink">'.date('d-F-Y', strtotime($warranty_last_date)).'</span>';
+						} elseif ($date1 > $date3) {
+							//PMS Date over
+							$warranty_last_date = '<span class="text-danger blink">'.date('d-F-Y', strtotime($warranty_last_date)).'</span>';
+						} else {
+							// cool PMS
+							$warranty_last_date = '<span class="text-primary">'.date('d-F-Y', strtotime($warranty_last_date)).'</span>';
+						}
+						$data[16] = $warranty_last_date;//date('d-F-Y', strtotime($warranty_last_date));
 					}else{
 						$data[16] = '';
 					}
