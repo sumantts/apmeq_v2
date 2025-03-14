@@ -371,6 +371,19 @@ $('#asset_id').on('change', function(){
     });//end ajax     
 })
 
+
+$('#from_dept_id, #to_dept_id').on('change', function(){  
+    $from_dept_id = $('#from_dept_id').val();
+    $to_dept_id = $('#to_dept_id').val();
+    console.log('from_dept_id:'+$from_dept_id+' to_dept_id: ' + $to_dept_id);
+
+    if(parseInt($from_dept_id) == parseInt($to_dept_id)){
+        alert('Two Department can not be same');
+        $('#from_dept_id').val('').trigger('change');
+        $('#to_dept_id').val('').trigger('change');
+    }
+})
+
 $(document).ready(function () {
     configureFacilityDropDown();
     configureAssetDropDown();

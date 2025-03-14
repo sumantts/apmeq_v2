@@ -152,9 +152,10 @@ include('common/head.php');
                                         <th>No.</th> 
                                         <th>Facility Name</th>
                                         <th>Facility Code</th>
-                                        <th>Parent Department</th>
-                                        <th>Reallocated Department</th>
-                                        <th>All asset related details</th> 
+                                        <th>Asset Name <br>& Code</th>
+                                        <th>Parent <br>Department</th>
+                                        <th>Reallocated <br>Department</th>
+                                        <th>All asset related <br>details</th> 
                                         <th>Date</th>
                                         <th>Status<br>(i.e Shifted to parent depratment)</th> 
                                         <th>Action</th>
@@ -165,9 +166,10 @@ include('common/head.php');
                                         <th>No.</th>
                                         <th>Facility Name</th>
                                         <th>Facility Code</th>
-                                        <th>Parent Department</th>
-                                        <th>Reallocated Department</th>
-                                        <th>All asset related details</th> 
+                                        <th>Asset Name <br>& Code</th>
+                                        <th>Parent <br>Department</th>
+                                        <th>Reallocated <br>Department</th>
+                                        <th>All asset related <br>details</th> 
                                         <th>Date</th>
                                         <th>Status<br>(i.e Shifted to parent depratment)</th>
                                         <th>Action</th>

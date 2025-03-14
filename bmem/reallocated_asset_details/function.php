@@ -110,7 +110,7 @@
 		}
 		
 		
-		$sql = "SELECT reloc_asset_detail.reloc_id, reloc_asset_detail.facility_id, reloc_asset_detail.from_dept_id, reloc_asset_detail.to_dept_id, reloc_asset_detail.asset_id, reloc_asset_detail.relocate_date_time, reloc_asset_detail.relocated_by, facility_master.facility_name, facility_master.facility_code, department_list.department_name FROM reloc_asset_detail JOIN facility_master ON reloc_asset_detail.facility_id = facility_master.facility_id JOIN department_list ON reloc_asset_detail.from_dept_id = department_list.department_id $where_condition ORDER BY reloc_asset_detail.reloc_id DESC LIMIT 0, 50";
+		$sql = "SELECT reloc_asset_detail.reloc_id, reloc_asset_detail.facility_id, reloc_asset_detail.from_dept_id, reloc_asset_detail.to_dept_id, reloc_asset_detail.asset_id, reloc_asset_detail.relocate_date_time, reloc_asset_detail.relocated_by, facility_master.facility_name, facility_master.facility_code, department_list.department_name, asset_details.equipment_name, asset_details.asset_code FROM reloc_asset_detail JOIN facility_master ON reloc_asset_detail.facility_id = facility_master.facility_id JOIN department_list ON reloc_asset_detail.from_dept_id = department_list.department_id JOIN asset_details ON reloc_asset_detail.asset_id = asset_details.asset_id $where_condition ORDER BY reloc_asset_detail.reloc_id DESC LIMIT 0, 50";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -124,7 +124,9 @@
 				$to_dept_id = $row['to_dept_id'];	
 				$facility_name = $row['facility_name'];	 		
 				$facility_code = $row['facility_code']; 		
-				$department_name = $row['department_name'];		
+				$department_name = $row['department_name'];			
+				$equipment_name = $row['equipment_name'];			
+				$asset_code = $row['asset_code'];		
 				$relocate_date_time = date('d-m-Y h:i A', strtotime($row['relocate_date_time']));
 
 				$sql1 = "SELECT department_name FROM department_list WHERE department_id = '" .$to_dept_id. "' ";
@@ -143,12 +145,13 @@
 				$data[0] = $slno; 
 				$data[1] = $facility_name;
 				$data[2] = $facility_code;
-				$data[3] = $department_name;
-				$data[4] = $to_department_name; 
-				$data[5] = $equipment_name;
-				$data[6] = $relocate_date_time;
-				$data[7] = 'Yes'; 
-				$data[8] = "<a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$reloc_id.")'></i></a>";
+				$data[3] = $equipment_name.' ('.$asset_code.')';
+				$data[4] = $department_name;
+				$data[5] = $to_department_name; 
+				$data[6] = $equipment_name;
+				$data[7] = $relocate_date_time;
+				$data[8] = 'Yes'; 
+				$data[9] = "<a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$reloc_id.")'></i></a>";
 				
 
 				array_push($mainData, $data);
