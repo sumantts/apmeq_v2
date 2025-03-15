@@ -183,7 +183,7 @@
 		if($facility_code != ''){
 			$where_condition .= " AND pms_info.facility_code = '" .$facility_code. "' ";
 		}
-		if($device_group != ''){
+		if($device_group > 0){
 			$where_condition .= " AND pms_info.device_group = '" .$device_group. "' ";
 		}
 		if($asset_class > 0){
@@ -237,23 +237,22 @@
 				$view_link = "<a href='pms_dashboard/pms_link.php?pms_info_id=$pms_info_id', target='_blank'>View Link</a>";
 
 				$data[0] = $slno; 
-				$data[1] = $facility_name;
-				$data[2] = $facility_code;
-				$data[3] = $department_name;
-				$data[4] = $device_name; 
-				$data[5] = $asset_class_text;
-				$data[6] = $equipment_name;
-				$data[7] = $equipment_make_model;
-				$data[8] = $equipment_sl_no;
-				$data[9] = $pms_due_date;
-				$data[10] = '-';
-				$data[11] = '-';
-				$data[12] = $supplied_by;
-				$data[13] = $service_provider_details;
-				$data[14] = $pms_planned_date;
-				$data[15] = '-';
-				$data[16] = $view_link;
-				$data[17] = 'Resolved'; 
+				$data[1] = $pms_info_id;
+				$data[2] = $facility_name;
+				$data[3] = $facility_code;
+				$data[4] = $department_name;
+				$data[5] = $device_name; 
+				$data[6] = $asset_class_text;
+				$data[7] = $equipment_name;
+				$data[8] = $equipment_make_model;
+				$data[9] = $equipment_sl_no;
+				$data[10] = $pms_due_date; 
+				$data[11] = $supplied_by;
+				$data[12] = $service_provider_details;
+				$data[13] = $pms_planned_date;
+				$data[14] = '-';
+				$data[15] = $view_link;
+				$data[16] = 'Resolved'; 
 				
 				//$data[8] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$author_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$author_id.")'></i></a>";
 				
@@ -396,7 +395,6 @@
 
 			$upd_sql = "UPDATE pms_info SET pms_info_id = '" .$pms_info_id. "' WHERE pms_id = '" .$pms_id. "' ";
 			$result_upd = $mysqli->query($upd_sql); 
-
 		}else{
 			$return_result['error_message'] = 'Data Insert Error';
 			$status = false;

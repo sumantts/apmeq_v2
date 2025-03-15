@@ -227,7 +227,7 @@ function initTicketCounter(){
 
 $(document).ready(function () {
     initTicketCounter();
-    configureDeviceGroupDropDown();
+    //configureDeviceGroupDropDown();
     configureFacilityDropDown();
     populateDataTable(); 
 });
