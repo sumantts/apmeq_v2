@@ -115,7 +115,7 @@
 		}
 		
 		
-		$sql = "SELECT reloc_asset_detail.reloc_id, reloc_asset_detail.facility_id, reloc_asset_detail.from_dept_id, reloc_asset_detail.to_dept_id, reloc_asset_detail.asset_id, reloc_asset_detail.relocate_date_time, reloc_asset_detail.relocated_by, facility_master.facility_name, facility_master.facility_code, department_list.department_name, asset_details.equipment_name, asset_details.asset_code, asset_details.reloc_initiated FROM reloc_asset_detail JOIN facility_master ON reloc_asset_detail.facility_id = facility_master.facility_id JOIN department_list ON reloc_asset_detail.from_dept_id = department_list.department_id JOIN asset_details ON reloc_asset_detail.asset_id = asset_details.asset_id $where_condition ORDER BY reloc_asset_detail.reloc_id DESC LIMIT 0, 50";
+		$sql = "SELECT reloc_asset_detail.reloc_id, reloc_asset_detail.facility_id, reloc_asset_detail.from_dept_id, reloc_asset_detail.to_dept_id, reloc_asset_detail.asset_id, reloc_asset_detail.relocate_date_time, reloc_asset_detail.relocated_by, reloc_asset_detail.sent_to_parent_dept, facility_master.facility_name, facility_master.facility_code, department_list.department_name, asset_details.equipment_name, asset_details.asset_code, asset_details.reloc_initiated FROM reloc_asset_detail JOIN facility_master ON reloc_asset_detail.facility_id = facility_master.facility_id JOIN department_list ON reloc_asset_detail.from_dept_id = department_list.department_id JOIN asset_details ON reloc_asset_detail.asset_id = asset_details.asset_id $where_condition ORDER BY reloc_asset_detail.reloc_id DESC LIMIT 0, 50";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -132,7 +132,8 @@
 				$department_name = $row['department_name'];			
 				$equipment_name = $row['equipment_name'];			
 				$asset_code = $row['asset_code'];					
-				$reloc_initiated = $row['reloc_initiated'];	
+				$reloc_initiated = $row['reloc_initiated'];					
+				$sent_to_parent_dept = $row['sent_to_parent_dept'];	
 				$relocate_date_time = date('d-m-Y h:i A', strtotime($row['relocate_date_time']));
 
 				$sql1 = "SELECT department_name FROM department_list WHERE department_id = '" .$to_dept_id. "' ";
@@ -151,13 +152,18 @@
 				
 				$dynamic_id = 'shift_stat_'.$reloc_id;
 				$shifted_text = '';
-				$shifted_text .= '<select name="'.$dynamic_id.'" id="'.$dynamic_id.'" onChange="updateShiftingStatus('.$reloc_id.','.$asset_id.')" class="form-control-sm">';
-				if($reloc_initiated == 1){
+				$disabled_text = '';
+				if($sent_to_parent_dept == 1){
+					$disabled_text = 'disabled';
+				}
+
+				$shifted_text .= '<select name="'.$dynamic_id.'" id="'.$dynamic_id.'" onChange="updateShiftingStatus('.$reloc_id.','.$asset_id.')" class="form-control-sm" '.$disabled_text.'>';
+				if($sent_to_parent_dept == 1){
 					$shifted_text .= '<option value="1" selected="selected">Yes</option>';
 				}else{
 					$shifted_text .= '<option value="1">Yes</option>';
 				}
-				if($reloc_initiated == 0){
+				if($sent_to_parent_dept == 0){
 					$shifted_text .= '<option value="0" selected="selected">No</option>';
 				}else{
 					$shifted_text .= '<option value="0">No</option>';
@@ -251,6 +257,9 @@
 
 		$sql = "UPDATE asset_details SET reloc_initiated = '" .$reloc_initiated. "' WHERE asset_id = '".$asset_id."'";
 		$result = $mysqli->query($sql); 
+
+		$sql_1 = "UPDATE reloc_asset_detail SET sent_to_parent_dept = '" .$reloc_initiated. "' WHERE reloc_id = '".$reloc_id."'";
+		$result_1 = $mysqli->query($sql_1); 
 
 		$return_result['status'] = $status; 
 		echo json_encode($return_result);

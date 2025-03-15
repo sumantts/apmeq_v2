@@ -389,19 +389,21 @@ function updateShiftingStatus($reloc_id, $asset_id){
     $reloc_initiated = $('#shift_stat_'+$reloc_id).val();
     console.log('reloc_id: ' + $reloc_id + ' reloc_initiated: ' + $reloc_initiated);
 
-    $.ajax({
-        method: "POST",
-        url: "reallocated_asset_details/function.php",
-        data: { fn: "updateRelocStatus", reloc_id: $reloc_id, reloc_initiated: $reloc_initiated, asset_id: $asset_id }
-    })
-    .done(function( res ) {
-        //console.log(res);
-        $res1 = JSON.parse(res);
-        if($res1.status == true){
-            alert('Status Updated Successfully');
-            populateDataTable_1();
-        }
-    }); //end ajax
+    if(confirm('Are you sure to change status?')){
+        $.ajax({
+            method: "POST",
+            url: "reallocated_asset_details/function.php",
+            data: { fn: "updateRelocStatus", reloc_id: $reloc_id, reloc_initiated: $reloc_initiated, asset_id: $asset_id }
+        })
+        .done(function( res ) {
+            //console.log(res);
+            $res1 = JSON.parse(res);
+            if($res1.status == true){
+                alert('Status Updated Successfully');
+                populateDataTable_1();
+            }
+        }); //end ajax
+    }
 }
 
 $(document).ready(function () {

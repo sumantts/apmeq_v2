@@ -218,9 +218,9 @@ include('common/head.php');
                                     </button>
                                 </div> 
 
-                                <div class="col-md-4 mt-4">
+                                <!-- <div class="col-md-4 mt-4">
                                     <button type="button" class="btn btn-primary mb-2 float-right" id="generateLink">Generate Link <i class="fa fa-external-link" aria-hidden="true"></i></button>
-                                </div> 
+                                </div>  -->
 
                             </div>
                         </form>
