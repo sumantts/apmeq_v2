@@ -28,6 +28,11 @@
 			$sql = "INSERT INTO reloc_asset_detail (facility_id, from_dept_id, to_dept_id, asset_id, relocate_date_time, relocated_by) VALUES ('" .$facility_id. "', '" .$from_dept_id. "', '" .$to_dept_id. "', '" .$asset_id. "', '" .$relocate_date_time. "', '" .$relocated_by. "')";
 			$result = $mysqli->query($sql);
 			$insert_id = $mysqli->insert_id;	
+
+			if($insert_id > 0){			
+				$sql_1 = "UPDATE asset_details SET reloc_initiated = '0' WHERE asset_id = '" .$asset_id. "' ";
+				$result_1 = $mysqli->query($sql_1);
+			}//end if
 		} catch (PDOException $e) {
 			die("Error occurred:" . $e->getMessage());
 		}
@@ -110,7 +115,7 @@
 		}
 		
 		
-		$sql = "SELECT reloc_asset_detail.reloc_id, reloc_asset_detail.facility_id, reloc_asset_detail.from_dept_id, reloc_asset_detail.to_dept_id, reloc_asset_detail.asset_id, reloc_asset_detail.relocate_date_time, reloc_asset_detail.relocated_by, facility_master.facility_name, facility_master.facility_code, department_list.department_name, asset_details.equipment_name, asset_details.asset_code FROM reloc_asset_detail JOIN facility_master ON reloc_asset_detail.facility_id = facility_master.facility_id JOIN department_list ON reloc_asset_detail.from_dept_id = department_list.department_id JOIN asset_details ON reloc_asset_detail.asset_id = asset_details.asset_id $where_condition ORDER BY reloc_asset_detail.reloc_id DESC LIMIT 0, 50";
+		$sql = "SELECT reloc_asset_detail.reloc_id, reloc_asset_detail.facility_id, reloc_asset_detail.from_dept_id, reloc_asset_detail.to_dept_id, reloc_asset_detail.asset_id, reloc_asset_detail.relocate_date_time, reloc_asset_detail.relocated_by, facility_master.facility_name, facility_master.facility_code, department_list.department_name, asset_details.equipment_name, asset_details.asset_code, asset_details.reloc_initiated FROM reloc_asset_detail JOIN facility_master ON reloc_asset_detail.facility_id = facility_master.facility_id JOIN department_list ON reloc_asset_detail.from_dept_id = department_list.department_id JOIN asset_details ON reloc_asset_detail.asset_id = asset_details.asset_id $where_condition ORDER BY reloc_asset_detail.reloc_id DESC LIMIT 0, 50";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -126,7 +131,8 @@
 				$facility_code = $row['facility_code']; 		
 				$department_name = $row['department_name'];			
 				$equipment_name = $row['equipment_name'];			
-				$asset_code = $row['asset_code'];		
+				$asset_code = $row['asset_code'];					
+				$reloc_initiated = $row['reloc_initiated'];	
 				$relocate_date_time = date('d-m-Y h:i A', strtotime($row['relocate_date_time']));
 
 				$sql1 = "SELECT department_name FROM department_list WHERE department_id = '" .$to_dept_id. "' ";
@@ -142,6 +148,22 @@
 					$equipment_name = $row2['equipment_name'];	
 				}
 
+				
+				$dynamic_id = 'shift_stat_'.$reloc_id;
+				$shifted_text = '';
+				$shifted_text .= '<select name="'.$dynamic_id.'" id="'.$dynamic_id.'" onChange="updateShiftingStatus('.$reloc_id.','.$asset_id.')" class="form-control-sm">';
+				if($reloc_initiated == 1){
+					$shifted_text .= '<option value="1" selected="selected">Yes</option>';
+				}else{
+					$shifted_text .= '<option value="1">Yes</option>';
+				}
+				if($reloc_initiated == 0){
+					$shifted_text .= '<option value="0" selected="selected">No</option>';
+				}else{
+					$shifted_text .= '<option value="0">No</option>';
+				}
+				$shifted_text .= '</select>';
+
 				$data[0] = $slno; 
 				$data[1] = $facility_name;
 				$data[2] = $facility_code;
@@ -150,7 +172,7 @@
 				$data[5] = $to_department_name; 
 				$data[6] = $equipment_name;
 				$data[7] = $relocate_date_time;
-				$data[8] = 'Yes'; 
+				$data[8] = $shifted_text; 
 				$data[9] = "<a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$reloc_id.")'></i></a>";
 				
 
@@ -160,19 +182,7 @@
 		} else {
 			$status = false;
 		}
-			
-			/*$slno = 1; 
-
-			$data[0] = $slno; 
-			$data[1] = 'Facility 1';
-			$data[2] = '-';
-			$data[3] = '-';
-			$data[4] = '-'; 
-			$data[5] = '-';
-			$data[6] = '-';
-			$data[7] = '-'; 
-			array_push($mainData, $data);*/
-
+		
 		$return_array['data'] = $mainData;
     	echo json_encode($return_array);
 	}//function end	
@@ -225,6 +235,21 @@
 		$status = true;	
 
 		$sql = "DELETE FROM reloc_asset_detail WHERE reloc_id = '".$reloc_id."'";
+		$result = $mysqli->query($sql); 
+
+		$return_result['status'] = $status; 
+		echo json_encode($return_result);
+	}//end function deleteItem
+
+	//Update function
+	if($fn == 'updateRelocStatus'){
+		$return_result = array();
+		$asset_id = $_POST["asset_id"];
+		$reloc_id = $_POST["reloc_id"];
+		$reloc_initiated = $_POST["reloc_initiated"];
+		$status = true;	
+
+		$sql = "UPDATE asset_details SET reloc_initiated = '" .$reloc_initiated. "' WHERE asset_id = '".$asset_id."'";
 		$result = $mysqli->query($sql); 
 
 		$return_result['status'] = $status; 
@@ -312,7 +337,7 @@
 		$mainData = array(); 
 		$facility_id = $_POST['facility_id'];
 
-		$sql = "SELECT * FROM asset_details WHERE facility_id = '" .$facility_id. "'";
+		$sql = "SELECT * FROM asset_details WHERE facility_id = '" .$facility_id. "' AND reloc_initiated = '1'";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {

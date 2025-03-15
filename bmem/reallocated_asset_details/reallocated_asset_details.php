@@ -157,7 +157,7 @@ include('common/head.php');
                                         <th>Reallocated <br>Department</th>
                                         <th>All asset related <br>details</th> 
                                         <th>Date</th>
-                                        <th>Status<br>(i.e Shifted to parent depratment)</th> 
+                                        <th>Status<br>(i.e Shifted to <br>parent depratment)</th> 
                                         <th>Action</th>
                                     </tr>
                                 </thead>
