@@ -59,7 +59,24 @@ function generatePMSLink($asset_id){
             alert($res1.error_message);
         }  
     });//end ajax
+}//end fun 
 
+function generateCalibLink($asset_id){
+    console.log('asset_id: ' + $asset_id);
+     
+    $.ajax({
+        method: "POST",
+        url: "asset_data/function.php",
+        data: { fn: "generateCalibLink", asset_id: $asset_id }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res);
+        if($res1.status == true){
+            window.open('calibration_dashboard/calib_link.php?calib_info_id='+$res1.calib_info_id, '_blank');
+        }else{
+            alert($res1.error_message);
+        }  
+    });//end ajax
 }//end fun
 
 $(document).ready(function () { 

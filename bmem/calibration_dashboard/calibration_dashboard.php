@@ -101,7 +101,7 @@ include('common/head.php');
                             <table id="example" class="table table-striped" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>No.</th> 
+                                        <th>No.</th>
                                         <th>Facility name/code</th>
                                         <th>Calibration due</th>
                                         <th>Calibration done</th>
@@ -243,7 +243,8 @@ include('common/head.php');
                             <table id="example_1" class="table table-striped" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>No.</th> 
+                                        <th>No.</th>  
+                                        <th>Calib. ID</th> 
                                         <th>Facility Name</th>
                                         <th>Facility Code</th>
                                         <th>Department</th>
@@ -264,7 +265,8 @@ include('common/head.php');
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>No.</th>
+                                        <th>No.</th> 
+                                        <th>Calib. ID</th> 
                                         <th>Facility Name</th>
                                         <th>Facility Code</th>
                                         <th>Department</th>

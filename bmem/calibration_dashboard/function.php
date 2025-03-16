@@ -24,7 +24,7 @@
 		$equipment_sl_no = $_POST['equipment_sl_no'];
 		$pms_due_date = $_POST['pms_due_date'];
 		$supplied_by = $_POST['supplied_by'];
-		$service_provider_details = '';//$_POST['service_provider_details'];
+		$service_provider_details = $_POST['service_provider_details'];
 		$pms_planned_date = $_POST['pms_planned_date'];
 		
 		try {
@@ -198,7 +198,7 @@
 			$where_condition .= " AND calib_info.pms_data_updated > '" .$from_date1. "' AND calib_info.pms_data_updated < '" .$to_date1. "' ";
 		}
 		
-		$sql = "SELECT calib_info.calib_id, calib_info.calib_info_id, calib_info.facility_id, calib_info.facility_code, calib_info.department_id, calib_info.device_group, calib_info.asset_class, calib_info.equipment_name, calib_info.equipment_make_model, calib_info.equipment_sl_no, calib_info.pms_due_date, calib_info.supplied_by, calib_info.service_provider_details, calib_info.pms_planned_date, facility_master.facility_name, department_list.department_name, device_group_list.device_name FROM calib_info JOIN facility_master ON calib_info.facility_id = facility_master.facility_id JOIN department_list ON calib_info.department_id = department_list.department_id JOIN device_group_list ON calib_info.device_group = device_group_list.device_group_id $where_condition ORDER BY calib_info.calib_id DESC LIMIT 0, 50";
+		$sql = "SELECT calib_info.calib_id, calib_info.calib_info_id, calib_info.asset_id, calib_info.facility_id, calib_info.facility_code, calib_info.department_id, calib_info.device_group, calib_info.asset_class, calib_info.equipment_name, calib_info.equipment_make_model, calib_info.equipment_sl_no, calib_info.pms_due_date, calib_info.supplied_by, calib_info.service_provider_details, calib_info.pms_planned_date, calib_info.calib_status, facility_master.facility_name, department_list.department_name, device_group_list.device_name FROM calib_info JOIN facility_master ON calib_info.facility_id = facility_master.facility_id JOIN department_list ON calib_info.department_id = department_list.department_id JOIN device_group_list ON calib_info.device_group = device_group_list.device_group_id $where_condition ORDER BY calib_info.calib_id DESC LIMIT 0, 50";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -206,12 +206,16 @@
 			$slno = 1;
 
 			while($row = $result->fetch_array()){
+				$calib_id = $row['calib_id'];
 				$calib_info_id = $row['calib_info_id'];
+				$asset_id = $row['asset_id'];
 				$facility_name = $row['facility_name'];	
 				$facility_code = $row['facility_code'];	
 				$department_name = $row['department_name'];	 	
 				$device_name = $row['device_name'];	 	
-				$asset_class = $row['asset_class'];	 
+				$asset_class = $row['asset_class'];	  	
+				$calib_status = $row['calib_status'];
+				
 				$asset_class_text = '';
 				if($asset_class == 1){
 					$asset_class_text = 'Critical';
@@ -236,22 +240,49 @@
 
 				$view_link = "<a href='calibration_dashboard/calib_link.php?calib_info_id=$calib_info_id', target='_blank'>View Link</a>";
 
+				# 0=WIP, 1=Resolved, 2=Closed
+				$dynamic_id = 'calib_id_'.$calib_id;
+				$updated_text = '';
+				$disabled_text = '';
+				if($calib_status == 1 || $calib_status == 2){
+					$disabled_text = 'disabled';
+				}
+
+				$updated_text .= '<select name="'.$dynamic_id.'" id="'.$dynamic_id.'" onChange="updateCalibStatus('.$calib_id.','.$asset_id.')" class="form-control-sm" '.$disabled_text.'>';
+				if($calib_status == 0){
+					$updated_text .= '<option value="0" selected="selected">Worrk In Progress</option>';
+				}else{
+					$updated_text .= '<option value="0">Worrk In Progress</option>';
+				}
+				if($calib_status == 1){
+					$updated_text .= '<option value="1" selected="selected">Resolved</option>';
+				}else{
+					$updated_text .= '<option value="1">Resolved</option>';
+				}
+				if($calib_status == 2){
+					$updated_text .= '<option value="2" selected="selected">Closed</option>';
+				}else{
+					$updated_text .= '<option value="2">Closed</option>';
+				}
+				$updated_text .= '</select>';
+
 				$data[0] = $slno; 
-				$data[1] = $facility_name;
-				$data[2] = $facility_code;
-				$data[3] = $department_name;
-				$data[4] = $device_name; 
-				$data[5] = $asset_class_text;
-				$data[6] = $equipment_name;
-				$data[7] = $equipment_make_model;
-				$data[8] = $equipment_sl_no;
-				$data[9] = $pms_due_date;
-				$data[10] = $supplied_by;
-				$data[11] = $service_provider_details;
-				$data[12] = $pms_planned_date;
-				$data[13] = '-';
-				$data[14] = $view_link;
-				$data[15] = 'Resolved'; 
+				$data[1] = $calib_info_id;
+				$data[2] = $facility_name;
+				$data[3] = $facility_code;
+				$data[4] = $department_name;
+				$data[5] = $device_name; 
+				$data[6] = $asset_class_text;
+				$data[7] = $equipment_name;
+				$data[8] = $equipment_make_model;
+				$data[9] = $equipment_sl_no;
+				$data[10] = $pms_due_date;
+				$data[11] = $supplied_by;
+				$data[12] = $service_provider_details;
+				$data[13] = $pms_planned_date;
+				$data[14] = '-';
+				$data[15] = $view_link;
+				$data[16] = $updated_text; 
 				
 				//$data[8] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$author_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$author_id.")'></i></a>";
 				
@@ -511,5 +542,25 @@
 		
 		echo json_encode($return_array);
 	}//function end	
+
+	//Update function
+	if($fn == 'updateCalibStatus'){
+		$return_result = array();
+		$calib_id = $_POST["calib_id"];
+		$calib_status = $_POST["calib_status"]; 
+		$asset_id = $_POST["asset_id"]; 
+
+		$status = true;	
+		$last_date_of_calibration = date('Y-m-d');
+
+		$sql = "UPDATE calib_info SET calib_status = '" .$calib_status. "' WHERE calib_id = '".$calib_id."'";
+		$mysqli->query($sql);  	
+
+		$sql_1 = "UPDATE asset_details SET last_date_of_calibration = '" .$last_date_of_calibration. "' WHERE asset_id = '".$asset_id."'";
+		$mysqli->query($sql_1);  
+
+		$return_result['status'] = $status; 
+		echo json_encode($return_result);
+	}//end function deleteItem
 
 ?>

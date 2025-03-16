@@ -226,6 +226,28 @@ function initTicketCounter(){
     });//end ajax 
 }
 
+
+function updateCalibStatus($calib_id, $asset_id){
+    $calib_status = $('#calib_id_'+$calib_id).val();
+    console.log('calib_id: ' + $calib_id + ' calib_status: ' + $calib_status);
+
+    if(confirm('Are you sure to change status?')){
+        $.ajax({
+            method: "POST",
+            url: "calibration_dashboard/function.php",
+            data: { fn: "updateCalibStatus", calib_id: $calib_id, calib_status: $calib_status, asset_id: $asset_id }
+        })
+        .done(function( res ) {
+            //console.log(res);
+            $res1 = JSON.parse(res);
+            if($res1.status == true){
+                alert('Status Updated Successfully');
+                populateDataTable_1();
+            }
+        }); //end ajax
+    }
+}
+
 $(document).ready(function () {
     initTicketCounter();
     configureDeviceGroupDropDown();

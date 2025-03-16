@@ -62,6 +62,7 @@
 
     </style>    
   </head>
+  <?php include('../assets/php/sql_conn.php'); ?>
   
   <body>
     <div class="container">
@@ -104,7 +105,7 @@
                 </div>
         
                 <div class="col-lg-8 contact-form__wrapper p-5 order-lg-1">
-                    <h4 class="text-center">Calibration Info</h4>
+                    <h4 class="text-center">Calibration Info #<?=$_GET['calib_info_id']?></h4>
                     <form action="#" method="POST" class="contact-form form-validate" id="myForm">
                         <div class="row">
                             <div class="col-sm-6 mb-1">
@@ -137,6 +138,22 @@
                                     <label for="device_group">Device group</label>
                                     <select class="form-control" name="device_group" id="device_group" required >
                                         <option value="">Select</option> 
+                                        <?php
+                                        echo $sql = "SELECT * FROM device_group_list WHERE device_status = 1 ORDER BY device_name ASC";
+                                        $result = $mysqli->query($sql);
+                                
+                                        if ($result->num_rows > 0) {
+                                            $status = true;
+                                            $slno = 1;
+                                            while($row = $result->fetch_array()){
+                                                $device_group_id = $row['device_group_id'];	
+                                                $device_name = $row['device_name'];	
+                                                ?>
+                                                <option value="<?=$device_group_id?>" ><?=$device_name?></option>
+                                                <?php
+                                            }
+                                        }
+                                        ?>
                                     </select>
                                 </div>
                             </div>
@@ -162,14 +179,14 @@
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
                                     <label for="equipment_make_model">Equipment Make/Model</label>
-                                    <input type="text" class="form-control" id="equipment_make_model" name="equipment_make_model" required >
+                                    <input type="text" class="form-control" id="equipment_make_model" name="equipment_make_model">
                                 </div>
                             </div>
         
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
                                     <label for="equipment_sl_no">Equipment sl no</label>
-                                    <input type="text" class="form-control" id="equipment_sl_no" name="equipment_sl_no" required >
+                                    <input type="text" class="form-control" id="equipment_sl_no" name="equipment_sl_no">
                                 </div>
                             </div>
         
@@ -193,13 +210,14 @@
                                     <input type="date" class="form-control" id="pms_planned_date" name="pms_planned_date">
                                 </div>
                             </div>
-        
-                            <!-- <div class="col-sm-12 mb-1">
+
+                            <div class="col-sm-12 mb-1">
                                 <div class="form-group">
                                     <label class="required-field" for="service_provider_details">Service Provider Details</label>
                                     <textarea class="form-control" id="service_provider_details" name="service_provider_details" rows="4" placeholder="Name, Email, Phone Number"> </textarea>
                                 </div>
                             </div>
+                            <!-- 
         
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
@@ -524,7 +542,7 @@
 
     $(document).ready(function () {
         configureFacilityDropDown(); 
-        configureDeviceGroupDropDown();
+        //configureDeviceGroupDropDown();
         loadFormdata();
 
         $user_id = window.localStorage.getItem('user_id');
