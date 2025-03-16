@@ -240,7 +240,7 @@
 		$link_generated_by = $_SESSION["user_id"];
 		$link_generate_time = date('Y-m-d H:i:s');
 		
-		$sql = "INSERT INTO pms_info (link_generated_by, link_generate_time) VALUES ('" .$link_generated_by. "', '" .$link_generate_time. "')";
+		$sql = "INSERT INTO pms_info (asset_id, link_generated_by, link_generate_time) VALUES ('" .$asset_id. "', '" .$link_generated_by. "', '" .$link_generate_time. "')";
 		$result = $mysqli->query($sql);
 		$pms_id = $mysqli->insert_id;
 
