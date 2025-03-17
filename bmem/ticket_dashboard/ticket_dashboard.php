@@ -371,6 +371,30 @@ include('common/head.php');
                                         <label for="resolved_date_time" >Resolved Date Time</label>
                                         <input type="date" class="form-control" id="resolved_date_time" value="" > 
                                     </div>
+                                    
+                                    <div class="col-md-64 mt-4">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <input type="file" id="multiupload" name="uploadFiledd[]" multiple accept=".jpg,.jpeg,.png" >
+                                                <span id="uploadMessage"></span>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <button type="button" id="startUpload" class="btn btn-primary btn-sm">Upload</button>
+                                            </div>
+                                        </div>
+                                    </div>                                    
+                                </div> 
+
+                                <div class="form-row"> 
+                                    <div class="col-md-12 mb-3">
+                                        <div class="text-center" id="product_gallery"> </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row"> 
+                                    <div class="col-md-12 mb-3">
+                                        <textarea class="form-control" name="engineer_coment" id="engineer_coment"></textarea>
+                                    </div>
                                 </div>
                             
                         </div>

@@ -10,6 +10,7 @@ $('#clearForm').on('click', function(){
     
     $('#filteredTicketDiv').removeClass('d-block');
     $('#filteredTicketDiv').addClass('d-none');
+    $('#engineer_coment').val('');
 })
 
 $("#partTwoSwitch").click(function(){
@@ -27,7 +28,7 @@ $('#myFormS').on('submit', function(){
     $ticket_class = $('#ticket_class').val();  
     $from_dt = $('#from_dt').val();  
     $to_dt = $('#to_dt').val();  
-    $warranty_sr = $('#warranty_sr').val(); 
+    $warranty_sr = $('#warranty_sr').val();
     
     if($facility_id_s > 0 || $department_id > 0 || $call_log_status > 0 || $token_id != '' || $day_wise > 0 || $device_group > 0 || $equipment_name != '' || $ticket_class >= 0 || $from_dt != '' || $to_dt != '' || $warranty_sr != ''){
         populateDataTable_1();
@@ -45,11 +46,12 @@ $('#myFormM').on('submit', function(){
     $call_log_statusM = $('#call_log_statusM').val();
     $resolved_date_time = $('#resolved_date_time').val(); 
     $call_log_id = $('#call_log_id').val(); 
+    $engineer_coment = $('#engineer_coment').val();
     
     $.ajax({
         method: "POST",
         url: "ticket_dashboard/function.php",
-        data: { fn: "updateTicketInfo", assign_to: $assign_to, eng_contact_no: $eng_contact_no, call_log_statusM: $call_log_statusM, resolved_date_time: $resolved_date_time, call_log_id: $call_log_id }
+        data: { fn: "updateTicketInfo", assign_to: $assign_to, eng_contact_no: $eng_contact_no, call_log_statusM: $call_log_statusM, resolved_date_time: $resolved_date_time, call_log_id: $call_log_id, engineer_coment: $engineer_coment }
     })
     .done(function( res ) {
         //console.log(res);
@@ -73,11 +75,13 @@ function editTableData($call_log_id){
         //console.log(res);
         $res1 = JSON.parse(res);
         if($res1.status == true){
-            $('#call_log_id').val($call_log_id);  
+            $('#call_log_id').val($call_log_id); 
+            getAllProductImages($call_log_id) 
             $('#assign_to').val($res1.assign_to).trigger('change');
             $('#eng_contact_no').val($res1.eng_contact_no);
             $('#call_log_statusM').val($res1.call_log_status).trigger('change');
             $('#resolved_date_time').val($res1.resolved_date_time); 
+            $('#engineer_coment').val($res1.engineer_coment); 
             $html = '';
             $html += '<div><strong>Issue Description: </strong>'+$res1.issue_description+'</div>';
             $('#ticket_data').html($html);
@@ -297,6 +301,109 @@ function initTicketCounter(){
         }        
     });//end ajax 
 }
+
+//Multiple Photo Upload 
+function uploadajax(ttl,cl){
+    $call_log_id = $('#call_log_id').val();
+    var fileList = $('#multiupload').prop("files"); 
+    var form_data =  "";
+    form_data = new FormData();
+    form_data.append("upload_image", fileList[cl]);
+    form_data.append("call_log_id", $call_log_id);
+
+    var request = $.ajax({
+        url: "ticket_dashboard/upload.php",
+        cache: false,
+        contentType: false,
+        processData: false,
+        async: true,
+        data: form_data,
+        type: 'POST', 
+        success: function (res, status) {
+            console.log('return data: '+res + ' status: ' + status);
+            $res1 = JSON.parse(res);
+            if ($res1.status == true) {
+                $upload_count++;
+                percent = 0; 
+                if (cl < ttl) {
+                    uploadajax(ttl, cl + 1);
+                } else {
+                    console.log('Done');
+                    $('#uploadMessage').html($upload_count + ' Files Uploaded');
+                    getAllProductImages($call_log_id);
+                }
+            }
+        },
+        fail: function (res) {
+            console.log('Failed');
+        }    
+    })
+}
+
+$('#startUpload').on('click', function(){
+    console.log('upload start...');    
+    $call_log_id = $('#call_log_id').val();
+    $upload_count = 0;
+    if($call_log_id > 0){
+        $('#uploadMessage').html('');
+        var fileList = $('#multiupload').prop("files"); 
+        var i;
+        for ( i = 0; i < fileList.length; i++) { 
+            if(i == fileList.length-1){
+                uploadajax(fileList.length-1,0);
+            }
+        }
+    }else{
+        alert('Please enter procust name first');
+    }//end if
+}); 
+
+function getAllProductImages(pmsinfoid){
+    $('#product_gallery').html('');
+    $.ajax({
+        method: "POST",
+        url: "ticket_dashboard/function.php",
+        data: { fn: "getAllProductImages", call_log_id: pmsinfoid }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res);
+        //console.log(JSON.stringify($res1));
+        if($res1.status == true){
+            $all_images = $res1.all_images;
+
+            if($all_images.length > 0){ 
+                $html = "";
+                console.log('all_images length: '+$all_images.length);
+                for($i in $all_images ){
+                    $html += '<img src="./ticket_dashboard/photos/'+$all_images[$i]+'" width="75" class="img-fluid img-thumbnail" alt="..."><a href="javascript: void(0)"> <i class="fa fa-trash" aria-hidden="true" onclick="deleteProdImage(\''+$all_images[$i]+'\')"></i></a>'; 
+                }//end for
+                
+                $('#product_gallery').html($html);
+            }//end if
+        } //end if       
+    });//end ajax
+
+}//end if
+
+function deleteProdImage($prod_iamge_name){
+    console.log('prod_iamge_name: ' + $prod_iamge_name);
+    if (confirm('Are you sure to delete the Image?')) {
+        $call_log_id = $('#call_log_id').val();
+        $.ajax({
+            method: "POST",
+            url: "ticket_dashboard/function.php",
+            data: { fn: "deleteProdImage", call_log_id: $call_log_id, prod_iamge_name: $prod_iamge_name }
+        })
+        .done(function( res ) {
+            //console.log(res);
+            $res1 = JSON.parse(res);
+            if($res1.status == true){
+                getAllProductImages($call_log_id);
+            }
+        });//end ajax
+    }		
+}//end fun
+//End multiple pgoto upload
 
 $(document).ready(function () {
     initTicketCounter();

@@ -229,7 +229,7 @@
 			}			
 		}	
 		
-		$sql = "SELECT call_log_register.call_log_id, call_log_register.token_id, call_log_register.issue_description, call_log_register.call_log_date_time, call_log_register.resolved_date_time, call_log_register.ticket_raiser_contact, call_log_register.assign_to, call_log_register.call_log_status, call_log_register.eng_contact_no, asset_details.equipment_name, asset_details.department_id, asset_details.asset_supplied_by, asset_details.sp_details, asset_details.warranty_last_date, facility_master.facility_code, facility_master.facility_name FROM call_log_register JOIN asset_details ON call_log_register.asset_code = asset_details.asset_code JOIN facility_master ON call_log_register.facility_id = facility_master.facility_id $where_condition ORDER BY call_log_register.call_log_id DESC LIMIT 0, 50";
+		$sql = "SELECT call_log_register.call_log_id, call_log_register.token_id, call_log_register.issue_description, call_log_register.call_log_date_time, call_log_register.resolved_date_time, call_log_register.ticket_raiser_contact, call_log_register.assign_to, call_log_register.call_log_status, call_log_register.eng_contact_no, call_log_register.engineer_coment, asset_details.equipment_name, asset_details.department_id, asset_details.asset_supplied_by, asset_details.sp_details, asset_details.warranty_last_date, facility_master.facility_code, facility_master.facility_name FROM call_log_register JOIN asset_details ON call_log_register.asset_code = asset_details.asset_code JOIN facility_master ON call_log_register.facility_id = facility_master.facility_id $where_condition ORDER BY call_log_register.call_log_id DESC LIMIT 0, 50";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -244,7 +244,8 @@
 				$facility_code = $row['facility_code'];					
 				$facility_name = $row['facility_name'];					
 				$department_id = $row['department_id'];					
-				$asset_supplied_by = $row['asset_supplied_by'];				
+				$asset_supplied_by = $row['asset_supplied_by'];						
+				$engineer_coment = $row['engineer_coment'];				
 				$sp_details = $row['sp_details'];					
 				$call_log_date_time = date('d-F-Y h:i A', strtotime($row['call_log_date_time']));	
 				$resolved_date_time = '';
@@ -375,7 +376,7 @@
 
 		$where_condition = "WHERE call_log_register.call_log_id = '" .$call_log_id. "' ";
 		
-		$sql = "SELECT call_log_register.call_log_id, call_log_register.token_id, call_log_register.issue_description, call_log_register.call_log_date_time, call_log_register.resolved_date_time, call_log_register.ticket_raiser_contact, call_log_register.assign_to, call_log_register.call_log_status, call_log_register.eng_contact_no, asset_details.equipment_name, asset_details.department_id, asset_details.asset_supplied_by, asset_details.sp_details, facility_master.facility_code, facility_master.facility_name FROM call_log_register JOIN asset_details ON call_log_register.asset_code = asset_details.asset_code JOIN facility_master ON call_log_register.facility_id = facility_master.facility_id $where_condition";
+		$sql = "SELECT call_log_register.call_log_id, call_log_register.token_id, call_log_register.issue_description, call_log_register.call_log_date_time, call_log_register.resolved_date_time, call_log_register.ticket_raiser_contact, call_log_register.assign_to, call_log_register.call_log_status, call_log_register.eng_contact_no, call_log_register.engineer_coment, asset_details.equipment_name, asset_details.department_id, asset_details.asset_supplied_by, asset_details.sp_details, facility_master.facility_code, facility_master.facility_name FROM call_log_register JOIN asset_details ON call_log_register.asset_code = asset_details.asset_code JOIN facility_master ON call_log_register.facility_id = facility_master.facility_id $where_condition";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -389,7 +390,9 @@
 				$facility_code = $row['facility_code'];					
 				$facility_name = $row['facility_name'];					
 				$department_id = $row['department_id'];					
-				$asset_supplied_by = $row['asset_supplied_by'];				
+				$asset_supplied_by = $row['asset_supplied_by'];					
+				$engineer_coment = $row['engineer_coment'];	
+							
 				$sp_details = $row['sp_details'];					
 				$call_log_date_time = date('d-F-Y h:i A', strtotime($row['call_log_date_time']));	
 				$resolved_date_time = '';
@@ -460,6 +463,7 @@
 				$return_array['call_log_status'] = $call_log_status;
 				$return_array['call_log_status_text'] = $call_log_status_text;	
 				$return_array['eng_contact_no'] = $eng_contact_no;				
+				$return_array['engineer_coment'] = $engineer_coment;			
 			}
 		} else {
 			$status = false;
@@ -493,8 +497,9 @@
 		$call_log_statusM = $_POST['call_log_statusM'];
 		$resolved_date_time = $_POST['resolved_date_time'].' '.date('H:i:s'); 
 		$call_log_id = $_POST['call_log_id']; 
+		$engineer_coment = $_POST['engineer_coment']; 
 
-		$sql = "UPDATE call_log_register SET assign_to = '" .$assign_to. "', eng_contact_no = '" .$eng_contact_no. "', call_log_status = '" .$call_log_statusM. "', resolved_date_time = '" .$resolved_date_time. "' WHERE call_log_id = '" .$call_log_id. "' ";
+		$sql = "UPDATE call_log_register SET assign_to = '" .$assign_to. "', eng_contact_no = '" .$eng_contact_no. "', call_log_status = '" .$call_log_statusM. "', resolved_date_time = '" .$resolved_date_time. "', engineer_coment = '" .$engineer_coment. "' WHERE call_log_id = '" .$call_log_id. "' ";
 		$result = $mysqli->query($sql);
 
 		$return_array['status'] = $status;
@@ -530,5 +535,78 @@
 		
 		echo json_encode($return_array);
 	}//function end	
+
+	//Get Product Images
+	if($fn == 'getAllProductImages'){
+		$return_array = array();
+		$status = true;
+		$all_images = array();
+		$call_log_id = $_POST["call_log_id"];
+
+		$sql = "SELECT uploaded_report FROM call_log_register WHERE call_log_id = '".$call_log_id."'";
+		$result = $mysqli->query($sql);
+
+		if ($result->num_rows > 0) {
+			$slno = 1;
+			while($row = $result->fetch_array()){
+				$all_images_en = $row['uploaded_report']; 
+				if($all_images_en != ''){
+					$status = true;
+					$all_images = json_decode($all_images_en);
+				}
+			}
+		} else {
+			$status = false;
+		}
+		//$mysqli->close();
+
+		$return_array['status'] = $status;
+		$return_array['all_images'] = $all_images;
+    	echo json_encode($return_array);
+	}//function end		
+
+	//Delete Single Image
+	if($fn == 'deleteProdImage'){
+		$return_result = array();
+		$all_images = array();
+		$all_images_temp = array();
+		$status = true;
+		$call_log_id = $_POST["call_log_id"];
+		$prod_iamge_name = $_POST["prod_iamge_name"];
+
+		//Unlink product image
+		$sql = "SELECT uploaded_report FROM call_log_register WHERE call_log_id = '".$call_log_id."'";
+		$result = $mysqli->query($sql);
+
+		if ($result->num_rows > 0) {
+			$slno = 1;
+			while($row = $result->fetch_array()){
+				$all_images_en = $row['uploaded_report']; 
+				if($all_images_en != ''){
+					$status = true;
+					$all_images = json_decode($all_images_en);
+					if(sizeof($all_images) > 0){
+						for($i = 0; $i < sizeof($all_images); $i++){
+							if($all_images[$i] == $prod_iamge_name){
+								$file_path = ''.$all_images[$i];
+								unlink('photos/'.$file_path);
+							}
+							if($all_images[$i] != $prod_iamge_name){
+								array_push($all_images_temp, $all_images[$i]); 
+							}
+						}//end for
+						$all_images_en = json_encode($all_images_temp);
+					}//end if
+				}//end if
+			}//end while
+		} //end if
+
+		$sql = "UPDATE call_log_register SET uploaded_report = '" .$all_images_en. "' WHERE call_log_id = '".$call_log_id."'";
+		$mysqli->query($sql);
+
+		$return_result['status'] = $status;
+		//sleep(1);
+		echo json_encode($return_result);
+	}//end function deleteItem
 
 ?>
