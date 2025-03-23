@@ -181,8 +181,15 @@
         
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
-                                    <label for="equipment_make_model">Equipment Make/Model</label>
-                                    <input type="text" class="form-control" id="equipment_make_model" name="equipment_make_model">
+                                    <label for="equipment_make">Equipment Make/Model</label>
+                                    <input type="text" class="form-control" id="equipment_make" name="equipment_make">
+                                </div>
+                            </div>
+        
+                            <div class="col-sm-6 mb-1">
+                                <div class="form-group">
+                                    <label for="equipment_model">Equipment Make/Model</label>
+                                    <input type="text" class="form-control" id="equipment_model" name="equipment_model">
                                 </div>
                             </div>
         
@@ -275,7 +282,8 @@
             $device_group = $('#device_group').val();
             $asset_class = $('#asset_class').val();
             $equipment_name = $('#equipment_name').val();
-            $equipment_make_model = $('#equipment_make_model').val();
+            $equipment_make = $('#equipment_make').val();
+            $equipment_model = $('#equipment_model').val();
             $equipment_sl_no = $('#equipment_sl_no').val();
             $pms_due_date = $('#pms_due_date').val();
             $supplied_by = $('#supplied_by').val();
@@ -285,7 +293,7 @@
             $.ajax({
                 method: "POST",
                 url: "../pms_dashboard/function.php",
-                data: { fn: "updateGeneratedFormdata", pms_info_id: $pms_info_id, facility_id: $facility_id, facility_code: $facility_code, department_id: $department_id, device_group: $device_group, asset_class: $asset_class, equipment_name: $equipment_name, equipment_make_model: $equipment_make_model, equipment_sl_no: $equipment_sl_no, pms_due_date: $pms_due_date, supplied_by: $supplied_by, service_provider_details: $service_provider_details, pms_planned_date: $pms_planned_date }
+                data: { fn: "updateGeneratedFormdata", pms_info_id: $pms_info_id, facility_id: $facility_id, facility_code: $facility_code, department_id: $department_id, device_group: $device_group, asset_class: $asset_class, equipment_name: $equipment_name, equipment_make: $equipment_make, equipment_model: $equipment_model, equipment_sl_no: $equipment_sl_no, pms_due_date: $pms_due_date, supplied_by: $supplied_by, service_provider_details: $service_provider_details, pms_planned_date: $pms_planned_date }
             })
             .done(function( res ) {
                 $res1 = JSON.parse(res); 
@@ -426,7 +434,8 @@
                 $('#device_group').val($res1.device_group).trigger('change');            
                 $('#asset_class').val($res1.asset_class).trigger('change');
                 $('#equipment_name').val($res1.equipment_name);  
-                $('#equipment_make_model').val($res1.equipment_make_model);
+                $('#equipment_make').val($res1.equipment_make); 
+                $('#equipment_model').val($res1.equipment_model);
                 $('#equipment_sl_no').val($res1.equipment_sl_no);  
                 $('#pms_due_date').val($res1.pms_due_date);  
                 $('#supplied_by').val($res1.supplied_by);  
@@ -557,7 +566,8 @@
             $('#device_group').prop('disabled', true);             
             $('#asset_class').prop('disabled', true); 
             $('#equipment_name').prop('readonly', true);  
-            $('#equipment_make_model').prop('readonly', true);
+            $('#equipment_make').prop('readonly', true); 
+            $('#equipment_model').prop('readonly', true);
             $('#equipment_sl_no').prop('readonly', true);  
             $('#pms_due_date').prop('readonly', true);   
             $('#supplied_by').prop('readonly', true);    

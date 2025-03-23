@@ -20,7 +20,8 @@
 		$device_group = $_POST['device_group'];
 		$asset_class = $_POST['asset_class'];
 		$equipment_name = $_POST['equipment_name'];
-		$equipment_make_model = $_POST['equipment_make_model'];
+		$equipment_make = $_POST['equipment_make'];
+		$equipment_model = $_POST['equipment_model'];
 		$equipment_sl_no = $_POST['equipment_sl_no'];
 		$pms_due_date = $_POST['pms_due_date'];
 		$supplied_by = $_POST['supplied_by'];
@@ -32,7 +33,7 @@
 				$status = true;
 				$pms_data_updated = date('Y-m-d H:i:s');
 				$row_status = 2;
-				$sql = "UPDATE pms_info SET facility_id = '" .$facility_id. "', facility_code = '" .$facility_code. "', department_id = '" .$department_id. "', device_group = '" .$device_group. "', asset_class = '" .$asset_class. "', equipment_name = '" .$equipment_name. "', equipment_make_model = '" .$equipment_make_model. "', equipment_sl_no = '" .$equipment_sl_no. "', pms_due_date = '" .$pms_due_date. "', supplied_by = '" .$supplied_by. "', service_provider_details = '" .$service_provider_details. "', pms_planned_date = '" .$pms_planned_date. "', facility_code = '" .$facility_code. "', pms_data_updated = '" .$pms_data_updated. "', row_status = '" .$row_status. "' WHERE pms_info_id = '" .$pms_info_id. "' ";
+				$sql = "UPDATE pms_info SET facility_id = '" .$facility_id. "', facility_code = '" .$facility_code. "', department_id = '" .$department_id. "', device_group = '" .$device_group. "', asset_class = '" .$asset_class. "', equipment_name = '" .$equipment_name. "', equipment_make = '" .$equipment_make. "', equipment_model = '" .$equipment_model. "', equipment_sl_no = '" .$equipment_sl_no. "', pms_due_date = '" .$pms_due_date. "', supplied_by = '" .$supplied_by. "', service_provider_details = '" .$service_provider_details. "', pms_planned_date = '" .$pms_planned_date. "', facility_code = '" .$facility_code. "', pms_data_updated = '" .$pms_data_updated. "', row_status = '" .$row_status. "' WHERE pms_info_id = '" .$pms_info_id. "' ";
 				$result = $mysqli->query($sql);
 			}	
 		} catch (PDOException $e) {
@@ -198,7 +199,7 @@
 			$where_condition .= " AND pms_info.pms_data_updated > '" .$from_date1. "' AND pms_info.pms_data_updated < '" .$to_date1. "' ";
 		}
 		
-		$sql = "SELECT pms_info.pms_id, pms_info.asset_id, pms_info.pms_info_id, pms_info.facility_id, pms_info.facility_code, pms_info.department_id, pms_info.device_group, pms_info.asset_class, pms_info.equipment_name, pms_info.equipment_make_model, pms_info.equipment_sl_no, pms_info.pms_due_date, pms_info.supplied_by, pms_info.service_provider_details, pms_info.pms_planned_date,pms_info.pms_status, facility_master.facility_name, department_list.department_name, device_group_list.device_name FROM pms_info JOIN facility_master ON pms_info.facility_id = facility_master.facility_id JOIN department_list ON pms_info.department_id = department_list.department_id JOIN device_group_list ON pms_info.device_group = device_group_list.device_group_id $where_condition ORDER BY pms_info.pms_id DESC LIMIT 0, 50";
+		$sql = "SELECT pms_info.pms_id, pms_info.asset_id, pms_info.pms_info_id, pms_info.facility_id, pms_info.facility_code, pms_info.department_id, pms_info.device_group, pms_info.asset_class, pms_info.equipment_name, pms_info.equipment_make,pms_info.equipment_model, pms_info.equipment_sl_no, pms_info.pms_due_date, pms_info.supplied_by, pms_info.service_provider_details, pms_info.pms_planned_date,pms_info.pms_status, facility_master.facility_name, department_list.department_name, device_group_list.device_name FROM pms_info JOIN facility_master ON pms_info.facility_id = facility_master.facility_id JOIN department_list ON pms_info.department_id = department_list.department_id JOIN device_group_list ON pms_info.device_group = device_group_list.device_group_id $where_condition ORDER BY pms_info.pms_id DESC LIMIT 0, 50";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -223,7 +224,8 @@
 					$asset_class_text = 'Non Critical';
 				}else{} 	
 				$equipment_name = $row['equipment_name'];	
-				$equipment_make_model = $row['equipment_make_model'];	
+				$equipment_make = $row['equipment_make'];		
+				$equipment_model = $row['equipment_model'];
 				$equipment_sl_no = $row['equipment_sl_no'];	
 				if($row['pms_due_date'] != '0000-00-00'){
 					$pms_due_date = date('d-m-Y', strtotime($row['pms_due_date']));
@@ -274,15 +276,16 @@
 				$data[5] = $device_name; 
 				$data[6] = $asset_class_text;
 				$data[7] = $equipment_name;
-				$data[8] = $equipment_make_model;
-				$data[9] = $equipment_sl_no;
-				$data[10] = $pms_due_date; 
-				$data[11] = $supplied_by;
-				$data[12] = $service_provider_details;
-				$data[13] = $pms_planned_date;
-				$data[14] = '-';
-				$data[15] = $view_link;
-				$data[16] = $updated_text; 
+				$data[8] = $equipment_make;
+				$data[9] = $equipment_model;
+				$data[10] = $equipment_sl_no;
+				$data[11] = $pms_due_date; 
+				$data[12] = $supplied_by;
+				$data[13] = $service_provider_details;
+				$data[14] = $pms_planned_date;
+				$data[15] = '-';
+				$data[16] = $view_link;
+				$data[17] = $updated_text; 
 				
 				//$data[8] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$author_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$author_id.")'></i></a>";
 				
@@ -360,7 +363,8 @@
 			$device_group = $row['device_group'];
 			$asset_class = $row['asset_class'];
 			$equipment_name = $row['equipment_name'];
-			$equipment_make_model = $row['equipment_make_model'];
+			$equipment_make = $row['equipment_make'];
+			$equipment_model = $row['equipment_model'];
 			$equipment_sl_no = $row['equipment_sl_no'];
 			$pms_due_date = $row['pms_due_date'];
 			$supplied_by = $row['supplied_by'];
@@ -377,7 +381,8 @@
 		$return_array['device_group'] = $device_group;
 		$return_array['asset_class'] = $asset_class;
 		$return_array['equipment_name'] = $equipment_name;
-		$return_array['equipment_make_model'] = $equipment_make_model;		
+		$return_array['equipment_make'] = $equipment_make;	
+		$return_array['equipment_model'] = $equipment_model;	
 		$return_array['equipment_sl_no'] = $equipment_sl_no;
 		$return_array['pms_due_date'] = $pms_due_date;
 		$return_array['supplied_by'] = $supplied_by;
@@ -434,9 +439,7 @@
 		$return_result['status'] = $status; 
 		$return_result['pms_info_id'] = $pms_info_id; 
 		echo json_encode($return_result);
-	}//end function deleteItem
-	
-	//pms_id, pms_info_id, facility_id, facility_code, department_id, device_group, asset_class, equipment_name, equipment_make_model, equipment_sl_no, pms_due_date, supplied_by, service_provider_details, pms_planned_date, pms_report_attached, link_generated_by, link_generate_time
+	}//end function deleteItem 
 
 	
 

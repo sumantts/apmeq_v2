@@ -251,7 +251,8 @@ include('common/head.php');
                                         <th>Device Group</th>
                                         <th>Asset Class</th> 
                                         <th>Equpment Name</th>
-                                        <th>Equipment Make/Model</th>
+                                        <th>Equipment Make</th>
+                                        <th>Equipment Model</th>
                                         <th>Equipment sl no</th>
                                         <th>Last PMS Done</th>  
                                         <th>Supplied by</th>
@@ -273,7 +274,8 @@ include('common/head.php');
                                         <th>Device Group</th>
                                         <th>Asset Class</th> 
                                         <th>Equpment Name</th>
-                                        <th>Equipment Make/Model</th>
+                                        <th>Equipment Make</th>
+                                        <th>Equipment Model</th>
                                         <th>Equipment sl no</th>
                                         <th>Last PMS Done</th>  
                                         <th>Supplied by</th>
