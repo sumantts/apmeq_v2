@@ -306,8 +306,10 @@ if(isset($_POST["importSubmit"])){
                                     <tr>
                                         <th>Sl.No.</th> 
                                         <th>Facility name</th>
+                                        <th>Facility Code</th>
                                         <th>Department</th>
-                                        <th>Equipment name</th>
+                                        <th>Equipment/Asset name</th>
+                                        <th>Asset Code</th>
                                         <th>Make</th>
                                         <th>Model</th>
                                         <th>Slerial number</th>
@@ -324,8 +326,10 @@ if(isset($_POST["importSubmit"])){
                                     <tr>
                                         <th>Sl.No.</th> 
                                         <th>Facility name</th>
+                                        <th>Facility Code</th>
                                         <th>Department</th>
-                                        <th>Equipment name</th>
+                                        <th>Equipment/Asset name</th>
+                                        <th>Asset Code</th>
                                         <th>Make</th>
                                         <th>Model</th>
                                         <th>Slerial number</th>

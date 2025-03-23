@@ -129,7 +129,7 @@
 		}
 
 
-		$sql = "SELECT asset_details.asset_id, asset_details.facility_id, asset_details.department_id, asset_details.equipment_name, asset_details.asset_make, asset_details.asset_model, asset_details.slerial_number, asset_details.asset_specifiaction, asset_details.date_of_installation, asset_details.ins_certificate, asset_details.asset_supplied_by, asset_details.value_of_the_asset, asset_details.total_year_in_service, asset_details.technology, asset_details.asset_status, asset_details.asset_class, asset_details.device_group, asset_details.last_date_of_calibration, asset_details.calibration_attachment, asset_details.frequency_of_calibration, asset_details.last_date_of_pms, asset_details.pms_attachment, asset_details.frequency_of_pms, asset_details.qa_due_date, asset_details.qa_attachment, asset_details.warranty_last_date, asset_details.amc_yes_no, asset_details.amc_last_date, asset_details.cmc_yes_no, asset_details.cmc_last_date, asset_details.asset_code, asset_details.sp_details, asset_details.row_status, facility_master.facility_name FROM asset_details JOIN facility_master ON asset_details.facility_id = facility_master.facility_id $condition ORDER BY asset_details.asset_id DESC";
+		$sql = "SELECT asset_details.asset_id, asset_details.facility_id, asset_details.department_id, asset_details.equipment_name, asset_details.asset_make, asset_details.asset_model, asset_details.slerial_number, asset_details.asset_specifiaction, asset_details.date_of_installation, asset_details.ins_certificate, asset_details.asset_supplied_by, asset_details.value_of_the_asset, asset_details.total_year_in_service, asset_details.technology, asset_details.asset_status, asset_details.asset_class, asset_details.device_group, asset_details.last_date_of_calibration, asset_details.calibration_attachment, asset_details.frequency_of_calibration, asset_details.last_date_of_pms, asset_details.pms_attachment, asset_details.frequency_of_pms, asset_details.qa_due_date, asset_details.qa_attachment, asset_details.warranty_last_date, asset_details.amc_yes_no, asset_details.amc_last_date, asset_details.cmc_yes_no, asset_details.cmc_last_date, asset_details.asset_code, asset_details.sp_details, asset_details.row_status, facility_master.facility_name, facility_master.facility_code FROM asset_details JOIN facility_master ON asset_details.facility_id = facility_master.facility_id $condition ORDER BY asset_details.asset_id DESC";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -156,6 +156,8 @@
 				$asset_status = $row['asset_status'];
 				$asset_class = $row['asset_class'];
 				$warranty_last_date = $row['warranty_last_date'];
+				$asset_code = $row['asset_code'];
+				$facility_code = $row['facility_code'];
 
 				//get all depertment name	
 				$dept_names = '';	
@@ -174,30 +176,32 @@
 						$dept_names .= $row_get['department_name'].', ';	
 					}
 				} 				
-				$dept_names = rtrim($dept_names, ", ");
+				$dept_names = rtrim($dept_names, ", "); 
 
 				$data[0] = $slno; 
 				$data[1] = $facility_name;
-				$data[2] = $dept_names;
-				$data[3] = $equipment_name;
-				$data[4] = $asset_make; 
-				$data[5] = $asset_model;
-				$data[6] = $slerial_number;
-				$data[7] = $asset_specifiaction;
+				$data[2] = $facility_code;
+				$data[3] = $dept_names;
+				$data[4] = $equipment_name;
+				$data[5] = $asset_code;
+				$data[6] = $asset_make; 
+				$data[7] = $asset_model;
+				$data[8] = $slerial_number;
+				$data[9] = $asset_specifiaction;
 				if($date_of_installation != '0000-00-00'){
-					$data[8] = date('d-F-Y', strtotime($date_of_installation));
+					$data[10] = date('d-F-Y', strtotime($date_of_installation));
 				}else{
-					$data[8] = '';
+					$data[10] = '';
 				}
-				$data[9] = $asset_supplied_by;
-				$data[10] = $value_of_the_asset;
-				$data[11] = $total_year_in_service;				
+				$data[11] = $asset_supplied_by;
+				$data[12] = $value_of_the_asset;
+				$data[13] = $total_year_in_service;				
 				if($warranty_last_date != '0000-00-00'){
-					$data[12] = date('d-F-Y', strtotime($warranty_last_date));
+					$data[14] = date('d-F-Y', strtotime($warranty_last_date));
 				}else{
-					$data[12] = '';
+					$data[14] = '';
 				}
-				$data[13] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$asset_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$asset_id.")'></i></a>";
+				$data[15] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$asset_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$asset_id.")'></i></a>";
 
 				array_push($mainData, $data);
 				$slno++;

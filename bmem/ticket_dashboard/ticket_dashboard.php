@@ -372,7 +372,7 @@ include('common/head.php');
                                         <input type="date" class="form-control" id="resolved_date_time" value="" > 
                                     </div>
                                     
-                                    <div class="col-md-64 mt-4">
+                                    <div class="col-md-6 mt-4">
                                         <div class="row">
                                             <div class="col-md-8">
                                                 <input type="file" id="multiupload" name="uploadFiledd[]" multiple accept=".jpg,.jpeg,.png" >

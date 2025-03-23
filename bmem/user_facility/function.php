@@ -275,7 +275,7 @@
 				$data[6] =  $nabh_accrediated_text;
 				$data[7] =  $nabl_accrediated_text;
 				$data[8] =  $dept_names;
-				$data[9] = "<a href='javascript: void(0)'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$facility_id.")'></i></a>";
+				$data[9] = "<a href='javascript: void(0)'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$facility_id.")'></i></a><a href='javascript: void(0)'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$facility_id.")'></i></a>";
 
 				array_push($mainData, $data);
 				$slno++;
@@ -288,4 +288,19 @@
 		$return_array['data'] = $mainData;
     	echo json_encode($return_array);
 	}//function end	
+
+	
+
+	//Delete function
+	if($fn == 'deleteTableData'){
+		$return_result = array();
+		$facility_id = $_POST["facility_id"];
+		$status = true;	
+
+		$sql = "DELETE FROM facility_master WHERE facility_id = '".$facility_id."'";
+		$result = $mysqli->query($sql);
+		$return_result['status'] = $status;
+		
+		echo json_encode($return_result);
+	}//end function deleteItem
 ?>

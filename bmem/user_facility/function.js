@@ -75,6 +75,26 @@ $('#getFacility').on('click', function(){
 })
  
 
+
+//Delete function	
+function deleteTableData($facility_id){
+    if (confirm('Are you sure to delete the data?')) {
+        $.ajax({
+            method: "POST",
+            url: "user_facility/function.php",
+            data: { fn: "deleteTableData", facility_id: $facility_id }
+        })
+        .done(function( res ) {
+            //console.log(res);
+            $res1 = JSON.parse(res);
+            if($res1.status == true){
+                $('#orgFormAlert').show();
+                populateDataTable();
+            }
+        });//end ajax
+    }		
+}//end delete
+
 function editTableData(facility_id){
     $('#exampleModalLong').modal('show');
     $.ajax({
