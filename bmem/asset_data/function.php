@@ -239,57 +239,81 @@
 		$asset_id = $_POST['asset_id'];
 		$link_generated_by = $_SESSION["user_id"];
 		$link_generate_time = date('Y-m-d H:i:s');
-		
-		$sql = "INSERT INTO pms_info (asset_id, link_generated_by, link_generate_time) VALUES ('" .$asset_id. "', '" .$link_generated_by. "', '" .$link_generate_time. "')";
-		$result = $mysqli->query($sql);
-		$pms_id = $mysqli->insert_id;
 
-		if($pms_id > 0){
-			$status = true;  
-			$pms_info_id = str_pad($pms_id, 4, '0', STR_PAD_LEFT);
+		# check PMS is open or closed
+		$sql1 = "SELECT * FROM pms_info WHERE asset_id = '" .$asset_id. "'";
+		$result1 = $mysqli->query($sql1);
+		if($result1->num_rows > 0) {	
+			$row1 = $result1->fetch_array();
+			$pms_id = $row1['pms_id'];
+			$pms_info_id = $row1['pms_info_id'];
+			$pms_status = $row1['pms_status'];
+			$pms_status_text = '';
 
-			$upd_sql = "UPDATE pms_info SET pms_info_id = '" .$pms_info_id. "' WHERE pms_id = '" .$pms_id. "' ";
-			$result_upd = $mysqli->query($upd_sql); 
-
-			$sql_2 = "SELECT asset_details.facility_id, asset_details.department_id, asset_details.device_group, asset_details.asset_class, asset_details.equipment_name, asset_details.last_date_of_pms, asset_details.asset_supplied_by, asset_details.asset_make, asset_details.asset_model, asset_details.slerial_number, facility_master.facility_code FROM asset_details JOIN facility_master ON asset_details.facility_id = facility_master.facility_id WHERE asset_details.asset_id = '" .$asset_id. "'";
-			$result_2 = $mysqli->query($sql_2);
-	
-			if($result_2->num_rows > 0) {	
-				$row_2 = $result_2->fetch_array();
-				$facility_id = $row_2['facility_id'];
-				$department_id_str = $row_2['department_id'];
-				$department_ids = json_decode($department_id_str);
-				$department_id = $department_ids[0];
-				$facility_code = $row_2['facility_code'];
-				$device_group = $row_2['device_group'];
-				$asset_class = $row_2['asset_class'];
-				$equipment_name = $row_2['equipment_name'];
-				$pms_due_date = $row_2['last_date_of_pms'];
-				$supplied_by = $row_2['asset_supplied_by'];
-				$asset_make = $row_2['asset_make'];
-				$asset_model = $row_2['asset_model'];
-				$slerial_number = $row_2['slerial_number'];
-				$pms_planned_date = date('Y-m-d');
-			} 
-			
-			try {
-				if($pms_info_id > 0){
-					$status = true;
-					$pms_data_updated = date('Y-m-d H:i:s');
-					$row_status = 2;
-					$sql = "UPDATE pms_info SET facility_id = '" .$facility_id. "', facility_code = '" .$facility_code. "', department_id = '" .$department_id. "', device_group = '" .$device_group. "', asset_class = '" .$asset_class. "', equipment_name = '" .$equipment_name. "', pms_due_date = '" .$pms_due_date. "', supplied_by = '" .$supplied_by. "', pms_planned_date = '" .$pms_planned_date. "', pms_data_updated = '" .$pms_data_updated. "', row_status = '" .$row_status. "', equipment_make = '".$asset_make."', equipment_model = '" .$asset_model. "', equipment_sl_no = '" .$slerial_number. "' WHERE pms_info_id = '" .$pms_info_id. "' ";
-					$result = $mysqli->query($sql);
-				}	
-			} catch (PDOException $e) {
-				die("Error occurred:" . $e->getMessage());
+			if($pms_status == 0){
+				$pms_status_text = 'Work In Progress';
 			}
-			
-		}else{
-			$return_result['error_message'] = 'Data Insert Error';
+			if($pms_status == 1){
+				$pms_status_text = 'Resolved';
+			}
+			if($pms_status == 2){
+				$pms_status_text = 'Closed';
+			}
+			$return_result['error_message'] = 'PMS Link Already Generated. PMS ID: '.$pms_info_id.' and PMS Status is: '.$pms_status_text;
 			$status = false;
 		}
 
-		$return_result['error_message'] = $error_message; 
+		if($status == true){
+			$sql = "INSERT INTO pms_info (asset_id, link_generated_by, link_generate_time) VALUES ('" .$asset_id. "', '" .$link_generated_by. "', '" .$link_generate_time. "')";
+			$result = $mysqli->query($sql);
+			$pms_id = $mysqli->insert_id;
+
+			if($pms_id > 0){
+				$status = true;  
+				$pms_info_id = str_pad($pms_id, 4, '0', STR_PAD_LEFT);
+
+				$upd_sql = "UPDATE pms_info SET pms_info_id = '" .$pms_info_id. "' WHERE pms_id = '" .$pms_id. "' ";
+				$result_upd = $mysqli->query($upd_sql); 
+
+				$sql_2 = "SELECT asset_details.facility_id, asset_details.department_id, asset_details.device_group, asset_details.asset_class, asset_details.equipment_name, asset_details.last_date_of_pms, asset_details.asset_supplied_by, asset_details.asset_make, asset_details.asset_model, asset_details.slerial_number, facility_master.facility_code FROM asset_details JOIN facility_master ON asset_details.facility_id = facility_master.facility_id WHERE asset_details.asset_id = '" .$asset_id. "'";
+				$result_2 = $mysqli->query($sql_2);
+		
+				if($result_2->num_rows > 0) {	
+					$row_2 = $result_2->fetch_array();
+					$facility_id = $row_2['facility_id'];
+					$department_id_str = $row_2['department_id'];
+					$department_ids = json_decode($department_id_str);
+					$department_id = $department_ids[0];
+					$facility_code = $row_2['facility_code'];
+					$device_group = $row_2['device_group'];
+					$asset_class = $row_2['asset_class'];
+					$equipment_name = $row_2['equipment_name'];
+					$pms_due_date = $row_2['last_date_of_pms'];
+					$supplied_by = $row_2['asset_supplied_by'];
+					$asset_make = $row_2['asset_make'];
+					$asset_model = $row_2['asset_model'];
+					$slerial_number = $row_2['slerial_number'];
+					$pms_planned_date = date('Y-m-d');
+				} 
+				
+				try {
+					if($pms_info_id > 0){
+						$status = true;
+						$pms_data_updated = date('Y-m-d H:i:s');
+						$row_status = 2;
+						$sql = "UPDATE pms_info SET facility_id = '" .$facility_id. "', facility_code = '" .$facility_code. "', department_id = '" .$department_id. "', device_group = '" .$device_group. "', asset_class = '" .$asset_class. "', equipment_name = '" .$equipment_name. "', pms_due_date = '" .$pms_due_date. "', supplied_by = '" .$supplied_by. "', pms_planned_date = '" .$pms_planned_date. "', pms_data_updated = '" .$pms_data_updated. "', row_status = '" .$row_status. "', equipment_make = '".$asset_make."', equipment_model = '" .$asset_model. "', equipment_sl_no = '" .$slerial_number. "' WHERE pms_info_id = '" .$pms_info_id. "' ";
+						$result = $mysqli->query($sql);
+					}	
+				} catch (PDOException $e) {
+					die("Error occurred:" . $e->getMessage());
+				}
+				
+			}else{
+				$return_result['error_message'] = 'Data Insert Error';
+				$status = false;
+			}
+		}//end if
+		
 		$return_result['status'] = $status; 
 		$return_result['pms_info_id'] = $pms_info_id; 
 		echo json_encode($return_result);
