@@ -230,7 +230,7 @@
 
 	
 
-	//generate Link
+	//generate PMS Link
 	if($fn == 'generateLink'){
 		$return_result = array(); 
 		$status = true;	
@@ -275,7 +275,7 @@
 				$upd_sql = "UPDATE pms_info SET pms_info_id = '" .$pms_info_id. "' WHERE pms_id = '" .$pms_id. "' ";
 				$result_upd = $mysqli->query($upd_sql); 
 
-				$sql_2 = "SELECT asset_details.facility_id, asset_details.department_id, asset_details.device_group, asset_details.asset_class, asset_details.equipment_name, asset_details.last_date_of_pms, asset_details.asset_supplied_by, asset_details.asset_make, asset_details.asset_model, asset_details.slerial_number, facility_master.facility_code FROM asset_details JOIN facility_master ON asset_details.facility_id = facility_master.facility_id WHERE asset_details.asset_id = '" .$asset_id. "'";
+				$sql_2 = "SELECT asset_details.facility_id, asset_details.department_id, asset_details.device_group, asset_details.asset_class, asset_details.equipment_name, asset_details.last_date_of_pms, asset_details.frequency_of_pms, asset_details.asset_supplied_by, asset_details.asset_make, asset_details.asset_model, asset_details.slerial_number, asset_details.sp_details, facility_master.facility_code FROM asset_details JOIN facility_master ON asset_details.facility_id = facility_master.facility_id WHERE asset_details.asset_id = '" .$asset_id. "'";
 				$result_2 = $mysqli->query($sql_2);
 		
 				if($result_2->num_rows > 0) {	
@@ -289,19 +289,51 @@
 					$asset_class = $row_2['asset_class'];
 					$equipment_name = $row_2['equipment_name'];
 					$pms_due_date = $row_2['last_date_of_pms'];
+					$last_date_of_pms = $row_2['last_date_of_pms'];
+					$frequency_of_pms = $row_2['frequency_of_pms'];
 					$supplied_by = $row_2['asset_supplied_by'];
 					$asset_make = $row_2['asset_make'];
 					$asset_model = $row_2['asset_model'];
 					$slerial_number = $row_2['slerial_number'];
+					$sp_details = $row_2['sp_details'];
 					$pms_planned_date = date('Y-m-d');
 				} 
+
+				
+
+				# PMS Frequency Calculation
+				$pms_frequency = '';
+				$next_pms_date = '';
+
+				if($last_date_of_pms != '0000-00-00'){
+					$last_date_of_pms1 = date('Y-m-d', strtotime($last_date_of_pms));
+					$date = new DateTime($last_date_of_pms1); 
+						
+					$pms_freq_str = explode("|", $frequency_of_pms);
+					if($pms_freq_str[0] > 0){
+						$y1 = $pms_freq_str[0];
+						$pms_frequency = 'Each '.$y1.' Year(s)';
+						$next_pms_date = date('Y-m-d', strtotime('+'.$y1.' year', strtotime($last_date_of_pms)));
+					}else if($pms_freq_str[1] > 0){
+						$m1 = $pms_freq_str[1];
+						$pms_frequency = 'Each '.$m1.' Month(s)';
+						$next_pms_date = date('Y-m-d', strtotime('+'.$m1.' month', strtotime($last_date_of_pms)));
+					}else if($pms_freq_str[2] > 0){
+						$d1 = $pms_freq_str[2];
+						$pms_frequency = 'Each '.$d1.' Day(s)';
+						$next_pms_date = date('Y-m-d', strtotime('+'.$d1.' day', strtotime($last_date_of_pms)));
+					}else{
+						$pms_frequency = '';
+						$next_pms_date = '';
+					} 
+				}//ennd if
 				
 				try {
 					if($pms_info_id > 0){
 						$status = true;
 						$pms_data_updated = date('Y-m-d H:i:s');
 						$row_status = 2;
-						$sql = "UPDATE pms_info SET facility_id = '" .$facility_id. "', facility_code = '" .$facility_code. "', department_id = '" .$department_id. "', device_group = '" .$device_group. "', asset_class = '" .$asset_class. "', equipment_name = '" .$equipment_name. "', pms_due_date = '" .$pms_due_date. "', supplied_by = '" .$supplied_by. "', pms_planned_date = '" .$pms_planned_date. "', pms_data_updated = '" .$pms_data_updated. "', row_status = '" .$row_status. "', equipment_make = '".$asset_make."', equipment_model = '" .$asset_model. "', equipment_sl_no = '" .$slerial_number. "' WHERE pms_info_id = '" .$pms_info_id. "' ";
+						$sql = "UPDATE pms_info SET facility_id = '" .$facility_id. "', facility_code = '" .$facility_code. "', department_id = '" .$department_id. "', device_group = '" .$device_group. "', asset_class = '" .$asset_class. "', equipment_name = '" .$equipment_name. "', pms_due_date = '" .$next_pms_date. "', supplied_by = '" .$supplied_by. "', pms_planned_date = '" .$pms_planned_date. "', pms_data_updated = '" .$pms_data_updated. "', row_status = '" .$row_status. "', equipment_make = '".$asset_make."', equipment_model = '" .$asset_model. "', equipment_sl_no = '" .$slerial_number. "', sp_details = '" .$sp_details. "' WHERE pms_info_id = '" .$pms_info_id. "' ";
 						$result = $mysqli->query($sql);
 					}	
 				} catch (PDOException $e) {
@@ -319,7 +351,7 @@
 		echo json_encode($return_result);
 	}//end function 
 	
-	//generate Link
+	//generate calib Link
 	if($fn == 'generateCalibLink'){
 		$return_result = array(); 
 		$status = true;	

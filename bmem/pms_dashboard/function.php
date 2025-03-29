@@ -27,13 +27,14 @@
 		$supplied_by = $_POST['supplied_by'];
 		$service_provider_details = $_POST['service_provider_details'];
 		$pms_planned_date = $_POST['pms_planned_date'];
+		$pms_sp_status = $_POST['pms_sp_status'];
 		
 		try {
 			if($pms_info_id > 0){
 				$status = true;
 				$pms_data_updated = date('Y-m-d H:i:s');
 				$row_status = 2;
-				$sql = "UPDATE pms_info SET facility_id = '" .$facility_id. "', facility_code = '" .$facility_code. "', department_id = '" .$department_id. "', device_group = '" .$device_group. "', asset_class = '" .$asset_class. "', equipment_name = '" .$equipment_name. "', equipment_make = '" .$equipment_make. "', equipment_model = '" .$equipment_model. "', equipment_sl_no = '" .$equipment_sl_no. "', pms_due_date = '" .$pms_due_date. "', supplied_by = '" .$supplied_by. "', service_provider_details = '" .$service_provider_details. "', pms_planned_date = '" .$pms_planned_date. "', facility_code = '" .$facility_code. "', pms_data_updated = '" .$pms_data_updated. "', row_status = '" .$row_status. "' WHERE pms_info_id = '" .$pms_info_id. "' ";
+				$sql = "UPDATE pms_info SET facility_id = '" .$facility_id. "', facility_code = '" .$facility_code. "', department_id = '" .$department_id. "', device_group = '" .$device_group. "', asset_class = '" .$asset_class. "', equipment_name = '" .$equipment_name. "', equipment_make = '" .$equipment_make. "', equipment_model = '" .$equipment_model. "', equipment_sl_no = '" .$equipment_sl_no. "', pms_due_date = '" .$pms_due_date. "', supplied_by = '" .$supplied_by. "', service_provider_details = '" .$service_provider_details. "', pms_planned_date = '" .$pms_planned_date. "', facility_code = '" .$facility_code. "', pms_data_updated = '" .$pms_data_updated. "', row_status = '" .$row_status. "', pms_sp_status = '" .$pms_sp_status. "' WHERE pms_info_id = '" .$pms_info_id. "' ";
 				$result = $mysqli->query($sql);
 			}	
 		} catch (PDOException $e) {
@@ -199,7 +200,7 @@
 			$where_condition .= " AND pms_info.pms_data_updated > '" .$from_date1. "' AND pms_info.pms_data_updated < '" .$to_date1. "' ";
 		}
 		
-		$sql = "SELECT pms_info.pms_id, pms_info.asset_id, pms_info.pms_info_id, pms_info.facility_id, pms_info.facility_code, pms_info.department_id, pms_info.device_group, pms_info.asset_class, pms_info.equipment_name, pms_info.equipment_make,pms_info.equipment_model, pms_info.equipment_sl_no, pms_info.pms_due_date, pms_info.supplied_by, pms_info.service_provider_details, pms_info.pms_planned_date,pms_info.pms_status, facility_master.facility_name, department_list.department_name, device_group_list.device_name FROM pms_info JOIN facility_master ON pms_info.facility_id = facility_master.facility_id JOIN department_list ON pms_info.department_id = department_list.department_id JOIN device_group_list ON pms_info.device_group = device_group_list.device_group_id $where_condition ORDER BY pms_info.pms_id DESC LIMIT 0, 50";
+		$sql = "SELECT pms_info.pms_id, pms_info.asset_id, pms_info.pms_info_id, pms_info.facility_id, pms_info.facility_code, pms_info.department_id, pms_info.device_group, pms_info.asset_class, pms_info.equipment_name, pms_info.equipment_make,pms_info.equipment_model, pms_info.equipment_sl_no, pms_info.pms_due_date, pms_info.supplied_by, pms_info.service_provider_details, pms_info.pms_planned_date, pms_info.pms_status, pms_info.assign_to_sp_engg, facility_master.facility_name, department_list.department_name, device_group_list.device_name FROM pms_info JOIN facility_master ON pms_info.facility_id = facility_master.facility_id JOIN department_list ON pms_info.department_id = department_list.department_id JOIN device_group_list ON pms_info.device_group = device_group_list.device_group_id $where_condition ORDER BY pms_info.pms_id DESC LIMIT 0, 50";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -215,7 +216,19 @@
 				$department_name = $row['department_name'];	 	
 				$device_name = $row['device_name'];	 	
 				$asset_class = $row['asset_class']; 	
-				$pms_status = $row['pms_status'];		 
+				$pms_status = $row['pms_status']; 			
+				$assign_to_sp_engg = $row['assign_to_sp_engg'];
+
+				# select fom asset_details
+				$asset_code = '';
+				$sp_details = '';
+				$sql1 = "SELECT asset_code, sp_details FROM asset_details WHERE asset_id = '" .$asset_id. "' ";
+				$result1 = $mysqli->query($sql1);
+				if ($result1->num_rows > 0) {
+					$row1 = $result1->fetch_array();		
+					$asset_code = $row1['asset_code'];			
+					$sp_details = $row1['sp_details'];	
+				}
 				
 				$asset_class_text = '';
 				if($asset_class == 1){
@@ -266,7 +279,33 @@
 				}else{
 					$updated_text .= '<option value="2">Closed</option>';
 				}
-				$updated_text .= '</select>';
+				$updated_text .= '</select>'; 
+
+				
+				# Assign to SP or Engg				
+				$dynamic_id1 = 'assign_to_sp_engg_'.$pms_id;
+				$updated_text1 = '';
+				$disabled_text = '';
+				if($pms_status == 1 || $pms_status == 2){
+					$disabled_text = 'disabled';
+				}
+				$updated_text1 .= '<select name="'.$dynamic_id1.'" id="'.$dynamic_id1.'" onChange="updateSpEnggStatus('.$pms_id.')" class="form-control-sm" '.$disabled_text.'>';
+				if($assign_to_sp_engg == 0){
+					$updated_text1 .= '<option value="0" selected="selected">Assign To</option>';
+				}else{
+					$updated_text1 .= '<option value="0">Assign To</option>';
+				}
+				if($assign_to_sp_engg == 1){
+					$updated_text1 .= '<option value="1" selected="selected">Service Provider</option>';
+				}else{
+					$updated_text1 .= '<option value="1">Service Provider</option>';
+				}
+				if($assign_to_sp_engg == 2){
+					$updated_text1 .= '<option value="2" selected="selected">Engineer</option>';
+				}else{
+					$updated_text1 .= '<option value="2">Engineer</option>';
+				}
+				$updated_text1 .= '</select>'; 
 
 				$data[0] = $slno; 
 				$data[1] = $pms_info_id;
@@ -276,16 +315,17 @@
 				$data[5] = $device_name; 
 				$data[6] = $asset_class_text;
 				$data[7] = $equipment_name;
-				$data[8] = $equipment_make;
-				$data[9] = $equipment_model;
-				$data[10] = $equipment_sl_no;
-				$data[11] = $pms_due_date; 
-				$data[12] = $supplied_by;
-				$data[13] = $service_provider_details;
-				$data[14] = $pms_planned_date;
-				$data[15] = '-';
-				$data[16] = $view_link;
-				$data[17] = $updated_text; 
+				$data[8] = $asset_code;
+				$data[9] = $equipment_make;
+				$data[10] = $equipment_model;
+				$data[11] = $equipment_sl_no;
+				$data[12] = $pms_due_date; 
+				$data[13] = $supplied_by;
+				$data[14] = $sp_details;
+				$data[15] = $pms_planned_date;
+				$data[16] = $updated_text1;
+				$data[17] = $view_link;
+				$data[18] = $updated_text; 
 				
 				//$data[8] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$author_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$author_id.")'></i></a>";
 				
@@ -370,6 +410,8 @@
 			$supplied_by = $row['supplied_by'];
 			$service_provider_details = $row['service_provider_details'];
 			$pms_planned_date = $row['pms_planned_date'];
+			$pms_sp_status = $row['pms_sp_status'];
+			$sp_details = $row['sp_details'];
 		} else {
 			$status = false;
 		}
@@ -388,6 +430,8 @@
 		$return_array['supplied_by'] = $supplied_by;
 		$return_array['service_provider_details'] = $service_provider_details;
 		$return_array['pms_planned_date'] = $pms_planned_date; 
+		$return_array['pms_sp_status'] = $pms_sp_status; 
+		$return_array['sp_details'] = $sp_details; 
 
 		$return_array['status'] = $status;
     	echo json_encode($return_array);
@@ -560,6 +604,21 @@
 
 		$sql_1 = "UPDATE asset_details SET last_date_of_pms = '" .$last_date_of_pms. "' WHERE asset_id = '".$asset_id."'";
 		$mysqli->query($sql_1);  
+
+		$return_result['status'] = $status; 
+		echo json_encode($return_result);
+	}//end function deleteItem
+
+	//Update function
+	if($fn == 'updateSpEnggStatus'){
+		$return_result = array();
+		$pms_id = $_POST["pms_id"];
+		$assign_to_sp_engg_status = $_POST["assign_to_sp_engg_status"];  
+
+		$status = true;	 
+
+		$sql = "UPDATE pms_info SET assign_to_sp_engg = '" .$assign_to_sp_engg_status. "' WHERE pms_id = '".$pms_id."'";
+		$mysqli->query($sql);    
 
 		$return_result['status'] = $status; 
 		echo json_encode($return_result);

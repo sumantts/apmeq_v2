@@ -212,14 +212,7 @@
                                     <label for="supplied_by">Supplied by</label>
                                     <input type="text" class="form-control" id="supplied_by" name="supplied_by" required >
                                 </div>
-                            </div> 
-        
-                            <div class="col-sm-12 mb-1">
-                                <div class="form-group">
-                                    <label class="required-field" for="service_provider_details">Service Provider Details</label>
-                                    <textarea class="form-control" id="service_provider_details" name="service_provider_details" rows="4" placeholder="Name, Email, Phone Number"> </textarea>
-                                </div>
-                            </div>
+                            </div>  
         
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
@@ -227,6 +220,20 @@
                                     <input type="date" class="form-control" id="pms_planned_date" name="pms_planned_date" required >
                                 </div>
                             </div> 
+        
+                            <div class="col-sm-12 mb-1">
+                                <div class="form-group">
+                                    <label class="required-field" for="sp_details">Service Provider Details</label>
+                                    <textarea class="form-control" id="sp_details" name="sp_details" rows="4" > </textarea>
+                                </div>
+                            </div>
+        
+                            <div class="col-sm-12 mb-1">
+                                <div class="form-group">
+                                    <label class="required-field" for="service_provider_details">Comments</label>
+                                    <textarea class="form-control" id="service_provider_details" name="service_provider_details" rows="4" > </textarea>
+                                </div>
+                            </div>
         
                             <!-- <div class="col-sm-6 mb-1">
                                 <div class="form-group">
@@ -249,6 +256,16 @@
                             <div class="form-row"> 
                                 <div class="col-md-12 mb-3">
                                     <div class="text-center" id="product_gallery"> </div>
+                                </div>
+                            </div>
+        
+                            <div class="col-sm-6 mb-1">
+                                <div class="form-group">
+                                    <label for="pms_sp_status">Status</label>
+                                    <select class="form-control" name="pms_sp_status" id="pms_sp_status" required > 
+                                        <option value="0">Work in progress</option>
+                                        <option value="1">Completed</option> 
+                                    </select>
                                 </div>
                             </div>
         
@@ -289,11 +306,12 @@
             $supplied_by = $('#supplied_by').val();
             $service_provider_details = $('#service_provider_details').val();
             $pms_planned_date = $('#pms_planned_date').val();
+            $pms_sp_status = $('#pms_sp_status').val();
 
             $.ajax({
                 method: "POST",
                 url: "../pms_dashboard/function.php",
-                data: { fn: "updateGeneratedFormdata", pms_info_id: $pms_info_id, facility_id: $facility_id, facility_code: $facility_code, department_id: $department_id, device_group: $device_group, asset_class: $asset_class, equipment_name: $equipment_name, equipment_make: $equipment_make, equipment_model: $equipment_model, equipment_sl_no: $equipment_sl_no, pms_due_date: $pms_due_date, supplied_by: $supplied_by, service_provider_details: $service_provider_details, pms_planned_date: $pms_planned_date }
+                data: { fn: "updateGeneratedFormdata", pms_info_id: $pms_info_id, facility_id: $facility_id, facility_code: $facility_code, department_id: $department_id, device_group: $device_group, asset_class: $asset_class, equipment_name: $equipment_name, equipment_make: $equipment_make, equipment_model: $equipment_model, equipment_sl_no: $equipment_sl_no, pms_due_date: $pms_due_date, supplied_by: $supplied_by, service_provider_details: $service_provider_details, pms_planned_date: $pms_planned_date, pms_sp_status: $pms_sp_status }
             })
             .done(function( res ) {
                 $res1 = JSON.parse(res); 
@@ -441,6 +459,8 @@
                 $('#supplied_by').val($res1.supplied_by);  
                 $('#service_provider_details').val($res1.service_provider_details);  
                 $('#pms_planned_date').val($res1.pms_planned_date);  
+                $('#pms_sp_status').val($res1.pms_sp_status).trigger('change');
+                $('#sp_details').val($res1.sp_details);  
             }
         });//end ajax
     }
@@ -571,7 +591,8 @@
             $('#equipment_sl_no').prop('readonly', true);  
             $('#pms_due_date').prop('readonly', true);   
             $('#supplied_by').prop('readonly', true);    
-            $('#pms_planned_date').prop('readonly', true);  
+            $('#pms_planned_date').prop('readonly', true);     
+            $('#sp_details').prop('readonly', true); 
         }
         
     });

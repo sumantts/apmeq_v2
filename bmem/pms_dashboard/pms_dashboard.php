@@ -251,6 +251,7 @@ include('common/head.php');
                                         <th>Device Group</th>
                                         <th>Asset Class</th> 
                                         <th>Equpment Name</th>
+                                        <th>Asset Code</th>
                                         <th>Equipment Make</th>
                                         <th>Equipment Model</th>
                                         <th>Equipment sl no</th>
@@ -258,8 +259,7 @@ include('common/head.php');
                                         <th>Supplied by</th>
                                         <th>Service provider details<br> if it is in Warranty/AMC/CMC</th>
                                         <th>PMS planned date</th>
-                                        <th>Assign Service provider/<br>Junior enhgineer <br>(by soft link <br>email/mobile no/whatsapp)</th>
-                                         
+                                        <th>Assign Service provider/<br>Junior enhgineer <br>(by soft link <br>email/mobile no/whatsapp)</th>                                         
                                         <th>View report</th>
                                         <th>Updated status<br>(WIP/Resolved/closed)</th> 
                                     </tr>
@@ -274,6 +274,7 @@ include('common/head.php');
                                         <th>Device Group</th>
                                         <th>Asset Class</th> 
                                         <th>Equpment Name</th>
+                                        <th>Asset Code</th>
                                         <th>Equipment Make</th>
                                         <th>Equipment Model</th>
                                         <th>Equipment sl no</th>
@@ -281,8 +282,7 @@ include('common/head.php');
                                         <th>Supplied by</th>
                                         <th>Service provider details<br> if it is in Warranty/AMC/CMC</th>
                                         <th>PMS planned date</th>
-                                        <th>Assign Service provider/<br>Junior enhgineer <br>(by soft link <br>email/mobile no/whatsapp)</th>
-                                         
+                                        <th>Assign Service provider/<br>Junior enhgineer <br>(by soft link <br>email/mobile no/whatsapp)</th>                                         
                                         <th>View report</th>
                                         <th>Updated status<br>(WIP/Resolved/closed)</th> 
                                     </tr>

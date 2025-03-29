@@ -247,6 +247,28 @@ function updatePMSStatus($pms_id, $asset_id){
     }
 }
 
+
+function updateSpEnggStatus($pms_id){
+    $assign_to_sp_engg_status = $('#assign_to_sp_engg_'+$pms_id).val();
+    console.log('pms_id: ' + $pms_id + ' assign_to_sp_engg_status: ' + $assign_to_sp_engg_status);
+
+    if(confirm('Are you sure to change status?')){
+        $.ajax({
+            method: "POST",
+            url: "pms_dashboard/function.php",
+            data: { fn: "updateSpEnggStatus", pms_id: $pms_id, assign_to_sp_engg_status: $assign_to_sp_engg_status }
+        })
+        .done(function( res ) {
+            //console.log(res);
+            $res1 = JSON.parse(res);
+            if($res1.status == true){
+                alert('Status Updated Successfully');
+                populateDataTable_1();
+            }
+        }); //end ajax
+    }
+}
+
 $(document).ready(function () {
     initTicketCounter();
     //configureDeviceGroupDropDown();
