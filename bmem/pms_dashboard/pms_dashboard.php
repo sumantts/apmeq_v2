@@ -181,9 +181,10 @@ include('common/head.php');
                                 <div class="col-md-3 mb-3">
                                     <label for="PMSStatus">PMS Status</label>
                                     <select class="form-control" id="PMSStatus">
-                                        <option value="0">Select</option>
-                                        <option value="1">DONE</option>
-                                        <option value="2">DUE</option> 
+                                        <option value="">Select</option>
+                                        <option value="0">Work in progress</option>
+                                        <option value="1">Resolved</option> 
+                                        <option value="2">Closed</option> 
                                     </select> 
                                 </div>      
 

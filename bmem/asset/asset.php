@@ -482,7 +482,7 @@ if(isset($_POST["importSubmit"])){
                                 
                                 <div class="col-md-4 mb-3">
                                     <label for="last_date_of_calibration">Last date of calibration</label>
-                                    <input type="date" class="form-control" id="last_date_of_calibration" value=""> 
+                                    <input type="date" class="form-control" id="last_date_of_calibration" value="<?=date('Y-m-d')?>"> 
                                 </div>
                                 
                                 <div class="col-md-4 mb-2 mt-4">
@@ -511,7 +511,7 @@ if(isset($_POST["importSubmit"])){
                                 
                                 <div class="col-md-4 mb-3">
                                     <label for="last_date_of_pms">Last date of Preventive Maintanence(PMS)</label>
-                                    <input type="date" class="form-control" id="last_date_of_pms" value=""> 
+                                    <input type="date" class="form-control" id="last_date_of_pms" value="<?=date('Y-m-d')?>"> 
                                 </div> 
                                 
                                 <div class="col-md-4 mb-2 mt-4">

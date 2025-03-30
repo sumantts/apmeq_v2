@@ -110,8 +110,9 @@
 		$status = true;
 		$mainData = array();
 		$email1 = '';
+		$user_id = $_SESSION["user_id"];
 
-		$sql = "SELECT * FROM facility_master LIMIT 0, 50";
+		$sql = "SELECT * FROM facility_master  WHERE user_id = '" .$user_id. "' LIMIT 0, 50";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -121,35 +122,80 @@
 			while($row = $result->fetch_array()){
 				$facility_id = $row['facility_id'];	
 				$facility_name = $row['facility_name'];	
+				
+				$pms_due = 0;
+				$pms_done = 0;
+				$pms_planed = 0;										
 
-				$sql1 = "SELECT COUNT(row_status) AS count_row_status FROM pms_info WHERE facility_id = '" .$facility_id. "' GROUP BY facility_id";
-				$result1 = $mysqli->query($sql1);		
-				if ($result1->num_rows > 0) {
-					while($row1 = $result1->fetch_array()){
-						$pms_planed = 0;
-						$pending_pms = 0;
-						$pms_done = 0;
-						$row_status = $row1['count_row_status'];						 
+				$sql_2 = "SELECT * FROM pms_info WHERE pms_status = '0' AND facility_id = '" .$facility_id. "'";
+				$result_2 = $mysqli->query($sql_2);
+				$pms_planed = $result_2->num_rows;						 
 
-						$sql_2 = "SELECT * FROM pms_info WHERE row_status = '1' AND facility_id = '" .$facility_id. "'";
-						$result_2 = $mysqli->query($sql_2);
-						$pending_pms = $result_2->num_rows;						 
+				$sql_3 = "SELECT * FROM pms_info WHERE pms_status != '0' AND facility_id = '" .$facility_id. "'";
+				$result_3 = $mysqli->query($sql_3);
+				$pms_done = $result_3->num_rows;
 
-						$sql_3 = "SELECT * FROM pms_info WHERE row_status = '2' AND facility_id = '" .$facility_id. "'";
-						$result_3 = $mysqli->query($sql_3);
-						$pms_done = $result_3->num_rows;
+				$sql_5 = "SELECT last_date_of_pms, frequency_of_pms FROM asset_details WHERE facility_id = '" .$facility_id. "'";
+				$result_5 = $mysqli->query($sql_5);
 
-						$data[0] = $slno; 
-						$data[1] = $facility_name;
-						$data[2] = $pending_pms;
-						$data[3] = $pms_done;
-						$data[4] = $pending_pms;
-						//$data[5] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$facility_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$facility_id.")'></i></a>";
-		
-						array_push($mainData, $data);
-						$slno++;
-					}//end while
+				if ($result_5->num_rows > 0) {			
+					while($row_5 = $result_5->fetch_array()){
+						$last_date_of_pms = $row_5['last_date_of_pms']; 
+						$frequency_of_pms = $row_5['frequency_of_pms']; 
+
+						# PMS Frequency Calculation
+						$pms_frequency = '';
+						$next_pms_date = '';
+
+						if($last_date_of_pms != '0000-00-00'){
+							$last_date_of_pms1 = date('Y-m-d', strtotime($last_date_of_pms));
+							$date = new DateTime($last_date_of_pms1); 
+								
+							$pms_freq_str = explode("|", $frequency_of_pms);
+							if($pms_freq_str[0] > 0){
+								$y1 = $pms_freq_str[0];
+								$pms_frequency = 'Each '.$y1.' Year(s)';
+								$next_pms_date = date('d-F-Y', strtotime('+'.$y1.' year', strtotime($last_date_of_pms)));
+							}else if($pms_freq_str[1] > 0){
+								$m1 = $pms_freq_str[1];
+								$pms_frequency = 'Each '.$m1.' Month(s)';
+								$next_pms_date = date('d-F-Y', strtotime('+'.$m1.' month', strtotime($last_date_of_pms)));
+							}else if($pms_freq_str[2] > 0){
+								$d1 = $pms_freq_str[2];
+								$pms_frequency = 'Each '.$d1.' Day(s)';
+								$next_pms_date = date('d-F-Y', strtotime('+'.$d1.' day', strtotime($last_date_of_pms)));
+							}else{
+								$pms_frequency = '';
+								$next_pms_date = '';
+							} 
+						}//ennd if
+
+						if($next_pms_date != ''){					
+							$fifteen_day_prev = date('Y-m-d H:i:s',(strtotime ( '-15 day' , strtotime($next_pms_date))));
+							
+							// Create two DateTime objects
+							$today = date('Y-m-d');
+							$date1 = new DateTime($today); 
+							$date2 = new DateTime($next_pms_date);
+
+							// Compare the dates
+							if ($date1 > $date2) {
+								//PMS Date over
+								$pms_due++;
+							}
+						}//end if
+						
+					}
 				}//end if
+
+				$data[0] = $slno; 
+				$data[1] = $facility_name;
+				$data[2] = $pms_due;
+				$data[3] = $pms_done;
+				$data[4] = $pms_planed;
+
+				array_push($mainData, $data);
+				$slno++;
 			}//end while
 		} else {
 			$status = false;
@@ -193,6 +239,9 @@
 		}
 		if($department_id > 0){
 			$where_condition .= " AND pms_info.department_id = '" .$department_id. "' ";
+		}
+		if($PMSStatus != ''){
+			$where_condition .= " AND pms_info.pms_status = '" .$PMSStatus. "' ";
 		}
 		if($from_date != '' && $to_date != ''){
 			$from_date1 = $from_date.' 00:01:01';
@@ -412,6 +461,7 @@
 			$pms_planned_date = $row['pms_planned_date'];
 			$pms_sp_status = $row['pms_sp_status'];
 			$sp_details = $row['sp_details'];
+			$asset_code = $row['asset_code'];
 		} else {
 			$status = false;
 		}
@@ -432,6 +482,7 @@
 		$return_array['pms_planned_date'] = $pms_planned_date; 
 		$return_array['pms_sp_status'] = $pms_sp_status; 
 		$return_array['sp_details'] = $sp_details; 
+		$return_array['asset_code'] = $asset_code; 
 
 		$return_array['status'] = $status;
     	echo json_encode($return_array);
@@ -568,6 +619,8 @@
 		$total_ticket = 0; 
 		$pending_pms = 0;
 		$pms_done = 0;
+		$pms_scheduled = 0;
+		$pms_due = 0;
 
 
 		//Total Assets
@@ -579,12 +632,76 @@
 		$result_2 = $mysqli->query($sql_2);
 		$pending_pms = $result_2->num_rows;
 
-		$pms_done = $total_ticket - $pending_pms;
+		//$pms_done = $total_ticket - $pending_pms;		
+
+		$sql_3 = "SELECT * FROM pms_info WHERE pms_status != '0' ";
+		$result_3 = $mysqli->query($sql_3);
+		$pms_done = $result_3->num_rows;	
+
+		$sql_4 = "SELECT * FROM pms_info WHERE pms_status = '0' ";
+		$result_4 = $mysqli->query($sql_4);
+		$pms_dopms_scheduledne = $result_4->num_rows;
+
+		
+		$sql_5 = "SELECT last_date_of_pms, frequency_of_pms FROM asset_details";
+		$result_5 = $mysqli->query($sql_5);
+
+		if ($result_5->num_rows > 0) {			
+			while($row_5 = $result_5->fetch_array()){
+				$last_date_of_pms = $row_5['last_date_of_pms']; 
+				$frequency_of_pms = $row_5['frequency_of_pms']; 
+
+				# PMS Frequency Calculation
+				$pms_frequency = '';
+				$next_pms_date = '';
+
+				if($last_date_of_pms != '0000-00-00'){
+					$last_date_of_pms1 = date('Y-m-d', strtotime($last_date_of_pms));
+					$date = new DateTime($last_date_of_pms1); 
+						
+					$pms_freq_str = explode("|", $frequency_of_pms);
+					if($pms_freq_str[0] > 0){
+						$y1 = $pms_freq_str[0];
+						$pms_frequency = 'Each '.$y1.' Year(s)';
+						$next_pms_date = date('d-F-Y', strtotime('+'.$y1.' year', strtotime($last_date_of_pms)));
+					}else if($pms_freq_str[1] > 0){
+						$m1 = $pms_freq_str[1];
+						$pms_frequency = 'Each '.$m1.' Month(s)';
+						$next_pms_date = date('d-F-Y', strtotime('+'.$m1.' month', strtotime($last_date_of_pms)));
+					}else if($pms_freq_str[2] > 0){
+						$d1 = $pms_freq_str[2];
+						$pms_frequency = 'Each '.$d1.' Day(s)';
+						$next_pms_date = date('d-F-Y', strtotime('+'.$d1.' day', strtotime($last_date_of_pms)));
+					}else{
+						$pms_frequency = '';
+						$next_pms_date = '';
+					} 
+				}//ennd if
+
+				if($next_pms_date != ''){					
+					$fifteen_day_prev = date('Y-m-d H:i:s',(strtotime ( '-15 day' , strtotime($next_pms_date))));
+					
+					// Create two DateTime objects
+					$today = date('Y-m-d');
+					$date1 = new DateTime($today); 
+					$date2 = new DateTime($next_pms_date);
+
+					// Compare the dates
+					if ($date1 > $date2) {
+						//PMS Date over
+						$pms_due++;
+					}
+				}//end if
+				
+			}
+		}//end if
 
 		$return_array['status'] = $status;
 		$return_array['total_ticket'] = $total_ticket;
 		$return_array['pending_pms'] = $pending_pms;
 		$return_array['pms_done'] = $pms_done;
+		$return_array['pms_dopms_scheduledne'] = $pms_dopms_scheduledne;
+		$return_array['pms_due'] = $pms_due;
 		
 		echo json_encode($return_array);
 	}//function end	

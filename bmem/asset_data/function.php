@@ -275,7 +275,7 @@
 				$upd_sql = "UPDATE pms_info SET pms_info_id = '" .$pms_info_id. "' WHERE pms_id = '" .$pms_id. "' ";
 				$result_upd = $mysqli->query($upd_sql); 
 
-				$sql_2 = "SELECT asset_details.facility_id, asset_details.department_id, asset_details.device_group, asset_details.asset_class, asset_details.equipment_name, asset_details.last_date_of_pms, asset_details.frequency_of_pms, asset_details.asset_supplied_by, asset_details.asset_make, asset_details.asset_model, asset_details.slerial_number, asset_details.sp_details, facility_master.facility_code FROM asset_details JOIN facility_master ON asset_details.facility_id = facility_master.facility_id WHERE asset_details.asset_id = '" .$asset_id. "'";
+				$sql_2 = "SELECT asset_details.facility_id, asset_details.department_id, asset_details.device_group, asset_details.asset_class, asset_details.equipment_name, asset_details.last_date_of_pms, asset_details.frequency_of_pms, asset_details.asset_supplied_by, asset_details.asset_make, asset_details.asset_model, asset_details.slerial_number, asset_details.sp_details, asset_details.asset_code, facility_master.facility_code FROM asset_details JOIN facility_master ON asset_details.facility_id = facility_master.facility_id WHERE asset_details.asset_id = '" .$asset_id. "'";
 				$result_2 = $mysqli->query($sql_2);
 		
 				if($result_2->num_rows > 0) {	
@@ -296,6 +296,7 @@
 					$asset_model = $row_2['asset_model'];
 					$slerial_number = $row_2['slerial_number'];
 					$sp_details = $row_2['sp_details'];
+					$asset_code = $row_2['asset_code'];
 					$pms_planned_date = date('Y-m-d');
 				} 
 
@@ -333,7 +334,7 @@
 						$status = true;
 						$pms_data_updated = date('Y-m-d H:i:s');
 						$row_status = 2;
-						$sql = "UPDATE pms_info SET facility_id = '" .$facility_id. "', facility_code = '" .$facility_code. "', department_id = '" .$department_id. "', device_group = '" .$device_group. "', asset_class = '" .$asset_class. "', equipment_name = '" .$equipment_name. "', pms_due_date = '" .$next_pms_date. "', supplied_by = '" .$supplied_by. "', pms_planned_date = '" .$pms_planned_date. "', pms_data_updated = '" .$pms_data_updated. "', row_status = '" .$row_status. "', equipment_make = '".$asset_make."', equipment_model = '" .$asset_model. "', equipment_sl_no = '" .$slerial_number. "', sp_details = '" .$sp_details. "' WHERE pms_info_id = '" .$pms_info_id. "' ";
+						$sql = "UPDATE pms_info SET facility_id = '" .$facility_id. "', facility_code = '" .$facility_code. "', department_id = '" .$department_id. "', device_group = '" .$device_group. "', asset_class = '" .$asset_class. "', equipment_name = '" .$equipment_name. "', pms_due_date = '" .$next_pms_date. "', supplied_by = '" .$supplied_by. "', pms_planned_date = '" .$pms_planned_date. "', pms_data_updated = '" .$pms_data_updated. "', row_status = '" .$row_status. "', equipment_make = '".$asset_make."', equipment_model = '" .$asset_model. "', equipment_sl_no = '" .$slerial_number. "', sp_details = '" .$sp_details. "', asset_code = '" .$asset_code. "' WHERE pms_info_id = '" .$pms_info_id. "' ";
 						$result = $mysqli->query($sql);
 					}	
 				} catch (PDOException $e) {

@@ -72,9 +72,10 @@
 		$status = true;
 		$mainData = array();
 		$email1 = '';
+		$user_id = $_SESSION["user_id"];
 		
 		
-		$sql = "SELECT * FROM facility_master LIMIT 0, 50";
+		$sql = "SELECT * FROM facility_master WHERE user_id = '" .$user_id. "' LIMIT 0, 50";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {

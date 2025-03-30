@@ -181,6 +181,13 @@
         
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
+                                    <label for="asset_code">Asset Code</label>
+                                    <input type="text" class="form-control" id="asset_code" name="asset_code" required >
+                                </div>
+                            </div>
+        
+                            <div class="col-sm-6 mb-1">
+                                <div class="form-group">
                                     <label for="equipment_make">Equipment Make/Model</label>
                                     <input type="text" class="form-control" id="equipment_make" name="equipment_make">
                                 </div>
@@ -253,7 +260,7 @@
                                 </div>
                             </div> 
 
-                            <div class="form-row"> 
+                            <div class="form-row mt-4"> 
                                 <div class="col-md-12 mb-3">
                                     <div class="text-center" id="product_gallery"> </div>
                                 </div>
@@ -461,6 +468,7 @@
                 $('#pms_planned_date').val($res1.pms_planned_date);  
                 $('#pms_sp_status').val($res1.pms_sp_status).trigger('change');
                 $('#sp_details').val($res1.sp_details);  
+                $('#asset_code').val($res1.asset_code);  
             }
         });//end ajax
     }
@@ -541,7 +549,7 @@
                     $html = "";
                     console.log('all_images length: '+$all_images.length);
                     for($i in $all_images ){
-                        $html += '<img src="./photos/'+$all_images[$i]+'" width="75" class="img-fluid img-thumbnail" alt="..."><a href="javascript: void(0)"> <i class="fa fa-trash" aria-hidden="true" onclick="deleteProdImage(\''+$all_images[$i]+'\')"></i></a>'; 
+                        $html += '<a href="./photos/'+$all_images[$i]+'" target="_blank"><img src="./photos/'+$all_images[$i]+'" width="75" class="img-fluid img-thumbnail" alt="..."></a><a href="javascript: void(0)"> <i class="fa fa-trash" aria-hidden="true" onclick="deleteProdImage(\''+$all_images[$i]+'\')"></i></a>'; 
                     }//end for
                     
                     $('#product_gallery').html($html);
@@ -592,7 +600,8 @@
             $('#pms_due_date').prop('readonly', true);   
             $('#supplied_by').prop('readonly', true);    
             $('#pms_planned_date').prop('readonly', true);     
-            $('#sp_details').prop('readonly', true); 
+            $('#sp_details').prop('readonly', true);     
+            $('#asset_code').prop('readonly', true); 
         }
         
     });

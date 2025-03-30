@@ -218,9 +218,9 @@ function initTicketCounter(){
         $res1 = JSON.parse(res); 
         if($res1.status == true){ 
             $('#total_ticket').html($res1.total_ticket); 
-            $('#pending_pms').html($res1.pending_pms);
-            $('#pending_pms1').html($res1.pending_pms);
-            $('#pms_done').html($res1.pms_done); 
+            $('#pending_pms').html($res1.pms_due);
+            $('#pending_pms1').html($res1.pms_dopms_scheduledne);
+            $('#pms_done').html($res1.pms_done);  
         }        
     });//end ajax 
 }
@@ -271,7 +271,7 @@ function updateSpEnggStatus($pms_id){
 
 $(document).ready(function () {
     initTicketCounter();
-    //configureDeviceGroupDropDown();
+    configureDeviceGroupDropDown();
     configureFacilityDropDown();
     populateDataTable(); 
 });

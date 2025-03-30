@@ -455,7 +455,7 @@
 		$status = true;
 		$mainData = array(); 
 
-		$sql = "SELECT * FROM device_group_list WHERE device_status = 1 ORDER BY device_name ASC";
+		$sql = "SELECT * FROM device_group_list WHERE device_status = '1' ORDER BY device_name ASC";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
