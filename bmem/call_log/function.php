@@ -145,9 +145,9 @@
 		$return_array['qa_due_date'] = date('d-m-Y', strtotime($qa_due_date));
 		$return_array['warranty_last_date'] = date('d-m-Y', strtotime($warranty_last_date)); 
 		$return_array['amc_yes_no'] = $amc_yes_no; 
-		$return_array['amc_last_date'] = date('d-m-Y', strtotime($amc_last_date)); 
+		$return_array['amc_last_date'] = $amc_last_date; 
 		$return_array['cmc_yes_no'] = $cmc_yes_no; 
-		$return_array['cmc_last_date'] = date('d-m-Y', strtotime($cmc_last_date));  
+		$return_array['cmc_last_date'] = $cmc_last_date;  
 		$return_array['asset_code'] = $asset_code;
 		$return_array['sp_details'] = $sp_details;
 		$return_array['status'] = $status;
@@ -169,6 +169,11 @@
 		$ticket_raiser_contact = $_POST['ticket_raiser_contact'];
 		$issue_description = $_POST['issue_description']; 
 		$call_log_date_time = date('Y-m-d H:i:s');
+    
+		$amc_yes_no = $_POST['amc_yes_no']; 
+		$amc_last_date = $_POST['amc_last_date']; 
+		$cmc_yes_no = $_POST['cmc_yes_no']; 
+		$cmc_last_date = $_POST['cmc_last_date']; 
 		
 		try {
 			if($issue_description == ''){
@@ -176,7 +181,7 @@
 				$status = false;
 			}else{
 				//Insert into table
-				$sql1 = "INSERT INTO call_log_register (facility_id, asset_code, user_id, ticket_raiser_name, ticket_raiser_contact, issue_description, call_log_date_time) VALUES ('" .$facility_id. "', '" .$asset_code. "', '" .$user_id. "', '" .$ticket_raiser_name. "', '" .$ticket_raiser_contact. "', '" .$issue_description. "', '" .$call_log_date_time. "')";
+				$sql1 = "INSERT INTO call_log_register (facility_id, asset_code, user_id, ticket_raiser_name, ticket_raiser_contact, issue_description, call_log_date_time, amc_yes_no, amc_last_date, cmc_yes_no, cmc_last_date) VALUES ('" .$facility_id. "', '" .$asset_code. "', '" .$user_id. "', '" .$ticket_raiser_name. "', '" .$ticket_raiser_contact. "', '" .$issue_description. "', '" .$call_log_date_time. "', '" .$amc_yes_no. "', '" .$amc_last_date. "', '" .$cmc_yes_no. "', '" .$cmc_last_date. "')";
 				$result1 = $mysqli->query($sql1);
 				$insert_id = $mysqli->insert_id;	
 

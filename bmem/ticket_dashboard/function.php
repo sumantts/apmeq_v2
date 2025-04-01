@@ -230,7 +230,7 @@
 			}			
 		}	
 		
-		$sql = "SELECT call_log_register.call_log_id, call_log_register.token_id, call_log_register.issue_description, call_log_register.call_log_date_time, call_log_register.resolved_date_time, call_log_register.ticket_raiser_contact, call_log_register.assign_to, call_log_register.call_log_status, call_log_register.eng_contact_no, call_log_register.engineer_coment, asset_details.equipment_name, asset_details.department_id, asset_details.asset_supplied_by, asset_details.sp_details, asset_details.warranty_last_date, facility_master.facility_code, facility_master.facility_name FROM call_log_register JOIN asset_details ON call_log_register.asset_code = asset_details.asset_code JOIN facility_master ON call_log_register.facility_id = facility_master.facility_id $where_condition ORDER BY call_log_register.call_log_id DESC LIMIT 0, 50";
+		$sql = "SELECT call_log_register.call_log_id, call_log_register.token_id, call_log_register.asset_code, call_log_register.issue_description, call_log_register.call_log_date_time, call_log_register.resolved_date_time, call_log_register.ticket_raiser_contact, call_log_register.assign_to, call_log_register.call_log_status, call_log_register.eng_contact_no, call_log_register.engineer_coment, call_log_register.amc_yes_no, call_log_register.amc_last_date, call_log_register.cmc_yes_no, call_log_register.cmc_last_date, asset_details.equipment_name, asset_details.department_id, asset_details.asset_supplied_by, asset_details.sp_details, asset_details.warranty_last_date, facility_master.facility_code, facility_master.facility_name FROM call_log_register JOIN asset_details ON call_log_register.asset_code = asset_details.asset_code JOIN facility_master ON call_log_register.facility_id = facility_master.facility_id $where_condition ORDER BY call_log_register.call_log_id DESC LIMIT 0, 50";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -248,6 +248,8 @@
 				$asset_supplied_by = $row['asset_supplied_by'];						
 				$engineer_coment = $row['engineer_coment'];				
 				$sp_details = $row['sp_details'];					
+				$asset_code = $row['asset_code'];	
+								
 				$call_log_date_time = date('d-F-Y h:i A', strtotime($row['call_log_date_time']));	
 				$resolved_date_time = '';
 				if($row['resolved_date_time'] != '0000-00-00 00:00:00'){			
@@ -311,6 +313,16 @@
 				} 
 				
 				$warranty_last_date = $row['warranty_last_date'];
+				$amc_yes_no = $row['amc_yes_no'];
+				$amc_last_date = $row['amc_last_date'];
+				$cmc_yes_no = $row['cmc_yes_no'];
+				$cmc_last_date = $row['cmc_last_date'];
+
+				$amc_info1 = ($amc_yes_no == 0)? 'No':'Yes';
+				$cmc_info1 = ($cmc_yes_no == 0)? 'No':'Yes'; 
+
+				$amc_info = $amc_info1 ."<br>". date('d-F-Y', strtotime($amc_last_date));
+				$cmc_info = $cmc_info1 ."<br>". date('d-F-Y', strtotime($cmc_last_date));
 
 				if($dept_match == true){
 					$data[0] = $slno; 
@@ -318,11 +330,11 @@
 					$data[2] = $issue_description;
 					$data[3] = '-';
 					$data[4] = $equipment_name; 
-					$data[5] = $facility_code;
+					$data[5] = $asset_code; 
 					$data[6] = $facility_name;
-					$data[7] = $dept_names;
-					$data[8] = $asset_supplied_by;
-					$data[9] = $sp_details;
+					$data[7] = $facility_code;
+					$data[8] = $dept_names;
+					$data[9] = $asset_supplied_by;
 					$data[10] = $call_log_date_time;
 					$data[11] = $resolved_date_time;
 					$data[12] = $ticket_raiser_contact;
@@ -354,7 +366,11 @@
 					}else{
 						$data[16] = '';
 					}
-					$data[17] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$call_log_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$call_log_id.")'></i></a>";						
+					$data[17] = $amc_info;	
+					$data[18] = $cmc_info;	
+					$data[19] = $sp_details;
+
+					$data[20] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$call_log_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$call_log_id.")'></i></a>";						
 
 					array_push($mainData, $data);
 					$slno++;

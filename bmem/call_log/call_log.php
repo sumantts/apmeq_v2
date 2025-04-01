@@ -85,6 +85,12 @@ include('common/head.php');
                                     <input type="hidden" name="facility_id" id="facility_id" value="0">
                                     <input type="hidden" name="user_id" id="user_id" value="<?=$_SESSION["user_id"]?>" >
                                     <input type="text" class="form-control" id="ticket_raiser_name" value="<?=$_SESSION["user_name"]?>" required > 
+
+                                    
+                                    <input type="hidden" name="amc_yes_no" id="amc_yes_no" value="">
+                                    <input type="hidden" name="amc_last_date" id="amc_last_date" value="">
+                                    <input type="hidden" name="cmc_yes_no" id="cmc_yes_no" value="">
+                                    <input type="hidden" name="cmc_last_date" id="cmc_last_date" value="">
                                 </div>  
 
                                 <div class="col-md-3 mb-3">

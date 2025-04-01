@@ -15,6 +15,12 @@ $('#asset_code').on('blur', function(){
             $res1 = JSON.parse(res);
             if($res1.status == true){
                 $('#facility_id').val($res1.facility_id);
+
+                $('#amc_yes_no').val($res1.amc_yes_no);
+                $('#amc_last_date').val($res1.amc_last_date);
+                $('#cmc_yes_no').val($res1.cmc_yes_no);
+                $('#cmc_last_date').val($res1.cmc_last_date);
+
                 $html = '';
                 $html += '<div class="col-md-12">';
                 $html += '<span><strong>Device Name:</strong> '+$res1.equipment_name+'</span></br>';
@@ -33,7 +39,7 @@ $('#asset_code').on('blur', function(){
                 if($res1.cmc_yes_no == 1){
                     $html += '<span><strong>Last Date of CMC:</strong> '+$res1.cmc_last_date+'</span></br>';
                 }
-                $html += '<span><strong>Service Provider Details(Contact Number, Email Id) (in Warranty/AMC/CMC):</strong> '+$res1.sp_details+'</span></br>';
+                $html += '<span><strong>Service Provider Details:</strong> '+$res1.sp_details+'</span></br>';
                 $html += '</div>';
                 $('#asset_detail').html($html);
                 
@@ -56,11 +62,16 @@ $('#myForm').on('submit', function(){
     $ticket_raiser_name = $('#ticket_raiser_name').val(); 
     $ticket_raiser_contact = $('#ticket_raiser_contact').val();
     $issue_description = $('#issue_description').val(); 
+    
+    $amc_yes_no = $('#amc_yes_no').val(); 
+    $amc_last_date = $('#amc_last_date').val(); 
+    $cmc_yes_no = $('#cmc_yes_no').val(); 
+    $cmc_last_date = $('#cmc_last_date').val(); 
 
     $.ajax({
         method: "POST",
         url: "call_log/function.php",
-        data: { fn: "saveFormData", facility_id: $facility_id, asset_code: $asset_code, user_id: $user_id, ticket_raiser_name: $ticket_raiser_name, ticket_raiser_contact: $ticket_raiser_contact, issue_description: $issue_description }
+        data: { fn: "saveFormData", facility_id: $facility_id, asset_code: $asset_code, user_id: $user_id, ticket_raiser_name: $ticket_raiser_name, ticket_raiser_contact: $ticket_raiser_contact, issue_description: $issue_description, amc_yes_no: $amc_yes_no, amc_last_date: $amc_last_date, cmc_yes_no: $cmc_yes_no, cmc_last_date: $cmc_last_date }
     })
     .done(function( res ) {
         //console.log(res);

@@ -278,11 +278,11 @@ include('common/head.php');
                                         <th>Complaint/issue</th>
                                         <th>Barcode</th>
                                         <th>Asset Name</th>
-                                        <th>Facility code</th>
+                                        <th>Asset Code</th>
                                         <th>Facility Name</th>
+                                        <th>Facility code</th>
                                         <th>Department</th>
                                         <th>Supplied by</th>
-                                        <th>Service provider details<br> if it is in <br>Warranty/AMC/CMC</th>
                                         <th>Logged date</th> 
                                         <th>Resolved Date</th>
                                         <th>Contact details <br>of <br>ticket raiser</th>
@@ -290,6 +290,9 @@ include('common/head.php');
                                         <th>Engineer Contact No</th>
                                         <th>Call Log Status </th> 
                                         <th>Warrenty last date</th>
+                                        <th>AMC(Y/N)<br>Date</th>
+                                        <th>CMC(Y/N)<br>Date</th>
+                                        <th>Service provider<br> details</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -300,11 +303,11 @@ include('common/head.php');
                                         <th>Complaint/issue</th>
                                         <th>Barcode</th>
                                         <th>Asset Name</th>
-                                        <th>Facility code</th>
+                                        <th>Asset Code</th>
                                         <th>Facility Name</th>
+                                        <th>Facility code</th>
                                         <th>Department</th>
                                         <th>Supplied by</th>
-                                        <th>Service provider details<br> if it is in <br>Warranty/AMC/CMC</th>
                                         <th>Logged date</th> 
                                         <th>Resolved Date</th>
                                         <th>Contact details <br>of <br>ticket raiser</th>
@@ -312,6 +315,9 @@ include('common/head.php');
                                         <th>Engineer Contact No</th>
                                         <th>Call Log Status </th> 
                                         <th>Warrenty last date</th>
+                                        <th>AMC(Y/N)<br>Date</th>
+                                        <th>CMC(Y/N)<br>Date</th>
+                                        <th>Service provider<br> details</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
