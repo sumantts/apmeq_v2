@@ -10,7 +10,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
     <link rel="icon" href="../assets/images/favicon-16x16.png" type="image/x-icon">
 
-    <title>Calibration Info</title> 
+    <title>Calibration Soft Link</title> 
     <style>
         body{
             margin-top:20px;
@@ -62,8 +62,9 @@
 
     </style>    
   </head>
-  <?php include('../assets/php/sql_conn.php'); ?>
-  
+  <?php
+	include('../assets/php/sql_conn.php');
+    ?>
   <body>
     <div class="container">
         <div class="contact__wrapper shadow-lg mt-n9">
@@ -105,7 +106,7 @@
                 </div>
         
                 <div class="col-lg-8 contact-form__wrapper p-5 order-lg-1">
-                    <h4 class="text-center">Calibration Info #<?=$_GET['calib_info_id']?></h4>
+                    <h4 class="text-center">Calibration #<?=$_GET['calib_info_id']?></h4>
                     <form action="#" method="POST" class="contact-form form-validate" id="myForm">
                         <div class="row">
                             <div class="col-sm-6 mb-1">
@@ -139,7 +140,7 @@
                                     <select class="form-control" name="device_group" id="device_group" required >
                                         <option value="">Select</option> 
                                         <?php
-                                        echo $sql = "SELECT * FROM device_group_list WHERE device_status = 1 ORDER BY device_name ASC";
+                                        $sql = "SELECT * FROM device_group_list WHERE device_status = 1 ORDER BY device_name ASC";
                                         $result = $mysqli->query($sql);
                                 
                                         if ($result->num_rows > 0) {
@@ -152,6 +153,8 @@
                                                 <option value="<?=$device_group_id?>" ><?=$device_name?></option>
                                                 <?php
                                             }
+                                        } else {
+                                            $status = false;
                                         }
                                         ?>
                                     </select>
@@ -178,8 +181,22 @@
         
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
-                                    <label for="equipment_make_model">Equipment Make/Model</label>
-                                    <input type="text" class="form-control" id="equipment_make_model" name="equipment_make_model">
+                                    <label for="asset_code">Asset Code</label>
+                                    <input type="text" class="form-control" id="asset_code" name="asset_code" required >
+                                </div>
+                            </div>
+        
+                            <div class="col-sm-6 mb-1">
+                                <div class="form-group">
+                                    <label for="equipment_make">Equipment Make/Model</label>
+                                    <input type="text" class="form-control" id="equipment_make" name="equipment_make">
+                                </div>
+                            </div>
+        
+                            <div class="col-sm-6 mb-1">
+                                <div class="form-group">
+                                    <label for="equipment_model">Equipment Make/Model</label>
+                                    <input type="text" class="form-control" id="equipment_model" name="equipment_model">
                                 </div>
                             </div>
         
@@ -192,37 +209,43 @@
         
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
-                                    <label for="pms_due_date">Calibration due date</label>
-                                    <input type="date" class="form-control" id="pms_due_date" name="pms_due_date"  >
+                                    <label for="pms_due_date">PMS due date</label>
+                                    <input type="date" class="form-control" id="pms_due_date" name="pms_due_date" required >
                                 </div>
                             </div>
         
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
                                     <label for="supplied_by">Supplied by</label>
-                                    <input type="text" class="form-control" id="supplied_by" name="supplied_by"  >
+                                    <input type="text" class="form-control" id="supplied_by" name="supplied_by" required >
                                 </div>
-                            </div> 
-        
-                            <div class="col-sm-6 mb-1">
-                                <div class="form-group">
-                                    <label for="pms_planned_date">Planned date for Calibration</label>
-                                    <input type="date" class="form-control" id="pms_planned_date" name="pms_planned_date">
-                                </div>
-                            </div>
-
-                            <div class="col-sm-12 mb-1">
-                                <div class="form-group">
-                                    <label class="required-field" for="service_provider_details">Service Provider Details</label>
-                                    <textarea class="form-control" id="service_provider_details" name="service_provider_details" rows="4" placeholder="Name, Email, Phone Number"> </textarea>
-                                </div>
-                            </div>
-                            <!-- 
+                            </div>  
         
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
                                     <label for="pms_planned_date">PMS planned date</label>
-                                    <input type="date" class="form-control" id="pms_planned_date" name="pms_planned_date" >
+                                    <input type="date" class="form-control" id="pms_planned_date" name="pms_planned_date" required >
+                                </div>
+                            </div> 
+        
+                            <div class="col-sm-12 mb-1">
+                                <div class="form-group">
+                                    <label class="required-field" for="sp_details">Service Provider Details</label>
+                                    <textarea class="form-control" id="sp_details" name="sp_details" rows="4" > </textarea>
+                                </div>
+                            </div>
+        
+                            <div class="col-sm-12 mb-1">
+                                <div class="form-group">
+                                    <label class="required-field" for="service_provider_details">Comments</label>
+                                    <textarea class="form-control" id="service_provider_details" name="service_provider_details" rows="4" > </textarea>
+                                </div>
+                            </div>
+        
+                            <!-- <div class="col-sm-6 mb-1">
+                                <div class="form-group">
+                                    <label class="form-label" for="pms_report_attached">Upload report</label>
+                                    <input type="file" class="form-control" id="pms_report_attached" name="pms_report_attached" />
                                 </div>
                             </div>  -->
                             <div class="col-md-6 mt-4">
@@ -237,13 +260,23 @@
                                 </div>
                             </div> 
 
-                            <div class="form-row mb-2"> 
+                            <div class="form-row mt-4"> 
                                 <div class="col-md-12 mb-3">
                                     <div class="text-center" id="product_gallery"> </div>
                                 </div>
                             </div>
         
-                            <div class="col-sm-12 mt-2 mb-1">
+                            <div class="col-sm-6 mb-1">
+                                <div class="form-group">
+                                    <label for="pms_sp_status">Status</label>
+                                    <select class="form-control" name="pms_sp_status" id="pms_sp_status" required > 
+                                        <option value="0">Work in progress</option>
+                                        <option value="1">Completed</option> 
+                                    </select>
+                                </div>
+                            </div>
+        
+                            <div class="col-sm-12 mb-1">
                                 <input type="hidden" name="calib_info_id" id="calib_info_id" value="<?=$_GET['calib_info_id']?>">
                                 <button type="submit" name="submit" class="btn btn-primary">Submit</button>
                             </div>
@@ -273,17 +306,19 @@
             $device_group = $('#device_group').val();
             $asset_class = $('#asset_class').val();
             $equipment_name = $('#equipment_name').val();
-            $equipment_make_model = $('#equipment_make_model').val();
+            $equipment_make = $('#equipment_make').val();
+            $equipment_model = $('#equipment_model').val();
             $equipment_sl_no = $('#equipment_sl_no').val();
             $pms_due_date = $('#pms_due_date').val();
             $supplied_by = $('#supplied_by').val();
             $service_provider_details = $('#service_provider_details').val();
             $pms_planned_date = $('#pms_planned_date').val();
+            $pms_sp_status = $('#pms_sp_status').val();
 
             $.ajax({
                 method: "POST",
                 url: "../calibration_dashboard/function.php",
-                data: { fn: "updateGeneratedFormdata", calib_info_id: $calib_info_id, facility_id: $facility_id, facility_code: $facility_code, department_id: $department_id, device_group: $device_group, asset_class: $asset_class, equipment_name: $equipment_name, equipment_make_model: $equipment_make_model, equipment_sl_no: $equipment_sl_no, pms_due_date: $pms_due_date, supplied_by: $supplied_by, service_provider_details: $service_provider_details, pms_planned_date: $pms_planned_date }
+                data: { fn: "updateGeneratedFormdata", calib_info_id: $calib_info_id, facility_id: $facility_id, facility_code: $facility_code, department_id: $department_id, device_group: $device_group, asset_class: $asset_class, equipment_name: $equipment_name, equipment_make: $equipment_make, equipment_model: $equipment_model, equipment_sl_no: $equipment_sl_no, pms_due_date: $pms_due_date, supplied_by: $supplied_by, service_provider_details: $service_provider_details, pms_planned_date: $pms_planned_date, pms_sp_status: $pms_sp_status }
             })
             .done(function( res ) {
                 $res1 = JSON.parse(res); 
@@ -424,12 +459,16 @@
                 $('#device_group').val($res1.device_group).trigger('change');            
                 $('#asset_class').val($res1.asset_class).trigger('change');
                 $('#equipment_name').val($res1.equipment_name);  
-                $('#equipment_make_model').val($res1.equipment_make_model);
+                $('#equipment_make').val($res1.equipment_make); 
+                $('#equipment_model').val($res1.equipment_model);
                 $('#equipment_sl_no').val($res1.equipment_sl_no);  
                 $('#pms_due_date').val($res1.pms_due_date);  
                 $('#supplied_by').val($res1.supplied_by);  
                 $('#service_provider_details').val($res1.service_provider_details);  
                 $('#pms_planned_date').val($res1.pms_planned_date);  
+                $('#pms_sp_status').val($res1.pms_sp_status).trigger('change');
+                $('#sp_details').val($res1.sp_details);  
+                $('#asset_code').val($res1.asset_code);  
             }
         });//end ajax
     }
@@ -510,7 +549,7 @@
                     $html = "";
                     console.log('all_images length: '+$all_images.length);
                     for($i in $all_images ){
-                        $html += '<img src="./photos/'+$all_images[$i]+'" width="75" class="img-fluid img-thumbnail" alt="..."><a href="javascript: void(0)"> <i class="fa fa-trash" aria-hidden="true" onclick="deleteProdImage(\''+$all_images[$i]+'\')"></i></a>'; 
+                        $html += '<a href="./photos/'+$all_images[$i]+'" target="_blank"><img src="./photos/'+$all_images[$i]+'" width="75" class="img-fluid img-thumbnail" alt="..."></a><a href="javascript: void(0)"> <i class="fa fa-trash" aria-hidden="true" onclick="deleteProdImage(\''+$all_images[$i]+'\')"></i></a>'; 
                     }//end for
                     
                     $('#product_gallery').html($html);
@@ -542,7 +581,7 @@
 
     $(document).ready(function () {
         configureFacilityDropDown(); 
-        //configureDeviceGroupDropDown();
+        configureDeviceGroupDropDown();
         loadFormdata();
 
         $user_id = window.localStorage.getItem('user_id');
@@ -555,11 +594,14 @@
             $('#device_group').prop('disabled', true);             
             $('#asset_class').prop('disabled', true); 
             $('#equipment_name').prop('readonly', true);  
-            $('#equipment_make_model').prop('readonly', true);
+            $('#equipment_make').prop('readonly', true); 
+            $('#equipment_model').prop('readonly', true);
             $('#equipment_sl_no').prop('readonly', true);  
             $('#pms_due_date').prop('readonly', true);   
             $('#supplied_by').prop('readonly', true);    
-            $('#pms_planned_date').prop('readonly', true);  
+            $('#pms_planned_date').prop('readonly', true);     
+            $('#sp_details').prop('readonly', true);     
+            $('#asset_code').prop('readonly', true); 
         }
         
     });

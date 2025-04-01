@@ -49,7 +49,7 @@ include('common/head.php');
                 <div class="card support-bar overflow-hidden">
                     <div class="card-body pb-0 text-center">
                         <h2 class="m-0" id="total_ticket">000</h2>
-                        <span class="text-c-blue">calibration Ticket Status</span>
+                        <span class="text-c-blue">Calibration Ticket Status</span>
                         <p class="mb-3 mt-3">Total number of support requests that come in.</p>
                     </div>
                     <div id="support-chart"></div>
@@ -101,7 +101,7 @@ include('common/head.php');
                             <table id="example" class="table table-striped" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>No.</th>
+                                        <th>No.</th> 
                                         <th>Facility name/code</th>
                                         <th>Calibration due</th>
                                         <th>Calibration done</th>
@@ -128,7 +128,7 @@ include('common/head.php');
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Filter Calibration Tickets </h5> 
+                        <h5>Filter Calibration </h5> 
                     </div>
                     <div class="card-body">
                         <div class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;" id="orgFormAlert">
@@ -181,9 +181,10 @@ include('common/head.php');
                                 <div class="col-md-3 mb-3">
                                     <label for="PMSStatus">Calibration Status</label>
                                     <select class="form-control" id="PMSStatus">
-                                        <option value="0">Select</option>
-                                        <option value="1">DONE</option>
-                                        <option value="2">DUE</option> 
+                                        <option value="">Select</option>
+                                        <option value="0">Work in progress</option>
+                                        <option value="1">Resolved</option> 
+                                        <option value="2">Closed</option> 
                                     </select> 
                                 </div>      
 
@@ -218,9 +219,9 @@ include('common/head.php');
                                     </button>
                                 </div> 
 
-                                <div class="col-md-4 mt-4">
+                                <!-- <div class="col-md-4 mt-4">
                                     <button type="button" class="btn btn-primary mb-2 float-right" id="generateLink">Generate Link <i class="fa fa-external-link" aria-hidden="true"></i></button>
-                                </div> 
+                                </div>  -->
 
                             </div>
                         </form>
@@ -243,44 +244,46 @@ include('common/head.php');
                             <table id="example_1" class="table table-striped" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>No.</th>  
-                                        <th>Calib. ID</th> 
+                                        <th>No.</th> 
+                                        <th>Calibration ID</th>
                                         <th>Facility Name</th>
                                         <th>Facility Code</th>
                                         <th>Department</th>
                                         <th>Device Group</th>
                                         <th>Asset Class</th> 
                                         <th>Equpment Name</th>
-                                        <th>Equipment Make/Model</th>
+                                        <th>Asset Code</th>
+                                        <th>Equipment Make</th>
+                                        <th>Equipment Model</th>
                                         <th>Equipment sl no</th>
-                                        <th>Calibration due date</th> 
+                                        <th>Last Calibration Done</th>  
                                         <th>Supplied by</th>
                                         <th>Service provider details<br> if it is in Warranty/AMC/CMC</th>
                                         <th>Calibration planned date</th>
-                                        <th>Assign Service provider/<br>Junior enhgineer <br>(by soft link <br>email/mobile no/whatsapp)</th>
-                                         
+                                        <th>Assign Service provider/<br>Junior enhgineer <br>(by soft link <br>email/mobile no/whatsapp)</th>                                         
                                         <th>View report</th>
                                         <th>Updated status<br>(WIP/Resolved/closed)</th> 
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>No.</th> 
-                                        <th>Calib. ID</th> 
+                                        <th>No.</th>
+                                        <th>Calibration ID</th>
                                         <th>Facility Name</th>
                                         <th>Facility Code</th>
                                         <th>Department</th>
                                         <th>Device Group</th>
                                         <th>Asset Class</th> 
                                         <th>Equpment Name</th>
-                                        <th>Equipment Make/Model</th>
+                                        <th>Asset Code</th>
+                                        <th>Equipment Make</th>
+                                        <th>Equipment Model</th>
                                         <th>Equipment sl no</th>
-                                        <th>Calibration due date</th> 
+                                        <th>Last Calibration Done</th>  
                                         <th>Supplied by</th>
                                         <th>Service provider details<br> if it is in Warranty/AMC/CMC</th>
                                         <th>Calibration planned date</th>
-                                        <th>Assign Service provider/<br>Junior enhgineer <br>(by soft link <br>email/mobile no/whatsapp)</th>
-                                         
+                                        <th>Assign Service provider/<br>Junior enhgineer <br>(by soft link <br>email/mobile no/whatsapp)</th>                                         
                                         <th>View report</th>
                                         <th>Updated status<br>(WIP/Resolved/closed)</th> 
                                     </tr>

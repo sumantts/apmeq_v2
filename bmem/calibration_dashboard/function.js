@@ -98,8 +98,7 @@ function populateDataTable_1(){
                 text: '<i class="fa fa-print"></i>',
                 titleAttr: 'Print'
             },
-        ]
-
+        ] 
     });
 }//end fun
 
@@ -189,7 +188,7 @@ $('#generateLink').on('click', function(){
     .done(function( res ) {
         $res1 = JSON.parse(res);
         if($res1.status == true){
-            window.open('calibration_dashboard/calib_link.php?calib_info_id='+$res1.calib_info_id, '_blank');
+            window.open('calibration_dashboard/calib_link.php?pms_info_id='+$res1.pms_info_id, '_blank');
         }else{
             alert($res1.error_message);
         }  
@@ -219,23 +218,45 @@ function initTicketCounter(){
         $res1 = JSON.parse(res); 
         if($res1.status == true){ 
             $('#total_ticket').html($res1.total_ticket); 
-            $('#pending_pms').html($res1.pending_pms);
-            $('#pending_pms1').html($res1.pending_pms);
-            $('#pms_done').html($res1.pms_done); 
+            $('#pending_pms').html($res1.pms_due);
+            $('#pending_pms1').html($res1.pms_dopms_scheduledne);
+            $('#pms_done').html($res1.pms_done);  
         }        
     });//end ajax 
 }
 
 
-function updateCalibStatus($calib_id, $asset_id){
-    $calib_status = $('#calib_id_'+$calib_id).val();
-    console.log('calib_id: ' + $calib_id + ' calib_status: ' + $calib_status);
+function updatePMSStatus($calib_id, $asset_id){
+    $pms_status = $('#calib_id_'+$calib_id).val();
+    console.log('calib_id: ' + $calib_id + ' pms_status: ' + $pms_status);
 
     if(confirm('Are you sure to change status?')){
         $.ajax({
             method: "POST",
             url: "calibration_dashboard/function.php",
-            data: { fn: "updateCalibStatus", calib_id: $calib_id, calib_status: $calib_status, asset_id: $asset_id }
+            data: { fn: "updatePMSStatus", calib_id: $calib_id, pms_status: $pms_status, asset_id: $asset_id }
+        })
+        .done(function( res ) {
+            //console.log(res);
+            $res1 = JSON.parse(res);
+            if($res1.status == true){
+                alert('Status Updated Successfully');
+                populateDataTable_1();
+            }
+        }); //end ajax
+    }
+}
+
+
+function updateSpEnggStatus($calib_id){
+    $assign_to_sp_engg_status = $('#assign_to_sp_engg_'+$calib_id).val();
+    console.log('calib_id: ' + $calib_id + ' assign_to_sp_engg_status: ' + $assign_to_sp_engg_status);
+
+    if(confirm('Are you sure to change status?')){
+        $.ajax({
+            method: "POST",
+            url: "calibration_dashboard/function.php",
+            data: { fn: "updateSpEnggStatus", calib_id: $calib_id, assign_to_sp_engg_status: $assign_to_sp_engg_status }
         })
         .done(function( res ) {
             //console.log(res);

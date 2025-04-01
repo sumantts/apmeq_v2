@@ -112,7 +112,7 @@
 						$calib_frequency = 'Each '.$y.' Year(s)';
 						$next_calib_date = date('d-F-Y', strtotime('+'.$y.' year', strtotime($last_date_of_calibration)));
 					}else if($calib_freq_str[1] > 0){
-						$m = $calib_freq_str[0];
+						$m = $calib_freq_str[1];
 						$calib_frequency = 'Each '.$m.' Month(s)';
 						$next_calib_date = date('d-F-Y', strtotime('+'.$m.' month', strtotime($last_date_of_calibration)));
 					}else if($calib_freq_str[2] > 0){
@@ -357,61 +357,122 @@
 		$return_result = array(); 
 		$status = true;	
 		$error_message = '';
-		$pms_id = 0;
+		$calib_id = 0;
 		$asset_id = $_POST['asset_id'];
 		$link_generated_by = $_SESSION["user_id"];
 		$link_generate_time = date('Y-m-d H:i:s');
-		
-		$sql = "INSERT INTO calib_info (asset_id, link_generated_by, link_generate_time) VALUES ('" .$asset_id. "', '" .$link_generated_by. "', '" .$link_generate_time. "')";
-		$result = $mysqli->query($sql);
-		$calib_id = $mysqli->insert_id;
 
-		if($calib_id > 0){
-			$status = true;  
-			$calib_info_id = str_pad($calib_id, 4, '0', STR_PAD_LEFT);
+		# check PMS is open or closed
+		$sql1 = "SELECT * FROM calib_info WHERE asset_id = '" .$asset_id. "'";
+		$result1 = $mysqli->query($sql1);
+		if($result1->num_rows > 0) {	
+			$row1 = $result1->fetch_array();
+			$calib_id = $row1['calib_id'];
+			$calib_info_id = $row1['calib_info_id'];
+			$pms_status = $row1['pms_status'];
+			$pms_status_text = '';
 
-			$upd_sql = "UPDATE calib_info SET calib_info_id = '" .$calib_info_id. "' WHERE calib_id = '" .$calib_id. "' ";
-			$result_upd = $mysqli->query($upd_sql);  
-
-			$sql_2 = "SELECT asset_details.facility_id, asset_details.department_id, asset_details.device_group, asset_details.asset_class, asset_details.equipment_name, asset_details.last_date_of_pms, asset_details.asset_supplied_by, facility_master.facility_code FROM asset_details JOIN facility_master ON asset_details.facility_id = facility_master.facility_id WHERE asset_details.asset_id = '" .$asset_id. "'";
-			$result_2 = $mysqli->query($sql_2);
-	
-			if($result_2->num_rows > 0) {	
-				$row_2 = $result_2->fetch_array();
-				$facility_id = $row_2['facility_id'];
-				$department_id_str = $row_2['department_id'];
-				$department_ids = json_decode($department_id_str);
-				$department_id = $department_ids[0];
-				$facility_code = $row_2['facility_code'];
-				$device_group = $row_2['device_group'];
-				$asset_class = $row_2['asset_class'];
-				$equipment_name = $row_2['equipment_name'];
-				$pms_due_date = $row_2['last_date_of_pms'];
-				$supplied_by = $row_2['asset_supplied_by'];
-				$pms_planned_date = date('Y-m-d');
-			} 
-			
-			try {
-				if($calib_info_id > 0){
-					$status = true;
-					$pms_data_updated = date('Y-m-d H:i:s');
-					$row_status = 2;
-					$sql = "UPDATE calib_info SET facility_id = '" .$facility_id. "', facility_code = '" .$facility_code. "', department_id = '" .$department_id. "', device_group = '" .$device_group. "', asset_class = '" .$asset_class. "', equipment_name = '" .$equipment_name. "', pms_due_date = '" .$pms_due_date. "', supplied_by = '" .$supplied_by. "', pms_planned_date = '" .$pms_planned_date. "', pms_data_updated = '" .$pms_data_updated. "', row_status = '" .$row_status. "' WHERE calib_id = '" .$calib_id. "' ";
-					$result = $mysqli->query($sql);
-				}	
-			} catch (PDOException $e) {
-				die("Error occurred:" . $e->getMessage());
+			if($pms_status == 0){
+				$pms_status_text = 'Work In Progress';
 			}
-			
-		}else{
-			$return_result['error_message'] = 'Data Insert Error';
+			if($pms_status == 1){
+				$pms_status_text = 'Resolved';
+			}
+			if($pms_status == 2){
+				$pms_status_text = 'Closed';
+			}
+			$return_result['error_message'] = 'Calibration Soft Link Already Generated. Calibration ID: '.$calib_info_id.' and Calibration Status is: '.$pms_status_text;
 			$status = false;
 		}
 
-		$return_result['error_message'] = $error_message; 
+		if($status == true){
+			$sql = "INSERT INTO calib_info (asset_id, link_generated_by, link_generate_time) VALUES ('" .$asset_id. "', '" .$link_generated_by. "', '" .$link_generate_time. "')";
+			$result = $mysqli->query($sql);
+			$calib_id = $mysqli->insert_id;
+
+			if($calib_id > 0){
+				$status = true;  
+				$calib_info_id = str_pad($calib_id, 4, '0', STR_PAD_LEFT);
+
+				$upd_sql = "UPDATE calib_info SET calib_info_id = '" .$calib_info_id. "' WHERE calib_id = '" .$calib_id. "' ";
+				$result_upd = $mysqli->query($upd_sql); 
+
+				$sql_2 = "SELECT asset_details.facility_id, asset_details.department_id, asset_details.device_group, asset_details.asset_class, asset_details.equipment_name, asset_details.last_date_of_calibration, asset_details.frequency_of_calibration, asset_details.asset_supplied_by, asset_details.asset_make, asset_details.asset_model, asset_details.slerial_number, asset_details.sp_details, asset_details.asset_code, facility_master.facility_code FROM asset_details JOIN facility_master ON asset_details.facility_id = facility_master.facility_id WHERE asset_details.asset_id = '" .$asset_id. "'";
+				$result_2 = $mysqli->query($sql_2);
+		
+				if($result_2->num_rows > 0) {	
+					$row_2 = $result_2->fetch_array();
+					$facility_id = $row_2['facility_id'];
+					$department_id_str = $row_2['department_id'];
+					$department_ids = json_decode($department_id_str);
+					$department_id = $department_ids[0];
+					$facility_code = $row_2['facility_code'];
+					$device_group = $row_2['device_group'];
+					$asset_class = $row_2['asset_class'];
+					$equipment_name = $row_2['equipment_name'];
+					$pms_due_date = $row_2['last_date_of_calibration'];
+					$last_date_of_calibration = $row_2['last_date_of_calibration'];
+					$frequency_of_calibration = $row_2['frequency_of_calibration'];
+					$supplied_by = $row_2['asset_supplied_by'];
+					$asset_make = $row_2['asset_make'];
+					$asset_model = $row_2['asset_model'];
+					$slerial_number = $row_2['slerial_number'];
+					$sp_details = $row_2['sp_details'];
+					$asset_code = $row_2['asset_code'];
+					$pms_planned_date = date('Y-m-d');
+				} 
+
+				
+
+				# PMS Frequency Calculation
+				$pms_frequency = '';
+				$next_pms_date = '';
+
+				if($last_date_of_calibration != '0000-00-00'){
+					$last_date_of_calibration1 = date('Y-m-d', strtotime($last_date_of_calibration));
+					$date = new DateTime($last_date_of_calibration1); 
+						
+					$pms_freq_str = explode("|", $frequency_of_calibration);
+					if($pms_freq_str[0] > 0){
+						$y1 = $pms_freq_str[0];
+						$pms_frequency = 'Each '.$y1.' Year(s)';
+						$next_pms_date = date('Y-m-d', strtotime('+'.$y1.' year', strtotime($last_date_of_calibration)));
+					}else if($pms_freq_str[1] > 0){
+						$m1 = $pms_freq_str[1];
+						$pms_frequency = 'Each '.$m1.' Month(s)';
+						$next_pms_date = date('Y-m-d', strtotime('+'.$m1.' month', strtotime($last_date_of_calibration)));
+					}else if($pms_freq_str[2] > 0){
+						$d1 = $pms_freq_str[2];
+						$pms_frequency = 'Each '.$d1.' Day(s)';
+						$next_pms_date = date('Y-m-d', strtotime('+'.$d1.' day', strtotime($last_date_of_calibration)));
+					}else{
+						$pms_frequency = '';
+						$next_pms_date = '';
+					} 
+				}//ennd if
+				
+				try {
+					if($calib_info_id > 0){
+						$status = true;
+						$pms_data_updated = date('Y-m-d H:i:s');
+						$row_status = 2;
+						$sql = "UPDATE calib_info SET facility_id = '" .$facility_id. "', facility_code = '" .$facility_code. "', department_id = '" .$department_id. "', device_group = '" .$device_group. "', asset_class = '" .$asset_class. "', equipment_name = '" .$equipment_name. "', pms_due_date = '" .$next_pms_date. "', supplied_by = '" .$supplied_by. "', pms_planned_date = '" .$pms_planned_date. "', pms_data_updated = '" .$pms_data_updated. "', row_status = '" .$row_status. "', equipment_make = '".$asset_make."', equipment_model = '" .$asset_model. "', equipment_sl_no = '" .$slerial_number. "', sp_details = '" .$sp_details. "', asset_code = '" .$asset_code. "' WHERE calib_info_id = '" .$calib_info_id. "' ";
+						$result = $mysqli->query($sql);
+					}	
+				} catch (PDOException $e) {
+					die("Error occurred:" . $e->getMessage());
+				}
+				
+			}else{
+				$return_result['error_message'] = 'Data Insert Error';
+				$status = false;
+			}
+		}//end if
+		
 		$return_result['status'] = $status; 
 		$return_result['calib_info_id'] = $calib_info_id; 
 		echo json_encode($return_result);
+		
 	}//end function 
 
 ?>
