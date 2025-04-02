@@ -83,6 +83,8 @@ include('common/head.php');
                                         <th>Next Calibration <br>Date</th>
                                         <th>PMS <br>Frequency</th>
                                         <th>Next PMS <br>Date</th>
+                                        <th>QA <br>Frequency</th>
+                                        <th>Next QA <br>Date</th>
                                         <th>Technology<br>(i.e obsolute/running)</th>
                                         <th>Asset status<br>(Working/not working/<br>not in use/packed/RBER)</th>
                                         <th>Verified(Yes/No)</th>
@@ -102,6 +104,8 @@ include('common/head.php');
                                         <th>Next Calibration <br>Date</th>
                                         <th>PMS <br>Frequency</th>
                                         <th>Next PMS <br>Date</th>
+                                        <th>QA <br>Frequency</th>
+                                        <th>Next QA <br>Date</th>
                                         <th>Technology<br>(i.e obsolute/running)</th>
                                         <th>Asset status<br>(Working/not working/<br>not in use/packed/RBER)</th>
                                         <th>Verified(Yes/No)</th>
