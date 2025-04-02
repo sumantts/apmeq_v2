@@ -17,6 +17,11 @@ $('#clearForm').on('click', function(){
     $('#frequency_of_pms_y').val('');
     $('#frequency_of_pms_m').val('');
     $('#frequency_of_pms_d').val('');
+    
+    $('#frequency_of_qa_y').val('');
+    $('#frequency_of_qa_m').val('');
+    $('#frequency_of_qa_d').val('');
+
     $('#cmc_yes_no').val('').trigger('change');
     $('#asset_id').val('0'); 
     $('#h_dept_edit_ids').val('');
@@ -42,7 +47,8 @@ $('#myForm').on('submit', function(){
     $last_date_of_calibration = $('#last_date_of_calibration').val(); 
     $frequency_of_calibration = $('#frequency_of_calibration').val(); 
     $last_date_of_pms = $('#last_date_of_pms').val();  
-    $frequency_of_pms = $('#frequency_of_pms').val(); 
+    $frequency_of_pms = $('#frequency_of_pms').val();   
+    $frequency_of_qa = $('#frequency_of_qa').val(); 
     $qa_due_date = $('#qa_due_date').val(); 
     $warranty_last_date = $('#warranty_last_date').val(); 
     $amc_yes_no = $('#amc_yes_no').val(); 
@@ -56,7 +62,7 @@ $('#myForm').on('submit', function(){
         type: "POST",
         url: "asset/function.php",
         dataType: "json",
-        data: { fn: "saveFormData", asset_id: $asset_id, facility_id: $facility_id, department_id: JSON.stringify($department_id), equipment_name: $equipment_name, asset_make: $asset_make, asset_model: $asset_model, slerial_number: $slerial_number, asset_specifiaction: $asset_specifiaction, date_of_installation: $date_of_installation, asset_supplied_by: $asset_supplied_by, value_of_the_asset: $value_of_the_asset, total_year_in_service: $total_year_in_service, technology: $technology, asset_status: $asset_status, asset_class: $asset_class, device_group: $device_group, last_date_of_calibration: $last_date_of_calibration, frequency_of_calibration: $frequency_of_calibration, last_date_of_pms: $last_date_of_pms, frequency_of_pms: $frequency_of_pms, qa_due_date: $qa_due_date, warranty_last_date: $warranty_last_date, amc_yes_no: $amc_yes_no, amc_last_date: $amc_last_date, cmc_yes_no: $cmc_yes_no, cmc_last_date: $cmc_last_date, asset_code: $asset_code, sp_details: $sp_details }
+        data: { fn: "saveFormData", asset_id: $asset_id, facility_id: $facility_id, department_id: JSON.stringify($department_id), equipment_name: $equipment_name, asset_make: $asset_make, asset_model: $asset_model, slerial_number: $slerial_number, asset_specifiaction: $asset_specifiaction, date_of_installation: $date_of_installation, asset_supplied_by: $asset_supplied_by, value_of_the_asset: $value_of_the_asset, total_year_in_service: $total_year_in_service, technology: $technology, asset_status: $asset_status, asset_class: $asset_class, device_group: $device_group, last_date_of_calibration: $last_date_of_calibration, frequency_of_calibration: $frequency_of_calibration, last_date_of_pms: $last_date_of_pms, frequency_of_pms: $frequency_of_pms, frequency_of_qa: $frequency_of_qa, qa_due_date: $qa_due_date, warranty_last_date: $warranty_last_date, amc_yes_no: $amc_yes_no, amc_last_date: $amc_last_date, cmc_yes_no: $cmc_yes_no, cmc_last_date: $cmc_last_date, asset_code: $asset_code, sp_details: $sp_details }
     })
     .done(function( res ) {
         if(res.status == true){
@@ -108,10 +114,17 @@ function editTableData($asset_id){
 			$('#frequency_of_calibration_m').val($res1.frequency_of_calibration_m);   
 			$('#frequency_of_calibration_d').val($res1.frequency_of_calibration_d); 
 			$('#last_date_of_pms').val($res1.last_date_of_pms);  
-			$('#frequency_of_pms').val($res1.frequency_of_pms);   
+			$('#frequency_of_pms').val($res1.frequency_of_pms);  
+			$('#frequency_of_qa').val($res1.frequency_of_qa); 
+
 			$('#frequency_of_pms_y').val($res1.frequency_of_pms_y);  
 			$('#frequency_of_pms_m').val($res1.frequency_of_pms_m);  
 			$('#frequency_of_pms_d').val($res1.frequency_of_pms_d); 
+              
+			$('#frequency_of_qa_y').val($res1.frequency_of_qa_y);  
+			$('#frequency_of_qa_m').val($res1.frequency_of_qa_m);  
+			$('#frequency_of_qa_d').val($res1.frequency_of_qa_d); 
+
 			$('#qa_due_date').val($res1.qa_due_date);
 			$('#warranty_last_date').val($res1.warranty_last_date); 
 			$('#amc_yes_no').val($res1.amc_yes_no).trigger('change'); 
@@ -288,6 +301,14 @@ $('#frequency_of_pms_y, #frequency_of_pms_m, #frequency_of_pms_d').on('change', 
     $frequency_of_pms_d = $('#frequency_of_pms_d').val();
     $frequency_of_pms = $frequency_of_pms_y+'|'+$frequency_of_pms_m+'|'+$frequency_of_pms_d;
     $('#frequency_of_pms').val($frequency_of_pms); 
+})
+
+$('#frequency_of_qa_y, #frequency_of_qa_m, #frequency_of_qa_d').on('change', function(){
+    $frequency_of_qa_y = $('#frequency_of_qa_y').val();
+    $frequency_of_qa_m = $('#frequency_of_qa_m').val();
+    $frequency_of_qa_d = $('#frequency_of_qa_d').val();
+    $frequency_of_qa = $frequency_of_qa_y+'|'+$frequency_of_qa_m+'|'+$frequency_of_qa_d;
+    $('#frequency_of_qa').val($frequency_of_qa); 
 })
 
 $('#ins_cert_attach').on('click', function(){

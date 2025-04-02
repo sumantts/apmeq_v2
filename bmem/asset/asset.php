@@ -471,24 +471,20 @@ if(isset($_POST["importSubmit"])){
                                         <option value="1">Critical</option>
                                         <option value="2">Non Critical</option>
                                     </select> 
-                                </div>
-                                
+                                </div>  
                                 <div class="col-md-4 mb-3">
                                     <label for="device_group">Device Group</label>
                                     <select class="form-control js-example-basic-single" name="device_group" id="device_group">
                                         <option value="">Select</option>  
                                     </select> 
                                 </div>    
-                                
+                            
+                            </div>
+                            <div class="form-row">      
                                 <div class="col-md-4 mb-3">
                                     <label for="last_date_of_calibration">Last date of calibration</label>
                                     <input type="date" class="form-control" id="last_date_of_calibration" value="<?=date('Y-m-d')?>"> 
-                                </div>
-                                
-                                <div class="col-md-4 mb-2 mt-4">
-                                    <label for="ins_cert_attach">calibration Certificate</label><br>
-                                    <a href="javascript: void(0)" id="calib_cert_attach">Upload & View calibration Certificate</a> 
-                                </div>      
+                                </div>     
                                 
                                 <div class="col-md-4 mb-3">
                                     <label for="frequency_of_calibration">Frequency of calibration</label>
@@ -509,14 +505,15 @@ if(isset($_POST["importSubmit"])){
                                     </div>
                                 </div>   
                                 
+                                <div class="col-md-4 mb-2 mt-4">
+                                    <label for="ins_cert_attach">calibration Certificate</label><br>
+                                    <a href="javascript: void(0)" id="calib_cert_attach">Upload & View calibration Certificate</a> 
+                                </div> 
+                            </div>
+                            <div class="form-row">      
                                 <div class="col-md-4 mb-3">
                                     <label for="last_date_of_pms">Last date of Preventive Maintanence(PMS)</label>
                                     <input type="date" class="form-control" id="last_date_of_pms" value="<?=date('Y-m-d')?>"> 
-                                </div> 
-                                
-                                <div class="col-md-4 mb-2 mt-4">
-                                    <label for="pms_cert_attach">PMS Certificate</label><br>
-                                    <a href="javascript: void(0)" id="pms_cert_attach">Upload & View PMS Certificate</a> 
                                 </div>     
                                 
                                 <div class="col-md-4 mb-3">
@@ -536,17 +533,46 @@ if(isset($_POST["importSubmit"])){
                                             <input type="number" class="form-control form-control-sm" name="frequency_of_pms_d" id="frequency_of_pms_d"> 
                                         </div>
                                     </div>
-                                </div>   
+                                </div>  
+                                
+                                <div class="col-md-4 mb-2 mt-4">
+                                    <label for="pms_cert_attach">PMS Certificate</label><br>
+                                    <a href="javascript: void(0)" id="pms_cert_attach">Upload & View PMS Certificate</a> 
+                                </div> 
+                            </div>
+
+                            <div class="form-row">      
+                                <div class="col-md-4 mb-3">
+                                    <label for="qa_due_date">Last Date of Quality Certification(QA)</label>
+                                    <input type="date" class="form-control" id="qa_due_date" value="<?=date('Y-m-d')?>"> 
+                                </div>     
                                 
                                 <div class="col-md-4 mb-3">
-                                    <label for="qa_due_date">(QA)Quality Certification due date</label>
-                                    <input type="date" class="form-control" id="qa_due_date" value=""> 
+                                    <label for="frequency_of_qa">Frequency of Quality Certification(QA)</label>
+                                    <input type="hidden" name="frequency_of_qa" id="frequency_of_qa" value="">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label for="y">Year(s)</label>
+                                            <input type="number" class="form-control form-control-sm" name="frequency_of_qa_y" id="frequency_of_qa_y"> 
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="m">Month(s)</label>
+                                            <input type="number" class="form-control form-control-sm" name="frequency_of_qa_m" id="frequency_of_qa_m"> 
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="d">Day(s)</label>
+                                            <input type="number" class="form-control form-control-sm" name="frequency_of_qa_d" id="frequency_of_qa_d"> 
+                                        </div>
+                                    </div>
                                 </div> 
                                 
                                 <div class="col-md-4 mb-2 mt-4">
                                     <label for="qa_cert_attach">QA Certificate</label><br>
                                     <a href="javascript: void(0)" id="qa_cert_attach">Upload & View QA Certificate</a> 
                                 </div>  
+                            </div>
+                            
+                            <div class="form-row">  
                                 
                                 <div class="col-md-4 mb-3">
                                     <label for="warranty_last_date">Warranty last date</label>
