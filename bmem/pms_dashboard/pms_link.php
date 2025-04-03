@@ -112,7 +112,7 @@
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
                                     <label class="required-field" for="facility_id">Facility name</label>
-                                    <select class="form-control" name="facility_id" id="facility_id" required >
+                                    <select class="form-control" name="facility_id" id="facility_id" >
                                         <option value="">Select</option> 
                                     </select>
                                 </div>
@@ -121,14 +121,14 @@
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
                                     <label for="facility_code">Facility Code</label>
-                                    <input type="text" class="form-control" id="facility_code" name="facility_code" value="" required >
+                                    <input type="text" class="form-control" id="facility_code" name="facility_code" value="" >
                                 </div>
                             </div>
         
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
                                     <label class="required-field" for="department_id">Department</label>
-                                    <select class="form-control" name="department_id" id="department_id" required >
+                                    <select class="form-control" name="department_id" id="department_id" >
                                         <option value="">Select</option>
                                     </select>
                                 </div>
@@ -137,7 +137,7 @@
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
                                     <label for="device_group">Device group</label>
-                                    <select class="form-control" name="device_group" id="device_group" required >
+                                    <select class="form-control" name="device_group" id="device_group" >
                                         <option value="">Select</option> 
                                         <?php
                                         $sql = "SELECT * FROM device_group_list WHERE device_status = 1 ORDER BY device_name ASC";
@@ -164,7 +164,7 @@
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
                                     <label for="asset_class">Asset class</label>
-                                    <select class="form-control" name="asset_class" id="asset_class" required >
+                                    <select class="form-control" name="asset_class" id="asset_class" >
                                         <option value="">Select</option>
                                         <option value="1">Critical</option>
                                         <option value="2">Non Critical</option> 
