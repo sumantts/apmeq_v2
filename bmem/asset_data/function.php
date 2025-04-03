@@ -306,9 +306,7 @@
 
 		$return_array['data'] = $mainData;
     	echo json_encode($return_array);
-	}//function end	 
-
-	
+	}//function end	 	
 
 	//generate PMS Link
 	if($fn == 'generateLink'){
@@ -553,6 +551,128 @@
 		$return_result['calib_info_id'] = $calib_info_id; 
 		echo json_encode($return_result);
 		
+	}//end function 		 	
+
+	//generate qa Link
+	if($fn == 'generateLinkQA'){
+		$return_result = array(); 
+		$status = true;	
+		$error_message = '';
+		$qa_id = 0;
+		$asset_id = $_POST['asset_id'];
+		$link_generated_by = $_SESSION["user_id"];
+		$link_generate_time = date('Y-m-d H:i:s');
+
+		# check qa is open or closed
+		$sql1 = "SELECT * FROM qa_info WHERE asset_id = '" .$asset_id. "'";
+		$result1 = $mysqli->query($sql1);
+		if($result1->num_rows > 0) {	
+			$row1 = $result1->fetch_array();
+			$qa_id = $row1['qa_id'];
+			$qa_info_id = $row1['qa_info_id'];
+			$pms_status = $row1['pms_status'];
+			$qa_status_text = '';
+
+			if($pms_status == 0){
+				$qa_status_text = 'Work In Progress';
+			}
+			if($pms_status == 1){
+				$qa_status_text = 'Resolved';
+			}
+			if($pms_status == 2){
+				$qa_status_text = 'Closed';
+			}
+			$return_result['error_message'] = 'qa Link Already Generated. qa ID: '.$qa_info_id.' and qa Status is: '.$qa_status_text;
+			$status = false;
+		}
+
+		if($status == true){
+			$sql = "INSERT INTO qa_info (asset_id, link_generated_by, link_generate_time) VALUES ('" .$asset_id. "', '" .$link_generated_by. "', '" .$link_generate_time. "')";
+			$result = $mysqli->query($sql);
+			$qa_id = $mysqli->insert_id;
+
+			if($qa_id > 0){
+				$status = true;  
+				$qa_info_id = str_pad($qa_id, 4, '0', STR_PAD_LEFT);
+
+				$upd_sql = "UPDATE qa_info SET qa_info_id = '" .$qa_info_id. "' WHERE qa_id = '" .$qa_id. "' ";
+				$result_upd = $mysqli->query($upd_sql); 
+
+				$sql_2 = "SELECT asset_details.facility_id, asset_details.department_id, asset_details.device_group, asset_details.asset_class, asset_details.equipment_name, asset_details.qa_due_date, asset_details.frequency_of_qa, asset_details.asset_supplied_by, asset_details.asset_make, asset_details.asset_model, asset_details.slerial_number, asset_details.sp_details, asset_details.asset_code, facility_master.facility_code FROM asset_details JOIN facility_master ON asset_details.facility_id = facility_master.facility_id WHERE asset_details.asset_id = '" .$asset_id. "'";
+				$result_2 = $mysqli->query($sql_2);
+		
+				if($result_2->num_rows > 0) {	
+					$row_2 = $result_2->fetch_array();
+					$facility_id = $row_2['facility_id'];
+					$department_id_str = $row_2['department_id'];
+					$department_ids = json_decode($department_id_str);
+					$department_id = $department_ids[0];
+					$facility_code = $row_2['facility_code'];
+					$device_group = $row_2['device_group'];
+					$asset_class = $row_2['asset_class'];
+					$equipment_name = $row_2['equipment_name'];
+					$pms_due_date = $row_2['qa_due_date'];
+					$last_date_of_qa = $row_2['qa_due_date'];
+					$frequency_of_qa = $row_2['frequency_of_qa'];
+					$supplied_by = $row_2['asset_supplied_by'];
+					$asset_make = $row_2['asset_make'];
+					$asset_model = $row_2['asset_model'];
+					$slerial_number = $row_2['slerial_number'];
+					$sp_details = $row_2['sp_details'];
+					$asset_code = $row_2['asset_code'];
+					$qa_planned_date = date('Y-m-d');
+				} 
+
+				//echo 'asset_code: ' . $asset_code;
+
+				# qa Frequency Calculation
+				$qa_frequency = '';
+				$next_qa_date = '';
+
+				if($last_date_of_qa != '0000-00-00'){
+					$last_date_of_qa1 = date('Y-m-d', strtotime($last_date_of_qa));
+					$date = new DateTime($last_date_of_qa1); 
+						
+					$qa_freq_str = explode("|", $frequency_of_qa);
+					if($qa_freq_str[0] > 0){
+						$y1 = $qa_freq_str[0];
+						$qa_frequency = 'Each '.$y1.' Year(s)';
+						$next_qa_date = date('Y-m-d', strtotime('+'.$y1.' year', strtotime($last_date_of_qa)));
+					}else if($qa_freq_str[1] > 0){
+						$m1 = $qa_freq_str[1];
+						$qa_frequency = 'Each '.$m1.' Month(s)';
+						$next_qa_date = date('Y-m-d', strtotime('+'.$m1.' month', strtotime($last_date_of_qa)));
+					}else if($qa_freq_str[2] > 0){
+						$d1 = $qa_freq_str[2];
+						$qa_frequency = 'Each '.$d1.' Day(s)';
+						$next_qa_date = date('Y-m-d', strtotime('+'.$d1.' day', strtotime($last_date_of_qa)));
+					}else{
+						$qa_frequency = '';
+						$next_qa_date = '';
+					} 
+				}//ennd if
+				
+				try {
+					if($qa_info_id > 0){
+						$status = true;
+						$qa_data_updated = date('Y-m-d H:i:s');
+						$row_status = 2;
+						$sql = "UPDATE qa_info SET facility_id = '" .$facility_id. "', facility_code = '" .$facility_code. "', department_id = '" .$department_id. "', device_group = '" .$device_group. "', asset_class = '" .$asset_class. "', equipment_name = '" .$equipment_name. "', pms_due_date = '" .$next_qa_date. "', supplied_by = '" .$supplied_by. "', pms_planned_date = '" .$qa_planned_date. "', pms_data_updated = '" .$qa_data_updated. "', row_status = '" .$row_status. "', equipment_make = '".$asset_make."', equipment_model = '" .$asset_model. "', equipment_sl_no = '" .$slerial_number. "', sp_details = '" .$sp_details. "', asset_code = '" .$asset_code. "' WHERE qa_info_id = '" .$qa_info_id. "' ";
+						$result = $mysqli->query($sql);
+					}	
+				} catch (PDOException $e) {
+					die("Error occurred:" . $e->getMessage());
+				}
+				
+			}else{
+				$return_result['error_message'] = 'Data Insert Error';
+				$status = false;
+			}
+		}//end if
+		
+		$return_result['status'] = $status; 
+		$return_result['qa_info_id'] = $qa_info_id; 
+		echo json_encode($return_result);
 	}//end function 
 
 ?>

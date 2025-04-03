@@ -61,6 +61,24 @@ function generatePMSLink($asset_id){
     });//end ajax
 }//end fun 
 
+function generateQALink($asset_id){
+    console.log('asset_id: ' + $asset_id);
+     
+    $.ajax({
+        method: "POST",
+        url: "asset_data/function.php",
+        data: { fn: "generateLinkQA", asset_id: $asset_id }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res);
+        if($res1.status == true){
+            window.open('qa_dashboard/qa_link.php?qa_info_id='+$res1.qa_info_id, '_blank');
+        }else{
+            alert($res1.error_message);
+        }  
+    });//end ajax
+}//end fun 
+
 function generateCalibLink($asset_id){
     console.log('asset_id: ' + $asset_id);
      

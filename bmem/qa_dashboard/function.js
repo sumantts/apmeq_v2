@@ -98,7 +98,7 @@ function populateDataTable_1(){
                 text: '<i class="fa fa-print"></i>',
                 titleAttr: 'Print'
             },
-        ]
+        ] 
     });
 }//end fun
 
@@ -218,11 +218,55 @@ function initTicketCounter(){
         $res1 = JSON.parse(res); 
         if($res1.status == true){ 
             $('#total_ticket').html($res1.total_ticket); 
-            $('#pending_pms').html($res1.pending_pms);
-            $('#pending_pms1').html($res1.pending_pms);
-            $('#pms_done').html($res1.pms_done); 
+            $('#pending_pms').html($res1.pms_due);
+            $('#pending_pms1').html($res1.pms_dopms_scheduledne);
+            $('#pms_done').html($res1.pms_done);  
         }        
     });//end ajax 
+}
+
+
+function updatePMSStatus($qa_id, $asset_id){
+    $pms_status = $('#qa_id_'+$qa_id).val();
+    console.log('qa_id: ' + $qa_id + ' pms_status: ' + $pms_status);
+
+    if(confirm('Are you sure to change status?')){
+        $.ajax({
+            method: "POST",
+            url: "qa_dashboard/function.php",
+            data: { fn: "updatePMSStatus", qa_id: $qa_id, pms_status: $pms_status, asset_id: $asset_id }
+        })
+        .done(function( res ) {
+            //console.log(res);
+            $res1 = JSON.parse(res);
+            if($res1.status == true){
+                alert('Status Updated Successfully');
+                populateDataTable_1();
+            }
+        }); //end ajax
+    }
+}
+
+
+function updateSpEnggStatus($qa_id){
+    $assign_to_sp_engg_status = $('#assign_to_sp_engg_'+$qa_id).val();
+    console.log('qa_id: ' + $qa_id + ' assign_to_sp_engg_status: ' + $assign_to_sp_engg_status);
+
+    if(confirm('Are you sure to change status?')){
+        $.ajax({
+            method: "POST",
+            url: "qa_dashboard/function.php",
+            data: { fn: "updateSpEnggStatus", qa_id: $qa_id, assign_to_sp_engg_status: $assign_to_sp_engg_status }
+        })
+        .done(function( res ) {
+            //console.log(res);
+            $res1 = JSON.parse(res);
+            if($res1.status == true){
+                alert('Status Updated Successfully');
+                populateDataTable_1();
+            }
+        }); //end ajax
+    }
 }
 
 $(document).ready(function () {

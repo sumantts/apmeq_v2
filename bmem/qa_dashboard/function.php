@@ -20,19 +20,21 @@
 		$device_group = $_POST['device_group'];
 		$asset_class = $_POST['asset_class'];
 		$equipment_name = $_POST['equipment_name'];
-		$equipment_make_model = $_POST['equipment_make_model'];
+		$equipment_make = $_POST['equipment_make'];
+		$equipment_model = $_POST['equipment_model'];
 		$equipment_sl_no = $_POST['equipment_sl_no'];
 		$pms_due_date = $_POST['pms_due_date'];
 		$supplied_by = $_POST['supplied_by'];
 		$service_provider_details = $_POST['service_provider_details'];
 		$pms_planned_date = $_POST['pms_planned_date'];
+		$pms_sp_status = $_POST['pms_sp_status'];
 		
 		try {
 			if($qa_info_id > 0){
 				$status = true;
 				$pms_data_updated = date('Y-m-d H:i:s');
 				$row_status = 2;
-				$sql = "UPDATE qa_info SET facility_id = '" .$facility_id. "', facility_code = '" .$facility_code. "', department_id = '" .$department_id. "', device_group = '" .$device_group. "', asset_class = '" .$asset_class. "', equipment_name = '" .$equipment_name. "', equipment_make_model = '" .$equipment_make_model. "', equipment_sl_no = '" .$equipment_sl_no. "', pms_due_date = '" .$pms_due_date. "', supplied_by = '" .$supplied_by. "', service_provider_details = '" .$service_provider_details. "', pms_planned_date = '" .$pms_planned_date. "', facility_code = '" .$facility_code. "', pms_data_updated = '" .$pms_data_updated. "', row_status = '" .$row_status. "' WHERE qa_info_id = '" .$qa_info_id. "' ";
+				$sql = "UPDATE qa_info SET service_provider_details = '" .$service_provider_details. "', pms_data_updated = '" .$pms_data_updated. "', row_status = '" .$row_status. "', pms_sp_status = '" .$pms_sp_status. "' WHERE qa_info_id = '" .$qa_info_id. "' ";
 				$result = $mysqli->query($sql);
 			}	
 		} catch (PDOException $e) {
@@ -120,35 +122,80 @@
 			while($row = $result->fetch_array()){
 				$facility_id = $row['facility_id'];	
 				$facility_name = $row['facility_name'];	
+				
+				$pms_due = 0;
+				$pms_done = 0;
+				$pms_planed = 0;										
 
-				$sql1 = "SELECT COUNT(row_status) AS count_row_status FROM qa_info WHERE facility_id = '" .$facility_id. "' GROUP BY facility_id";
-				$result1 = $mysqli->query($sql1);		
-				if ($result1->num_rows > 0) {
-					while($row1 = $result1->fetch_array()){
-						$pms_planed = 0;
-						$pending_pms = 0;
-						$pms_done = 0;
-						$row_status = $row1['count_row_status'];						 
+				$sql_2 = "SELECT * FROM qa_info WHERE pms_status = '0' AND facility_id = '" .$facility_id. "'";
+				$result_2 = $mysqli->query($sql_2);
+				$pms_planed = $result_2->num_rows;						 
 
-						$sql_2 = "SELECT * FROM qa_info WHERE row_status = '1' AND facility_id = '" .$facility_id. "'";
-						$result_2 = $mysqli->query($sql_2);
-						$pending_pms = $result_2->num_rows;						 
+				$sql_3 = "SELECT * FROM qa_info WHERE pms_status != '0' AND facility_id = '" .$facility_id. "'";
+				$result_3 = $mysqli->query($sql_3);
+				$pms_done = $result_3->num_rows;
 
-						$sql_3 = "SELECT * FROM qa_info WHERE row_status = '2' AND facility_id = '" .$facility_id. "'";
-						$result_3 = $mysqli->query($sql_3);
-						$pms_done = $result_3->num_rows;
+				$sql_5 = "SELECT last_date_of_pms, frequency_of_pms FROM asset_details WHERE facility_id = '" .$facility_id. "'";
+				$result_5 = $mysqli->query($sql_5);
 
-						$data[0] = $slno; 
-						$data[1] = $facility_name;
-						$data[2] = $pending_pms;
-						$data[3] = $pms_done;
-						$data[4] = $pending_pms;
-						//$data[5] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$facility_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$facility_id.")'></i></a>";
-		
-						array_push($mainData, $data);
-						$slno++;
-					}//end while
+				if ($result_5->num_rows > 0) {			
+					while($row_5 = $result_5->fetch_array()){
+						$last_date_of_pms = $row_5['last_date_of_pms']; 
+						$frequency_of_pms = $row_5['frequency_of_pms']; 
+
+						# PMS Frequency Calculation
+						$pms_frequency = '';
+						$next_pms_date = '';
+
+						if($last_date_of_pms != '0000-00-00'){
+							$last_date_of_pms1 = date('Y-m-d', strtotime($last_date_of_pms));
+							$date = new DateTime($last_date_of_pms1); 
+								
+							$pms_freq_str = explode("|", $frequency_of_pms);
+							if($pms_freq_str[0] > 0){
+								$y1 = $pms_freq_str[0];
+								$pms_frequency = 'Each '.$y1.' Year(s)';
+								$next_pms_date = date('d-F-Y', strtotime('+'.$y1.' year', strtotime($last_date_of_pms)));
+							}else if($pms_freq_str[1] > 0){
+								$m1 = $pms_freq_str[1];
+								$pms_frequency = 'Each '.$m1.' Month(s)';
+								$next_pms_date = date('d-F-Y', strtotime('+'.$m1.' month', strtotime($last_date_of_pms)));
+							}else if($pms_freq_str[2] > 0){
+								$d1 = $pms_freq_str[2];
+								$pms_frequency = 'Each '.$d1.' Day(s)';
+								$next_pms_date = date('d-F-Y', strtotime('+'.$d1.' day', strtotime($last_date_of_pms)));
+							}else{
+								$pms_frequency = '';
+								$next_pms_date = '';
+							} 
+						}//ennd if
+
+						if($next_pms_date != ''){					
+							$fifteen_day_prev = date('Y-m-d H:i:s',(strtotime ( '-15 day' , strtotime($next_pms_date))));
+							
+							// Create two DateTime objects
+							$today = date('Y-m-d');
+							$date1 = new DateTime($today); 
+							$date2 = new DateTime($next_pms_date);
+
+							// Compare the dates
+							if ($date1 > $date2) {
+								//PMS Date over
+								$pms_due++;
+							}
+						}//end if
+						
+					}
 				}//end if
+
+				$data[0] = $slno; 
+				$data[1] = $facility_name;
+				$data[2] = $pms_due;
+				$data[3] = $pms_done;
+				$data[4] = $pms_planed;
+
+				array_push($mainData, $data);
+				$slno++;
 			}//end while
 		} else {
 			$status = false;
@@ -184,7 +231,7 @@
 		if($facility_code != ''){
 			$where_condition .= " AND qa_info.facility_code = '" .$facility_code. "' ";
 		}
-		if($device_group != ''){
+		if($device_group > 0){
 			$where_condition .= " AND qa_info.device_group = '" .$device_group. "' ";
 		}
 		if($asset_class > 0){
@@ -193,13 +240,16 @@
 		if($department_id > 0){
 			$where_condition .= " AND qa_info.department_id = '" .$department_id. "' ";
 		}
+		if($PMSStatus != ''){
+			$where_condition .= " AND qa_info.pms_status = '" .$PMSStatus. "' ";
+		}
 		if($from_date != '' && $to_date != ''){
 			$from_date1 = $from_date.' 00:01:01';
 			$to_date1 = $to_date.' 23:58:00';
 			$where_condition .= " AND qa_info.pms_data_updated > '" .$from_date1. "' AND qa_info.pms_data_updated < '" .$to_date1. "' ";
 		}
 		
-		$sql = "SELECT qa_info.qa_id, qa_info.qa_info_id, qa_info.facility_id, qa_info.facility_code, qa_info.department_id, qa_info.device_group, qa_info.asset_class, qa_info.equipment_name, qa_info.equipment_make_model, qa_info.equipment_sl_no, qa_info.pms_due_date, qa_info.supplied_by, qa_info.service_provider_details, qa_info.pms_planned_date, facility_master.facility_name, department_list.department_name, device_group_list.device_name FROM qa_info JOIN facility_master ON qa_info.facility_id = facility_master.facility_id JOIN department_list ON qa_info.department_id = department_list.department_id JOIN device_group_list ON qa_info.device_group = device_group_list.device_group_id $where_condition ORDER BY qa_info.qa_id DESC LIMIT 0, 50";
+		$sql = "SELECT qa_info.qa_id, qa_info.asset_id, qa_info.qa_info_id, qa_info.facility_id, qa_info.facility_code, qa_info.department_id, qa_info.device_group, qa_info.asset_class, qa_info.equipment_name, qa_info.equipment_make,qa_info.equipment_model, qa_info.equipment_sl_no, qa_info.pms_due_date, qa_info.supplied_by, qa_info.service_provider_details, qa_info.pms_planned_date, qa_info.pms_status, qa_info.assign_to_sp_engg, facility_master.facility_name, department_list.department_name, device_group_list.device_name FROM qa_info JOIN facility_master ON qa_info.facility_id = facility_master.facility_id JOIN department_list ON qa_info.department_id = department_list.department_id JOIN device_group_list ON qa_info.device_group = device_group_list.device_group_id $where_condition ORDER BY qa_info.qa_id DESC LIMIT 0, 50";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -207,12 +257,28 @@
 			$slno = 1;
 
 			while($row = $result->fetch_array()){
+				$qa_id = $row['qa_id'];
 				$qa_info_id = $row['qa_info_id'];
+				$asset_id = $row['asset_id'];
 				$facility_name = $row['facility_name'];	
 				$facility_code = $row['facility_code'];	
 				$department_name = $row['department_name'];	 	
 				$device_name = $row['device_name'];	 	
-				$asset_class = $row['asset_class'];	 
+				$asset_class = $row['asset_class']; 	
+				$pms_status = $row['pms_status']; 			
+				$assign_to_sp_engg = $row['assign_to_sp_engg'];
+
+				# select fom asset_details
+				$asset_code = '';
+				$sp_details = '';
+				$sql1 = "SELECT asset_code, sp_details FROM asset_details WHERE asset_id = '" .$asset_id. "' ";
+				$result1 = $mysqli->query($sql1);
+				if ($result1->num_rows > 0) {
+					$row1 = $result1->fetch_array();		
+					$asset_code = $row1['asset_code'];			
+					$sp_details = $row1['sp_details'];	
+				}
+				
 				$asset_class_text = '';
 				if($asset_class == 1){
 					$asset_class_text = 'Critical';
@@ -220,7 +286,8 @@
 					$asset_class_text = 'Non Critical';
 				}else{} 	
 				$equipment_name = $row['equipment_name'];	
-				$equipment_make_model = $row['equipment_make_model'];	
+				$equipment_make = $row['equipment_make'];		
+				$equipment_model = $row['equipment_model'];
 				$equipment_sl_no = $row['equipment_sl_no'];	
 				if($row['pms_due_date'] != '0000-00-00'){
 					$pms_due_date = date('d-m-Y', strtotime($row['pms_due_date']));
@@ -237,22 +304,77 @@
 
 				$view_link = "<a href='qa_dashboard/qa_link.php?qa_info_id=$qa_info_id', target='_blank'>View Link</a>";
 
+				# 0=WIP, 1=Resolved, 2=Closed
+				$dynamic_id = 'qa_id_'.$qa_id;
+				$updated_text = '';
+				$disabled_text = '';
+				if($pms_status == 1 || $pms_status == 2){
+					$disabled_text = 'disabled';
+				}
+
+				$updated_text .= '<select name="'.$dynamic_id.'" id="'.$dynamic_id.'" onChange="updatePMSStatus('.$qa_id.','.$asset_id.')" class="form-control-sm" '.$disabled_text.'>';
+				if($pms_status == 0){
+					$updated_text .= '<option value="0" selected="selected">Worrk In Progress</option>';
+				}else{
+					$updated_text .= '<option value="0">Worrk In Progress</option>';
+				}
+				if($pms_status == 1){
+					$updated_text .= '<option value="1" selected="selected">Resolved</option>';
+				}else{
+					$updated_text .= '<option value="1">Resolved</option>';
+				}
+				if($pms_status == 2){
+					$updated_text .= '<option value="2" selected="selected">Closed</option>';
+				}else{
+					$updated_text .= '<option value="2">Closed</option>';
+				}
+				$updated_text .= '</select>'; 
+
+				
+				# Assign to SP or Engg				
+				$dynamic_id1 = 'assign_to_sp_engg_'.$qa_id;
+				$updated_text1 = '';
+				$disabled_text = '';
+				if($pms_status == 1 || $pms_status == 2){
+					$disabled_text = 'disabled';
+				}
+				$updated_text1 .= '<select name="'.$dynamic_id1.'" id="'.$dynamic_id1.'" onChange="updateSpEnggStatus('.$qa_id.')" class="form-control-sm" '.$disabled_text.'>';
+				if($assign_to_sp_engg == 0){
+					$updated_text1 .= '<option value="0" selected="selected">Assign To</option>';
+				}else{
+					$updated_text1 .= '<option value="0">Assign To</option>';
+				}
+				if($assign_to_sp_engg == 1){
+					$updated_text1 .= '<option value="1" selected="selected">Service Provider</option>';
+				}else{
+					$updated_text1 .= '<option value="1">Service Provider</option>';
+				}
+				if($assign_to_sp_engg == 2){
+					$updated_text1 .= '<option value="2" selected="selected">Engineer</option>';
+				}else{
+					$updated_text1 .= '<option value="2">Engineer</option>';
+				}
+				$updated_text1 .= '</select>'; 
+
 				$data[0] = $slno; 
-				$data[1] = $facility_name;
-				$data[2] = $facility_code;
-				$data[3] = $department_name;
-				$data[4] = $device_name; 
-				$data[5] = $asset_class_text;
-				$data[6] = $equipment_name;
-				$data[7] = $equipment_make_model;
-				$data[8] = $equipment_sl_no;
-				$data[9] = $pms_due_date;
-				$data[10] = $supplied_by;
-				$data[11] = $service_provider_details;
-				$data[12] = $pms_planned_date;
-				$data[13] = '-';
-				$data[14] = $view_link;
-				$data[15] = 'Resolved'; 
+				$data[1] = $qa_info_id;
+				$data[2] = $facility_name;
+				$data[3] = $facility_code;
+				$data[4] = $department_name;
+				$data[5] = $device_name; 
+				$data[6] = $asset_class_text;
+				$data[7] = $equipment_name;
+				$data[8] = $asset_code;
+				$data[9] = $equipment_make;
+				$data[10] = $equipment_model;
+				$data[11] = $equipment_sl_no;
+				$data[12] = $pms_due_date; 
+				$data[13] = $supplied_by;
+				$data[14] = $sp_details;
+				$data[15] = $pms_planned_date;
+				$data[16] = $updated_text1;
+				$data[17] = $view_link;
+				$data[18] = $updated_text; 
 				
 				//$data[8] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$author_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$author_id.")'></i></a>";
 				
@@ -330,12 +452,16 @@
 			$device_group = $row['device_group'];
 			$asset_class = $row['asset_class'];
 			$equipment_name = $row['equipment_name'];
-			$equipment_make_model = $row['equipment_make_model'];
+			$equipment_make = $row['equipment_make'];
+			$equipment_model = $row['equipment_model'];
 			$equipment_sl_no = $row['equipment_sl_no'];
 			$pms_due_date = $row['pms_due_date'];
 			$supplied_by = $row['supplied_by'];
 			$service_provider_details = $row['service_provider_details'];
 			$pms_planned_date = $row['pms_planned_date'];
+			$pms_sp_status = $row['pms_sp_status'];
+			$sp_details = $row['sp_details'];
+			$asset_code = $row['asset_code'];
 		} else {
 			$status = false;
 		}
@@ -347,12 +473,16 @@
 		$return_array['device_group'] = $device_group;
 		$return_array['asset_class'] = $asset_class;
 		$return_array['equipment_name'] = $equipment_name;
-		$return_array['equipment_make_model'] = $equipment_make_model;		
+		$return_array['equipment_make'] = $equipment_make;	
+		$return_array['equipment_model'] = $equipment_model;	
 		$return_array['equipment_sl_no'] = $equipment_sl_no;
 		$return_array['pms_due_date'] = $pms_due_date;
 		$return_array['supplied_by'] = $supplied_by;
 		$return_array['service_provider_details'] = $service_provider_details;
 		$return_array['pms_planned_date'] = $pms_planned_date; 
+		$return_array['pms_sp_status'] = $pms_sp_status; 
+		$return_array['sp_details'] = $sp_details; 
+		$return_array['asset_code'] = $asset_code; 
 
 		$return_array['status'] = $status;
     	echo json_encode($return_array);
@@ -395,7 +525,6 @@
 
 			$upd_sql = "UPDATE qa_info SET qa_info_id = '" .$qa_info_id. "' WHERE qa_id = '" .$qa_id. "' ";
 			$result_upd = $mysqli->query($upd_sql); 
-
 		}else{
 			$return_result['error_message'] = 'Data Insert Error';
 			$status = false;
@@ -405,9 +534,7 @@
 		$return_result['status'] = $status; 
 		$return_result['qa_info_id'] = $qa_info_id; 
 		echo json_encode($return_result);
-	}//end function deleteItem
-	
-	//qa_id, qa_info_id, facility_id, facility_code, department_id, device_group, asset_class, equipment_name, equipment_make_model, equipment_sl_no, pms_due_date, supplied_by, service_provider_details, pms_planned_date, pms_report_attached, link_generated_by, link_generate_time
+	}//end function deleteItem 
 
 	
 
@@ -492,10 +619,12 @@
 		$total_ticket = 0; 
 		$pending_pms = 0;
 		$pms_done = 0;
+		$pms_scheduled = 0;
+		$pms_due = 0;
 
 
 		//Total Assets
-		$sql1 = "SELECT * FROM qa_info";
+		$sql1 = "SELECT * FROM pms_info";
 		$result1 = $mysqli->query($sql1);
 		$total_ticket = $result1->num_rows; 
 
@@ -503,14 +632,113 @@
 		$result_2 = $mysqli->query($sql_2);
 		$pending_pms = $result_2->num_rows;
 
-		$pms_done = $total_ticket - $pending_pms;
+		//$pms_done = $total_ticket - $pending_pms;		
+
+		$sql_3 = "SELECT * FROM qa_info WHERE pms_status != '0' ";
+		$result_3 = $mysqli->query($sql_3);
+		$pms_done = $result_3->num_rows;	
+
+		$sql_4 = "SELECT * FROM qa_info WHERE pms_status = '0' ";
+		$result_4 = $mysqli->query($sql_4);
+		$pms_dopms_scheduledne = $result_4->num_rows;
+
+		
+		$sql_5 = "SELECT last_date_of_pms, frequency_of_pms FROM asset_details";
+		$result_5 = $mysqli->query($sql_5);
+
+		if ($result_5->num_rows > 0) {			
+			while($row_5 = $result_5->fetch_array()){
+				$last_date_of_pms = $row_5['last_date_of_pms']; 
+				$frequency_of_pms = $row_5['frequency_of_pms']; 
+
+				# PMS Frequency Calculation
+				$pms_frequency = '';
+				$next_pms_date = '';
+
+				if($last_date_of_pms != '0000-00-00'){
+					$last_date_of_pms1 = date('Y-m-d', strtotime($last_date_of_pms));
+					$date = new DateTime($last_date_of_pms1); 
+						
+					$pms_freq_str = explode("|", $frequency_of_pms);
+					if($pms_freq_str[0] > 0){
+						$y1 = $pms_freq_str[0];
+						$pms_frequency = 'Each '.$y1.' Year(s)';
+						$next_pms_date = date('d-F-Y', strtotime('+'.$y1.' year', strtotime($last_date_of_pms)));
+					}else if($pms_freq_str[1] > 0){
+						$m1 = $pms_freq_str[1];
+						$pms_frequency = 'Each '.$m1.' Month(s)';
+						$next_pms_date = date('d-F-Y', strtotime('+'.$m1.' month', strtotime($last_date_of_pms)));
+					}else if($pms_freq_str[2] > 0){
+						$d1 = $pms_freq_str[2];
+						$pms_frequency = 'Each '.$d1.' Day(s)';
+						$next_pms_date = date('d-F-Y', strtotime('+'.$d1.' day', strtotime($last_date_of_pms)));
+					}else{
+						$pms_frequency = '';
+						$next_pms_date = '';
+					} 
+				}//ennd if
+
+				if($next_pms_date != ''){					
+					$fifteen_day_prev = date('Y-m-d H:i:s',(strtotime ( '-15 day' , strtotime($next_pms_date))));
+					
+					// Create two DateTime objects
+					$today = date('Y-m-d');
+					$date1 = new DateTime($today); 
+					$date2 = new DateTime($next_pms_date);
+
+					// Compare the dates
+					if ($date1 > $date2) {
+						//PMS Date over
+						$pms_due++;
+					}
+				}//end if
+				
+			}
+		}//end if
 
 		$return_array['status'] = $status;
 		$return_array['total_ticket'] = $total_ticket;
 		$return_array['pending_pms'] = $pending_pms;
 		$return_array['pms_done'] = $pms_done;
+		$return_array['pms_dopms_scheduledne'] = $pms_dopms_scheduledne;
+		$return_array['pms_due'] = $pms_due;
 		
 		echo json_encode($return_array);
 	}//function end	
+
+	//Update function
+	if($fn == 'updatePMSStatus'){
+		$return_result = array();
+		$qa_id = $_POST["qa_id"];
+		$pms_status = $_POST["pms_status"]; 
+		$asset_id = $_POST["asset_id"]; 
+
+		$status = true;	
+		$last_date_of_pms = date('Y-m-d');
+
+		$sql = "UPDATE qa_info SET pms_status = '" .$pms_status. "' WHERE qa_id = '".$qa_id."'";
+		$mysqli->query($sql);  	
+
+		$sql_1 = "UPDATE asset_details SET last_date_of_pms = '" .$last_date_of_pms. "' WHERE asset_id = '".$asset_id."'";
+		$mysqli->query($sql_1);  
+
+		$return_result['status'] = $status; 
+		echo json_encode($return_result);
+	}//end function deleteItem
+
+	//Update function
+	if($fn == 'updateSpEnggStatus'){
+		$return_result = array();
+		$qa_id = $_POST["qa_id"];
+		$assign_to_sp_engg_status = $_POST["assign_to_sp_engg_status"];  
+
+		$status = true;	 
+
+		$sql = "UPDATE qa_info SET assign_to_sp_engg = '" .$assign_to_sp_engg_status. "' WHERE qa_id = '".$qa_id."'";
+		$mysqli->query($sql);    
+
+		$return_result['status'] = $status; 
+		echo json_encode($return_result);
+	}//end function deleteItem
 
 ?>
