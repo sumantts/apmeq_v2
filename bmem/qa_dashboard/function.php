@@ -719,7 +719,7 @@
 		$sql = "UPDATE qa_info SET pms_status = '" .$pms_status. "' WHERE qa_id = '".$qa_id."'";
 		$mysqli->query($sql);  	
 
-		$sql_1 = "UPDATE asset_details SET last_date_of_pms = '" .$last_date_of_pms. "' WHERE asset_id = '".$asset_id."'";
+		$sql_1 = "UPDATE asset_details SET qa_due_date = '" .$last_date_of_pms. "' WHERE asset_id = '".$asset_id."'";
 		$mysqli->query($sql_1);  
 
 		$return_result['status'] = $status; 
