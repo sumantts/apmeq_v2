@@ -293,6 +293,7 @@ include('common/head.php');
                                         <th>AMC(Y/N)<br>Date</th>
                                         <th>CMC(Y/N)<br>Date</th>
                                         <th>Service provider<br> details</th>
+                                        <th>Soft Link</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -318,6 +319,7 @@ include('common/head.php');
                                         <th>AMC(Y/N)<br>Date</th>
                                         <th>CMC(Y/N)<br>Date</th>
                                         <th>Service provider<br> details</th>
+                                        <th>Soft Link</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>

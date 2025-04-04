@@ -15,7 +15,8 @@
 		$asset_code = $_POST['asset_code'];
 		
 		$asset_id = ''; 
-		$facility_id = ''; 
+		$facility_id = '';
+		$facility_name = ''; 
 		$department_id = ''; 
 		$equipment_name = ''; 
 		$asset_make = ''; 
@@ -49,7 +50,7 @@
 		$sp_details = '';
 		$status = true;
 
-		$sql = "SELECT * FROM asset_details WHERE asset_code = '" .$asset_code. "'";
+		$sql = "SELECT asset_details.*, facility_master.facility_name FROM asset_details JOIN facility_master ON asset_details.facility_id = facility_master.facility_id WHERE asset_details.asset_code = '" .$asset_code. "'";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -65,6 +66,7 @@
 
 			$asset_id = $row['asset_id']; 
 			$facility_id = $row['facility_id']; 
+			$facility_name = $row['facility_name'];
 			$department_id = json_decode($row['department_id']); 
 			$equipment_name = $row['equipment_name']; 
 			$asset_make = $row['asset_make']; 
@@ -118,6 +120,7 @@
 		
 		$return_array['asset_id'] = $asset_id; 
 		$return_array['facility_id'] = $facility_id; 
+		$return_array['facility_name'] = $facility_name; 
 		$return_array['department_id'] = $department_id; 
 		$return_array['equipment_name'] = $equipment_name; 
 		$return_array['asset_make'] = $asset_make; 
@@ -180,21 +183,32 @@
 				$return_result['error_message'] = 'Please write the issue description';
 				$status = false;
 			}else{
-				//Insert into table
-				$sql1 = "INSERT INTO call_log_register (facility_id, asset_code, user_id, ticket_raiser_name, ticket_raiser_contact, issue_description, call_log_date_time, amc_yes_no, amc_last_date, cmc_yes_no, cmc_last_date) VALUES ('" .$facility_id. "', '" .$asset_code. "', '" .$user_id. "', '" .$ticket_raiser_name. "', '" .$ticket_raiser_contact. "', '" .$issue_description. "', '" .$call_log_date_time. "', '" .$amc_yes_no. "', '" .$amc_last_date. "', '" .$cmc_yes_no. "', '" .$cmc_last_date. "')";
-				$result1 = $mysqli->query($sql1);
-				$insert_id = $mysqli->insert_id;	
+				$call_log_status = 2;
+				$sql_1 = "SELECT * FROM call_log_register WHERE asset_code = '" .$asset_code. "' AND call_log_status < '" .$call_log_status. "' ";
+				$result_1 = $mysqli->query($sql_1);
 
-				if($insert_id > 0){
-					$status = true;  
-					$token_id = str_pad($insert_id, 4, '0', STR_PAD_LEFT);
-
-					$upd_sql = "UPDATE call_log_register SET token_id = '" .$token_id. "' WHERE call_log_id = '" .$insert_id. "' ";
-					$result_upd = $mysqli->query($upd_sql); 
+				if ($result_1->num_rows > 0) {
+					$status = false;	
+					$row_1 = $result_1->fetch_array();
+					$token_id = $row_1['token_id'];
+					$return_result['error_message'] = 'Call Log already registered, Ticket ID #'.$token_id;
 				}else{
-					$return_result['error_message'] = 'Data Insert Error';
-					$status = false;
-				}
+					//Insert into table
+					$sql1 = "INSERT INTO call_log_register (facility_id, asset_code, user_id, ticket_raiser_name, ticket_raiser_contact, issue_description, call_log_date_time, amc_yes_no, amc_last_date, cmc_yes_no, cmc_last_date) VALUES ('" .$facility_id. "', '" .$asset_code. "', '" .$user_id. "', '" .$ticket_raiser_name. "', '" .$ticket_raiser_contact. "', '" .$issue_description. "', '" .$call_log_date_time. "', '" .$amc_yes_no. "', '" .$amc_last_date. "', '" .$cmc_yes_no. "', '" .$cmc_last_date. "')";
+					$result1 = $mysqli->query($sql1);
+					$insert_id = $mysqli->insert_id;	
+
+					if($insert_id > 0){
+						$status = true;  
+						$token_id = str_pad($insert_id, 4, '0', STR_PAD_LEFT);
+
+						$upd_sql = "UPDATE call_log_register SET token_id = '" .$token_id. "' WHERE call_log_id = '" .$insert_id. "' ";
+						$result_upd = $mysqli->query($upd_sql); 
+					}else{
+						$return_result['error_message'] = 'Data Insert Error';
+						$status = false;
+					}
+				}//end if
 			}
 		} catch (PDOException $e) {
 			die("Error occurred:" . $e->getMessage());

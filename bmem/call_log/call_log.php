@@ -77,7 +77,7 @@ include('common/head.php');
 
                                 <div class="col-md-3 mb-3">
                                     <label for="asset_code" class="text-danger">Asset Code*</label>
-                                    <input type="number" class="form-control" id="asset_code" required> 
+                                    <input type="text" class="form-control" id="asset_code" required> 
                                 </div>   
 
                                 <div class="col-md-3 mb-3">

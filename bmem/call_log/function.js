@@ -23,6 +23,7 @@ $('#asset_code').on('blur', function(){
 
                 $html = '';
                 $html += '<div class="col-md-12">';
+                $html += '<span><strong>Facility Name:</strong> '+$res1.facility_name+'</span></br>';
                 $html += '<span><strong>Device Name:</strong> '+$res1.equipment_name+'</span></br>';
                 $html += '<span><strong>Date of installation:</strong> '+$res1.date_of_installation+'</span></br>';
                 $html += '<span><strong>Supplied by:</strong> '+$res1.asset_supplied_by+'</span></br>';

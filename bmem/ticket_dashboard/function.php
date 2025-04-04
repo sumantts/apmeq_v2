@@ -324,6 +324,8 @@
 				$amc_info = $amc_info1 ."<br>". date('d-F-Y', strtotime($amc_last_date));
 				$cmc_info = $cmc_info1 ."<br>". date('d-F-Y', strtotime($cmc_last_date));
 
+				$view_link = "<a href='ticket_dashboard/call_log_link.php?call_log_id=$call_log_id', target='_blank'>View Link</a>";
+
 				if($dept_match == true){
 					$data[0] = $slno; 
 					$data[1] = $token_id;
@@ -368,9 +370,10 @@
 					}
 					$data[17] = $amc_info;	
 					$data[18] = $cmc_info;	
-					$data[19] = $sp_details;
+					$data[19] = $sp_details;	
+					$data[20] = $view_link;
 
-					$data[20] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$call_log_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$call_log_id.")'></i></a>";						
+					$data[21] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$call_log_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$call_log_id.")'></i></a>";						
 
 					array_push($mainData, $data);
 					$slno++;
@@ -582,6 +585,35 @@
     	echo json_encode($return_array);
 	}//function end		
 
+	//Get Product Images
+	if($fn == 'getAllProductImagesCL'){
+		$return_array = array();
+		$status = true;
+		$all_images = array();
+		$call_log_id = $_POST["call_log_id"];
+
+		$sql = "SELECT call_log_attach FROM call_log_register WHERE call_log_id = '".$call_log_id."'";
+		$result = $mysqli->query($sql);
+
+		if ($result->num_rows > 0) {
+			$slno = 1;
+			while($row = $result->fetch_array()){
+				$all_images_en = $row['call_log_attach']; 
+				if($all_images_en != ''){
+					$status = true;
+					$all_images = json_decode($all_images_en);
+				}
+			}
+		} else {
+			$status = false;
+		}
+		//$mysqli->close();
+
+		$return_array['status'] = $status;
+		$return_array['all_images'] = $all_images;
+    	echo json_encode($return_array);
+	}//function end		
+
 	//Delete Single Image
 	if($fn == 'deleteProdImage'){
 		$return_result = array();
@@ -624,6 +656,76 @@
 		$return_result['status'] = $status;
 		//sleep(1);
 		echo json_encode($return_result);
+	}//end function deleteItem	
+
+	//Delete Single Image
+	if($fn == 'deleteProdImageCL'){
+		$return_result = array();
+		$all_images = array();
+		$all_images_temp = array();
+		$status = true;
+		$call_log_id = $_POST["call_log_id"];
+		$prod_iamge_name = $_POST["prod_iamge_name"];
+
+		//Unlink product image
+		$sql = "SELECT call_log_attach FROM call_log_register WHERE call_log_id = '".$call_log_id."'";
+		$result = $mysqli->query($sql);
+
+		if ($result->num_rows > 0) {
+			$slno = 1;
+			while($row = $result->fetch_array()){
+				$all_images_en = $row['call_log_attach']; 
+				if($all_images_en != ''){
+					$status = true;
+					$all_images = json_decode($all_images_en);
+					if(sizeof($all_images) > 0){
+						for($i = 0; $i < sizeof($all_images); $i++){
+							if($all_images[$i] == $prod_iamge_name){
+								$file_path = ''.$all_images[$i];
+								unlink('photos/'.$file_path);
+							}
+							if($all_images[$i] != $prod_iamge_name){
+								array_push($all_images_temp, $all_images[$i]); 
+							}
+						}//end for
+						$all_images_en = json_encode($all_images_temp);
+					}//end if
+				}//end if
+			}//end while
+		} //end if
+
+		$sql = "UPDATE call_log_register SET call_log_attach = '" .$all_images_en. "' WHERE call_log_id = '".$call_log_id."'";
+		$mysqli->query($sql);
+
+		$return_result['status'] = $status;
+		//sleep(1);
+		echo json_encode($return_result);
 	}//end function deleteItem
+
+	
+
+	//update Generated Form data
+	if($fn == 'updateGeneratedFormdata'){
+		$return_result = array();
+		$status = true;
+
+		$call_log_id = $_POST['call_log_id'];
+		$call_log_comment = $_POST['call_log_comment']; 
+		$status_by_engg = $_POST['status_by_engg']; 
+		
+		try {
+			if($call_log_id > 0){
+				$status = true;
+				$pms_data_updated = date('Y-m-d H:i:s'); 
+				$sql = "UPDATE call_log_register SET call_log_comment = '" .$call_log_comment. "', status_by_engg = '" .$status_by_engg. "' WHERE call_log_id = '" .$call_log_id. "' ";
+				$result = $mysqli->query($sql);
+			}	
+		} catch (PDOException $e) {
+			die("Error occurred:" . $e->getMessage());
+		}
+		$return_result['status'] = $status;
+		
+		echo json_encode($return_result);
+	}//Save function end
 
 ?>
