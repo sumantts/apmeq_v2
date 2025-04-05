@@ -172,14 +172,12 @@ include('common/head.php');
                                 </div>    
 
                                 <div class="col-md-3 mb-3">
-                                    <label for="call_log_status">Ticket Status</label>
-                                    <select class="form-control js-example-basic-single" id="call_log_status" name="call_log_status">
-                                        <option value="-1">Select</option>
-                                        <option value="0">Raised</option>
-                                        <option value="1">Work In Progress</option>
-                                        <option value="2">Resolved </option>
-                                        <option value="3">Closed </option>
-                                        <option value="4">Rejected</option>
+                                    <label for="status_by_engg">Ticket Status</label>
+                                    <select class="form-control js-example-basic-single" id="status_by_engg" name="status_by_engg"> 
+                                        <option value="-1">Select</option> 
+                                        <option value="0">Work In Progress</option> 
+                                        <option value="1">Closed </option>
+                                        <option value="2">RBER</option>
                                     </select> 
                                 </div>    
 
@@ -217,7 +215,7 @@ include('common/head.php');
                                 </div>  
 
                                 <div class="col-md-3 mb-3">
-                                    <label for="ticket_class">Ticket Class</label>
+                                    <label for="ticket_class">Asset Class</label>
                                     <select class="form-control js-example-basic-single" id="ticket_class" name="ticket_class">
                                         <option value="0">Select</option>
                                         <option value="1">critical</option>

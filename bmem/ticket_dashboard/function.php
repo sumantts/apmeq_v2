@@ -188,7 +188,7 @@
 
 		$facility_id_s = $_GET['facility_id_s'];
 		$department_id_s = $_GET['department_id']; 
-		$call_log_status = $_GET['call_log_status'];
+		$status_by_engg = $_GET['status_by_engg'];
 		$token_id = $_GET['token_id']; 
 		$day_wise = $_GET['day_wise']; 
 		$device_group = $_GET['device_group']; 
@@ -203,8 +203,8 @@
 		if($facility_id_s > 0){
 			$where_condition .= " AND call_log_register.facility_id = '" .$facility_id_s. "' ";
 		}
-		if($call_log_status > 0){
-			$where_condition .= " AND call_log_register.call_log_status = '" .$call_log_status. "' ";
+		if($status_by_engg >= 0){
+			$where_condition .= " AND call_log_register.status_by_engg = '" .$status_by_engg. "' ";
 		}
 		if($token_id != ''){
 			$where_condition .= " AND call_log_register.token_id = '" .$token_id. "' ";
@@ -230,7 +230,7 @@
 			}			
 		}	
 		
-		$sql = "SELECT call_log_register.call_log_id, call_log_register.token_id, call_log_register.asset_code, call_log_register.issue_description, call_log_register.call_log_date_time, call_log_register.resolved_date_time, call_log_register.ticket_raiser_contact, call_log_register.assign_to, call_log_register.call_log_status, call_log_register.eng_contact_no, call_log_register.engineer_coment, call_log_register.amc_yes_no, call_log_register.amc_last_date, call_log_register.cmc_yes_no, call_log_register.cmc_last_date, asset_details.equipment_name, asset_details.department_id, asset_details.asset_supplied_by, asset_details.sp_details, asset_details.warranty_last_date, facility_master.facility_code, facility_master.facility_name FROM call_log_register JOIN asset_details ON call_log_register.asset_code = asset_details.asset_code JOIN facility_master ON call_log_register.facility_id = facility_master.facility_id $where_condition ORDER BY call_log_register.call_log_id DESC LIMIT 0, 50";
+		$sql = "SELECT call_log_register.call_log_id, call_log_register.token_id, call_log_register.asset_code, call_log_register.issue_description, call_log_register.call_log_date_time, call_log_register.resolved_date_time, call_log_register.ticket_raiser_contact, call_log_register.assign_to, call_log_register.status_by_engg, call_log_register.eng_contact_no, call_log_register.engineer_coment, call_log_register.amc_yes_no, call_log_register.amc_last_date, call_log_register.cmc_yes_no, call_log_register.cmc_last_date, asset_details.equipment_name, asset_details.department_id, asset_details.asset_supplied_by, asset_details.sp_details, asset_details.warranty_last_date, facility_master.facility_code, facility_master.facility_name FROM call_log_register JOIN asset_details ON call_log_register.asset_code = asset_details.asset_code JOIN facility_master ON call_log_register.facility_id = facility_master.facility_id $where_condition ORDER BY call_log_register.call_log_id DESC LIMIT 0, 50";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -268,20 +268,16 @@
 					$assign_to_text = '';
 				}	
 
-				$call_log_status = $row['call_log_status'];	
+				$status_by_engg = $row['status_by_engg'];	
 				$call_log_status_text = '';
-				if($call_log_status == 0){
-					$call_log_status_text = 'Raised';					
-				}else if($call_log_status == 1){
-					$call_log_status_text = 'WIP';
-				}else if($call_log_status == 2){
-					$call_log_status_text = 'Resolved';
-				}else if($call_log_status == 3){
+				if($status_by_engg == 0){
+					$call_log_status_text = 'WIP';					
+				}else if($status_by_engg == 1){
 					$call_log_status_text = 'Closed';
-				}else if($call_log_status == 4){
-					$call_log_status_text = 'Rejected';
+				}else if($status_by_engg == 2){
+					$call_log_status_text = 'RBER';
 				}else{
-					$call_log_status_text = 'Raised';
+					$call_log_status_text = 'WIP';
 				}
 				
 				//get all depertment name

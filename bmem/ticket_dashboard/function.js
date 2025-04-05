@@ -156,7 +156,7 @@ function populateDataTable_1(){
 
     $facility_id_s = $('#facility_id_s').val();
     $department_id = $('#department_id').val(); 
-    $call_log_status = $('#call_log_status').val();
+    $status_by_engg = $('#status_by_engg').val();
     $token_id = $('#token_id').val(); 
     $day_wise = $('#day_wise').val(); 
     $device_group = $('#device_group').val(); 
@@ -170,7 +170,7 @@ function populateDataTable_1(){
         columnDefs: [{ width: 5, targets: 0 } ],
         responsive: true,
         serverMethod: 'GET',
-        ajax: {'url': 'ticket_dashboard/function.php?fn=getTableData_1&facility_id_s='+$facility_id_s+'&department_id='+$department_id+'&call_log_status='+$call_log_status+'&token_id='+$token_id+'&day_wise='+$day_wise+'&device_group='+$device_group+'&equipment_name='+$equipment_name+'&ticket_class='+$ticket_class+'&from_dt='+$from_dt+'&to_dt='+$to_dt+'&warranty_sr='+$warranty_sr },
+        ajax: {'url': 'ticket_dashboard/function.php?fn=getTableData_1&facility_id_s='+$facility_id_s+'&department_id='+$department_id+'&status_by_engg='+$status_by_engg+'&token_id='+$token_id+'&day_wise='+$day_wise+'&device_group='+$device_group+'&equipment_name='+$equipment_name+'&ticket_class='+$ticket_class+'&from_dt='+$from_dt+'&to_dt='+$to_dt+'&warranty_sr='+$warranty_sr },
         dom: 'Bfrtip',
         buttons: [
             {

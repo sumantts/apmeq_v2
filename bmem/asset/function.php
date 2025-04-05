@@ -67,13 +67,13 @@
 					}
 					 
 					//Get facility Code
-					$sql_get1 = "SELECT facility_code FROM asset_details WHERE facility_id = '" .$facility_id. "'";
+					/*$sql_get1 = "SELECT facility_code FROM asset_details WHERE facility_id = '" .$facility_id. "'";
 					$result_get1 = $mysqli->query($sql_get1);
 			
 					if ($result_get1->num_rows > 0) { 
 						$row_get1 = $result_get1->fetch_array();
 						$facility_code = $row_get1['facility_code'];	
-					}
+					}*/
 
 					$asset_code = $facility_code.''.str_pad($asset_id_temp, 5, '0', STR_PAD_LEFT);
 
