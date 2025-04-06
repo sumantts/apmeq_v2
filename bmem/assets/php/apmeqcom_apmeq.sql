@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 02, 2025 at 07:31 PM
+-- Generation Time: Apr 06, 2025 at 06:42 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -74,9 +74,10 @@ INSERT INTO `asset_details` (`asset_id`, `facility_id`, `department_id`, `equipm
 (24, 7, '[\"6\"]', 'Surgical Diathermy', 'Earbe', 'Earbedia', 'DiaT123456', '', '2025-03-01', '', '', '', '+0 years 0 months', 2, 1, 1, 7, '2025-03-01', '', '1||', '0000-00-00', '', '|6|', '2025-02-01', '', '', '2027-02-28', 2, '2025-01-01', 2, '2025-01-01', '000700024', '', 0, 1),
 (25, 7, '[\"3\"]', 'Multichannel Monitor', 'Philips', 'MX450', '', '', '2024-02-25', '', 'Marc Medical', '', '+1 years 0 months', 2, 1, 1, 4, '2024-02-28', '', '1|0|0', '2024-02-28', '', '|11|0', '2025-02-01', '', '', '2025-03-20', 0, '2025-01-01', 0, '2025-01-01', '000700025', '', 1, 1),
 (28, 1, '[\"5\"]', 'ECG', 'BPL', 'BPL ECG', 'BPL123456', '', '2024-01-01', '', 'BPL', '80000', '+1 years 2 months', 2, 1, 2, 4, '2024-12-01', '', '|6|', '2025-03-29', '', '|3|', '2025-02-01', '', '', '2025-01-02', 0, '2025-01-01', 0, '2025-01-01', '000100028', '8910420169', 1, 1),
-(29, 1, '[\"1\"]', 'Incubator', 'Phoneix', 'Incub', 'Phn123456', '', '2025-01-01', '', 'eastermedutech', '75000', '+0 years 3 months', 2, 1, 1, 5, '2025-01-01', '', '|2|', '2025-03-31', '', '|1|', '2025-02-01', '', '', '2025-12-31', 1, '2025-01-01', 1, '2025-01-01', '000100029', '8910420169', 1, 1),
-(30, 8, '[\"5\"]', 'Multipara monitor', 'BPL', 'MPM', 'MPM123456', '', '2024-03-19', '', 'BPL', '86000', '+1 years 0 months', 2, 1, 2, 4, '2024-08-26', '', '|6|', '2024-11-19', '', '|3|', '2025-02-01', '', '', '2025-03-19', 0, '2025-01-01', 0, '2025-01-01', '000800030', '8910420169', 1, 1),
-(31, 8, '[\"3\"]', 'Difbrilator', 'Philips', 'Difibmax', 'Difib12456', '', '2023-12-06', '', 'Philips', '200000', '+1 years 3 months', 2, 1, 1, 5, '2023-12-20', '[]', '1|1|1', '2024-12-31', '[]', '1|1|20', '2025-02-01', '|2|', '[]', '2024-12-12', 2, '2025-01-01', 2, '2025-01-01', '000800031', '8910420169', 1, 1);
+(29, 1, '[\"1\"]', 'Incubator', 'Phoneix', 'Incub', 'Phn123456', '', '2025-01-01', '', 'eastermedutech', '75000', '+0 years 3 months', 2, 1, 1, 5, '2025-01-01', '', '|2|', '2025-04-03', '', '|1|', '2025-02-01', '', '', '2025-12-31', 1, '2025-01-01', 1, '2025-01-01', '000100029', '8910420169', 1, 1),
+(30, 8, '[\"5\"]', 'Multipara monitor', 'BPL', 'MPM', 'MPM123456', '', '2024-03-19', '', 'BPL', '86000', '+1 years 0 months', 2, 1, 2, 4, '2025-04-03', '', '|6|', '2024-11-19', '', '|3|', '2025-02-01', '', '', '2025-03-19', 0, '2025-01-01', 0, '2025-01-01', '000800030', '8910420169', 1, 1),
+(31, 8, '[\"3\"]', 'Difbrilator', 'Philips', 'Difibmax', 'Difib12456', '', '2023-12-06', '', 'Philips', '200000', '+1 years 3 months', 2, 1, 1, 5, '2023-12-20', '[]', '1|1|1', '2025-04-03', '[]', '1|1|20', '2025-04-03', '|2|', '[]', '2024-12-12', 2, '2025-01-01', 2, '2025-01-01', '000800031', '8910420169', 1, 1),
+(34, 1, '[\"5\"]', 'Radiant Warmer 2025', 'NAT Steel', 'Difibmax', 'Phn123456', 'NA', '2025-04-05', '', 'NAT steel', '450000', '+0 years 0 months', 2, 1, 2, 5, '2025-04-05', '', '1||', '2025-04-05', '', '1||', '2025-04-05', '1||', '', '2026-02-05', 0, '0000-00-00', 0, '0000-00-00', '000100034', 'ok', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -167,7 +168,8 @@ CREATE TABLE `calib_info` (
 --
 
 INSERT INTO `calib_info` (`calib_id`, `calib_info_id`, `asset_id`, `asset_code`, `facility_id`, `facility_code`, `department_id`, `device_group`, `asset_class`, `equipment_name`, `equipment_make`, `equipment_model`, `equipment_sl_no`, `pms_due_date`, `supplied_by`, `sp_details`, `service_provider_details`, `pms_planned_date`, `pms_report_attached`, `link_generated_by`, `link_generate_time`, `row_status`, `pms_status`, `pms_sp_status`, `assign_to_sp_engg`, `pms_data_updated`) VALUES
-(1, '0001', 29, '000100029', 1, '0001', '1', 5, 1, 'Incubator', 'Phoneix', 'Incub', 'Phn123456', '2025-03-01', 'eastermedutech', '8910420169', 'calibration process initiated', '2025-03-31', '[\"67ea11dd5f6f2.png\",\"67ea11dd77f38.png\",\"67ea11dd941d3.png\"]', 1, '2025-03-31 08:53:03', 2, 1, 0, 1, '2025-03-31 09:14:18');
+(1, '0001', 29, '000100029', 1, '0001', '1', 5, 1, 'Incubator', 'Phoneix', 'Incub', 'Phn123456', '2025-03-01', 'eastermedutech', '8910420169', 'calibration process initiated', '2025-03-31', '[\"67ea11dd5f6f2.png\",\"67ea11dd77f38.png\",\"67ea11dd941d3.png\"]', 1, '2025-03-31 08:53:03', 2, 1, 0, 1, '2025-03-31 09:14:18'),
+(2, '0002', 30, '000800030', 8, '0008', '5', 4, 2, 'Multipara monitor', 'BPL', 'MPM', 'MPM123456', '2025-02-26', 'BPL', '8910420169', 'calib done\ncalibration completed', '2025-04-03', '', 1, '2025-04-03 09:53:18', 2, 1, 1, 0, '2025-04-03 09:58:12');
 
 -- --------------------------------------------------------
 
@@ -190,6 +192,9 @@ CREATE TABLE `call_log_register` (
   `eng_contact_no` varchar(10) NOT NULL,
   `uploaded_report` text NOT NULL,
   `engineer_coment` text NOT NULL,
+  `call_log_comment` text NOT NULL,
+  `call_log_attach` text NOT NULL COMMENT 'image uploaded by soft link',
+  `status_by_engg` tinyint(1) NOT NULL COMMENT '0=wip,1=closed,2=rber, 3=Condemed',
   `call_log_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0=Raised 1=WIP \r\n 2=Resolved 3=Closed 4=Rejected',
   `ticket_class` tinyint(1) NOT NULL DEFAULT 0 COMMENT '1=critical 2=non-critical',
   `amc_yes_no` tinyint(1) NOT NULL COMMENT '0=No, 1=Yes',
@@ -197,13 +202,6 @@ CREATE TABLE `call_log_register` (
   `cmc_yes_no` tinyint(1) NOT NULL COMMENT '0=No, 1=Yes',
   `cmc_last_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `call_log_register`
---
-
-INSERT INTO `call_log_register` (`call_log_id`, `token_id`, `facility_id`, `asset_code`, `user_id`, `ticket_raiser_name`, `ticket_raiser_contact`, `issue_description`, `call_log_date_time`, `resolved_date_time`, `assign_to`, `eng_contact_no`, `uploaded_report`, `engineer_coment`, `call_log_status`, `ticket_class`, `amc_yes_no`, `amc_last_date`, `cmc_yes_no`, `cmc_last_date`) VALUES
-(1, '0001', 1, '000100029', 1, 'Mr. Superadmin', '9733935161', 'take an immediate action', '2025-04-01 09:30:20', '0000-00-00 00:00:00', 0, '', '', '', 0, 0, 1, '2025-01-01', 1, '2025-01-01');
 
 -- --------------------------------------------------------
 
@@ -383,8 +381,8 @@ CREATE TABLE `pms_info` (
 --
 
 INSERT INTO `pms_info` (`pms_id`, `pms_info_id`, `asset_id`, `asset_code`, `facility_id`, `facility_code`, `department_id`, `device_group`, `asset_class`, `equipment_name`, `equipment_make`, `equipment_model`, `equipment_sl_no`, `pms_due_date`, `supplied_by`, `sp_details`, `service_provider_details`, `pms_planned_date`, `pms_report_attached`, `link_generated_by`, `link_generate_time`, `row_status`, `pms_status`, `pms_sp_status`, `assign_to_sp_engg`, `pms_data_updated`) VALUES
-(1, '0001', 29, '000100029', 1, '0001', '1', 5, 1, 'Incubator', 'Phoneix', 'Incub', 'Phn123456', '2025-02-01', 'eastermedutech', '8910420169', '', '2025-03-29', '[]', 1, '2025-03-29 18:30:32', 2, 0, 1, 0, '2025-03-29 18:40:57'),
-(2, '0002', 28, '000100028', 1, '0001', '5', 4, 2, 'ECG', 'BPL', 'BPL ECG', 'BPL123456', '2025-03-01', 'BPL', '8910420169', 'done', '2025-03-29', '', 1, '2025-03-29 18:51:52', 2, 2, 1, 2, '2025-03-29 18:52:26');
+(1, '0001', 29, '000100029', 1, '0001', '1', 5, 1, 'Incubator', 'Phoneix', 'Incub', 'Phn123456', '2025-02-01', 'eastermedutech', '8910420169', '', '2025-03-29', '[]', 1, '2025-03-29 18:30:32', 2, 1, 1, 0, '2025-03-29 18:40:57'),
+(2, '0002', 28, '000100028', 1, '0001', '5', 4, 2, 'ECG', 'BPL', 'BPL ECG', 'BPL123456', '2025-03-01', 'BPL', '8910420169', 'PMS in progress', '2025-03-29', '', 1, '2025-03-29 18:51:52', 2, 2, 1, 2, '2025-04-03 09:29:08');
 
 -- --------------------------------------------------------
 
@@ -426,7 +424,7 @@ CREATE TABLE `qa_info` (
 --
 
 INSERT INTO `qa_info` (`qa_id`, `qa_info_id`, `asset_id`, `asset_code`, `facility_id`, `facility_code`, `department_id`, `device_group`, `asset_class`, `equipment_name`, `equipment_make`, `equipment_model`, `equipment_sl_no`, `pms_due_date`, `supplied_by`, `sp_details`, `service_provider_details`, `pms_planned_date`, `pms_report_attached`, `link_generated_by`, `link_generate_time`, `row_status`, `pms_status`, `pms_sp_status`, `assign_to_sp_engg`, `pms_data_updated`) VALUES
-(1, '0001', 31, '000800031', 8, '0008', '3', 5, 1, 'Difbrilator', 'Philips', 'Difibmax', 'Difib12456', '2025-04-01', 'Philips', '8910420169', '', '2025-04-02', '', 1, '2025-04-02 22:59:40', 2, 0, 0, 0, '2025-04-02 22:59:40');
+(1, '0001', 31, '000800031', 8, '0008', '3', 5, 1, 'Difbrilator', 'Philips', 'Difibmax', 'Difib12456', '2025-04-01', 'Philips', '8910420169', 'done', '2025-04-03', '', 1, '2025-04-03 09:12:58', 2, 1, 1, 0, '2025-04-03 09:13:10');
 
 -- --------------------------------------------------------
 
@@ -462,7 +460,8 @@ CREATE TABLE `rber_info` (
 
 INSERT INTO `rber_info` (`rber_id`, `rber_info_id`, `facility_id`, `facility_code`, `department_id`, `device_group`, `asset_class`, `equipment_name`, `equipment_make_model`, `equipment_sl_no`, `pms_due_date`, `supplied_by`, `service_provider_details`, `pms_planned_date`, `pms_report_attached`, `link_generated_by`, `link_generate_time`, `row_status`, `pms_data_updated`) VALUES
 (1, '0001', 4, '0001', '5', 5, 1, 'Radiant Warmer', '0001', '0001', '0000-00-00', 'SJ', '', '0000-00-00', '[\"670e7e4a91015.jpg\"]', 1, '2024-10-15 20:07:35', 2, '2024-10-15 20:07:52'),
-(2, '0002', 0, '', '', 0, 0, '', '', '', '0000-00-00', '', '', '0000-00-00', '', 1, '2025-03-22 15:19:35', 1, '0000-00-00 00:00:00');
+(2, '0002', 0, '', '', 0, 0, '', '', '', '0000-00-00', '', '', '0000-00-00', '', 1, '2025-03-22 15:19:35', 1, '0000-00-00 00:00:00'),
+(3, '0003', 0, '', '', 0, 0, '', '', '', '0000-00-00', '', '', '0000-00-00', '', 1, '2025-04-05 20:34:59', 1, '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -708,7 +707,7 @@ ALTER TABLE `user_type`
 -- AUTO_INCREMENT for table `asset_details`
 --
 ALTER TABLE `asset_details`
-  MODIFY `asset_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `asset_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `asset_status_code`
@@ -726,13 +725,13 @@ ALTER TABLE `asset_type_list`
 -- AUTO_INCREMENT for table `calib_info`
 --
 ALTER TABLE `calib_info`
-  MODIFY `calib_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `calib_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `call_log_register`
 --
 ALTER TABLE `call_log_register`
-  MODIFY `call_log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `call_log_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `category_list`
@@ -786,7 +785,7 @@ ALTER TABLE `qa_info`
 -- AUTO_INCREMENT for table `rber_info`
 --
 ALTER TABLE `rber_info`
-  MODIFY `rber_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `rber_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `reloc_asset_detail`
