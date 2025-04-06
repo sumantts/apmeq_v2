@@ -1,10 +1,8 @@
-<?php  
+<?php 
 if(!$_SESSION["user_id"] || !$_SESSION["user_type_code"]){header('location:?p=signin');}
 include('common/head.php');  
 ?>
-<script>
-    window.localStorage.setItem('user_id', '1');
-</script>
+
 <body class="">
 <!-- [ Pre-loader ] start -->
 <div class="loader-bg">
@@ -44,184 +42,10 @@ include('common/head.php');
         <!-- [ Main Content ] start -->
         <div class="row">
             
-            <!-- Widget primary-success card start -->
-            <div class="col-md-12 col-xl-12">
-                <div class="card support-bar overflow-hidden">
-                    <div class="card-body pb-0 text-center">
-                        <h2 class="m-0" id="total_ticket">000</h2>
-                        <span class="text-c-blue">RBER Ticket Status</span>
-                        <p class="mb-3 mt-3">Total number of support requests that come in.</p>
-                    </div>
-                    <div id="support-chart"></div>
-                    <div class="card-footer bg-primary text-white">
-                        <div class="row text-center">
-                            <div class="col">
-                                <h4 class="m-0 text-white" id="pending_pms">000</h4>
-                                <span>Total Number of RBER due</span>
-                            </div>
-                            <div class="col">
-                                <h4 class="m-0 text-white" id="pms_done">000</h4>
-                                <span>Total Number of RBER done</span>
-                            </div>
-                            <div class="col">
-                                <h4 class="m-0 text-white" id="pending_pms1">000</h4>
-                                <span>Total Schedule / planned</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Widget primary-success card end -->
-
-            <!-- [ sample-table ] start -->
-            <div class="col-sm-12">
-                <div class="card">
-
-                    <div class="card-header">
-                        <h5>Facility wise RBER Tickets</h5>
-                        <div class="card-header-right">
-                            <div class="btn-group card-option"> 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;" id="orgFormAlert">
-							<strong>Success!</strong> Your Data Deleted successfully.
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						</div>
-                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;" id="orgFormAlert1">
-							<strong>Success!</strong> Your Data saved successfully.
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						</div>
-                        <!-- <button type="button" class="btn btn-primary mb-2 float-right" id="onMyModal">Add New</button>
-
-                        <a href="?p=asset-dashboard&gr=setup"><i class="fa fa-arrow-left" ></i> Back</a>
-                        <hr> -->
-                        <div class="table-responsive">
-                            <table id="example" class="table table-striped" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>No.</th> 
-                                        <th>Facility name/code</th>
-                                        <th>Total RBER</th>
-                                        <th>Total Condemned</th> 
-                                    </tr>
-                                </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>No.</th>  
-                                        <th>Facility name/code</th>
-                                        <th>Total RBER</th>
-                                        <th>Total Condemned</th>  
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>                       
-
-                    </div>
-                </div>
-            </div>
-            
-            <!-- [ sample-table ] Filter start -->
-            <div class="col-sm-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h5>Filter RBER </h5> 
-                    </div>
-                    <div class="card-body">
-                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;" id="orgFormAlert">
-							<strong>Success!</strong> Your Data Deleted successfully.
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						</div>
-                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;" id="orgFormAlert1">
-							<strong>Success!</strong> Your Data saved successfully.
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						</div>
-                         
-
-                        <form class="needs-validation" id="pmsSerForm">
-                            <div class="form-row">                               
-                                <div class="col-md-3 mb-3">
-                                    <label for="facility_id">Facility Name</label>
-                                    <select class="form-control" id="facility_id">
-                                        <option value="0">Select</option> 
-                                    </select> 
-                                </div>     
-
-                                <div class="col-md-3 mb-3">
-                                    <label for="facility_code">Facility code</label>
-                                    <input type="text" class="form-control" id="facility_code"> 
-                                </div>    
-
-                                <div class="col-md-3 mb-3">
-                                    <label for="device_group">Device Group</label>
-                                    <select class="form-control" id="device_group">
-                                        <option value="0">Select</option> 
-                                    </select> 
-                                </div>     
-
-                                <div class="col-md-3 mb-3">
-                                    <label for="asset_class">Asset Class</label>
-                                    <select class="form-control" id="asset_class">
-                                        <option value="0">Select</option>
-                                        <option value="1">critical</option>
-                                        <option value="2">Non Critical</option>
-                                    </select> 
-                                </div>
-
-                                <div class="col-md-3 mb-3">
-                                    <label for="department_id">Department</label>
-                                    <select class="form-control" id="department_id">
-                                        <option value="0">Select</option> 
-                                    </select> 
-                                </div>    
-
-                                <div class="col-md-3 mb-3">
-                                    <label for="equipment_name">Equipmnt Name</label>
-                                    <input type="text" class="form-control" id="equipment_name"> 
-                                    </select> 
-                                </div>      
-
-                                <div class="col-md-3 mb-3">
-                                    <label for="asset_code">Equipment Code</label>
-                                    <input type="text" class="form-control" id="asset_code"> 
-                                    </select> 
-                                </div>        
-                                
-                                <div class="col-md-4 mb-3">
-                                    <label for="date_from_to">Date from - Date to</label>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <input type="date" class="form-control" id="from_date">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input type="date" class="form-control" id="to_date">
-                                        </div>
-                                    </div>
-                                </div>     
-
-                                <div class="col-md-4 mt-4">
-                                    <button class="btn  btn-primary" type="button" id="filterPMS">
-                                        <span class="btn-text" id="submitForm_text">Search</span>
-                                    </button>
-                                    
-                                    <button class="btn btn-dark" type="button" id="clearSearchForm">
-                                        <span class="btn-text" id="submitForm_text1">Clear</span>
-                                    </button>
-                                </div> 
-
-                                <div class="col-md-4 mt-4">
-                                    <button type="button" class="btn btn-primary mb-2 float-right" id="generateLink">Generate Link <i class="fa fa-external-link" aria-hidden="true"></i></button>
-                                </div> 
-
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
             <!-- [ sample-table ] start --> 
-            <div class="col-sm-12 d-none" id="searchResDiv">
+            <div class="col-sm-12 d-block" id="filteredTicketDiv">
                 <div class="card">
+
                     <div class="card-header">
                         <h5>Filter Result</h5>
                         <div class="card-header-right">
@@ -230,49 +54,59 @@ include('common/head.php');
                         </div>
                     </div>
                     <div class="card-body">
-                        <!-- <button type="button" class="btn btn-primary mb-2 float-right" id="generateLink">Generate Link <i class="fa fa-external-link" aria-hidden="true"></i></button>                         -->
+                        
                         <div class="table-responsive">
                             <table id="example_1" class="table table-striped" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>No.</th> 
+                                        <th>Ticket no</th>
+                                        <th>Complaint/issue</th>
+                                        <th>Barcode</th>
+                                        <th>Asset Name</th>
+                                        <th>Asset Code</th>
                                         <th>Facility Name</th>
-                                        <th>Facility Code</th>
+                                        <th>Facility code</th>
                                         <th>Department</th>
-                                        <th>Device Group</th>
-                                        <th>Asset Class</th> 
-                                        <th>Equpment Name</th>
-                                        <th>Equipment Make/Model</th>
-                                        <th>Equipment sl no</th>
-                                        <th>PMS due date</th> 
                                         <th>Supplied by</th>
-                                        <th>Service provider details<br> if it is in Warranty/AMC/CMC</th>
-                                        <th>PMS planned date</th>
-                                        <th>Assign Service provider/<br>Junior enhgineer <br>(by soft link <br>email/mobile no/whatsapp)</th>
-                                         
-                                        <th>View report</th>
-                                        <th>Updated status<br>(WIP/Resolved/closed)</th> 
+                                        <th>Logged date</th> 
+                                        <th>Resolved Date</th>
+                                        <th>Contact details <br>of <br>ticket raiser</th>
+                                        <th>Assign Service provider/<br>Junior enhgineer</th>
+                                        <th>Engineer Contact No</th>
+                                        <th>Call Log Status </th> 
+                                        <th>Warrenty last date</th>
+                                        <th>AMC(Y/N)<br>Date</th>
+                                        <th>CMC(Y/N)<br>Date</th>
+                                        <th>Service provider<br> details</th>
+                                        <th>Soft Link</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>No.</th>
+                                        <th>No.</th> 
+                                        <th>Ticket no</th>
+                                        <th>Complaint/issue</th>
+                                        <th>Barcode</th>
+                                        <th>Asset Name</th>
+                                        <th>Asset Code</th>
                                         <th>Facility Name</th>
-                                        <th>Facility Code</th>
+                                        <th>Facility code</th>
                                         <th>Department</th>
-                                        <th>Device Group</th>
-                                        <th>Asset Class</th> 
-                                        <th>Equpment Name</th>
-                                        <th>Equipment Make/Model</th>
-                                        <th>Equipment sl no</th>
-                                        <th>PMS due date</th> 
                                         <th>Supplied by</th>
-                                        <th>Service provider details<br> if it is in Warranty/AMC/CMC</th>
-                                        <th>PMS planned date</th>
-                                        <th>Assign Service provider/<br>Junior enhgineer <br>(by soft link <br>email/mobile no/whatsapp)</th>
-                                         
-                                        <th>View report</th>
-                                        <th>Updated status<br>(WIP/Resolved/closed)</th> 
+                                        <th>Logged date</th> 
+                                        <th>Resolved Date</th>
+                                        <th>Contact details <br>of <br>ticket raiser</th>
+                                        <th>Assign Service provider/<br>Junior enhgineer</th>
+                                        <th>Engineer Contact No</th>
+                                        <th>Call Log Status </th> 
+                                        <th>Warrenty last date</th>
+                                        <th>AMC(Y/N)<br>Date</th>
+                                        <th>CMC(Y/N)<br>Date</th>
+                                        <th>Service provider<br> details</th>
+                                        <th>Soft Link</th>
+                                        <th>Action</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -282,6 +116,93 @@ include('common/head.php');
                 </div>
             </div>
 
+            <!-- Modal start -->
+            <div id="exampleModalLong" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle"><?=$title?></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="needs-validation" method="POST" id="myFormM" action="#">
+                                <a href="javascript: void(0);" id="partTwoSwitch" class="float-right">Show Ticket Description</a>
+                                <br>
+                                <hr>
+                                <div class="form-row" id="partTwoBoard"> 
+                                    <div class="col-md-12 mb-3" id="ticket_data">
+                                        
+                                    </div>  
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col-md-4 mb-3">
+                                        <label for="assign_to" class="text-danger">Assign To*</label>
+                                        <select class="form-control" name="assign_to" id="assign_to" required>
+                                            <option value="0">Select</option> 
+                                            <option value="1">Engineer</option> 
+                                            <option value="2">Service Provider</option> 
+                                        </select> 
+                                    </div>
+                                    
+                                    <div class="col-md-4 mb-3">
+                                        <label for="eng_contact_no" class="text-danger">Engineer Contact Number</label>
+                                        <input type="tel" class="form-control" id="eng_contact_no" value="" > 
+                                    </div> 
+
+                                    <div class="col-md-4 mb-3">
+                                        <label for="status_by_enggM" class="text-danger">Call Log Status*</label>
+                                        <select class="form-control" name="status_by_enggM" id="status_by_enggM" required> 
+                                            <option value="-1">Select</option> 
+                                            <option value="0">Work In Progress</option> 
+                                            <option value="1">Closed </option>
+                                            <option value="2">RBER</option>
+                                            <option value="3">Condemed</option> 
+                                        </select> 
+                                    </div>
+                                    
+                                    <div class="col-md-4 mb-3">
+                                        <label for="resolved_date_time" >Resolved Date Time</label>
+                                        <input type="date" class="form-control" id="resolved_date_time" value="" > 
+                                    </div>
+                                    
+                                    <!-- <div class="col-md-6 mt-4">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <input type="file" id="multiupload" name="uploadFiledd[]" multiple accept=".jpg,.jpeg,.png" >
+                                                <span id="uploadMessage"></span>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <button type="button" id="startUpload" class="btn btn-primary btn-sm">Upload</button>
+                                            </div>
+                                        </div>
+                                    </div>                                     -->
+                                </div> 
+
+                                <div class="form-row"> 
+                                    <div class="col-md-12 mb-3">
+                                        <div class="text-center" id="product_gallery"> </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row"> 
+                                    <div class="col-md-12 mb-3">
+                                        <textarea class="form-control" name="engineer_coment" id="engineer_coment"></textarea>
+                                    </div>
+                                </div>
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <input type="hidden" id="call_log_id" value="0">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            
+                            <button class="btn btn-primary" type="submit" id="submitFormM"> Save Changes </button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal end -->
             <!-- [ sample-page ] end -->
         </div>
         <!-- [ Main Content ] end -->

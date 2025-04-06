@@ -198,7 +198,7 @@
 		$to_dt = $_GET['to_dt'];  
 		$warranty_sr = $_GET['warranty_sr']; 
 
-		$where_condition = "WHERE call_log_register.call_log_id > 0";
+		$where_condition = "WHERE call_log_register.status_by_engg <= 2";
 
 		if($facility_id_s > 0){
 			$where_condition .= " AND call_log_register.facility_id = '" .$facility_id_s. "' ";
@@ -276,6 +276,8 @@
 					$call_log_status_text = 'Closed';
 				}else if($status_by_engg == 2){
 					$call_log_status_text = 'RBER';
+				}else if($status_by_engg == 3){
+					$call_log_status_text = 'Condemed';
 				}else{
 					$call_log_status_text = 'WIP';
 				}
@@ -392,7 +394,7 @@
 
 		$where_condition = "WHERE call_log_register.call_log_id = '" .$call_log_id. "' ";
 		
-		$sql = "SELECT call_log_register.call_log_id, call_log_register.token_id, call_log_register.issue_description, call_log_register.call_log_date_time, call_log_register.resolved_date_time, call_log_register.ticket_raiser_contact, call_log_register.assign_to, call_log_register.call_log_status, call_log_register.eng_contact_no, call_log_register.engineer_coment, asset_details.equipment_name, asset_details.department_id, asset_details.asset_supplied_by, asset_details.sp_details, facility_master.facility_code, facility_master.facility_name FROM call_log_register JOIN asset_details ON call_log_register.asset_code = asset_details.asset_code JOIN facility_master ON call_log_register.facility_id = facility_master.facility_id $where_condition";
+		$sql = "SELECT call_log_register.call_log_id, call_log_register.token_id, call_log_register.issue_description, call_log_register.call_log_date_time, call_log_register.resolved_date_time, call_log_register.ticket_raiser_contact, call_log_register.assign_to, call_log_register.call_log_status, call_log_register.status_by_engg, call_log_register.eng_contact_no, call_log_register.engineer_coment, asset_details.equipment_name, asset_details.department_id, asset_details.asset_supplied_by, asset_details.sp_details, facility_master.facility_code, facility_master.facility_name FROM call_log_register JOIN asset_details ON call_log_register.asset_code = asset_details.asset_code JOIN facility_master ON call_log_register.facility_id = facility_master.facility_id $where_condition";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -407,7 +409,8 @@
 				$facility_name = $row['facility_name'];					
 				$department_id = $row['department_id'];					
 				$asset_supplied_by = $row['asset_supplied_by'];					
-				$engineer_coment = $row['engineer_coment'];	
+				$engineer_coment = $row['engineer_coment'];					
+				$status_by_engg = $row['status_by_engg'];	
 							
 				$sp_details = $row['sp_details'];					
 				$call_log_date_time = date('d-F-Y h:i A', strtotime($row['call_log_date_time']));	
@@ -480,6 +483,7 @@
 				$return_array['call_log_status_text'] = $call_log_status_text;	
 				$return_array['eng_contact_no'] = $eng_contact_no;				
 				$return_array['engineer_coment'] = $engineer_coment;			
+				$return_array['status_by_engg'] = $status_by_engg;				
 			}
 		} else {
 			$status = false;
@@ -510,12 +514,12 @@
 		   
 		$assign_to = $_POST['assign_to'];
 		$eng_contact_no = $_POST['eng_contact_no']; 
-		$call_log_statusM = $_POST['call_log_statusM'];
+		$status_by_enggM = $_POST['status_by_enggM'];
 		$resolved_date_time = $_POST['resolved_date_time'].' '.date('H:i:s'); 
 		$call_log_id = $_POST['call_log_id']; 
 		$engineer_coment = $_POST['engineer_coment']; 
 
-		$sql = "UPDATE call_log_register SET assign_to = '" .$assign_to. "', eng_contact_no = '" .$eng_contact_no. "', call_log_status = '" .$call_log_statusM. "', resolved_date_time = '" .$resolved_date_time. "', engineer_coment = '" .$engineer_coment. "' WHERE call_log_id = '" .$call_log_id. "' ";
+		$sql = "UPDATE call_log_register SET assign_to = '" .$assign_to. "', eng_contact_no = '" .$eng_contact_no. "', status_by_engg = '" .$status_by_enggM. "', resolved_date_time = '" .$resolved_date_time. "', engineer_coment = '" .$engineer_coment. "' WHERE call_log_id = '" .$call_log_id. "' ";
 		$result = $mysqli->query($sql);
 
 		$return_array['status'] = $status;

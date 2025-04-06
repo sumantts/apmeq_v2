@@ -43,7 +43,7 @@ $('#myFormS').on('submit', function(){
 $('#myFormM').on('submit', function(){    
     $assign_to = $('#assign_to').val();
     $eng_contact_no = $('#eng_contact_no').val(); 
-    $call_log_statusM = $('#call_log_statusM').val();
+    $status_by_enggM = $('#status_by_enggM').val();
     $resolved_date_time = $('#resolved_date_time').val(); 
     $call_log_id = $('#call_log_id').val(); 
     $engineer_coment = $('#engineer_coment').val();
@@ -51,7 +51,7 @@ $('#myFormM').on('submit', function(){
     $.ajax({
         method: "POST",
         url: "ticket_dashboard/function.php",
-        data: { fn: "updateTicketInfo", assign_to: $assign_to, eng_contact_no: $eng_contact_no, call_log_statusM: $call_log_statusM, resolved_date_time: $resolved_date_time, call_log_id: $call_log_id, engineer_coment: $engineer_coment }
+        data: { fn: "updateTicketInfo", assign_to: $assign_to, eng_contact_no: $eng_contact_no, status_by_enggM: $status_by_enggM, resolved_date_time: $resolved_date_time, call_log_id: $call_log_id, engineer_coment: $engineer_coment }
     })
     .done(function( res ) {
         //console.log(res);
@@ -79,7 +79,7 @@ function editTableData($call_log_id){
             getAllProductImages($call_log_id) 
             $('#assign_to').val($res1.assign_to).trigger('change');
             $('#eng_contact_no').val($res1.eng_contact_no);
-            $('#call_log_statusM').val($res1.call_log_status).trigger('change');
+            $('#status_by_enggM').val($res1.status_by_engg).trigger('change');
             $('#resolved_date_time').val($res1.resolved_date_time); 
             $('#engineer_coment').val($res1.engineer_coment); 
             $html = '';
