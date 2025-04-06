@@ -183,8 +183,8 @@
 				$return_result['error_message'] = 'Please write the issue description';
 				$status = false;
 			}else{
-				$call_log_status = 2;
-				$sql_1 = "SELECT * FROM call_log_register WHERE asset_code = '" .$asset_code. "' AND call_log_status < '" .$call_log_status. "' ";
+				$status_by_engg = 0;
+				$sql_1 = "SELECT * FROM call_log_register WHERE asset_code = '" .$asset_code. "' AND status_by_engg = '" .$status_by_engg. "' ";
 				$result_1 = $mysqli->query($sql_1);
 
 				if ($result_1->num_rows > 0) {
