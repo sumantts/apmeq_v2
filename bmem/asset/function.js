@@ -603,3 +603,13 @@ $('#printBarcode').on('click', function(){
     newWin.document.close();
     setTimeout(function(){newWin.close();},10);
 })
+
+$('#department_id').on('change', function() {
+    var selected = $(this).val();
+    if (selected.length > 1) {
+        // Deselect previous selections and keep the most recent
+        var lastSelected = selected[selected.length - 1];
+        $(this).val([lastSelected]);
+    }
+});
+  
