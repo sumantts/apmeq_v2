@@ -438,6 +438,7 @@
 		$status = true;
 		$mainData = array();
 		$pms_info_id = $_POST['pms_info_id'];
+		$facility_name = '';
 
 		$sql = "SELECT * FROM pms_info WHERE pms_info_id = '" .$pms_info_id. "'";
 		$result = $mysqli->query($sql);
@@ -467,7 +468,20 @@
 		}
 		//$mysqli->close();
 
+		if($facility_id > 0){
+			$sql2 = "SELECT * FROM facility_master WHERE facility_id = '" .$facility_id. "'";
+			$result2 = $mysqli->query($sql2);
+
+			if ($result2->num_rows > 0) {
+				$status = true;	
+				$row2 = $result2->fetch_array();
+
+				$facility_name = $row2['facility_name'];
+			}
+		}
+
 		$return_array['facility_id'] = $facility_id;
+		$return_array['facility_name'] = $facility_name;
 		$return_array['facility_code'] = $facility_code;
 		$return_array['department_id'] = $department_id;
 		$return_array['device_group'] = $device_group;

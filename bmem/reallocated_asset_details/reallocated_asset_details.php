@@ -210,14 +210,7 @@ include('common/head.php');
 
                                 <div class="col-md-3 mb-3">
                                     <label for="facility_code">Facility code</label>
-                                    <input type="text" class="form-control form-control-sm" id="facility_code"> 
-                                </div>   
-
-                                <div class="col-md-3 mb-3">
-                                    <label for="from_dept_id" class="text-danger">Department*</label>
-                                    <select class="form-control js-example-basic-single" id="from_dept_id" required>
-                                        <option value="">Select</option> 
-                                    </select> 
+                                    <input type="text" class="form-control form-control-sm" id="facility_code" disabled> 
                                 </div>    
 
                                 <div class="col-md-3 mb-3">
@@ -229,8 +222,15 @@ include('common/head.php');
 
                                 <div class="col-md-3 mb-3">
                                     <label for="asset_code">Asset code</label>
-                                    <input type="text" class="form-control form-control-sm" id="asset_code"> 
-                                </div>    
+                                    <input type="text" class="form-control form-control-sm" id="asset_code" disabled> 
+                                </div>      
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="from_dept_id" class="text-danger">Department*</label>
+                                    <select class="form-control js-example-basic-single" id="from_dept_id" disabled required>
+                                        <option value="">Select</option> 
+                                    </select> 
+                                </div> 
 
                                 <div class="col-md-3 mb-3">
                                     <label for="to_dept_id" class="text-danger">Reallocated to Department*</label>

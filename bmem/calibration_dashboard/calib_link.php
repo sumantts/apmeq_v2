@@ -451,11 +451,21 @@
             //console.log(res);
             $res1 = JSON.parse(res);
             if($res1.status == true){
-                $('#facility_id').val($res1.facility_id).trigger('change');
-                loadDepartment($res1.facility_id, $res1.department_id);
+                //$('#facility_id').val($res1.facility_id).trigger('change');
+                $facility_id = $res1.facility_id;
+                $facility_name = $res1.facility_name;
+                $department_id = $res1.department_id;
+                
+                $('#facility_id').html(''); 
+                $html = "<option value='"+$facility_id+"'>"+$facility_name+"</option>";  
+                $('#facility_id').html($html);
+
+                loadDepartment($facility_id, $department_id);
                 getAllProductImages($calib_info_id);
-                $('#facility_code').val($res1.facility_code); 
-                $('#department_id').val($res1.department_id).trigger('change');   
+                $('#facility_code').val($res1.facility_code);  
+                setTimeout(function(){
+                    $('#department_id').val($department_id).trigger('change');                    
+                }, 1000);    
                 $('#device_group').val($res1.device_group).trigger('change');            
                 $('#asset_class').val($res1.asset_class).trigger('change');
                 $('#equipment_name').val($res1.equipment_name);  
@@ -580,7 +590,7 @@
     //End multiple pgoto upload
 
     $(document).ready(function () {
-        configureFacilityDropDown(); 
+        //configureFacilityDropDown(); 
         configureDeviceGroupDropDown();
         loadFormdata();
 

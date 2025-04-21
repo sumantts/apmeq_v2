@@ -367,7 +367,8 @@ $('#asset_id').on('change', function(){
     .done(function( res ) {
         $res1 = JSON.parse(res); 
         if($res1.status == true){
-            $('#asset_code').val($res1.asset_code);                    
+            $('#asset_code').val($res1.asset_code);         
+            $('#from_dept_id').val($res1.department_id).trigger('change');          
         }        
     });//end ajax     
 })

@@ -254,9 +254,21 @@
 		$asset_id = $_POST["asset_id"];
 		$reloc_id = $_POST["reloc_id"];
 		$reloc_initiated = $_POST["reloc_initiated"];
+		$to_dept_id = 0;
 		$status = true;	
 
-		$sql = "UPDATE asset_details SET reloc_initiated = '" .$reloc_initiated. "' WHERE asset_id = '".$asset_id."'";
+		$select_sql_1 = "SELECT to_dept_id FROM reloc_asset_detail WHERE reloc_id = '".$reloc_id."'";
+		$res_sql_1 = $mysqli->query($select_sql_1); 
+		if ($res_sql_1->num_rows > 0) { 
+			while($row_sql_1 = $res_sql_1->fetch_array()){
+				$to_dept_id = $row_sql_1['to_dept_id'];
+			}
+		}
+
+		$department_id_arr = array();
+		array_push($department_id_arr, $to_dept_id);
+		$department_id_arr_str = json_encode($department_id_arr);
+		$sql = "UPDATE asset_details SET department_id = '" .$department_id_arr_str. "', reloc_initiated = '" .$reloc_initiated. "' WHERE asset_id = '".$asset_id."'";
 		$result = $mysqli->query($sql); 
 
 		$sql_1 = "UPDATE reloc_asset_detail SET sent_to_parent_dept = '" .$reloc_initiated. "' WHERE reloc_id = '".$reloc_id."'";
@@ -405,6 +417,7 @@
 		$status = true;
 		$asset_id = $_POST['asset_id'];
 		$asset_code = '';
+		$department_id = 0;
 
 		$sql = "SELECT * FROM asset_details WHERE asset_id = '" .$asset_id. "'";
 		$result = $mysqli->query($sql);
@@ -412,13 +425,17 @@
 		if ($result->num_rows > 0) {
 			$status = true;
 			$row = $result->fetch_array();
-			$asset_code = $row['asset_code']; 			
+			$asset_code = $row['asset_code']; 		
+			$department_ids = json_decode($row['department_id']); 	
+			$department_id = $department_ids[0];
+
 		} else {
 			$status = false;
 		} 
 
 		$return_array['status'] = $status;
 		$return_array['asset_code'] = $asset_code;
+		$return_array['department_id'] = $department_id;
 		echo json_encode($return_array);
 	}//function end
 
