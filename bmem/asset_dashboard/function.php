@@ -15,9 +15,15 @@
 		$status = true;
 		$mainData = array(); 
 		$total_asset_count = 0;
-		$sub_total_value_of_the_asset = 0;
+		$sub_total_value_of_the_asset = 0;	
+		$facility_id = $_SESSION["facility_id"]; 
+		$user_type_id = $_SESSION["user_type_id"];	
 
-		$sql = "SELECT * FROM asset_details";
+		if($user_type_id == 1){
+			$sql = "SELECT * FROM asset_details";
+		}else{
+			$sql = "SELECT * FROM asset_details WHERE facility_id = '" .$facility_id. "' ";
+		}
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
