@@ -14,7 +14,7 @@
 		$message = ''; 		
 		
 		try {
-			$sql = "SELECT user_details.user_id, user_details.user_name, user_details.user_type_id, user_details.hospital_id, user_details.user_mobile, user_details.user_phone, user_details.user_email, user_details.user_dob, user_details.user_address, user_details.user_user_name, user_details.user_password, user_details.user_status, user_type.user_type_name, user_type.user_type_code, user_type.user_type_status FROM user_details JOIN user_type ON user_details.user_type_id = user_type.user_type_id WHERE user_details.user_user_name = '".$username."' AND user_details.user_password = '".$password."' AND user_type.user_type_status = 1";
+			$sql = "SELECT user_details.user_id, user_details.user_name, user_details.user_type_id, user_details.hospital_id, user_details.user_mobile, user_details.user_phone, user_details.user_email, user_details.user_dob, user_details.user_address, user_details.user_user_name, user_details.user_password, user_details.user_status, user_details.facility_id, user_type.user_type_name, user_type.user_type_code, user_type.user_type_status FROM user_details JOIN user_type ON user_details.user_type_id = user_type.user_type_id WHERE user_details.user_user_name = '".$username."' AND user_details.user_password = '".$password."' AND user_type.user_type_status = 1";
 			$result = $mysqli->query($sql);
 
 			if ($result->num_rows > 0) {		
@@ -36,7 +36,8 @@
 					$user_address = $row['user_address'];			
 					$user_user_name = $row['user_user_name'];			
 					$user_password = $row['user_password'];				
-					$user_type_status = $row['user_type_status'];	
+					$user_type_status = $row['user_type_status'];			
+					$facility_id = $row['facility_id'];		
 
 					$_SESSION["user_id"] = $user_id;
 					$_SESSION["user_name"] = $user_name;			
@@ -48,7 +49,8 @@
 					$_SESSION["user_dob"] = $user_dob;		
 					$_SESSION["user_address"] = $user_address;		
 					$_SESSION["user_user_name"] = $user_user_name;		
-					$_SESSION["user_password"] = $user_password; 
+					$_SESSION["user_password"] = $user_password; 	
+					$_SESSION["facility_id"] = $facility_id; 
 						
 					$_SESSION["user_type_name"] = $user_type_name; 	
 					$_SESSION["user_type_code"] = $user_type_code; 	

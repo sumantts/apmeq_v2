@@ -43,6 +43,116 @@ include('common/head.php');
         <!-- [ breadcrumb ] end -->
         <!-- [ Main Content ] start -->
         <div class="row">
+            
+            
+            <!-- [ sample-table ] Filter start -->
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Filter Assets </h5> 
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;" id="orgFormAlert">
+							<strong>Success!</strong> Your Data Deleted successfully.
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						</div>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;" id="orgFormAlert1">
+							<strong>Success!</strong> Your Data saved successfully.
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						</div>
+                         
+
+                        <form class="needs-validation" id="pmsSerForm">
+                            <div class="form-row">                               
+                                <div class="col-md-3 mb-3">
+                                    <label for="facility_id">Facility Name</label>
+                                    <select class="form-control" id="facility_id_s">
+                                        <option value="0">Select</option> 
+                                    </select> 
+                                </div>     
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="facility_code">Facility code</label>
+                                    <input type="text" class="form-control" id="facility_code"> 
+                                </div>    
+                                                              
+                                <div class="col-md-3 mb-3">
+                                    <label for="rber_status">RBER status(RBER/Condemned)</label>
+                                    <select class="form-control" id="rber_status">
+                                        <option value="0">Select</option> 
+                                        <option value="1">RBER</option> 
+                                        <option value="2">Condemned</option> 
+                                    </select> 
+                                </div>       
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="equipment_name">Equipment name</label>
+                                    <input type="text" class="form-control" id="equipment_name"> 
+                                </div>     
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="equipment_code">Equipment code/Id</label>
+                                    <input type="text" class="form-control" id="equipment_code"> 
+                                </div>      
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="asset_class">Maintanence Type</label>
+                                    <select class="form-control" id="asset_class">
+                                        <option value="0">Select</option>
+                                        <option value="1">under warranty</option>
+                                        <option value="2">AMC</option>
+                                        <option value="3">CMC</option>
+                                        <option value="4">No Information</option>
+                                    </select> 
+                                </div>    
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="asset_class">Technology</label>
+                                    <select class="form-control" id="asset_class">
+                                        <option value="0">Select</option>
+                                        <option value="1">Obsolute</option>
+                                        <option value="2">Running</option>
+                                    </select> 
+                                </div>    
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="asset_class">Verified</label>
+                                    <select class="form-control" id="asset_class">
+                                        <option value="0">Select</option>
+                                        <option value="1">Yes</option>
+                                        <option value="2">No</option>
+                                    </select> 
+                                </div>    
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="asset_class">Asset class</label>
+                                    <select class="form-control" id="asset_class">
+                                        <option value="0">Select</option>
+                                        <option value="1">Critical</option>
+                                        <option value="2">Non Critical</option>
+                                    </select> 
+                                </div>   
+
+                                <div class="col-md-4 mt-4">
+                                    <button class="btn  btn-primary" type="button" id="filterPMS">
+                                        <span class="btn-text" id="submitForm_text">Search</span>
+                                    </button>
+                                    
+                                    <button class="btn btn-dark" type="button" id="clearSearchForm">
+                                        <span class="btn-text" id="submitForm_text1">Clear</span>
+                                    </button>
+                                </div> 
+
+                                <!-- <div class="col-md-4 mt-4">
+                                    <button type="button" class="btn btn-primary mb-2 float-right" id="generateLink">Generate Link <i class="fa fa-external-link" aria-hidden="true"></i></button>
+                                </div>  -->
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
             <!-- [ sample-table ] start -->
             <div class="col-sm-12">
                 <div class="card">

@@ -14,9 +14,17 @@
 		$status = true;
 		$mainData = array();
 		$email1 = '';
-		$user_id = $_SESSION["user_id"];
-		
-		$sql = "SELECT * FROM facility_master WHERE user_id = '" .$user_id. "' ";
+		$user_id = $_SESSION["user_id"];			
+		$session_facility_id = $_SESSION["facility_id"]; 
+		$user_type_id = $_SESSION["user_type_id"];	
+
+		if($user_type_id == 1){
+			$sql = "SELECT * FROM facility_master WHERE user_id = '" .$user_id. "' ";
+		}else{
+			$sql = "SELECT * FROM facility_master WHERE facility_id = '" .$session_facility_id. "' ";
+		}
+
+		//$sql = "SELECT * FROM facility_master WHERE user_id = '" .$user_id. "' ";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {

@@ -97,6 +97,83 @@ function generateCalibLink($asset_id){
     });//end ajax
 }//end fun
 
+//Facility
+function configureFacilityDropDown(){
+    $.ajax({
+        method: "POST",
+        url: "user_facility/function.php",
+        data: { fn: "getAllFacilityName" }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res);
+        if($res1.status == true){
+            $rows = $res1.data;
+
+            if($rows.length > 0){
+                $('#facility_id_s').html(''); 
+                $html = "<option value=''>Select</option>";
+
+                for($i = 0; $i < $rows.length; $i++){
+                    $html += "<option value='"+$rows[$i].facility_id+"'>"+$rows[$i].facility_name+"</option>";                    
+                }//end for
+                
+                $('#facility_id_s').html($html); 
+            }//end if
+        }        
+    });//end ajax
+}//end
+
+
+
+$('#facility_id_s').on('change', function(){
+    setTimeout(function(){        
+        $facility_id_s = $('#facility_id_s').val();  
+
+        
+        if($facility_id_s > 0){
+            /****
+            $.ajax({
+                method: "POST",
+                url: "asset/function.php",
+                data: { fn: "getAllDepartmentName", facility_id_dd: $facility_id_s }
+            })
+            .done(function( res ) {
+                $res1 = JSON.parse(res); 
+                if($res1.status == true){
+                    $rows = $res1.data;
+
+                    if($rows.length > 0){
+                        $('#from_dept_id').html('');
+                        $('#to_dept_id').html('');
+                        $html = "<option value=''>Select</option>";
+                        for($i = 0; $i < $rows.length; $i++){ 
+                            $html += "<option value='"+$rows[$i].department_id+"' >"+$rows[$i].department_name+"</option>";                    
+                        }//end for
+                        
+                        $('#from_dept_id').html($html);
+                        $('#to_dept_id').html($html);
+                    }//end if
+                }        
+            });//end ajax 
+            ****/
+            //Get Facility ID            
+            $.ajax({
+                method: "POST",
+                url: "reallocated_asset_details/function.php",
+                data: { fn: "getFacilityID", facility_id_dd: $facility_id_s }
+            })
+            .done(function( res ) {
+                $res1 = JSON.parse(res); 
+                if($res1.status == true){
+                    $('#facility_code').val($res1.facility_code);                    
+                }        
+            });//end ajax 
+        }//end if
+    },500);
+})
+
+
 $(document).ready(function () { 
     populateDataTable();
+    configureFacilityDropDown();
 });
