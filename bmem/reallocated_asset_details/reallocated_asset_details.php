@@ -226,7 +226,7 @@ include('common/head.php');
                                 </div>      
 
                                 <div class="col-md-3 mb-3">
-                                    <label for="from_dept_id" class="text-danger">Department*</label>
+                                    <label for="from_dept_id" class="text-danger">Present Department*</label>
                                     <select class="form-control js-example-basic-single" id="from_dept_id" disabled required>
                                         <option value="">Select</option> 
                                     </select> 

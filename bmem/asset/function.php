@@ -88,14 +88,54 @@
 			// total_year_in_service
 			$total_year_in_service = '';
 			$today = date('Y-m-d');
-			$datetime1 = date_create($date_of_installation);
+			// Declare and define two dates
+			$date1 = strtotime($date_of_installation); 
+			$date2 = strtotime($today); 
+
+			// Calculate the difference in seconds
+			$diff = abs($date2 - $date1); 
+
+			// Calculate years
+			$years = floor($diff / (365*60*60*24)); 
+
+			// Calculate months
+			$months = floor(
+				($diff - $years * 365*60*60*24) / (30*60*60*24)); 
+
+			// Calculate days
+			$days = floor(
+				($diff - $years * 365*60*60*24 - 
+				$months * 30*60*60*24) / (60*60*24));
+
+			// Calculate hours
+			/*$hours = floor(
+				($diff - $years * 365*60*60*24 - $months * 
+				30*60*60*24 - $days * 60*60*24) / (60*60)); 
+
+			// Calculate minutes
+			$minutes = floor(
+				($diff - $years * 365*60*60*24 - $months * 30*60*60*24 - 
+				$days * 60*60*24 - $hours * 60*60) / 60); 
+
+			// Calculate seconds
+			$seconds = floor(($diff - $years * 365*60*60*24 - $months * 
+							30*60*60*24 - $days * 60*60*24 - $hours * 
+							60*60 - $minutes * 60)); 
+
+			// Output the result
+			printf("%d years, %d months, %d days, %d hours, %d minutes, %d seconds", 
+				$years, $months, $days, $hours, $minutes, $seconds);*/ 
+
+			$total_year_in_service = $years.' years, '.$months.' months, '.$days.' days'; 	
+				
+			/*$datetime1 = date_create($date_of_installation);
 			$datetime2 = date_create($today);
 
 			// Calculates the difference between DateTime objects
 			$interval = date_diff($datetime1, $datetime2);
 
 			// Printing result in years & months format
-			$total_year_in_service = $interval->format('%R%y years %m months');
+			$total_year_in_service = $interval->format('%R%y years %m months');*/
 			$upd_sql1 = "UPDATE asset_details SET total_year_in_service = '" .$total_year_in_service. "' WHERE asset_id = '" .$asset_id_temp. "' ";
 			$result_upd1 = $mysqli->query($upd_sql1); 
 
