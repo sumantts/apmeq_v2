@@ -172,9 +172,18 @@
 		$return_array = array();
 		$status = true;
 		$mainData = array(); 
-		$user_id = $_SESSION["user_id"];
+		
+		$user_id = $_SESSION["user_id"];			
+		$session_facility_id = $_SESSION["facility_id"]; 
+		$user_type_id = $_SESSION["user_type_id"];	
 
-		$sql = "SELECT * FROM facility_master WHERE user_id = '" .$user_id. "' ORDER BY facility_id DESC";
+		if($user_type_id == 1){
+			$sql = "SELECT * FROM facility_master WHERE user_id = '" .$user_id. "' ORDER BY facility_id DESC";
+		}else{
+			$sql = "SELECT * FROM facility_master WHERE facility_id = '" .$session_facility_id. "' ORDER BY facility_id DESC"; 
+		}
+
+		//$sql = "SELECT * FROM facility_master WHERE user_id = '" .$user_id. "' ORDER BY facility_id DESC";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -208,9 +217,17 @@
 		$status = true;
 		$mainData = array();
 		$author_bio1 = '';
-		$user_id = $_SESSION["user_id"];
+		$user_id = $_SESSION["user_id"];		
+		$session_facility_id = $_SESSION["facility_id"]; 
+		$user_type_id = $_SESSION["user_type_id"];	
+
+		if($user_type_id == 1){
+			$sql = "SELECT * FROM facility_master WHERE user_id = '" .$user_id. "' ORDER BY facility_id DESC limit 0, 50";
+		}else{
+			$sql = "SELECT * FROM facility_master WHERE facility_id = '" .$session_facility_id. "' ORDER BY facility_id DESC limit 0, 50"; 
+		}
 		
-		$sql = "SELECT * FROM facility_master WHERE user_id = '" .$user_id. "' ORDER BY facility_id DESC limit 0, 50";
+		//$sql = "SELECT * FROM facility_master WHERE user_id = '" .$user_id. "' ORDER BY facility_id DESC limit 0, 50";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
