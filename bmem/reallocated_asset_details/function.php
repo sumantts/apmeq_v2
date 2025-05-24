@@ -115,12 +115,22 @@
 		$facility_idS = $_GET['facility_idS'];
 		$facility_codeS = $_GET['facility_codeS'];
 
+		$user_id = $_SESSION["user_id"];			
+		$session_facility_id = $_SESSION["facility_id"]; 
+		$user_type_id = $_SESSION["user_type_id"];	
+
 		$where_condition = "WHERE reloc_asset_detail.reloc_id > 0";
 		if($facility_idS > 0){
 			$where_condition .= " AND reloc_asset_detail.facility_id = '" .$facility_idS. "' ";
 		}
 		if($facility_codeS != ''){
 			$where_condition .= " AND facility_master.facility_code = '" .$facility_codeS. "' ";
+		}
+
+		if($user_type_id == 1){
+			$where_condition .= " AND facility_master.user_id = '" .$user_id. "' ";
+		}else{
+			$where_condition .= " AND facility_master.facility_id = '" .$session_facility_id. "' ";
 		}
 		
 		
