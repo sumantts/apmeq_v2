@@ -119,6 +119,8 @@
 		$session_facility_id = $_SESSION["facility_id"]; 
 		$user_type_id = $_SESSION["user_type_id"];	
 
+		$delete_button = "";
+
 		$where_condition = "WHERE reloc_asset_detail.reloc_id > 0";
 		if($facility_idS > 0){
 			$where_condition .= " AND reloc_asset_detail.facility_id = '" .$facility_idS. "' ";
@@ -178,14 +180,16 @@
 
 				$shifted_text .= '<select name="'.$dynamic_id.'" id="'.$dynamic_id.'" onChange="updateShiftingStatus('.$reloc_id.','.$asset_id.')" class="form-control-sm" '.$disabled_text.'>';
 				if($sent_to_parent_dept == 1){
-					$shifted_text .= '<option value="1" selected="selected">Yes</option>';
+					$shifted_text .= '<option value="1" selected="selected">Shifted to Parent Dept.</option>';
+					$delete_button = "<a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$reloc_id.")'></i></a>";
 				}else{
-					$shifted_text .= '<option value="1">Yes</option>';
+					$shifted_text .= '<option value="1">Shifted to Parent Dept.</option>';
 				}
 				if($sent_to_parent_dept == 0){
-					$shifted_text .= '<option value="0" selected="selected">No</option>';
+					$shifted_text .= '<option value="0" selected="selected">Loan</option>';
+					$delete_button = "<a href='javascript: void(0)'> <i class='fa fa-trash' aria-hidden='true'></i></a>";
 				}else{
-					$shifted_text .= '<option value="0">No</option>';
+					$shifted_text .= '<option value="0">Loan</option>';
 				}
 				$shifted_text .= '</select>';
 
@@ -198,7 +202,7 @@
 				$data[6] = $equipment_name;
 				$data[7] = $relocate_date_time;
 				$data[8] = $shifted_text; 
-				$data[9] = "<a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$reloc_id.")'></i></a>";
+				$data[9] = $delete_button;
 				
 
 				array_push($mainData, $data);
@@ -283,11 +287,11 @@
 			}
 		}
 
-		$department_id_arr = array();
+		/*$department_id_arr = array();
 		array_push($department_id_arr, $to_dept_id);
 		$department_id_arr_str = json_encode($department_id_arr);
 		$sql = "UPDATE asset_details SET department_id = '" .$department_id_arr_str. "', reloc_initiated = '" .$reloc_initiated. "' WHERE asset_id = '".$asset_id."'";
-		$result = $mysqli->query($sql); 
+		$result = $mysqli->query($sql);*/ 
 
 		$sql_1 = "UPDATE reloc_asset_detail SET sent_to_parent_dept = '" .$reloc_initiated. "' WHERE reloc_id = '".$reloc_id."'";
 		$result_1 = $mysqli->query($sql_1); 
