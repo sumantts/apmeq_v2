@@ -30,7 +30,7 @@
 			$insert_id = $mysqli->insert_id;	
 
 			if($insert_id > 0){			
-				$sql_1 = "UPDATE asset_details SET reloc_initiated = '0' WHERE asset_id = '" .$asset_id. "' ";
+				$sql_1 = "UPDATE asset_details SET reloc_initiated = '1' WHERE asset_id = '" .$asset_id. "' ";
 				$result_1 = $mysqli->query($sql_1);
 			}//end if
 		} catch (PDOException $e) {
@@ -279,7 +279,7 @@
 		$to_dept_id = 0;
 		$status = true;	
 
-		$select_sql_1 = "SELECT to_dept_id FROM reloc_asset_detail WHERE reloc_id = '".$reloc_id."'";
+		/*$select_sql_1 = "SELECT to_dept_id FROM reloc_asset_detail WHERE reloc_id = '".$reloc_id."'";
 		$res_sql_1 = $mysqli->query($select_sql_1); 
 		if ($res_sql_1->num_rows > 0) { 
 			while($row_sql_1 = $res_sql_1->fetch_array()){
@@ -287,11 +287,14 @@
 			}
 		}
 
-		/*$department_id_arr = array();
+		$department_id_arr = array();
 		array_push($department_id_arr, $to_dept_id);
 		$department_id_arr_str = json_encode($department_id_arr);
 		$sql = "UPDATE asset_details SET department_id = '" .$department_id_arr_str. "', reloc_initiated = '" .$reloc_initiated. "' WHERE asset_id = '".$asset_id."'";
-		$result = $mysqli->query($sql);*/ 
+		$result = $mysqli->query($sql);*/ 		
+
+		$sql_2 = "UPDATE asset_details SET reloc_initiated = '0' WHERE asset_id = '" .$asset_id. "' ";
+		$mysqli->query($sql_2);
 
 		$sql_1 = "UPDATE reloc_asset_detail SET sent_to_parent_dept = '" .$reloc_initiated. "' WHERE reloc_id = '".$reloc_id."'";
 		$result_1 = $mysqli->query($sql_1); 
@@ -381,7 +384,7 @@
 		$mainData = array(); 
 		$facility_id = $_POST['facility_id'];
 
-		$sql = "SELECT * FROM asset_details WHERE facility_id = '" .$facility_id. "' AND reloc_initiated = '1'";
+		$sql = "SELECT * FROM asset_details WHERE facility_id = '" .$facility_id. "' AND reloc_initiated = '0'";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {

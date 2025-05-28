@@ -199,7 +199,7 @@ include('common/head.php');
 						</div>
                          
 
-                        <form class="needs-validation" method="POST" action="#" id="myForm">
+                        <form class="needs-validation" method="POST" action="#" id="myForm2">
                             <div class="form-row">                               
                                 <div class="col-md-3 mb-3">
                                     <label for="facility_id" class="text-danger">Facility Name*</label>

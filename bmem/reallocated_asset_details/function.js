@@ -7,7 +7,7 @@ $('#clearForm').on('click', function(){
     //$('#s_div').addClass('d-none');
 })
 
-$('#myForm').on('submit', function(){ 
+$('#myForm2').on('submit', function(){ 
     $facility_id = $('#facility_id').val();
     $facility_code = $('#facility_code').val(); 
     $from_dept_id = $('#from_dept_id').val();
@@ -26,7 +26,10 @@ $('#myForm').on('submit', function(){
         if($res1.status == true){  
             populateDataTable_1();
             alert('Asset Relocation Initiated');
-            $('#myForm').trigger('reset');
+            $('#myForm2').trigger('reset');
+            $('#facility_id').val('').trigger('change');
+            $('#from_dept_id').val('').trigger('change');
+            $('#to_dept_id').val('').trigger('change');
         }else{
             alert($res1.error_message);
         }
@@ -285,6 +288,9 @@ function configureFacilityDropDown(){
 //Asset
 function configureAssetDropDown(facilityid){ 
     if(facilityid > 0){
+        $('#asset_id').html('');
+        $html_a = "<option value=''>Select</option>";
+
         $.ajax({
             method: "POST",
             url: "reallocated_asset_details/function.php",
@@ -296,17 +302,16 @@ function configureAssetDropDown(facilityid){
                 $rows = $res1.data;
 
                 if($rows.length > 0){
-                    $('#asset_id').html('');
-                    $html = "<option value=''>Select</option>";
-
                     for($i = 0; $i < $rows.length; $i++){
-                        $html += "<option value='"+$rows[$i].asset_id+"'>"+$rows[$i].equipment_name+"("+$rows[$i].asset_code+")</option>";                    
+                        $html_a += "<option value='"+$rows[$i].asset_id+"'>"+$rows[$i].equipment_name+"("+$rows[$i].asset_code+")</option>";                    
                     }//end for
-                    
-                    $('#asset_id').html($html);
                 }//end if
             }        
         });//end ajax
+
+        setTimeout(function(){
+            $('#asset_id').html($html_a);
+        }, 500)
     }//end if
 }//end
 
