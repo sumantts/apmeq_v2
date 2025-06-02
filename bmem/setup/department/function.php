@@ -12,6 +12,7 @@
 	if($fn == 'saveFormData'){
 		$return_result = array();
 		$status = true;
+		$message = '';
 
 		$department_id = $_POST["department_id"];		
 		$department_name = $_POST["department_name"];		
@@ -23,16 +24,25 @@
 				$status = true;
 				$sql = "UPDATE department_list SET department_name = '" .$department_name. "', department_code = '" .$department_code. "', department_status = '" .$department_status. "' WHERE department_id = '" .$department_id. "' ";
 				$result = $mysqli->query($sql);
-			}else{
-				$status = true;
-				$sql = "INSERT INTO department_list (department_name, department_code, department_status) VALUES ('".$department_name."','".$department_code."', '".$department_status."')";
-				$result = $mysqli->query($sql);
+			}else{		
+				$sql_chk = "SELECT * FROM department_list WHERE department_name = '" .$department_name. "' ";
+				$result_chk = $mysqli->query($sql_chk);
+
+				if ($result_chk->num_rows > 0) {
+					$status = false;
+					$message = 'This name already exists';
+				}else{
+					$status = true;
+					$sql = "INSERT INTO department_list (department_name, department_code, department_status) VALUES ('".$department_name."','".$department_code."', '".$department_status."')";
+					$result = $mysqli->query($sql);
+				}
 			}
 				
 		} catch (PDOException $e) {
 			die("Error occurred:" . $e->getMessage());
 		}
 		$return_result['status'] = $status;
+		$return_result['message'] = $message;
 		//sleep(2);
 		echo json_encode($return_result);
 	}//Save function end	

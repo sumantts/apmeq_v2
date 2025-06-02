@@ -58,3 +58,21 @@ admin@apmeq.com / ?cgdbTDDNCLf
 developer@apmeq.com / ^~nUMZSF}!uJ
 
 12. check user permission roal based access - Tested
+
+***** 02*06*2025********
+Issues : 
+a. https://prnt.sc/FSdRgR303WB1    - department under manage ( Issue : 1. same department create kora jachhe )
+Fixed
+
+b. https://prnt.sc/bBiyrTx0NBrh  - new asset addition er somoy department je gulo create kora ache seigulo aschena..
+Fixed
+
+c. https://prnt.sc/4QBT4PiIDua2 - “Abcd” hospitale eisob department guloi active kora ache 
+But is not clear. Please explain what you want?
+
+d. https://prnt.sc/D6652umWvqGI  - ekhaneo asset addition er somoy sob department aschena, jodio sob department active kora ache.
+Already fixed on above point
+
+e. https://prnt.sc/ppDr4DTnzqsq - Asset reallocationer somoy “reallocated to department” etateo baki department er name aschena, jodio sob department gulo active ache.
+Fixed
+
