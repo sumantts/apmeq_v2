@@ -596,7 +596,7 @@
 
         $user_id = window.localStorage.getItem('user_id');
         console.log('user_id: ' + $user_id);
-        if($user_id == null){
+        //if($user_id == null){
             //$("input").prop('disabled', true);
             $('#facility_id').prop('disabled', true); 
             $('#facility_code').prop('readonly', true);
@@ -612,7 +612,7 @@
             $('#pms_planned_date').prop('readonly', true);     
             $('#sp_details').prop('readonly', true);     
             $('#asset_code').prop('readonly', true); 
-        }
+        //}
         
     });
     </script>

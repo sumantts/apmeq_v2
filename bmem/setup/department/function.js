@@ -74,7 +74,7 @@ $('#submitForm').click(function(){
                     $('#exampleModalLong').modal('hide');
                     populateDataTable();
                 }else{
-                    
+                    alert($res1.message);
                 }                
                 $('#submitForm_spinner').hide();
                 $('#submitForm_spinner_text').hide();
