@@ -182,9 +182,9 @@ include('common/head.php');
                                     <label for="PMSStatus">PMS Status</label>
                                     <select class="form-control" id="PMSStatus">
                                         <option value="">Select</option>
-                                        <option value="0">Work in progress</option>
-                                        <option value="1">Resolved</option> 
-                                        <option value="2">Closed</option> 
+                                        <option value="0">Due</option>
+                                        <option value="1">Done</option> 
+                                        <option value="2">Work in progress</option> 
                                     </select> 
                                 </div>      
 
@@ -258,11 +258,11 @@ include('common/head.php');
                                         <th>Equipment sl no</th>
                                         <th>Last PMS Done</th>  
                                         <th>Supplied by</th>
-                                        <th>Service provider details<br> if it is in Warranty/AMC/CMC</th>
+                                        <th>Service provider details </th>
                                         <th>PMS planned date</th>
-                                        <th>Assign Service provider/<br>Junior enhgineer <br>(by soft link <br>email/mobile no/whatsapp)</th>                                         
+                                        <th>Assign Service provider </th>                                         
                                         <th>View report</th>
-                                        <th>Updated status<br>(WIP/Resolved/closed)</th> 
+                                        <th>Status<br>(Due/Done/WIP)</th> 
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -281,11 +281,11 @@ include('common/head.php');
                                         <th>Equipment sl no</th>
                                         <th>Last PMS Done</th>  
                                         <th>Supplied by</th>
-                                        <th>Service provider details<br> if it is in Warranty/AMC/CMC</th>
+                                        <th>Service provider details </th>
                                         <th>PMS planned date</th>
-                                        <th>Assign Service provider/<br>Junior enhgineer <br>(by soft link <br>email/mobile no/whatsapp)</th>                                         
+                                        <th>Assign Service provider </th>                                         
                                         <th>View report</th>
-                                        <th>Updated status<br>(WIP/Resolved/closed)</th> 
+                                        <th>Status<br>(Due/Done/WIP)</th>  
                                     </tr>
                                 </tfoot>
                             </table>

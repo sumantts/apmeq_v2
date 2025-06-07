@@ -15,6 +15,8 @@
 		$mainData = array();
 		$email1 = '';
 		$facility_id = $_GET['facility_id'];
+		$due_type = $_GET['due_type'];
+		$due_type_now = 0;
 		
 		$sql = "SELECT asset_details.asset_id, asset_details.facility_id, asset_details.department_id, asset_details.equipment_name, asset_details.asset_make, asset_details.asset_model, asset_details.slerial_number, asset_details.asset_specifiaction, asset_details.date_of_installation, asset_details.ins_certificate, asset_details.asset_supplied_by, asset_details.value_of_the_asset, asset_details.total_year_in_service, asset_details.technology, asset_details.asset_status, asset_details.asset_class, asset_details.device_group, asset_details.last_date_of_calibration, asset_details.calibration_attachment, asset_details.frequency_of_calibration, asset_details.last_date_of_pms, asset_details.qa_due_date, asset_details.pms_attachment, asset_details.frequency_of_pms, asset_details.frequency_of_qa, asset_details.qa_due_date, asset_details.qa_attachment, asset_details.warranty_last_date, asset_details.amc_yes_no, asset_details.amc_last_date, asset_details.cmc_yes_no, asset_details.cmc_last_date, asset_details.asset_code, asset_details.sp_details, asset_details.asset_code, asset_details.row_status, facility_master.facility_name, facility_master.facility_code FROM asset_details JOIN facility_master ON asset_details.facility_id = facility_master.facility_id WHERE asset_details.row_status = 1 AND asset_details.facility_id = '" .$facility_id. "' ORDER BY asset_details.asset_id DESC LIMIT 0, 50";
 		$result = $mysqli->query($sql);
@@ -149,10 +151,12 @@
 					// Compare the dates
 					if ($date1 > $date2 && $date1 < $date3) {
 						//PMS within 15 days
-						$next_calib_date = '<span class="text-warning blink">'.$next_calib_date.'</span><br><a href="javascript: void(0)" onclick="generateCalibLink('.$asset_id.')">Generate Link</a>';
+						$next_calib_date = '<span class="text-warning blink">'.$next_calib_date.'</span><br><a href="javascript: void(0)" onclick="generateCalibLink('.$asset_id.')">Generate Link</a>';						
+						$due_type_now = 1;
 					} elseif ($date1 > $date3) {
 						//PMS Date over
-						$next_calib_date = '<span class="text-danger blink">'.$next_calib_date.'</span><br><a href="javascript: void(0)" onclick="generateCalibLink('.$asset_id.')">Generate Link</a>';
+						$next_calib_date = '<span class="text-danger blink">'.$next_calib_date.'</span><br><a href="javascript: void(0)" onclick="generateCalibLink('.$asset_id.')">Generate Link</a>';						
+						$due_type_now = 1;
 					} else {
 						// cool PMS
 						$next_calib_date = '<span class="text-primary">'.$next_calib_date.'</span>';
@@ -207,10 +211,12 @@
 					// Compare the dates
 					if ($date1 > $date2 && $date1 < $date3) {
 						//PMS within 15 days
-						$next_pms_date = '<span class="text-warning blink">'.$next_pms_date.'</span><br><a href="javascript: void(0)" onclick="generatePMSLink('.$asset_id.')">Generate Link</a>';
+						$next_pms_date = '<span class="text-warning blink">'.$next_pms_date.'</span><br><a href="javascript: void(0)" onclick="generatePMSLink('.$asset_id.')">Generate Link</a>';						
+						$due_type_now = 2;
 					} elseif ($date1 > $date3) {
 						//PMS Date over
-						$next_pms_date = '<span class="text-danger blink">'.$next_pms_date.'</span><br><a href="javascript: void(0)" onclick="generatePMSLink('.$asset_id.')">Generate Link</a>';
+						$next_pms_date = '<span class="text-danger blink">'.$next_pms_date.'</span><br><a href="javascript: void(0)" onclick="generatePMSLink('.$asset_id.')">Generate Link</a>';						
+						$due_type_now = 2;
 					} else {
 						// cool PMS
 						$next_pms_date = '<span class="text-primary">'.$next_pms_date.'</span>';
@@ -266,10 +272,12 @@
 					// Compare the dates
 					if ($date1 > $date2 && $date1 < $date3) {
 						//qa within 15 days
-						$next_qa_date = '<span class="text-warning blink">'.$next_qa_date.'</span><br><a href="javascript: void(0)" onclick="generateQALink('.$asset_id.')">Generate Link</a>';
+						$next_qa_date = '<span class="text-warning blink">'.$next_qa_date.'</span><br><a href="javascript: void(0)" onclick="generateQALink('.$asset_id.')">Generate Link</a>';						
+						$due_type_now = 3;
 					} elseif ($date1 > $date3) {
 						//qa Date over
-						$next_qa_date = '<span class="text-danger blink">'.$next_qa_date.'</span><br><a href="javascript: void(0)" onclick="generateQALink('.$asset_id.')">Generate Link</a>';
+						$next_qa_date = '<span class="text-danger blink">'.$next_qa_date.'</span><br><a href="javascript: void(0)" onclick="generateQALink('.$asset_id.')">Generate Link</a>';						
+						$due_type_now = 3;
 					} else {
 						// cool qa
 						$next_qa_date = '<span class="text-primary">'.$next_qa_date.'</span>';
@@ -295,7 +303,13 @@
 				$data[15] = $asset_status_text2;
 				$data[16] = $asset_class_text;  
 
-				array_push($mainData, $data);
+				if($due_type > 0){
+					if($due_type_now == $due_type){
+						array_push($mainData, $data);
+					}
+				}else{
+					array_push($mainData, $data);
+				}
 				$slno++;
 			}
 		} else {
@@ -319,26 +333,30 @@
 		$link_generate_time = date('Y-m-d H:i:s');
 
 		# check PMS is open or closed
-		$sql1 = "SELECT * FROM pms_info WHERE asset_id = '" .$asset_id. "'";
+		$sql1 = "SELECT * FROM pms_info WHERE asset_id = '" .$asset_id. "' AND pms_status != '1' ";
 		$result1 = $mysqli->query($sql1);
 		if($result1->num_rows > 0) {	
-			$row1 = $result1->fetch_array();
-			$pms_id = $row1['pms_id'];
-			$pms_info_id = $row1['pms_info_id'];
-			$pms_status = $row1['pms_status'];
-			$pms_status_text = '';
+			$continue_loop = true;
+			while($row1 = $result1->fetch_array()){
+				$pms_id = $row1['pms_id'];
+				$pms_info_id = $row1['pms_info_id'];
+				$pms_status = $row1['pms_status']; 
+				$pms_status_text = '';
 
-			if($pms_status == 0){
-				$pms_status_text = 'Work In Progress';
-			}
-			if($pms_status == 1){
-				$pms_status_text = 'Resolved';
-			}
-			if($pms_status == 2){
-				$pms_status_text = 'Closed';
-			}
-			$return_result['error_message'] = 'PMS Link Already Generated. PMS ID: '.$pms_info_id.' and PMS Status is: '.$pms_status_text;
-			$status = false;
+				if($pms_status == 0){
+					$pms_status_text = 'Due';
+				}
+				if($pms_status == 1){
+					$pms_status_text = 'Done';
+				}
+				if($pms_status == 2){
+					$pms_status_text = 'Work In Progress';
+				}
+				$return_result['error_message'] = 'PMS Link Already Generated. PMS ID: '.$pms_info_id.' and PMS Status is: '.$pms_status_text;
+				$status = false; 
+				$continue_loop = false;
+
+			}//end while
 		}
 
 		if($status == true){

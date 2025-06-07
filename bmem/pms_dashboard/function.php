@@ -27,14 +27,15 @@
 		$supplied_by = $_POST['supplied_by'];
 		$service_provider_details = $_POST['service_provider_details'];
 		$pms_planned_date = $_POST['pms_planned_date'];
-		$pms_sp_status = $_POST['pms_sp_status'];
+		$pms_status = $_POST['pms_status'];
+		$sp_details = $_POST['sp_details'];
 		
 		try {
 			if($pms_info_id > 0){
 				$status = true;
 				$pms_data_updated = date('Y-m-d H:i:s');
 				$row_status = 2;
-				$sql = "UPDATE pms_info SET service_provider_details = '" .$service_provider_details. "', pms_planned_date = '" .$pms_planned_date. "', pms_data_updated = '" .$pms_data_updated. "', row_status = '" .$row_status. "', pms_sp_status = '" .$pms_sp_status. "' WHERE pms_info_id = '" .$pms_info_id. "' ";
+				$sql = "UPDATE pms_info SET sp_details = '" .$sp_details. "', service_provider_details = '" .$service_provider_details. "', pms_planned_date = '" .$pms_planned_date. "', pms_data_updated = '" .$pms_data_updated. "', row_status = '" .$row_status. "', pms_status = '" .$pms_status. "' WHERE pms_info_id = '" .$pms_info_id. "' ";
 				$result = $mysqli->query($sql);
 			}	
 		} catch (PDOException $e) {
@@ -131,7 +132,7 @@
 				$result_2 = $mysqli->query($sql_2);
 				$pms_planed = $result_2->num_rows;						 
 
-				$sql_3 = "SELECT * FROM pms_info WHERE pms_status != '0' AND facility_id = '" .$facility_id. "'";
+				$sql_3 = "SELECT * FROM pms_info WHERE pms_status = '1' AND facility_id = '" .$facility_id. "'";
 				$result_3 = $mysqli->query($sql_3);
 				$pms_done = $result_3->num_rows;
 
@@ -143,8 +144,7 @@
 						$last_date_of_pms = $row_5['last_date_of_pms']; 
 						$frequency_of_pms = $row_5['frequency_of_pms']; 
 
-						# PMS Frequency Calculation
-						$pms_frequency = '';
+						# PMS Frequency Calculation 
 						$next_pms_date = '';
 
 						if($last_date_of_pms != '0000-00-00'){
@@ -153,26 +153,20 @@
 								
 							$pms_freq_str = explode("|", $frequency_of_pms);
 							if($pms_freq_str[0] > 0){
-								$y1 = $pms_freq_str[0];
-								$pms_frequency = 'Each '.$y1.' Year(s)';
+								$y1 = $pms_freq_str[0]; 
 								$next_pms_date = date('d-F-Y', strtotime('+'.$y1.' year', strtotime($last_date_of_pms)));
 							}else if($pms_freq_str[1] > 0){
-								$m1 = $pms_freq_str[1];
-								$pms_frequency = 'Each '.$m1.' Month(s)';
+								$m1 = $pms_freq_str[1]; 
 								$next_pms_date = date('d-F-Y', strtotime('+'.$m1.' month', strtotime($last_date_of_pms)));
 							}else if($pms_freq_str[2] > 0){
-								$d1 = $pms_freq_str[2];
-								$pms_frequency = 'Each '.$d1.' Day(s)';
+								$d1 = $pms_freq_str[2]; 
 								$next_pms_date = date('d-F-Y', strtotime('+'.$d1.' day', strtotime($last_date_of_pms)));
-							}else{
-								$pms_frequency = '';
+							}else{ 
 								$next_pms_date = '';
 							} 
 						}//ennd if
 
-						if($next_pms_date != ''){					
-							$fifteen_day_prev = date('Y-m-d H:i:s',(strtotime ( '-15 day' , strtotime($next_pms_date))));
-							
+						if($next_pms_date != ''){
 							// Create two DateTime objects
 							$today = date('Y-m-d');
 							$date1 = new DateTime($today); 
@@ -308,25 +302,25 @@
 				$dynamic_id = 'pms_id_'.$pms_id;
 				$updated_text = '';
 				$disabled_text = '';
-				if($pms_status == 1 || $pms_status == 2){
+				if($pms_status == 1){
 					$disabled_text = 'disabled';
 				}
 
 				$updated_text .= '<select name="'.$dynamic_id.'" id="'.$dynamic_id.'" onChange="updatePMSStatus('.$pms_id.','.$asset_id.')" class="form-control-sm" '.$disabled_text.'>';
 				if($pms_status == 0){
-					$updated_text .= '<option value="0" selected="selected">Worrk In Progress</option>';
+					$updated_text .= '<option value="0" selected="selected">Due</option>';
 				}else{
-					$updated_text .= '<option value="0">Worrk In Progress</option>';
+					$updated_text .= '<option value="0">Due</option>';
 				}
 				if($pms_status == 1){
-					$updated_text .= '<option value="1" selected="selected">Resolved</option>';
+					$updated_text .= '<option value="1" selected="selected">Done</option>';
 				}else{
-					$updated_text .= '<option value="1">Resolved</option>';
+					$updated_text .= '<option value="1">Done</option>';
 				}
 				if($pms_status == 2){
-					$updated_text .= '<option value="2" selected="selected">Closed</option>';
+					$updated_text .= '<option value="2" selected="selected">WIP</option>';
 				}else{
-					$updated_text .= '<option value="2">Closed</option>';
+					$updated_text .= '<option value="2">WIP</option>';
 				}
 				$updated_text .= '</select>'; 
 
@@ -460,7 +454,7 @@
 			$supplied_by = $row['supplied_by'];
 			$service_provider_details = $row['service_provider_details'];
 			$pms_planned_date = $row['pms_planned_date'];
-			$pms_sp_status = $row['pms_sp_status'];
+			$pms_status = $row['pms_status'];
 			$sp_details = $row['sp_details'];
 			$asset_code = $row['asset_code'];
 		} else {
@@ -494,7 +488,7 @@
 		$return_array['supplied_by'] = $supplied_by;
 		$return_array['service_provider_details'] = $service_provider_details;
 		$return_array['pms_planned_date'] = $pms_planned_date; 
-		$return_array['pms_sp_status'] = $pms_sp_status; 
+		$return_array['pms_status'] = $pms_status; 
 		$return_array['sp_details'] = $sp_details; 
 		$return_array['asset_code'] = $asset_code; 
 

@@ -62,9 +62,9 @@ include('common/head.php');
 						</div>
                          
 
-                        <form class="needs-validation" id="pmsSerForm">
+                        <form class="needs-validation" id="pmsSerForm" method="POST" action="#">
                             <div class="form-row">                               
-                                <div class="col-md-3 mb-3">
+                                <!-- <div class="col-md-3 mb-3">
                                     <label for="facility_id">Facility Name</label>
                                     <select class="form-control" id="facility_id_s">
                                         <option value="0">Select</option> 
@@ -131,15 +131,25 @@ include('common/head.php');
                                         <option value="1">Critical</option>
                                         <option value="2">Non Critical</option>
                                     </select> 
-                                </div>   
+                                </div>-->    
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="due_type">Calibration/PMS/QA Due</label>
+                                    <select class="form-control" id="due_type" name="due_type">
+                                        <option value="0">Select</option>
+                                        <option value="1">Calibration</option>
+                                        <option value="2">PMS</option>
+                                        <option value="3">QA</option>
+                                    </select> 
+                                </div>
 
                                 <div class="col-md-4 mt-4">
-                                    <button class="btn  btn-primary" type="button" id="filterPMS">
+                                    <button class="btn  btn-primary" type="submit" id="filterPMS">
                                         <span class="btn-text" id="submitForm_text">Search</span>
                                     </button>
                                     
                                     <button class="btn btn-dark" type="button" id="clearSearchForm">
-                                        <span class="btn-text" id="submitForm_text1">Clear</span>
+                                        <span class="btn-text" >Clear</span>
                                     </button>
                                 </div> 
 

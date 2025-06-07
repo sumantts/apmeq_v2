@@ -5,12 +5,13 @@ function populateDataTable(){
     $('#example').dataTable().fnClearTable();
     $('#example').dataTable().fnDestroy();
     $facility_id = $('#facility_id').val();
+    $due_type = $('#due_type').val();
 
     $('#example').DataTable({ 
         columnDefs: [{ width: 5, targets: 0 }],
         responsive: true,
         serverMethod: 'GET',
-        ajax: {'url': 'asset_data/function.php?fn=getTableData&facility_id='+$facility_id },
+        ajax: {'url': 'asset_data/function.php?fn=getTableData&facility_id='+$facility_id+'&due_type='+$due_type },
         dom: 'Bfrtip',
         buttons: [
             {
@@ -172,6 +173,17 @@ $('#facility_id_s').on('change', function(){
     },500);
 })
 
+$('#pmsSerForm').on('submit', function(){
+    $due_type = $('#due_type').val();
+    populateDataTable();
+    console.log('due_type: ' + $due_type);
+    return false;
+})
+
+$('#clearSearchForm').on('click', function(){
+    $('#pmsSerForm').trigger("reset");
+    populateDataTable();
+})
 
 $(document).ready(function () { 
     populateDataTable();
