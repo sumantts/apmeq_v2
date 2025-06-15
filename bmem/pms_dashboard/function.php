@@ -126,67 +126,40 @@
 				
 				$pms_due = 0;
 				$pms_done = 0;
-				$pms_planed = 0;										
+				$pms_wip = 0;		
+				$total_asset = 0;
 
-				$sql_2 = "SELECT * FROM pms_info WHERE pms_status = '0' AND facility_id = '" .$facility_id. "'";
-				$result_2 = $mysqli->query($sql_2);
-				$pms_planed = $result_2->num_rows;						 
-
-				$sql_3 = "SELECT * FROM pms_info WHERE pms_status = '1' AND facility_id = '" .$facility_id. "'";
-				$result_3 = $mysqli->query($sql_3);
-				$pms_done = $result_3->num_rows;
-
-				$sql_5 = "SELECT last_date_of_pms, frequency_of_pms FROM asset_details WHERE facility_id = '" .$facility_id. "'";
+				$sql_5 = "SELECT asset_id, last_date_of_pms, frequency_of_pms FROM asset_details WHERE facility_id = '" .$facility_id. "'";
 				$result_5 = $mysqli->query($sql_5);
-
 				if ($result_5->num_rows > 0) {			
 					while($row_5 = $result_5->fetch_array()){
-						$last_date_of_pms = $row_5['last_date_of_pms']; 
-						$frequency_of_pms = $row_5['frequency_of_pms']; 
+						$asset_id = $row_5['asset_id'];
+						$total_asset++;
 
-						# PMS Frequency Calculation 
-						$next_pms_date = '';
+						$sql_3 = "SELECT * FROM pms_info WHERE asset_id = '" .$asset_id. "' ORDER BY pms_id DESC LIMIT 0,1";
+						$result_3 = $mysqli->query($sql_3);
+						if ($result_3->num_rows > 0) {	
+							$row_3 = $result_3->fetch_array();
+							$pms_status = $row_3['pms_status'];
 
-						if($last_date_of_pms != '0000-00-00'){
-							$last_date_of_pms1 = date('Y-m-d', strtotime($last_date_of_pms));
-							$date = new DateTime($last_date_of_pms1); 
-								
-							$pms_freq_str = explode("|", $frequency_of_pms);
-							if($pms_freq_str[0] > 0){
-								$y1 = $pms_freq_str[0]; 
-								$next_pms_date = date('d-F-Y', strtotime('+'.$y1.' year', strtotime($last_date_of_pms)));
-							}else if($pms_freq_str[1] > 0){
-								$m1 = $pms_freq_str[1]; 
-								$next_pms_date = date('d-F-Y', strtotime('+'.$m1.' month', strtotime($last_date_of_pms)));
-							}else if($pms_freq_str[2] > 0){
-								$d1 = $pms_freq_str[2]; 
-								$next_pms_date = date('d-F-Y', strtotime('+'.$d1.' day', strtotime($last_date_of_pms)));
-							}else{ 
-								$next_pms_date = '';
-							} 
-						}//ennd if
-
-						if($next_pms_date != ''){
-							// Create two DateTime objects
-							$today = date('Y-m-d');
-							$date1 = new DateTime($today); 
-							$date2 = new DateTime($next_pms_date);
-
-							// Compare the dates
-							if ($date1 > $date2) {
-								//PMS Date over
-								$pms_due++;
-							}
+							if($pms_status == 0){
+								$pms_due++;	
+							}else if($pms_status == 1){
+								$pms_done++;	
+							}else if($pms_status == 2){
+								$pms_wip++;	
+							}else{}
+						}else{
+							$pms_due++;
 						}//end if
-						
 					}
 				}//end if
 
 				$data[0] = $slno; 
-				$data[1] = $facility_name;
+				$data[1] = $facility_name.' (Total Asset: '.$total_asset.')';
 				$data[2] = $pms_due;
 				$data[3] = $pms_done;
-				$data[4] = $pms_planed;
+				$data[4] = $pms_wip;
 
 				array_push($mainData, $data);
 				$slno++;
@@ -440,7 +413,8 @@
 		if ($result->num_rows > 0) {
 			$status = true;	
 			$row = $result->fetch_array();
-
+			
+			$pms_id = $row['pms_id'];
 			$facility_id = $row['facility_id'];
 			$facility_code = $row['facility_code'];
 			$department_id = $row['department_id'];
@@ -457,6 +431,7 @@
 			$pms_status = $row['pms_status'];
 			$sp_details = $row['sp_details'];
 			$asset_code = $row['asset_code'];
+			$asset_id = $row['asset_id'];
 		} else {
 			$status = false;
 		}
@@ -474,6 +449,7 @@
 			}
 		}
 
+		$return_array['pms_id'] = $pms_id;
 		$return_array['facility_id'] = $facility_id;
 		$return_array['facility_name'] = $facility_name;
 		$return_array['facility_code'] = $facility_code;
@@ -491,6 +467,7 @@
 		$return_array['pms_status'] = $pms_status; 
 		$return_array['sp_details'] = $sp_details; 
 		$return_array['asset_code'] = $asset_code; 
+		$return_array['asset_id'] = $asset_id; 
 
 		$return_array['status'] = $status;
     	echo json_encode($return_array);
@@ -727,8 +704,10 @@
 		$sql = "UPDATE pms_info SET pms_status = '" .$pms_status. "' WHERE pms_id = '".$pms_id."'";
 		$mysqli->query($sql);  	
 
-		$sql_1 = "UPDATE asset_details SET last_date_of_pms = '" .$last_date_of_pms. "' WHERE asset_id = '".$asset_id."'";
-		$mysqli->query($sql_1);  
+		if($pms_status == 1){
+			$sql_1 = "UPDATE asset_details SET last_date_of_pms = '" .$last_date_of_pms. "' WHERE asset_id = '".$asset_id."'";
+			$mysqli->query($sql_1);  
+		}
 
 		$return_result['status'] = $status; 
 		echo json_encode($return_result);

@@ -64,13 +64,19 @@
   </head>
   <?php
 	include('../assets/php/sql_conn.php');
+    $readonly_text = '';
+    if(isset($_SESSION["user_id"])){
+        $readonly_text = '';
+        }else{
+        $readonly_text = 'readonly';
+    }
     ?>
   <body>
     <div class="container">
         <div class="contact__wrapper shadow-lg mt-n9">
             <div class="row no-gutters">
                 <div class="col-lg-4 contact-info__wrapper gradient-brand-color p-4 order-lg-2">
-                    <h3 class="color--white mb-5 text-center">APMEQ</h3>
+                    <h3 class="color--white mb-5 text-center">APMEQ </h3>
         
                     <ul class="contact-info__list list-style--none position-relative z-index-101">
                         <li class="mb-4 pl-4">
@@ -183,6 +189,8 @@
                                 <div class="form-group">
                                     <label for="asset_code">Asset Code</label>
                                     <input type="text" class="form-control" id="asset_code" name="asset_code" required >
+                                    <input type="hidden" name="asset_id" id="asset_id" value="">
+                                    <input type="hidden" name="pms_id" id="pms_id" value="">
                                 </div>
                             </div>
         
@@ -224,14 +232,14 @@
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
                                     <label for="pms_planned_date">PMS planned date</label>
-                                    <input type="date" class="form-control" id="pms_planned_date" name="pms_planned_date" required >
+                                    <input type="date" class="form-control" id="pms_planned_date" name="pms_planned_date" <?=$readonly_text?> required >
                                 </div>
                             </div> 
         
                             <div class="col-sm-12 mb-1">
                                 <div class="form-group">
                                     <label class="required-field" for="sp_details">Service Provider Details</label>
-                                    <textarea class="form-control" id="sp_details" name="sp_details" rows="4" > </textarea>
+                                    <textarea class="form-control" id="sp_details" name="sp_details" rows="4" <?=$readonly_text?> > </textarea>
                                 </div>
                             </div>
         
@@ -481,7 +489,9 @@
                 $('#pms_planned_date').val($res1.pms_planned_date);  
                 $('#pms_status').val($res1.pms_status).trigger('change');
                 $('#sp_details').val($res1.sp_details);  
-                $('#asset_code').val($res1.asset_code);  
+                $('#asset_code').val($res1.asset_code);    
+                $('#asset_id').val($res1.asset_id);    
+                $('#pms_id').val($res1.pms_id); 
                 
                 $pms_status = $res1.pms_status;
                 if($pms_status == '1'){
@@ -633,6 +643,26 @@
         //}
         
     });
+
+    $('#pms_status').on('change', function(){
+        $asset_id = $('#asset_id').val();
+        $pms_status = $('#pms_status').val();
+        $pms_id = $('#pms_id').val();
+
+        $.ajax({
+            method: "POST",
+            url: "function.php",
+            data: { fn: "updatePMSStatus", pms_id: $pms_id, pms_status: $pms_status, asset_id: $asset_id }
+        })
+        .done(function( res ) {
+            //console.log(res);
+            $res1 = JSON.parse(res);
+            if($res1.status == true){
+                alert('Status Updated Successfully'); 
+                loadFormdata()
+            }
+        }); //end ajax
+    })
     </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   </body>
