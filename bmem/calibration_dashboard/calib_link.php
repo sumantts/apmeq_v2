@@ -3,7 +3,7 @@
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="PMS Soft Link">
+    <meta name="viewport" content="Calibration Soft Link">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -64,13 +64,19 @@
   </head>
   <?php
 	include('../assets/php/sql_conn.php');
+    $readonly_text = '';
+    if(isset($_SESSION["user_id"])){
+        $readonly_text = '';
+        }else{
+        $readonly_text = 'readonly';
+    }
     ?>
   <body>
     <div class="container">
         <div class="contact__wrapper shadow-lg mt-n9">
             <div class="row no-gutters">
                 <div class="col-lg-4 contact-info__wrapper gradient-brand-color p-4 order-lg-2">
-                    <h3 class="color--white mb-5 text-center">APMEQ</h3>
+                    <h3 class="color--white mb-5 text-center">APMEQ </h3>
         
                     <ul class="contact-info__list list-style--none position-relative z-index-101">
                         <li class="mb-4 pl-4">
@@ -106,7 +112,7 @@
                 </div>
         
                 <div class="col-lg-8 contact-form__wrapper p-5 order-lg-1">
-                    <h4 class="text-center">Calibration #<?=$_GET['calib_info_id']?></h4>
+                    <h4 class="text-center">Calibration Info #<?=$_GET['calib_info_id']?></h4>
                     <form action="#" method="POST" class="contact-form form-validate" id="myForm">
                         <div class="row">
                             <div class="col-sm-6 mb-1">
@@ -183,6 +189,8 @@
                                 <div class="form-group">
                                     <label for="asset_code">Asset Code</label>
                                     <input type="text" class="form-control" id="asset_code" name="asset_code" required >
+                                    <input type="hidden" name="asset_id" id="asset_id" value="">
+                                    <input type="hidden" name="calib_id" id="calib_id" value="">
                                 </div>
                             </div>
         
@@ -224,14 +232,14 @@
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
                                     <label for="pms_planned_date">Calibration planned date</label>
-                                    <input type="date" class="form-control" id="pms_planned_date" name="pms_planned_date" required >
+                                    <input type="date" class="form-control" id="pms_planned_date" name="pms_planned_date" <?=$readonly_text?> required >
                                 </div>
                             </div> 
         
                             <div class="col-sm-12 mb-1">
                                 <div class="form-group">
                                     <label class="required-field" for="sp_details">Service Provider Details</label>
-                                    <textarea class="form-control" id="sp_details" name="sp_details" rows="4" > </textarea>
+                                    <textarea class="form-control" id="sp_details" name="sp_details" rows="4" <?=$readonly_text?> > </textarea>
                                 </div>
                             </div>
         
@@ -268,17 +276,18 @@
         
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
-                                    <label for="pms_sp_status">Status</label>
-                                    <select class="form-control" name="pms_sp_status" id="pms_sp_status" required > 
-                                        <option value="0">Work in progress</option>
-                                        <option value="1">Completed</option> 
+                                    <label for="pms_status">Status</label>
+                                    <select class="form-control" name="pms_status" id="pms_status" required > 
+                                        <option value="0">Due</option>
+                                        <option value="1">Done</option>
+                                        <option value="2">Work in Progress</option> 
                                     </select>
                                 </div>
                             </div>
         
                             <div class="col-sm-12 mb-1">
                                 <input type="hidden" name="calib_info_id" id="calib_info_id" value="<?=$_GET['calib_info_id']?>">
-                                <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" name="submit" id="submitBtn" class="btn btn-primary">Submit</button>
                             </div>
         
                         </div>
@@ -313,16 +322,18 @@
             $supplied_by = $('#supplied_by').val();
             $service_provider_details = $('#service_provider_details').val();
             $pms_planned_date = $('#pms_planned_date').val();
-            $pms_sp_status = $('#pms_sp_status').val();
+            $pms_status = $('#pms_status').val();
+            $sp_details = $('#sp_details').val();
 
             $.ajax({
                 method: "POST",
                 url: "../calibration_dashboard/function.php",
-                data: { fn: "updateGeneratedFormdata", calib_info_id: $calib_info_id, facility_id: $facility_id, facility_code: $facility_code, department_id: $department_id, device_group: $device_group, asset_class: $asset_class, equipment_name: $equipment_name, equipment_make: $equipment_make, equipment_model: $equipment_model, equipment_sl_no: $equipment_sl_no, pms_due_date: $pms_due_date, supplied_by: $supplied_by, service_provider_details: $service_provider_details, pms_planned_date: $pms_planned_date, pms_sp_status: $pms_sp_status }
+                data: { fn: "updateGeneratedFormdata", calib_info_id: $calib_info_id, facility_id: $facility_id, facility_code: $facility_code, department_id: $department_id, device_group: $device_group, asset_class: $asset_class, equipment_name: $equipment_name, equipment_make: $equipment_make, equipment_model: $equipment_model, equipment_sl_no: $equipment_sl_no, pms_due_date: $pms_due_date, supplied_by: $supplied_by, service_provider_details: $service_provider_details, pms_planned_date: $pms_planned_date, pms_status: $pms_status, sp_details: $sp_details }
             })
             .done(function( res ) {
                 $res1 = JSON.parse(res); 
                 if($res1.status == true){
+                    loadFormdata();
                     alert('Data Updated successfully');
                 }        
             });//end ajax
@@ -462,10 +473,10 @@
 
                 loadDepartment($facility_id, $department_id);
                 getAllProductImages($calib_info_id);
-                $('#facility_code').val($res1.facility_code);  
+                $('#facility_code').val($res1.facility_code); 
                 setTimeout(function(){
                     $('#department_id').val($department_id).trigger('change');                    
-                }, 1000);    
+                }, 1000);   
                 $('#device_group').val($res1.device_group).trigger('change');            
                 $('#asset_class').val($res1.asset_class).trigger('change');
                 $('#equipment_name').val($res1.equipment_name);  
@@ -476,9 +487,21 @@
                 $('#supplied_by').val($res1.supplied_by);  
                 $('#service_provider_details').val($res1.service_provider_details);  
                 $('#pms_planned_date').val($res1.pms_planned_date);  
-                $('#pms_sp_status').val($res1.pms_sp_status).trigger('change');
+                $('#pms_status').val($res1.pms_status).trigger('change');
                 $('#sp_details').val($res1.sp_details);  
-                $('#asset_code').val($res1.asset_code);  
+                $('#asset_code').val($res1.asset_code);    
+                $('#asset_id').val($res1.asset_id);    
+                $('#calib_id').val($res1.calib_id); 
+                
+                $pms_status = $res1.pms_status;
+                if($pms_status == '1'){
+                    $('#pms_planned_date').prop('readonly', true);     
+                    $('#sp_details').prop('readonly', true);    
+                    $('#service_provider_details').prop('readonly', true);    
+                    $('#pms_status').prop('disabled', true);      
+                    $('#startUpload').prop('disabled', true);       
+                    $('#submitBtn').prop('disabled', true); 
+                }
             }
         });//end ajax
     }
@@ -544,6 +567,7 @@
 
     function getAllProductImages(pmsinfoid){
         $('#product_gallery').html('');
+        $pms_status = $('#pms_status').val();
         $.ajax({
             method: "POST",
             url: "../calibration_dashboard/function.php",
@@ -559,7 +583,10 @@
                     $html = "";
                     console.log('all_images length: '+$all_images.length);
                     for($i in $all_images ){
-                        $html += '<a href="./photos/'+$all_images[$i]+'" target="_blank"><img src="./photos/'+$all_images[$i]+'" width="75" class="img-fluid img-thumbnail" alt="..."></a><a href="javascript: void(0)"> <i class="fa fa-trash" aria-hidden="true" onclick="deleteProdImage(\''+$all_images[$i]+'\')"></i></a>'; 
+                        $html += '<a href="./photos/'+$all_images[$i]+'" target="_blank"><img src="./photos/'+$all_images[$i]+'" width="75" class="img-fluid img-thumbnail" alt="..."></a>';
+                        if($pms_status != '1'){
+                            $html += '<a href="javascript: void(0)"> <i class="fa fa-trash" aria-hidden="true" onclick="deleteProdImage(\''+$all_images[$i]+'\')"></i></a>'; 
+                        }
                     }//end for
                     
                     $('#product_gallery').html($html);
@@ -596,7 +623,7 @@
 
         $user_id = window.localStorage.getItem('user_id');
         console.log('user_id: ' + $user_id);
-        if($user_id == null){
+        //if($user_id == null){
             //$("input").prop('disabled', true);
             $('#facility_id').prop('disabled', true); 
             $('#facility_code').prop('readonly', true);
@@ -608,13 +635,34 @@
             $('#equipment_model').prop('readonly', true);
             $('#equipment_sl_no').prop('readonly', true);  
             $('#pms_due_date').prop('readonly', true);   
-            $('#supplied_by').prop('readonly', true);    
-            $('#pms_planned_date').prop('readonly', true);     
-            $('#sp_details').prop('readonly', true);     
+            $('#supplied_by').prop('readonly', true);   
+
+            //$('#pms_planned_date').prop('readonly', true);     
+            //$('#sp_details').prop('readonly', true);     
             $('#asset_code').prop('readonly', true); 
-        }
+        //}
         
     });
+
+    $('#pms_status').on('change', function(){
+        $asset_id = $('#asset_id').val();
+        $pms_status = $('#pms_status').val();
+        $calib_id = $('#calib_id').val();
+
+        $.ajax({
+            method: "POST",
+            url: "function.php",
+            data: { fn: "updatePMSStatus", calib_id: $calib_id, pms_status: $pms_status, asset_id: $asset_id }
+        })
+        .done(function( res ) {
+            //console.log(res);
+            $res1 = JSON.parse(res);
+            if($res1.status == true){
+                alert('Status Updated Successfully'); 
+                loadFormdata()
+            }
+        }); //end ajax
+    })
     </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   </body>

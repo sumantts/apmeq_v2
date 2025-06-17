@@ -27,14 +27,15 @@
 		$supplied_by = $_POST['supplied_by'];
 		$service_provider_details = $_POST['service_provider_details'];
 		$pms_planned_date = $_POST['pms_planned_date'];
-		$pms_sp_status = $_POST['pms_sp_status'];
+		$pms_status = $_POST['pms_status'];
+		$sp_details = $_POST['sp_details'];
 		
 		try {
 			if($calib_info_id > 0){
 				$status = true;
 				$pms_data_updated = date('Y-m-d H:i:s');
 				$row_status = 2;
-				$sql = "UPDATE calib_info SET service_provider_details = '" .$service_provider_details. "', pms_planned_date = '" .$pms_planned_date. "', pms_data_updated = '" .$pms_data_updated. "', row_status = '" .$row_status. "', pms_sp_status = '" .$pms_sp_status. "' WHERE calib_info_id = '" .$calib_info_id. "' ";
+				$sql = "UPDATE calib_info SET sp_details = '" .$sp_details. "', service_provider_details = '" .$service_provider_details. "', pms_planned_date = '" .$pms_planned_date. "', pms_data_updated = '" .$pms_data_updated. "', row_status = '" .$row_status. "', pms_status = '" .$pms_status. "' WHERE calib_info_id = '" .$calib_info_id. "' ";
 				$result = $mysqli->query($sql);
 			}	
 		} catch (PDOException $e) {
@@ -125,74 +126,40 @@
 				
 				$pms_due = 0;
 				$pms_done = 0;
-				$pms_planed = 0;										
+				$pms_wip = 0;		
+				$total_asset = 0;
 
-				$sql_2 = "SELECT * FROM calib_info WHERE pms_status = '0' AND facility_id = '" .$facility_id. "'";
-				$result_2 = $mysqli->query($sql_2);
-				$pms_planed = $result_2->num_rows;						 
-
-				$sql_3 = "SELECT * FROM calib_info WHERE pms_status != '0' AND facility_id = '" .$facility_id. "'";
-				$result_3 = $mysqli->query($sql_3);
-				$pms_done = $result_3->num_rows;
-
-				$sql_5 = "SELECT last_date_of_pms, frequency_of_pms FROM asset_details WHERE facility_id = '" .$facility_id. "'";
+				$sql_5 = "SELECT asset_id, last_date_of_pms, frequency_of_pms FROM asset_details WHERE facility_id = '" .$facility_id. "'";
 				$result_5 = $mysqli->query($sql_5);
-
 				if ($result_5->num_rows > 0) {			
 					while($row_5 = $result_5->fetch_array()){
-						$last_date_of_pms = $row_5['last_date_of_pms']; 
-						$frequency_of_pms = $row_5['frequency_of_pms']; 
+						$asset_id = $row_5['asset_id'];
+						$total_asset++;
 
-						# PMS Frequency Calculation
-						$pms_frequency = '';
-						$next_pms_date = '';
+						$sql_3 = "SELECT * FROM calib_info WHERE asset_id = '" .$asset_id. "' ORDER BY calib_id DESC LIMIT 0,1";
+						$result_3 = $mysqli->query($sql_3);
+						if ($result_3->num_rows > 0) {	
+							$row_3 = $result_3->fetch_array();
+							$pms_status = $row_3['pms_status'];
 
-						if($last_date_of_pms != '0000-00-00'){
-							$last_date_of_pms1 = date('Y-m-d', strtotime($last_date_of_pms));
-							$date = new DateTime($last_date_of_pms1); 
-								
-							$pms_freq_str = explode("|", $frequency_of_pms);
-							if($pms_freq_str[0] > 0){
-								$y1 = $pms_freq_str[0];
-								$pms_frequency = 'Each '.$y1.' Year(s)';
-								$next_pms_date = date('d-F-Y', strtotime('+'.$y1.' year', strtotime($last_date_of_pms)));
-							}else if($pms_freq_str[1] > 0){
-								$m1 = $pms_freq_str[1];
-								$pms_frequency = 'Each '.$m1.' Month(s)';
-								$next_pms_date = date('d-F-Y', strtotime('+'.$m1.' month', strtotime($last_date_of_pms)));
-							}else if($pms_freq_str[2] > 0){
-								$d1 = $pms_freq_str[2];
-								$pms_frequency = 'Each '.$d1.' Day(s)';
-								$next_pms_date = date('d-F-Y', strtotime('+'.$d1.' day', strtotime($last_date_of_pms)));
-							}else{
-								$pms_frequency = '';
-								$next_pms_date = '';
-							} 
-						}//ennd if
-
-						if($next_pms_date != ''){					
-							$fifteen_day_prev = date('Y-m-d H:i:s',(strtotime ( '-15 day' , strtotime($next_pms_date))));
-							
-							// Create two DateTime objects
-							$today = date('Y-m-d');
-							$date1 = new DateTime($today); 
-							$date2 = new DateTime($next_pms_date);
-
-							// Compare the dates
-							if ($date1 > $date2) {
-								//PMS Date over
-								$pms_due++;
-							}
+							if($pms_status == 0){
+								$pms_due++;	
+							}else if($pms_status == 1){
+								$pms_done++;	
+							}else if($pms_status == 2){
+								$pms_wip++;	
+							}else{}
+						}else{
+							$pms_due++;
 						}//end if
-						
 					}
 				}//end if
 
 				$data[0] = $slno; 
-				$data[1] = $facility_name;
+				$data[1] = $facility_name.' (Total Asset: '.$total_asset.')';
 				$data[2] = $pms_due;
 				$data[3] = $pms_done;
-				$data[4] = $pms_planed;
+				$data[4] = $pms_wip;
 
 				array_push($mainData, $data);
 				$slno++;
@@ -308,25 +275,25 @@
 				$dynamic_id = 'calib_id_'.$calib_id;
 				$updated_text = '';
 				$disabled_text = '';
-				if($pms_status == 1 || $pms_status == 2){
+				if($pms_status == 1){
 					$disabled_text = 'disabled';
 				}
 
 				$updated_text .= '<select name="'.$dynamic_id.'" id="'.$dynamic_id.'" onChange="updatePMSStatus('.$calib_id.','.$asset_id.')" class="form-control-sm" '.$disabled_text.'>';
 				if($pms_status == 0){
-					$updated_text .= '<option value="0" selected="selected">Worrk In Progress</option>';
+					$updated_text .= '<option value="0" selected="selected">Due</option>';
 				}else{
-					$updated_text .= '<option value="0">Worrk In Progress</option>';
+					$updated_text .= '<option value="0">Due</option>';
 				}
 				if($pms_status == 1){
-					$updated_text .= '<option value="1" selected="selected">Resolved</option>';
+					$updated_text .= '<option value="1" selected="selected">Done</option>';
 				}else{
-					$updated_text .= '<option value="1">Resolved</option>';
+					$updated_text .= '<option value="1">Done</option>';
 				}
 				if($pms_status == 2){
-					$updated_text .= '<option value="2" selected="selected">Closed</option>';
+					$updated_text .= '<option value="2" selected="selected">WIP</option>';
 				}else{
-					$updated_text .= '<option value="2">Closed</option>';
+					$updated_text .= '<option value="2">WIP</option>';
 				}
 				$updated_text .= '</select>'; 
 
@@ -446,7 +413,8 @@
 		if ($result->num_rows > 0) {
 			$status = true;	
 			$row = $result->fetch_array();
-
+			
+			$calib_id = $row['calib_id'];
 			$facility_id = $row['facility_id'];
 			$facility_code = $row['facility_code'];
 			$department_id = $row['department_id'];
@@ -460,9 +428,10 @@
 			$supplied_by = $row['supplied_by'];
 			$service_provider_details = $row['service_provider_details'];
 			$pms_planned_date = $row['pms_planned_date'];
-			$pms_sp_status = $row['pms_sp_status'];
+			$pms_status = $row['pms_status'];
 			$sp_details = $row['sp_details'];
 			$asset_code = $row['asset_code'];
+			$asset_id = $row['asset_id'];
 		} else {
 			$status = false;
 		}
@@ -480,6 +449,7 @@
 			}
 		}
 
+		$return_array['calib_id'] = $calib_id;
 		$return_array['facility_id'] = $facility_id;
 		$return_array['facility_name'] = $facility_name;
 		$return_array['facility_code'] = $facility_code;
@@ -494,9 +464,10 @@
 		$return_array['supplied_by'] = $supplied_by;
 		$return_array['service_provider_details'] = $service_provider_details;
 		$return_array['pms_planned_date'] = $pms_planned_date; 
-		$return_array['pms_sp_status'] = $pms_sp_status; 
+		$return_array['pms_status'] = $pms_status; 
 		$return_array['sp_details'] = $sp_details; 
 		$return_array['asset_code'] = $asset_code; 
+		$return_array['asset_id'] = $asset_id; 
 
 		$return_array['status'] = $status;
     	echo json_encode($return_array);
@@ -529,15 +500,15 @@
 		$link_generated_by = $_SESSION["user_id"];
 		$link_generate_time = date('Y-m-d H:i:s');
 		
-		$sql = "INSERT INTO calib_id (link_generated_by, link_generate_time) VALUES ('" .$link_generated_by. "', '" .$link_generate_time. "')";
+		$sql = "INSERT INTO calib_info (link_generated_by, link_generate_time) VALUES ('" .$link_generated_by. "', '" .$link_generate_time. "')";
 		$result = $mysqli->query($sql);
 		$calib_id = $mysqli->insert_id;
 
 		if($calib_id > 0){
 			$status = true;  
-			$calib_id = str_pad($calib_id, 4, '0', STR_PAD_LEFT);
+			$calib_info_id = str_pad($calib_id, 4, '0', STR_PAD_LEFT);
 
-			$upd_sql = "UPDATE calib_info SET calib_id = '" .$calib_info. "' WHERE calib_id = '" .$calib_id. "' ";
+			$upd_sql = "UPDATE calib_info SET calib_info_id = '" .$calib_info_id. "' WHERE calib_id = '" .$calib_id. "' ";
 			$result_upd = $mysqli->query($upd_sql); 
 		}else{
 			$return_result['error_message'] = 'Data Insert Error';
@@ -546,7 +517,7 @@
 
 		$return_result['error_message'] = $error_message; 
 		$return_result['status'] = $status; 
-		$return_result['calib_id'] = $calib_id; 
+		$return_result['calib_info_id'] = $calib_info_id; 
 		echo json_encode($return_result);
 	}//end function deleteItem 
 
@@ -587,11 +558,11 @@
 		$all_images = array();
 		$all_images_temp = array();
 		$status = true;
-		$calib_id = $_POST["calib_id"];
+		$calib_info_id = $_POST["calib_info_id"];
 		$prod_iamge_name = $_POST["prod_iamge_name"];
 
 		//Unlink product image
-		$sql = "SELECT pms_report_attached FROM calib_info WHERE calib_id = '".$calib_id."'";
+		$sql = "SELECT pms_report_attached FROM calib_info WHERE calib_info_id = '".$calib_info_id."'";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -617,7 +588,7 @@
 			}//end while
 		} //end if
 
-		$sql = "UPDATE calib_info SET pms_report_attached = '" .$all_images_en. "' WHERE calib_id = '".$calib_id."'";
+		$sql = "UPDATE calib_info SET pms_report_attached = '" .$all_images_en. "' WHERE calib_info_id = '".$calib_info_id."'";
 		$mysqli->query($sql);
 
 		$return_result['status'] = $status;
@@ -733,8 +704,10 @@
 		$sql = "UPDATE calib_info SET pms_status = '" .$pms_status. "' WHERE calib_id = '".$calib_id."'";
 		$mysqli->query($sql);  	
 
-		$sql_1 = "UPDATE asset_details SET last_date_of_calibration = '" .$last_date_of_pms. "' WHERE asset_id = '".$asset_id."'";
-		$mysqli->query($sql_1);  
+		if($pms_status == 1){
+			$sql_1 = "UPDATE asset_details SET last_date_of_calibration = '" .$last_date_of_pms. "' WHERE asset_id = '".$asset_id."'";
+			$mysqli->query($sql_1);  
+		}
 
 		$return_result['status'] = $status; 
 		echo json_encode($return_result);

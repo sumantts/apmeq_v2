@@ -188,7 +188,7 @@ $('#generateLink').on('click', function(){
     .done(function( res ) {
         $res1 = JSON.parse(res);
         if($res1.status == true){
-            window.open('calibration_dashboard/calib_link.php?pms_info_id='+$res1.pms_info_id, '_blank');
+            window.open('calibration_dashboard/calib_link.php?calib_info_id='+$res1.calib_info_id, '_blank');
         }else{
             alert($res1.error_message);
         }  
