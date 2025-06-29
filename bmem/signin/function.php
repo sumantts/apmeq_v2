@@ -110,4 +110,67 @@
 		echo json_encode($return_result);
 	}//end function doLogin
 
+	//Login function
+	if($fn == 'reset_table'){
+		$return_result = array();
+		$status = true;		
+		
+		$sql = "TRUNCATE asset_details";
+		$mysqli->query($sql);	
+		
+		$sql = "TRUNCATE asset_reallocate";
+		$mysqli->query($sql);	
+		
+		//$sql = "TRUNCATE asset_status_code";
+		//$mysqli->query($sql);	
+		
+		$sql = "TRUNCATE asset_type_list";
+		$mysqli->query($sql);	
+		
+		$sql = "TRUNCATE calib_info";
+		$mysqli->query($sql);	
+		
+		$sql = "TRUNCATE call_log_register";
+		$mysqli->query($sql);	
+		
+		//$sql = "TRUNCATE category_list";
+		//$mysqli->query($sql);	
+		
+		//$sql = "TRUNCATE department_list";
+		//$mysqli->query($sql);	
+		
+		$sql = "TRUNCATE device_group_list";
+		$mysqli->query($sql);	
+		
+		//$sql = "TRUNCATE facility_master";
+		//$mysqli->query($sql);	
+		
+		//$sql = "TRUNCATE hospital_list";
+		//$mysqli->query($sql);	
+		
+		$sql = "TRUNCATE manufacturer_list";
+		$mysqli->query($sql);	
+		
+		$sql = "TRUNCATE pms_info";
+		$mysqli->query($sql);	
+		
+		$sql = "TRUNCATE qa_info";
+		$mysqli->query($sql);	
+		
+		$sql = "TRUNCATE rber_info";
+		$mysqli->query($sql);	
+		
+		$sql = "TRUNCATE reloc_asset_detail";
+		$mysqli->query($sql);	
+		
+		$sql = "TRUNCATE service_providers_list";
+		$mysqli->query($sql);	
+		
+		$sql = "TRUNCATE supplier_list";
+		$mysqli->query($sql); 
+		
+		$return_result['status'] = $status;
+		echo json_encode($return_result);
+	}//end function doLogin
+
     ?>

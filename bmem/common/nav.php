@@ -113,6 +113,10 @@
 					<?php } ?> 
 					<!-- //Calibration service provider -->
 					 
+					
+					<li class="nav-item">
+						<a href="javascript: void(0);" class="nav-link " id="reset_table"><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Reset Database Table</span></a>
+					</li>
 
 				</ul>				
 				

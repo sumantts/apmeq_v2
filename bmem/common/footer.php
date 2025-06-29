@@ -188,6 +188,27 @@
             }, 250);
         }
         
+
+        
+        //reset Table
+        $('#reset_table').click(function(){
+            if(confirm('Are you sure to reset all the table?')){
+                $.ajax({
+                    method: "POST",
+                    url: "signin/function.php",
+                    data: { fn: "reset_table" }
+                })
+                .done(function( res ) {
+                    console.log(res);
+                    $res1 = JSON.parse(res);
+                    if($res1.status == true){
+                    
+                    }else{
+                    
+                    }
+                });//end ajax 
+            }//end if
+        });//end function
     </script>
     
     <!-- Place at bottom of page Loading -->
