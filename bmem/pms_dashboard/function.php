@@ -268,8 +268,9 @@
 				}else{
 					$pms_planned_date = '';
 				}	
-
-				$view_link = "<a href='pms_dashboard/pms_link.php?pms_info_id=$pms_info_id', target='_blank'>View Link</a>";
+				$view_link = "";
+				$view_link .= "<a href='pms_dashboard/pms_link.php?pms_info_id=$pms_info_id', target='_blank'>View Link</a> <br><br>";
+				$view_link .= "<a href='pms_dashboard/pms_link.php?pms_info_id=$pms_info_id&link=external', target='_blank'>Share Link</a>";
 
 				# 0=WIP, 1=Resolved, 2=Closed
 				$dynamic_id = 'pms_id_'.$pms_id;

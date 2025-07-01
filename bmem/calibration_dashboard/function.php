@@ -268,8 +268,9 @@
 				}else{
 					$pms_planned_date = '';
 				}	
-
-				$view_link = "<a href='calibration_dashboard/calib_link.php?calib_info_id=$calib_info_id', target='_blank'>View Link</a>";
+				$view_link = "";
+				$view_link .= "<a href='calibration_dashboard/calib_link.php?calib_info_id=$calib_info_id', target='_blank'>View Link</a>";
+				$view_link .= "<a href='calibration_dashboard/calib_link.php?calib_info_id=$calib_info_id&link=external', target='_blank'>Share Link</a>";
 
 				# 0=WIP, 1=Resolved, 2=Closed
 				$dynamic_id = 'calib_id_'.$calib_id;

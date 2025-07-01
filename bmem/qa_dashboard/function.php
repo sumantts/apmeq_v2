@@ -268,8 +268,9 @@
 				}else{
 					$pms_planned_date = '';
 				}	
-
-				$view_link = "<a href='qa_dashboard/qa_link.php?qa_info_id=$qa_info_id', target='_blank'>View Link</a>";
+				$view_link = "";
+				$view_link .= "<a href='qa_dashboard/qa_link.php?qa_info_id=$qa_info_id', target='_blank'>View Link</a><br><br>";
+				$view_link .= "<a href='qa_dashboard/qa_link.php?qa_info_id=$qa_info_id&link=external', target='_blank'>Share Link</a>";
 
 				# 0=WIP, 1=Resolved, 2=Closed
 				$dynamic_id = 'qa_id_'.$qa_id;

@@ -65,10 +65,10 @@
   <?php
 	include('../assets/php/sql_conn.php');
     $readonly_text = '';
-    if(isset($_SESSION["user_id"])){
-        $readonly_text = '';
-        }else{
+    if(isset($_GET["link"])){
         $readonly_text = 'readonly';
+    }else{
+        $readonly_text = '';
     }
     ?>
   <body>
