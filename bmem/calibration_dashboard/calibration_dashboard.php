@@ -57,11 +57,11 @@ include('common/head.php');
                         <div class="row text-center">
                             <div class="col">
                                 <h4 class="m-0 text-white" id="pending_pms">000</h4>
-                                <span>Total Number of Calibration due</span>
+                                <span>Total Number of Calibration Planned</span>
                             </div>
                             <div class="col">
                                 <h4 class="m-0 text-white" id="pms_done">000</h4>
-                                <span>Total Number of Calibration done</span>
+                                <span>Total Number of Calibration Done</span>
                             </div>
                             <div class="col">
                                 <h4 class="m-0 text-white" id="pending_pms1">000</h4>
@@ -103,8 +103,8 @@ include('common/head.php');
                                     <tr>
                                         <th>No.</th> 
                                         <th>Facility name/code</th>
-                                        <th>Calibration due</th>
-                                        <th>Calibration done</th>
+                                        <th>Calibration Planned</th>
+                                        <th>Calibration Done</th>
                                         <th>Calibration WIP</th>
                                     </tr>
                                 </thead>
@@ -112,8 +112,8 @@ include('common/head.php');
                                     <tr>
                                         <th>No.</th>  
                                         <th>Facility name/code</th>
-                                        <th>Calibration due</th>
-                                        <th>Calibration done</th>
+                                        <th>Calibration Planned</th>
+                                        <th>Calibration Done</th>
                                         <th>Calibration WIP</th> 
                                     </tr>
                                 </tfoot>
@@ -182,7 +182,7 @@ include('common/head.php');
                                     <label for="PMSStatus">Calibration Status</label>
                                     <select class="form-control" id="PMSStatus">
                                         <option value="">Select</option>
-                                        <option value="0">Due</option>
+                                        <option value="0">Planned</option>
                                         <option value="1">Done</option> 
                                         <option value="2">Work in progress</option> 
                                     </select> 
@@ -262,7 +262,7 @@ include('common/head.php');
                                         <th>Calibration planned date</th>
                                         <th>Assign Service provider </th>                                         
                                         <th>View report</th>
-                                        <th>Status<br>(Due/Done/WIP)</th> 
+                                        <th>Status<br>(Planned/Done/WIP)</th> 
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -285,7 +285,7 @@ include('common/head.php');
                                         <th>Calibration planned date</th>
                                         <th>Assign Service provider </th>                                         
                                         <th>View report</th>
-                                        <th>Status<br>(Due/Done/WIP)</th>  
+                                        <th>Status<br>(Planned/Done/WIP)</th>  
                                     </tr>
                                 </tfoot>
                             </table>

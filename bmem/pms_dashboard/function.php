@@ -282,9 +282,9 @@
 
 				$updated_text .= '<select name="'.$dynamic_id.'" id="'.$dynamic_id.'" onChange="updatePMSStatus('.$pms_id.','.$asset_id.')" class="form-control-sm" '.$disabled_text.'>';
 				if($pms_status == 0){
-					$updated_text .= '<option value="0" selected="selected">Due</option>';
+					$updated_text .= '<option value="0" selected="selected">Planned</option>';
 				}else{
-					$updated_text .= '<option value="0">Due</option>';
+					$updated_text .= '<option value="0">Planned</option>';
 				}
 				if($pms_status == 1){
 					$updated_text .= '<option value="1" selected="selected">Done</option>';

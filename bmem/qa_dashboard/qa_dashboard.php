@@ -57,11 +57,11 @@ include('common/head.php');
                         <div class="row text-center">
                             <div class="col">
                                 <h4 class="m-0 text-white" id="pending_pms">000</h4>
-                                <span>Total Number of QA due</span>
+                                <span>Total Number of QA Planned</span>
                             </div>
                             <div class="col">
                                 <h4 class="m-0 text-white" id="pms_done">000</h4>
-                                <span>Total Number of QA done</span>
+                                <span>Total Number of QA Done</span>
                             </div>
                             <div class="col">
                                 <h4 class="m-0 text-white" id="pending_pms1">000</h4>
@@ -103,8 +103,8 @@ include('common/head.php');
                                     <tr>
                                         <th>No.</th> 
                                         <th>Facility name/code</th>
-                                        <th>QA due</th>
-                                        <th>QA done</th>
+                                        <th>QA Planned</th>
+                                        <th>QA Done</th>
                                         <th>QA WIP</th>
                                     </tr>
                                 </thead>
@@ -112,8 +112,8 @@ include('common/head.php');
                                     <tr>
                                         <th>No.</th>  
                                         <th>Facility name/code</th>
-                                        <th>QA due</th>
-                                        <th>QA done</th>
+                                        <th>QA Planned</th>
+                                        <th>QA Done</th>
                                         <th>QA WIP</th> 
                                     </tr>
                                 </tfoot>
@@ -182,7 +182,7 @@ include('common/head.php');
                                     <label for="PMSStatus">QA Status</label>
                                     <select class="form-control" id="PMSStatus">
                                         <option value="">Select</option>
-                                        <option value="0">Due</option>
+                                        <option value="0">Planned</option>
                                         <option value="1">Done</option> 
                                         <option value="2">Work in progress</option> 
                                     </select> 

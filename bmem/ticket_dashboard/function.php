@@ -348,7 +348,8 @@
 					$data[12] = $ticket_raiser_contact;
 					$data[13] = $assign_to_text;
 					$data[14] = $eng_contact_no;
-					$data[15] = $call_log_status_text;			
+					$data[15] = $call_log_status_text;	
+							
 					if($warranty_last_date != '0000-00-00'){										
 						$fifteen_day_prev = date('Y-m-d H:i:s',(strtotime ( '-15 day' , strtotime($warranty_last_date))));
 						

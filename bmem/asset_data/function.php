@@ -58,6 +58,10 @@
 				$last_date_of_calibration = $row['last_date_of_calibration']; 
 				$last_date_of_pms = $row['last_date_of_pms']; 
 				$last_date_of_qa = $row['qa_due_date']; 
+				
+				$calib_due = 0;
+				$pms_due = 0;
+				$qa_due = 0;
 
 				$asset_status_text = '-';
 				if($asset_status == 5){
@@ -102,9 +106,9 @@
 					$asset_class_text = 'Non Critical';
 				}
 
-				# Calibration Frequency Calculation
 				$calib_frequency = '';
-				$next_calib_date = '';
+				$next_calib_date = ''; 
+				# Calibration Frequency Calculation
 
 				if($last_date_of_calibration != '0000-00-00' && $frequency_of_calibration != ''){
 					$last_date_of_calibration1 = date('Y-m-d', strtotime($last_date_of_calibration));
@@ -153,19 +157,22 @@
 						//PMS within 15 days
 						$next_calib_date = '<span class="text-warning blink">'.$next_calib_date.'</span><br><a href="javascript: void(0)" onclick="generateCalibLink('.$asset_id.')">Generate Link</a>';						
 						$due_type_now = 1;
+						$calib_due = 1;
 					} elseif ($date1 > $date3) {
 						//PMS Date over
 						$next_calib_date = '<span class="text-danger blink">'.$next_calib_date.'</span><br><a href="javascript: void(0)" onclick="generateCalibLink('.$asset_id.')">Generate Link</a>';						
 						$due_type_now = 1;
+						$calib_due = 1;
 					} else {
 						// cool PMS
 						$next_calib_date = '<span class="text-primary">'.$next_calib_date.'</span>';
 					}
 				}//end if
+                
 
-				# PMS Frequency Calculation
 				$pms_frequency = '';
 				$next_pms_date = '';
+				# PMS Frequency Calculation
 
 				if($last_date_of_pms != '0000-00-00' && $frequency_of_pms != ''){
 					$last_date_of_pms1 = date('Y-m-d', strtotime($last_date_of_pms));
@@ -203,31 +210,33 @@
 					
 					// Create two DateTime objects
 					$today = date('Y-m-d');
-					$date1 = new DateTime($today);
-					$date2 = new DateTime($fifteen_day_prev);
-					$date3 = new DateTime($next_pms_date);
+					$date1 = strtotime($today);
+					$date2 = strtotime($fifteen_day_prev);
+					$date3 = strtotime($next_pms_date);
 
-
+                    //echo 'date1: '.$date1.' date2: '.$date2.' date3: '.$date3;
 					// Compare the dates
-					if ($date1 > $date2 && $date1 < $date3) {
+					if ($date1 > $date2) {
 						//PMS within 15 days
 						$next_pms_date = '<span class="text-warning blink">'.$next_pms_date.'</span><br><a href="javascript: void(0)" onclick="generatePMSLink('.$asset_id.')">Generate Link</a>';						
 						$due_type_now = 2;
+						$pms_due = 1;
 					} elseif ($date1 > $date3) {
 						//PMS Date over
 						$next_pms_date = '<span class="text-danger blink">'.$next_pms_date.'</span><br><a href="javascript: void(0)" onclick="generatePMSLink('.$asset_id.')">Generate Link</a>';						
 						$due_type_now = 2;
+						$pms_due = 1;
 					} else {
 						// cool PMS
 						$next_pms_date = '<span class="text-primary">'.$next_pms_date.'</span>';
 					}
-				}//end if
+				}//end if 
+                
 
 
-
-				# QA Frequency Calculation
 				$qa_frequency = '';
-				$next_qa_date = '';
+				$next_qa_date = ''; 
+				# QA Frequency Calculation
 
 				if($last_date_of_qa != '0000-00-00' && $frequency_of_qa != ''){
 					$last_date_of_qa1 = date('Y-m-d', strtotime($last_date_of_qa));
@@ -274,15 +283,17 @@
 						//qa within 15 days
 						$next_qa_date = '<span class="text-warning blink">'.$next_qa_date.'</span><br><a href="javascript: void(0)" onclick="generateQALink('.$asset_id.')">Generate Link</a>';						
 						$due_type_now = 3;
+						$qa_due = 1;
 					} elseif ($date1 > $date3) {
 						//qa Date over
 						$next_qa_date = '<span class="text-danger blink">'.$next_qa_date.'</span><br><a href="javascript: void(0)" onclick="generateQALink('.$asset_id.')">Generate Link</a>';						
 						$due_type_now = 3;
+						$qa_due = 1;
 					} else {
 						// cool qa
 						$next_qa_date = '<span class="text-primary">'.$next_qa_date.'</span>';
 					}
-				}//end if
+				}//end if              
 
 
 				$data[0] = $slno; 
@@ -303,10 +314,16 @@
 				$data[15] = $asset_status_text2;
 				$data[16] = $asset_class_text;  
 
+                //echo 'due_type_now: '.$due_type_now.' due_type: '.$due_type;
+				//calib PMS QA
 				if($due_type > 0){
-					if($due_type_now == $due_type){
+					if($calib_due == 1 && $due_type == 1){
 						array_push($mainData, $data);
-					}
+					}else if($pms_due == 1 && $due_type == 2){
+						array_push($mainData, $data);
+					}else if($qa_due == 1 && $due_type == 3){
+						array_push($mainData, $data);
+					}else{}
 				}else{
 					array_push($mainData, $data);
 				}
@@ -314,9 +331,7 @@
 			}
 		} else {
 			$status = false;
-		}
-
-			
+		}			
 
 		$return_array['data'] = $mainData;
     	echo json_encode($return_array);

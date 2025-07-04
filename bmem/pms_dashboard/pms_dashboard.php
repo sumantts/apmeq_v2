@@ -57,7 +57,7 @@ include('common/head.php');
                         <div class="row text-center">
                             <div class="col">
                                 <h4 class="m-0 text-white" id="pending_pms">000</h4>
-                                <span>Total Number of PMS due</span>
+                                <span>Total Number of PMS Planned</span>
                             </div>
                             <div class="col">
                                 <h4 class="m-0 text-white" id="pms_done">000</h4>
@@ -103,8 +103,8 @@ include('common/head.php');
                                     <tr>
                                         <th>No.</th> 
                                         <th>Facility name/code</th>
-                                        <th>PMS due</th>
-                                        <th>PMS done</th>
+                                        <th>PMS Planned</th>
+                                        <th>PMS Done</th>
                                         <th>PMS WIP</th>
                                     </tr>
                                 </thead>
@@ -112,8 +112,8 @@ include('common/head.php');
                                     <tr>
                                         <th>No.</th>  
                                         <th>Facility name/code</th>
-                                        <th>PMS due</th>
-                                        <th>PMS done</th>
+                                        <th>PMS Planned</th>
+                                        <th>PMS Done</th>
                                         <th>PMS WIP</th> 
                                     </tr>
                                 </tfoot>
@@ -182,7 +182,7 @@ include('common/head.php');
                                     <label for="PMSStatus">PMS Status</label>
                                     <select class="form-control" id="PMSStatus">
                                         <option value="">Select</option>
-                                        <option value="0">Due</option>
+                                        <option value="0">Planned</option>
                                         <option value="1">Done</option> 
                                         <option value="2">Work in progress</option> 
                                     </select> 
@@ -262,7 +262,7 @@ include('common/head.php');
                                         <th>PMS planned date</th>
                                         <th>Assign Service provider </th>                                         
                                         <th>View report</th>
-                                        <th>Status<br>(Due/Done/WIP)</th> 
+                                        <th>Status<br>(Planned/Done/WIP)</th> 
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -285,7 +285,7 @@ include('common/head.php');
                                         <th>PMS planned date</th>
                                         <th>Assign Service provider </th>                                         
                                         <th>View report</th>
-                                        <th>Status<br>(Due/Done/WIP)</th>  
+                                        <th>Status<br>(Planned/Done/WIP)</th>  
                                     </tr>
                                 </tfoot>
                             </table>
