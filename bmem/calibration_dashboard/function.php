@@ -150,7 +150,7 @@
 								$pms_wip++;	
 							}else{}
 						}else{
-							$pms_due++;
+							//$pms_due++;
 						}//end if
 					}
 				}//end if

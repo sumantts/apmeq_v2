@@ -473,8 +473,8 @@ if(isset($_POST["importSubmit"])){
                                     </select> 
                                 </div>  
                                 <div class="col-md-4 mb-3">
-                                    <label for="device_group">Device Group</label>
-                                    <select class="form-control js-example-basic-single" name="device_group" id="device_group">
+                                    <label for="device_group" class="text-danger">Device Group*</label>
+                                    <select class="form-control js-example-basic-single" name="device_group" id="device_group" required>
                                         <option value="">Select</option>  
                                     </select> 
                                 </div>    
