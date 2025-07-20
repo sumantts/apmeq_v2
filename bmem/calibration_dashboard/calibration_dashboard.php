@@ -56,16 +56,16 @@ include('common/head.php');
                     <div class="card-footer bg-primary text-white">
                         <div class="row text-center">
                             <div class="col">
-                                <h4 class="m-0 text-white" id="pending_pms">000</h4>
+                                <h4 class="m-0 text-white" id="tot_due_pms">0</h4>
+                                <span>Total Number of Calibration Due</span>
+                            </div>
+                            <div class="col">
+                                <h4 class="m-0 text-white" id="total_planned_pms">0</h4>
                                 <span>Total Number of Calibration Planned</span>
                             </div>
                             <div class="col">
-                                <h4 class="m-0 text-white" id="pms_done">000</h4>
+                                <h4 class="m-0 text-white" id="total_done_pms">0</h4>
                                 <span>Total Number of Calibration Done</span>
-                            </div>
-                            <div class="col">
-                                <h4 class="m-0 text-white" id="pending_pms1">000</h4>
-                                <span>Total Schedule / planned</span>
                             </div>
                         </div>
                     </div>
@@ -103,18 +103,18 @@ include('common/head.php');
                                     <tr>
                                         <th>No.</th> 
                                         <th>Facility name/code</th>
+                                        <th>Calibration Due</th>
                                         <th>Calibration Planned</th>
                                         <th>Calibration Done</th>
-                                        <th>Calibration WIP</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>No.</th>  
                                         <th>Facility name/code</th>
+                                        <th>Calibration Due</th> 
                                         <th>Calibration Planned</th>
                                         <th>Calibration Done</th>
-                                        <th>Calibration WIP</th> 
                                     </tr>
                                 </tfoot>
                             </table>

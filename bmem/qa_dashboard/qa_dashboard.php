@@ -54,18 +54,18 @@ include('common/head.php');
                     </div>
                     <div id="support-chart"></div>
                     <div class="card-footer bg-primary text-white">
-                        <div class="row text-center">
+                        <div class="row text-center"> 
                             <div class="col">
-                                <h4 class="m-0 text-white" id="pending_pms">000</h4>
+                                <h4 class="m-0 text-white" id="tot_due_pms">0</h4>
+                                <span>Total Number of QA Due</span>
+                            </div>
+                            <div class="col">
+                                <h4 class="m-0 text-white" id="total_planned_pms">0</h4>
                                 <span>Total Number of QA Planned</span>
                             </div>
                             <div class="col">
-                                <h4 class="m-0 text-white" id="pms_done">000</h4>
+                                <h4 class="m-0 text-white" id="total_done_pms">0</h4>
                                 <span>Total Number of QA Done</span>
-                            </div>
-                            <div class="col">
-                                <h4 class="m-0 text-white" id="pending_pms1">000</h4>
-                                <span>Total Schedule / planned</span>
                             </div>
                         </div>
                     </div>
@@ -103,18 +103,18 @@ include('common/head.php');
                                     <tr>
                                         <th>No.</th> 
                                         <th>Facility name/code</th>
+                                        <th>QA Due</th>
                                         <th>QA Planned</th>
                                         <th>QA Done</th>
-                                        <th>QA WIP</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>No.</th>  
                                         <th>Facility name/code</th>
+                                        <th>QA Due</th> 
                                         <th>QA Planned</th>
                                         <th>QA Done</th>
-                                        <th>QA WIP</th> 
                                     </tr>
                                 </tfoot>
                             </table>

@@ -29,21 +29,29 @@
 				$status = true;
 				$sql = "UPDATE facility_master SET contact_person = '" .$contact_person. "', department_id = '" .$department_id. "', facility_name = '" .$facility_name. "', facility_type = '" .$facility_type. "', facility_address = '" .$facility_address. "', nabh_accrediated = '" .$nabh_accrediated. "', nabl_accrediated = '" .$nabl_accrediated. "' WHERE facility_id = '" .$facility_id. "' ";
 				$result = $mysqli->query($sql); 
-			}else{
-				$sql = "INSERT INTO facility_master (contact_person, department_id, facility_name, facility_type, facility_address, nabh_accrediated, nabl_accrediated, user_id) VALUES ('" .$contact_person. "', '" .$department_id. "', '" .$facility_name. "', '" .$facility_type. "', '" .$facility_address. "', '" .$nabh_accrediated. "', '" .$nabl_accrediated. "', '" .$user_id. "')";
-				$result = $mysqli->query($sql);
-				$facility_id = $mysqli->insert_id;
-				if($facility_id > 0){
-					$status = true;  
-					$facility_code = str_pad($facility_id, 4, '0', STR_PAD_LEFT);
+			}else{			
+				$sql_f = "SELECT * FROM facility_master WHERE facility_name = '" .$facility_name. "'";
+				$result_f = $mysqli->query($sql_f);
 
-					$upd_sql = "UPDATE facility_master SET facility_code = '" .$facility_code. "' WHERE facility_id = '" .$facility_id. "' ";
-					$result_upd = $mysqli->query($upd_sql); 
-
-				}else{
-					$return_result['error_message'] = 'Data Insert Error';
+				if ($result_f->num_rows > 0) {
+					$return_result['error_message'] = 'This Facility Name already added.';
 					$status = false;
-				}
+				}else{
+					$sql = "INSERT INTO facility_master (contact_person, department_id, facility_name, facility_type, facility_address, nabh_accrediated, nabl_accrediated, user_id) VALUES ('" .$contact_person. "', '" .$department_id. "', '" .$facility_name. "', '" .$facility_type. "', '" .$facility_address. "', '" .$nabh_accrediated. "', '" .$nabl_accrediated. "', '" .$user_id. "')";
+					$result = $mysqli->query($sql);
+					$facility_id = $mysqli->insert_id;
+					if($facility_id > 0){
+						$status = true;  
+						$facility_code = str_pad($facility_id, 4, '0', STR_PAD_LEFT);
+
+						$upd_sql = "UPDATE facility_master SET facility_code = '" .$facility_code. "' WHERE facility_id = '" .$facility_id. "' ";
+						$result_upd = $mysqli->query($upd_sql); 
+
+					}else{
+						$return_result['error_message'] = 'Data Insert Error';
+						$status = false;
+					}
+				}//end if
 					
 			}	
 		} catch (PDOException $e) {

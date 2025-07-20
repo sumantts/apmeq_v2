@@ -51,6 +51,9 @@ function populateDataTable(){
     });
 }//end fun
 
+
+
+
 function populateDataTable_1(){
     $('#example_1').dataTable().fnClearTable();
     $('#example_1').dataTable().fnDestroy();
@@ -274,4 +277,31 @@ $(document).ready(function () {
     configureDeviceGroupDropDown();
     configureFacilityDropDown();
     populateDataTable(); 
+
+    setTimeout(function(){
+        $tot_due_pms = 0;
+        $total_planned_pms = 0;
+        $total_done_pms = 0;
+        
+        $('#example tr:gt(0)').each(function(){
+            $pms_due_temp = $(this).find('td:eq(2)').text();
+            if(parseInt($pms_due_temp) > 0){
+                $tot_due_pms = parseInt($tot_due_pms) + parseInt($pms_due_temp);
+            }
+            
+            $pms_plan_temp = $(this).find('td:eq(3)').text(); 
+            if(parseInt($pms_plan_temp) > 0){
+                $total_planned_pms = parseInt($total_planned_pms) + parseInt($pms_plan_temp);
+            }
+
+            $pms_done_temp = $(this).find('td:eq(4)').text(); 
+            if(parseInt($pms_done_temp) > 0){
+                $total_done_pms = parseInt($total_done_pms) + parseInt($pms_done_temp);
+            }
+
+            $('#tot_due_pms').html($tot_due_pms);
+            $('#total_planned_pms').html($total_planned_pms);
+            $('#total_done_pms').html($total_done_pms);            
+        });       
+    },1000)
 });

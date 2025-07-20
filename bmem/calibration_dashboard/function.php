@@ -126,14 +126,17 @@
 				
 				$pms_due = 0;
 				$pms_done = 0;
-				$pms_wip = 0;		
+				$pms_planned = 0;		
 				$total_asset = 0;
 
-				$sql_5 = "SELECT asset_id, last_date_of_pms, frequency_of_pms FROM asset_details WHERE facility_id = '" .$facility_id. "'";
+				$sql_5 = "SELECT asset_id, last_date_of_pms, frequency_of_pms, last_date_of_calibration, frequency_of_calibration FROM asset_details WHERE facility_id = '" .$facility_id. "'";
 				$result_5 = $mysqli->query($sql_5);
 				if ($result_5->num_rows > 0) {			
 					while($row_5 = $result_5->fetch_array()){
 						$asset_id = $row_5['asset_id'];
+						$last_date_of_calibration = $row_5['last_date_of_calibration'];
+						$frequency_of_calibration = $row_5['frequency_of_calibration'];
+						
 						$total_asset++;
 
 						$sql_3 = "SELECT * FROM calib_info WHERE asset_id = '" .$asset_id. "' ORDER BY calib_id DESC LIMIT 0,1";
@@ -143,23 +146,82 @@
 							$pms_status = $row_3['pms_status'];
 
 							if($pms_status == 0){
-								$pms_due++;	
+								$pms_planned++;	
 							}else if($pms_status == 1){
 								$pms_done++;	
 							}else if($pms_status == 2){
-								$pms_wip++;	
+								//$pms_wip++;	
 							}else{}
 						}else{
 							//$pms_due++;
 						}//end if
-					}
+
+						$calib_frequency = '';
+						$next_calib_date = ''; 
+						# Calibration Frequency Calculation
+
+						if($last_date_of_calibration != '0000-00-00' && $frequency_of_calibration != ''){
+							$last_date_of_calibration1 = date('Y-m-d', strtotime($last_date_of_calibration));
+							$next_calib_date = $last_date_of_calibration1;
+							$date = new DateTime($last_date_of_calibration1);				
+							
+							$calib_freq_str = explode("|", $frequency_of_calibration);
+							if($calib_freq_str[0] > 0){
+								$y = $calib_freq_str[0];
+								$calib_frequency .= 'Each '.$y.' Year(s)';
+								$next_calib_date = date('d-F-Y', strtotime('+'.$y.' year', strtotime($next_calib_date)));
+							}
+							if($calib_freq_str[1] > 0){
+								$m = $calib_freq_str[1];
+								if($calib_frequency != ''){
+									$calib_frequency .= ' '.$m.' Month(s)';
+								}else{
+									$calib_frequency .= 'Each '.$m.' Month(s)';
+								}
+								$next_calib_date = date('d-F-Y', strtotime('+'.$m.' month', strtotime($next_calib_date)));
+							}
+							if($calib_freq_str[2] > 0){
+								$d = $calib_freq_str[2];
+								if($calib_frequency != ''){
+									$calib_frequency .= ' '.$d.' Day(s)';
+								}else{
+									$calib_frequency .= 'Each '.$d.' Day(s)';
+								}
+								$next_calib_date = date('d-F-Y', strtotime('+'.$d.' day', strtotime($next_calib_date)));
+							}  
+						}
+						
+
+						if($next_calib_date != ''){					
+							$fifteen_day_prev = date('Y-m-d H:i:s',(strtotime ( '-15 day' , strtotime($next_calib_date))));
+							
+							// Create two DateTime objects
+							$today = date('Y-m-d');
+							$date1 = new DateTime($today);
+							$date2 = new DateTime($fifteen_day_prev);
+							$date3 = new DateTime($next_calib_date);
+
+
+							// Compare the dates
+							if ($date1 > $date2 && $date1 < $date3) {
+								//PMS within 15 days 
+								$pms_due++;	
+							} elseif ($date1 > $date3) {
+								//PMS Date over
+								$pms_due++;	
+							} else {
+								// cool PMS
+								//$next_calib_date = '<span class="text-primary">'.$next_calib_date.'</span>';
+							}
+						}//end if
+					}//end while
 				}//end if
 
 				$data[0] = $slno; 
 				$data[1] = $facility_name.' (Total Asset: '.$total_asset.')';
 				$data[2] = $pms_due;
-				$data[3] = $pms_done;
-				$data[4] = $pms_wip;
+				$data[3] = $pms_planned;
+				$data[4] = $pms_done;
 
 				array_push($mainData, $data);
 				$slno++;

@@ -19,7 +19,7 @@ $('#myForm').on("submit", function(){
     $user_name = $('#user_name').val();
     $user_type_id = $('#user_type_id').val();
     $facility_id = $('#facility_id').val();
-    $hospital_id = 2;//$('#hospital_id').val();
+    $hospital_id = 1;//$('#hospital_id').val();
     $user_mobile = $('#user_mobile').val();
     $user_phone = $('#user_phone').val();
     $user_email = $('#user_email').val();
