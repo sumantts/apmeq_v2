@@ -280,7 +280,7 @@
                                     <select class="form-control" name="pms_status" id="pms_status" required > 
                                         <option value="0">Planned</option>
                                         <option value="1">Done</option>
-                                        <option value="2">Work in Progress</option> 
+                                        <!-- <option value="2">Work in Progress</option>  -->
                                     </select>
                                 </div>
                             </div>

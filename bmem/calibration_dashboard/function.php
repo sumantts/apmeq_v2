@@ -133,12 +133,14 @@
 				$result_5 = $mysqli->query($sql_5);
 				if ($result_5->num_rows > 0) {			
 					while($row_5 = $result_5->fetch_array()){
+						$planned_due_done = 0;
 						$asset_id = $row_5['asset_id'];
 						$last_date_of_calibration = $row_5['last_date_of_calibration'];
 						$frequency_of_calibration = $row_5['frequency_of_calibration'];
 						
 						$total_asset++;
 
+						# Planned Count
 						$sql_3 = "SELECT * FROM calib_info WHERE asset_id = '" .$asset_id. "' ORDER BY calib_id DESC LIMIT 0,1";
 						$result_3 = $mysqli->query($sql_3);
 						if ($result_3->num_rows > 0) {	
@@ -147,71 +149,87 @@
 
 							if($pms_status == 0){
 								$pms_planned++;	
-							}else if($pms_status == 1){
-								$pms_done++;	
-							}else if($pms_status == 2){
-								//$pms_wip++;	
-							}else{}
+								$planned_due_done = 1;
+							}
 						}else{
 							//$pms_due++;
 						}//end if
 
-						$calib_frequency = '';
-						$next_calib_date = ''; 
-						# Calibration Frequency Calculation
 
-						if($last_date_of_calibration != '0000-00-00' && $frequency_of_calibration != ''){
-							$last_date_of_calibration1 = date('Y-m-d', strtotime($last_date_of_calibration));
-							$next_calib_date = $last_date_of_calibration1;
-							$date = new DateTime($last_date_of_calibration1);				
-							
-							$calib_freq_str = explode("|", $frequency_of_calibration);
-							if($calib_freq_str[0] > 0){
-								$y = $calib_freq_str[0];
-								$calib_frequency .= 'Each '.$y.' Year(s)';
-								$next_calib_date = date('d-F-Y', strtotime('+'.$y.' year', strtotime($next_calib_date)));
-							}
-							if($calib_freq_str[1] > 0){
-								$m = $calib_freq_str[1];
-								if($calib_frequency != ''){
-									$calib_frequency .= ' '.$m.' Month(s)';
-								}else{
-									$calib_frequency .= 'Each '.$m.' Month(s)';
+						# Due Count 
+						if($planned_due_done == 0){
+							$calib_frequency = '';
+							$next_calib_date = ''; 
+							# Calibration Frequency Calculation
+
+							if($last_date_of_calibration != '0000-00-00' && $frequency_of_calibration != ''){
+								$last_date_of_calibration1 = date('Y-m-d', strtotime($last_date_of_calibration));
+								$next_calib_date = $last_date_of_calibration1;
+								$date = new DateTime($last_date_of_calibration1);				
+								
+								$calib_freq_str = explode("|", $frequency_of_calibration);
+								if($calib_freq_str[0] > 0){
+									$y = $calib_freq_str[0];
+									$calib_frequency .= 'Each '.$y.' Year(s)';
+									$next_calib_date = date('d-F-Y', strtotime('+'.$y.' year', strtotime($next_calib_date)));
 								}
-								$next_calib_date = date('d-F-Y', strtotime('+'.$m.' month', strtotime($next_calib_date)));
-							}
-							if($calib_freq_str[2] > 0){
-								$d = $calib_freq_str[2];
-								if($calib_frequency != ''){
-									$calib_frequency .= ' '.$d.' Day(s)';
-								}else{
-									$calib_frequency .= 'Each '.$d.' Day(s)';
+								if($calib_freq_str[1] > 0){
+									$m = $calib_freq_str[1];
+									if($calib_frequency != ''){
+										$calib_frequency .= ' '.$m.' Month(s)';
+									}else{
+										$calib_frequency .= 'Each '.$m.' Month(s)';
+									}
+									$next_calib_date = date('d-F-Y', strtotime('+'.$m.' month', strtotime($next_calib_date)));
 								}
-								$next_calib_date = date('d-F-Y', strtotime('+'.$d.' day', strtotime($next_calib_date)));
-							}  
-						}
-						
+								if($calib_freq_str[2] > 0){
+									$d = $calib_freq_str[2];
+									if($calib_frequency != ''){
+										$calib_frequency .= ' '.$d.' Day(s)';
+									}else{
+										$calib_frequency .= 'Each '.$d.' Day(s)';
+									}
+									$next_calib_date = date('d-F-Y', strtotime('+'.$d.' day', strtotime($next_calib_date)));
+								}  
+							}							
 
-						if($next_calib_date != ''){					
-							$fifteen_day_prev = date('Y-m-d H:i:s',(strtotime ( '-15 day' , strtotime($next_calib_date))));
-							
-							// Create two DateTime objects
-							$today = date('Y-m-d');
-							$date1 = new DateTime($today);
-							$date2 = new DateTime($fifteen_day_prev);
-							$date3 = new DateTime($next_calib_date);
+							if($next_calib_date != ''){					
+								$fifteen_day_prev = date('Y-m-d H:i:s',(strtotime ( '-15 day' , strtotime($next_calib_date))));
+								
+								// Create two DateTime objects
+								$today = date('Y-m-d');
+								$date1 = new DateTime($today);
+								$date2 = new DateTime($fifteen_day_prev);
+								$date3 = new DateTime($next_calib_date);
 
+								// Compare the dates
+								if ($date1 > $date2 && $date1 < $date3) {
+									//PMS within 15 days 
+									$pms_due++;	
+									$planned_due_done = 2;
+								} elseif ($date1 > $date3) {
+									//PMS Date over
+									$pms_due++;	
+									$planned_due_done = 2;
+								} else {
+									// cool PMS
+									//$next_calib_date = '<span class="text-primary">'.$next_calib_date.'</span>';
+								}
+							}//end if
+						}//end if 
 
-							// Compare the dates
-							if ($date1 > $date2 && $date1 < $date3) {
-								//PMS within 15 days 
-								$pms_due++;	
-							} elseif ($date1 > $date3) {
-								//PMS Date over
-								$pms_due++;	
-							} else {
-								// cool PMS
-								//$next_calib_date = '<span class="text-primary">'.$next_calib_date.'</span>';
+						# Done Count
+						if($planned_due_done == 0){
+							$sql_4 = "SELECT * FROM pms_info WHERE asset_id = '" .$asset_id. "' ORDER BY pms_id DESC LIMIT 0,1";
+							$result_4 = $mysqli->query($sql_4);
+							if ($result_4->num_rows > 0) {	
+								$row_4 = $result_4->fetch_array();
+								$pms_status = $row_4['pms_status'];
+								
+								if($pms_status == 1){
+									$pms_done++;	
+									$planned_due_done = 3;
+								}
 							}
 						}//end if
 					}//end while
@@ -353,11 +371,11 @@
 				}else{
 					$updated_text .= '<option value="1">Done</option>';
 				}
-				if($pms_status == 2){
+				/*if($pms_status == 2){
 					$updated_text .= '<option value="2" selected="selected">WIP</option>';
 				}else{
 					$updated_text .= '<option value="2">WIP</option>';
-				}
+				}*/
 				$updated_text .= '</select>'; 
 
 				

@@ -131,14 +131,16 @@
 
 				$sql_5 = "SELECT asset_id, last_date_of_pms, frequency_of_pms FROM asset_details WHERE facility_id = '" .$facility_id. "'";
 				$result_5 = $mysqli->query($sql_5);
-				if ($result_5->num_rows > 0) {			
+				if ($result_5->num_rows > 0) {
 					while($row_5 = $result_5->fetch_array()){
+						$planned_due_done = 0;
 						$asset_id = $row_5['asset_id'];
 						$last_date_of_pms = $row_5['last_date_of_pms'];
 						$frequency_of_pms = $row_5['frequency_of_pms'];
 
 						$total_asset++;
 
+						# Planned Count
 						$sql_3 = "SELECT * FROM pms_info WHERE asset_id = '" .$asset_id. "' ORDER BY pms_id DESC LIMIT 0,1";
 						$result_3 = $mysqli->query($sql_3);
 						if ($result_3->num_rows > 0) {	
@@ -147,72 +149,86 @@
 
 							if($pms_status == 0){
 								$pms_planned++;	
-							}else if($pms_status == 1){
-								$pms_done++;	
-							}else if($pms_status == 2){
-								//$pms_wip++;	
-							}else{}
-						}else{
-							//$pms_due++;
-						}//end if 
+								$planned_due_done = 1;
+							}
+						}//end if
 
-						$pms_frequency = '';
-						$next_pms_date = '';
-						# PMS Frequency Calculation
+						# Due Count 
+						if($planned_due_done == 0){
+							$pms_frequency = '';
+							$next_pms_date = '';
+							# PMS Frequency Calculation
 
-						if($last_date_of_pms != '0000-00-00' && $frequency_of_pms != ''){
-							$last_date_of_pms1 = date('Y-m-d', strtotime($last_date_of_pms));
-							$next_pms_date = $last_date_of_pms1;
-							$date = new DateTime($last_date_of_pms1); 
+							if($last_date_of_pms != '0000-00-00' && $frequency_of_pms != ''){
+								$last_date_of_pms1 = date('Y-m-d', strtotime($last_date_of_pms));
+								$next_pms_date = $last_date_of_pms1;
+								$date = new DateTime($last_date_of_pms1); 
+									
+								$pms_freq_str = explode("|", $frequency_of_pms);
+								if($pms_freq_str[0] > 0){
+									$y1 = $pms_freq_str[0];
+									$pms_frequency .= 'Each '.$y1.' Year(s)';
+									$next_pms_date = date('d-F-Y', strtotime('+'.$y1.' year', strtotime($next_pms_date)));
+								}
+								if($pms_freq_str[1] > 0){
+									$m1 = $pms_freq_str[1];
+									if($pms_frequency != ''){
+										$pms_frequency .= ' '.$m1.' Month(s)';
+									}else{
+										$pms_frequency .= 'Each '.$m1.' Month(s)';
+									}
+									$next_pms_date = date('d-F-Y', strtotime('+'.$m1.' month', strtotime($next_pms_date)));
+								}
+								if($pms_freq_str[2] > 0){
+									$d1 = $pms_freq_str[2];
+									if($pms_frequency != ''){
+										$pms_frequency .= ' '.$d1.' Day(s)';
+									}else{
+										$pms_frequency .= 'Each '.$d1.' Day(s)';
+									}
+									$next_pms_date = date('d-F-Y', strtotime('+'.$d1.' day', strtotime($next_pms_date)));
+								} 
+							}//ennd if
+
+							if($next_pms_date != ''){					
+								$fifteen_day_prev = date('Y-m-d H:i:s',(strtotime ( '-15 day' , strtotime($next_pms_date))));
 								
-							$pms_freq_str = explode("|", $frequency_of_pms);
-							if($pms_freq_str[0] > 0){
-								$y1 = $pms_freq_str[0];
-								$pms_frequency .= 'Each '.$y1.' Year(s)';
-								$next_pms_date = date('d-F-Y', strtotime('+'.$y1.' year', strtotime($next_pms_date)));
-							}
-							if($pms_freq_str[1] > 0){
-								$m1 = $pms_freq_str[1];
-								if($pms_frequency != ''){
-									$pms_frequency .= ' '.$m1.' Month(s)';
-								}else{
-									$pms_frequency .= 'Each '.$m1.' Month(s)';
+								// Create two DateTime objects
+								$today = date('Y-m-d');
+								$date1 = strtotime($today);
+								$date2 = strtotime($fifteen_day_prev);
+								$date3 = strtotime($next_pms_date);
+								
+								// Compare the dates
+								if ($date1 > $date2) {
+									//PMS within 15 days 
+									$pms_due++;
+									$planned_due_done = 2;
+								} elseif ($date1 > $date3) {
+									//PMS Date over 
+									$pms_due++;
+									$planned_due_done = 2;
+								} else {
+									// cool PMS
+									//$next_pms_date = '<span class="text-primary">'.$next_pms_date.'</span>';
 								}
-								$next_pms_date = date('d-F-Y', strtotime('+'.$m1.' month', strtotime($next_pms_date)));
-							}
-							if($pms_freq_str[2] > 0){
-								$d1 = $pms_freq_str[2];
-								if($pms_frequency != ''){
-									$pms_frequency .= ' '.$d1.' Day(s)';
-								}else{
-									$pms_frequency .= 'Each '.$d1.' Day(s)';
-								}
-								$next_pms_date = date('d-F-Y', strtotime('+'.$d1.' day', strtotime($next_pms_date)));
-							} 
-						}//ennd if
+							}//end if 
+						}//end if
 
-						if($next_pms_date != ''){					
-							$fifteen_day_prev = date('Y-m-d H:i:s',(strtotime ( '-15 day' , strtotime($next_pms_date))));
-							
-							// Create two DateTime objects
-							$today = date('Y-m-d');
-							$date1 = strtotime($today);
-							$date2 = strtotime($fifteen_day_prev);
-							$date3 = strtotime($next_pms_date);
-							
-							// Compare the dates
-							if ($date1 > $date2) {
-								//PMS within 15 days 
-								$pms_due++;
-							} elseif ($date1 > $date3) {
-								//PMS Date over 
-								$pms_due++;
-							} else {
-								// cool PMS
-								//$next_pms_date = '<span class="text-primary">'.$next_pms_date.'</span>';
+						# Done Count
+						if($planned_due_done == 0){
+							$sql_4 = "SELECT * FROM pms_info WHERE asset_id = '" .$asset_id. "' ORDER BY pms_id DESC LIMIT 0,1";
+							$result_4 = $mysqli->query($sql_4);
+							if ($result_4->num_rows > 0) {	
+								$row_4 = $result_4->fetch_array();
+								$pms_status = $row_4['pms_status'];
+								
+								if($pms_status == 1){
+									$pms_done++;	
+									$planned_due_done = 3;
+								}
 							}
-						}//end if 
-						
+						}//end if
 					}//end while
 				}//end if
 
@@ -352,11 +368,11 @@
 				}else{
 					$updated_text .= '<option value="1">Done</option>';
 				}
-				if($pms_status == 2){
+				/*if($pms_status == 2){
 					$updated_text .= '<option value="2" selected="selected">WIP</option>';
 				}else{
 					$updated_text .= '<option value="2">WIP</option>';
-				}
+				}*/
 				$updated_text .= '</select>'; 
 
 				

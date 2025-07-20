@@ -184,7 +184,7 @@ include('common/head.php');
                                         <option value="">Select</option>
                                         <option value="0">Planned</option>
                                         <option value="1">Done</option> 
-                                        <option value="2">Work in progress</option> 
+                                        <!-- <option value="2">Work in progress</option>  -->
                                     </select> 
                                 </div>      
 

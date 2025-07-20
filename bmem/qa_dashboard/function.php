@@ -133,11 +133,13 @@
 				$result_5 = $mysqli->query($sql_5);
 				if ($result_5->num_rows > 0) {			
 					while($row_5 = $result_5->fetch_array()){
+						$planned_due_done = 0;
 						$asset_id = $row_5['asset_id'];
 						$last_date_of_qa = $row_5['qa_due_date'];
 						$frequency_of_qa = $row_5['frequency_of_qa'];
 						$total_asset++;
 
+						# Planned Count
 						$sql_3 = "SELECT * FROM qa_info WHERE asset_id = '" .$asset_id. "' ORDER BY qa_id DESC LIMIT 0,1";
 						$result_3 = $mysqli->query($sql_3);
 						if ($result_3->num_rows > 0) {	
@@ -146,72 +148,87 @@
 
 							if($pms_status == 0){
 								$pms_planned++;	
-							}else if($pms_status == 1){
-								$pms_done++;	
-							}else if($pms_status == 2){
-								//$pms_wip++;	
-							}else{}
+								$planned_due_done = 1;
+							}
 						}else{
 							//$pms_due++;
 						}//end if
 
 
-						$qa_frequency = '';
-						$next_qa_date = ''; 
-						# QA Frequency Calculation
+						# Due Count 
+						if($planned_due_done == 0){
+							$qa_frequency = '';
+							$next_qa_date = ''; 
+							# QA Frequency Calculation
 
-						if($last_date_of_qa != '0000-00-00' && $frequency_of_qa != ''){
-							$last_date_of_qa1 = date('Y-m-d', strtotime($last_date_of_qa));
-							$next_qa_date = $last_date_of_qa1;
-							$date = new DateTime($last_date_of_qa1); 
+							if($last_date_of_qa != '0000-00-00' && $frequency_of_qa != ''){
+								$last_date_of_qa1 = date('Y-m-d', strtotime($last_date_of_qa));
+								$next_qa_date = $last_date_of_qa1;
+								$date = new DateTime($last_date_of_qa1); 
+									
+								$qa_freq_str = explode("|", $frequency_of_qa);
+								if($qa_freq_str[0] > 0){
+									$y1 = $qa_freq_str[0];
+									$qa_frequency .= 'Each '.$y1.' Year(s)';
+									$next_qa_date = date('d-F-Y', strtotime('+'.$y1.' year', strtotime($next_qa_date)));
+								}
+								if($qa_freq_str[1] > 0){
+									$m1 = $qa_freq_str[1];
+									if($qa_frequency != ''){
+										$qa_frequency .= ' '.$m1.' Month(s)';
+									}else{
+										$qa_frequency .= 'Each '.$m1.' Month(s)';
+									}
+									$next_qa_date = date('d-F-Y', strtotime('+'.$m1.' month', strtotime($next_qa_date)));
+								}
+								if($qa_freq_str[2] > 0){
+									$d1 = $qa_freq_str[2];
+									if($qa_frequency != ''){
+										$qa_frequency .= ' '.$d1.' Day(s)';
+									}else{
+										$qa_frequency .= 'Each '.$d1.' Day(s)';
+									}
+									$next_qa_date = date('d-F-Y', strtotime('+'.$d1.' day', strtotime($next_qa_date)));
+								}
+							}//ennd if
+
+							if($next_qa_date != ''){					
+								$fifteen_day_prev = date('Y-m-d H:i:s',(strtotime ( '-15 day' , strtotime($next_qa_date))));
 								
-							$qa_freq_str = explode("|", $frequency_of_qa);
-							if($qa_freq_str[0] > 0){
-								$y1 = $qa_freq_str[0];
-								$qa_frequency .= 'Each '.$y1.' Year(s)';
-								$next_qa_date = date('d-F-Y', strtotime('+'.$y1.' year', strtotime($next_qa_date)));
-							}
-							if($qa_freq_str[1] > 0){
-								$m1 = $qa_freq_str[1];
-								if($qa_frequency != ''){
-									$qa_frequency .= ' '.$m1.' Month(s)';
-								}else{
-									$qa_frequency .= 'Each '.$m1.' Month(s)';
-								}
-								$next_qa_date = date('d-F-Y', strtotime('+'.$m1.' month', strtotime($next_qa_date)));
-							}
-							if($qa_freq_str[2] > 0){
-								$d1 = $qa_freq_str[2];
-								if($qa_frequency != ''){
-									$qa_frequency .= ' '.$d1.' Day(s)';
-								}else{
-									$qa_frequency .= 'Each '.$d1.' Day(s)';
-								}
-								$next_qa_date = date('d-F-Y', strtotime('+'.$d1.' day', strtotime($next_qa_date)));
-							}
-						}//ennd if
+								// Create two DateTime objects
+								$today = date('Y-m-d');
+								$date1 = new DateTime($today);
+								$date2 = new DateTime($fifteen_day_prev);
+								$date3 = new DateTime($next_qa_date);
 
-						if($next_qa_date != ''){					
-							$fifteen_day_prev = date('Y-m-d H:i:s',(strtotime ( '-15 day' , strtotime($next_qa_date))));
-							
-							// Create two DateTime objects
-							$today = date('Y-m-d');
-							$date1 = new DateTime($today);
-							$date2 = new DateTime($fifteen_day_prev);
-							$date3 = new DateTime($next_qa_date);
+								// Compare the dates
+								if ($date1 > $date2 && $date1 < $date3) {
+									//qa within 15 days
+									$pms_due++;
+								} elseif ($date1 > $date3) {
+									//qa Date over
+									$pms_due++;
+								} else {
+									// cool qa
+									//$next_qa_date = '<span class="text-primary">'.$next_qa_date.'</span>';
+								}
+							}//end if  
+						}//end if 
 
-							// Compare the dates
-							if ($date1 > $date2 && $date1 < $date3) {
-								//qa within 15 days
-								$pms_due++;
-							} elseif ($date1 > $date3) {
-								//qa Date over
-								$pms_due++;
-							} else {
-								// cool qa
-								//$next_qa_date = '<span class="text-primary">'.$next_qa_date.'</span>';
+						# Done Count
+						if($planned_due_done == 0){
+							$sql_4 = "SELECT * FROM pms_info WHERE asset_id = '" .$asset_id. "' ORDER BY pms_id DESC LIMIT 0,1";
+							$result_4 = $mysqli->query($sql_4);
+							if ($result_4->num_rows > 0) {	
+								$row_4 = $result_4->fetch_array();
+								$pms_status = $row_4['pms_status'];
+								
+								if($pms_status == 1){
+									$pms_done++;	
+									$planned_due_done = 3;
+								}
 							}
-						}//end if  
+						}//end if
 					}//end while
 				}//end if
 
@@ -351,11 +368,11 @@
 				}else{
 					$updated_text .= '<option value="1">Done</option>';
 				}
-				if($pms_status == 2){
+				/*if($pms_status == 2){
 					$updated_text .= '<option value="2" selected="selected">WIP</option>';
 				}else{
 					$updated_text .= '<option value="2">WIP</option>';
-				}
+				}*/
 				$updated_text .= '</select>'; 
 
 				

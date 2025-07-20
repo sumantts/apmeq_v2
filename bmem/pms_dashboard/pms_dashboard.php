@@ -184,7 +184,7 @@ include('common/head.php');
                                         <option value="">Select</option>
                                         <option value="0">Planned</option>
                                         <option value="1">Done</option> 
-                                        <option value="2">Work in progress</option> 
+                                        <!-- <option value="2">Work in progress</option>  -->
                                     </select> 
                                 </div>      
 
@@ -262,7 +262,7 @@ include('common/head.php');
                                         <th>PMS planned date</th>
                                         <th>Assign Service provider </th>                                         
                                         <th>View report</th>
-                                        <th>Status<br>(Planned/Done/WIP)</th> 
+                                        <th>Status<br>(Planned/Done)</th> 
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -285,7 +285,7 @@ include('common/head.php');
                                         <th>PMS planned date</th>
                                         <th>Assign Service provider </th>                                         
                                         <th>View report</th>
-                                        <th>Status<br>(Planned/Done/WIP)</th>  
+                                        <th>Status<br>(Planned/Done)</th>  
                                     </tr>
                                 </tfoot>
                             </table>
