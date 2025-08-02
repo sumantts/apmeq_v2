@@ -219,20 +219,9 @@
 						}//end if 
 
 						# Done Count
-						if($planned_due_done == 0){
+						if($planned_due_done == 0 && $last_date_of_calibration != '0000-00-00'){
 							$pms_done++;	
-							$planned_due_done = 3;
-							/*$sql_4 = "SELECT * FROM calib_info WHERE asset_id = '" .$asset_id. "' ORDER BY calib_id DESC LIMIT 0,1";
-							$result_4 = $mysqli->query($sql_4);
-							if ($result_4->num_rows > 0) {	
-								$row_4 = $result_4->fetch_array();
-								$pms_status = $row_4['pms_status'];
-								
-								if($pms_status == 1){
-									$pms_done++;	
-									$planned_due_done = 3;
-								}
-							}*/
+							$planned_due_done = 3; 
 						}//end if
 					}//end while
 				}//end if
@@ -429,9 +418,22 @@
 				
 				//$data[8] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$author_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$author_id.")'></i></a>";
 				
+				if($PMSStatus != ''){
+					$sql_3 = "SELECT * FROM calib_info WHERE asset_id = '" .$asset_id. "' ORDER BY calib_id DESC LIMIT 0,1";
+					$result_3 = $mysqli->query($sql_3);
+					if ($result_3->num_rows > 0) {	
+						$row_3 = $result_3->fetch_array();
+						$pms_status = $row_3['pms_status'];
 
-				array_push($mainData, $data);
-				$slno++;
+						if($pms_status == $PMSStatus){
+							array_push($mainData, $data);
+							$slno++;
+						}
+					}
+				}else{
+					array_push($mainData, $data);
+					$slno++;
+				}
 			}
 		} else {
 			$status = false;
@@ -562,9 +564,6 @@
 
 							# Done Count
 							if($planned_due_done == 0){
-								$pms_done++;	
-								$planned_due_done = 3; 
-
 								$data[0] = $slno; 
 								$data[1] = '-';//$calib_info_id;
 								$data[2] = $facility_name;
@@ -587,6 +586,9 @@
 
 								// check it exists in pms table ot not
 								if($available_in_pms == false && $last_date_of_calibration != '0000-00-00'){
+									$pms_done++;	
+									$planned_due_done = 3; 
+
 									array_push($mainData, $data);
 								}//end if
 								$slno++;
