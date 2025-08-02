@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jun 17, 2025 at 07:37 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- Host: localhost:3306
+-- Generation Time: Jul 22, 2025 at 09:42 AM
+-- Server version: 10.11.11-MariaDB
+-- PHP Version: 8.3.23
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -70,14 +70,17 @@ CREATE TABLE `asset_details` (
 --
 
 INSERT INTO `asset_details` (`asset_id`, `facility_id`, `department_id`, `equipment_name`, `asset_make`, `asset_model`, `slerial_number`, `asset_specifiaction`, `date_of_installation`, `ins_certificate`, `asset_supplied_by`, `value_of_the_asset`, `total_year_in_service`, `technology`, `asset_status`, `asset_class`, `device_group`, `last_date_of_calibration`, `calibration_attachment`, `frequency_of_calibration`, `last_date_of_pms`, `pms_attachment`, `frequency_of_pms`, `qa_due_date`, `frequency_of_qa`, `qa_attachment`, `warranty_last_date`, `amc_yes_no`, `amc_last_date`, `cmc_yes_no`, `cmc_last_date`, `asset_code`, `sp_details`, `reloc_initiated`, `row_status`) VALUES
-(14, 3, '[\"1\"]', 'USG', 'GE', 'Sono View ', '76541234', 'CW, Linear probe, Convex Probe, cardiac probe, and micro convex probe', '2023-10-01', '', 'GE', '2000000', '+1 years 5 months', 2, 1, 2, 1, '2025-01-01', '', '1||', '0000-00-00', '', '1||', '2025-02-01', '', '', '2024-10-03', 0, '2025-01-01', 0, '2025-01-01', '000300014', '8910420169', 0, 1),
-(24, 7, '[\"6\"]', 'Surgical Diathermy', 'Earbe', 'Earbedia', 'DiaT123456', '', '2025-03-01', '', '', '', '+0 years 0 months', 2, 1, 1, 7, '2025-03-01', '', '1||', '0000-00-00', '', '|6|', '2025-02-01', '', '', '2027-02-28', 2, '2025-01-01', 2, '2025-01-01', '000700024', '', 0, 1),
-(25, 7, '[\"3\"]', 'Multichannel Monitor', 'Philips', 'MX450', '', '', '2024-02-25', '', 'Marc Medical', '', '+1 years 0 months', 2, 1, 1, 4, '2024-02-28', '', '1|0|0', '2024-02-28', '', '|11|0', '2025-02-01', '', '', '2025-03-20', 0, '2025-01-01', 0, '2025-01-01', '000700025', '', 0, 1),
-(28, 1, '[\"1\"]', 'ECG', 'BPL', 'BPL ECG', 'BPL123456', '', '2024-01-01', '', 'BPL', '80000', '+1 years 2 months', 2, 1, 2, 4, '2024-12-01', '', '|6|', '2025-03-29', '', '|3|', '2025-02-01', '', '', '2025-01-02', 0, '2025-01-01', 0, '2025-01-01', '000100028', '8910420169', 0, 1),
-(29, 1, '[\"1\"]', 'Incubator', 'Phoneix', 'Incub', 'Phn123456', '', '2025-01-01', '', 'eastermedutech', '75000', '0 years, 5 months, 7 days', 2, 1, 1, 5, '2025-06-17', '', '|2|', '2025-06-15', '', '|1|', '2025-02-01', '', '', '2025-12-31', 1, '2025-01-01', 1, '2025-01-01', '000100029', '8910420169', 0, 1),
-(30, 8, '[\"5\"]', 'Multipara monitor', 'BPL', 'MPM', 'MPM123456', '', '2024-03-19', '', 'BPL', '86000', '+1 years 0 months', 2, 1, 2, 4, '2025-04-03', '', '|6|', '2024-11-19', '', '|3|', '2025-02-01', '', '', '2025-03-19', 0, '2025-01-01', 0, '2025-01-01', '000800030', '8910420169', 0, 1),
-(31, 8, '[\"3\"]', 'Difbrilator', 'Philips', 'Difibmax', 'Difib12456', '', '2023-12-06', '', 'Philips', '200000', '+1 years 3 months', 2, 1, 1, 5, '2023-12-20', '[]', '1|1|1', '2025-04-03', '[]', '1|1|20', '2025-04-03', '|2|', '[]', '2024-12-12', 2, '2025-01-01', 2, '2025-01-01', '000800031', '8910420169', 0, 1),
-(34, 1, '[\"1\"]', 'Radiant Warmer 2025', 'NAT Steel', 'Difibmax', 'Phn123456', 'NA', '2025-04-05', '', 'NAT steel', '450000', '0 years, 1 months, 0 days', 2, 1, 2, 5, '2025-04-05', '', '1||', '2025-04-05', '', '1||', '2025-04-05', '1||', '', '2026-02-05', 0, '0000-00-00', 0, '0000-00-00', '000100034', 'ok', 0, 1);
+(1, 1, '[\"2\"]', 'Radiant Warmer', 'NAT Steel', 'Difibmax', '12345678', 'NA', '2025-01-01', '', 'NAT steel', '450000', '0 years, 5 months, 29 days', 2, 1, 2, 1, '2025-07-21', '', '|3|', '2025-06-29', '', '|3|', '2025-01-01', '|3|', '', '2026-01-01', 1, '2025-06-01', 2, '0000-00-00', '000100001', 'NAT Steel Ltd.', 1, 1),
+(2, 1, '[\"2\"]', 'Incubator', 'Phoneix', 'Incub', 'Phn123456', 'NA', '2025-02-01', '', 'Philips', '75000', '0 years, 4 months, 28 days', 2, 1, 2, 1, '2025-07-21', '', '|2|', '2025-02-01', '', '|2|', '2025-02-01', '|2|', '', '2026-02-01', 2, '0000-00-00', 2, '0000-00-00', '000100002', 'Phoneix Pvt. Ltd.', 1, 1),
+(3, 1, '[\"2\"]', 'Multipara monitor', 'Philips', 'Pro', '12345678', 'NA', '2025-03-01', '', 'Philips', '10000', '0 years, 4 months, 0 days', 2, 1, 2, 1, '2025-03-01', '', '|2|', '2025-07-16', '', '|2|', '2025-03-01', '|2|', '', '2026-03-01', 2, '0000-00-00', 2, '0000-00-00', '000100003', 'Philips Pvt. Ltd.', 1, 1),
+(4, 2, '[\"2\"]', 'ECG', 'BPL', 'Cardiart', '123123', 'NA', '2023-02-10', '', 'Bhogilal', '25000', '2 years, 4 months, 25 days', 2, 1, 2, 0, '2024-02-02', '', '1|0|0', '2024-02-02', '', '0|4|0', '0000-00-00', '', '', '2024-02-10', 0, '0000-00-00', 0, '1970-01-01', '000200004', '8910420169', 1, 1),
+(5, 2, '[\"2\"]', 'BP Machine', 'Omron', 'OMBP', '1245', 'NA', '2024-02-10', '', 'Bhogilal', '3000', '+1 years 4 months', 2, 1, 2, 0, '2025-02-02', '', '1|0|0', '2025-02-02', '', '0|3|0', '1970-01-01', '', '', '2025-02-10', 0, '0000-00-00', 0, '1970-01-01', '000200005', '8910420169', 1, 1),
+(6, 3, '[\"2\"]', 'Nebulizer', 'Max', 'M2', '1001', 'NA', '2025-01-01', '', 'Bhogilal', '2500', '0 years, 6 months, 6 days', 2, 1, 2, 1, '2025-01-01', '', '1|0|0', '2025-07-21', '', '0|3|0', '1970-01-01', '', '', '2025-07-01', 0, '0000-00-00', 0, '1970-01-01', '000300006', '8910420169', 1, 1),
+(7, 3, '[\"2\"]', 'Difibrilator', 'Phillips', 'Difib', 'AB1234', 'NA', '2023-01-01', '', 'Bhogilal', '600000', '+2 years 6 months', 2, 1, 1, 0, '2024-01-01', '', '0|6|0', '2025-06-01', '', '0|6|0', '1970-01-01', '', '', '2024-01-01', 0, '0000-00-00', 0, '1970-01-01', '000300007', '8910420169', 1, 1),
+(8, 3, '[\"1\"]', 'X-ray', 'ME xray', 'Xray123', 'ME123456', 'NA', '2023-09-01', '', 'Bhogilal', '300000', '1 years, 10 months, 7 days', 2, 1, 1, 0, '2025-01-20', '', '0|6|0', '2025-04-20', '', '0|3|0', '2025-01-01', '1|0|0', '', '2024-09-01', 0, '0000-00-00', 0, '1970-01-01', '000300008', '8910420169', 1, 1),
+(9, 2, '[\"3\"]', 'X-ray', 'PHILIPS', '300mA', 'LM200i', 'N.A', '2024-01-01', '', 'Eastern Meditech', '800000', '1 years, 6 months, 22 days', 2, 1, 1, 3, '2024-01-01', '', '1||', '2024-01-01', '', '|6|', '2024-02-15', '1||', '', '2025-01-31', 0, '0000-00-00', 0, '0000-00-00', '000200009', '8910420169', 1, 1),
+(10, 3, '[\"1\"]', 'Mamo graphy', 'PHILIPS', 'Mamo 1', '121245', '', '2024-11-21', '', 'Eastern Meditech', '100000', '0 years, 8 months, 2 days', 2, 1, 1, 3, '2025-01-01', '', '1||', '2025-02-04', '', '|6|', '2025-07-21', '|6|', '', '2025-11-21', 0, '0000-00-00', 0, '0000-00-00', '000300010', '8910420169', 1, 1),
+(11, 2, '[\"2\"]', 'C-ARM', 'BPL', 'C-ARM', '102354', '', '2024-01-01', '', 'Eastern Meditech', '1500000', '1 years, 6 months, 22 days', 2, 1, 1, 3, '2025-06-21', '', '|6|', '2025-06-21', '', '|6|0', '2025-07-21', '|6|', '', '2025-07-21', 0, '0000-00-00', 0, '0000-00-00', '000200011', '', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -163,6 +166,18 @@ CREATE TABLE `calib_info` (
   `pms_data_updated` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `calib_info`
+--
+
+INSERT INTO `calib_info` (`calib_id`, `calib_info_id`, `asset_id`, `asset_code`, `facility_id`, `facility_code`, `department_id`, `device_group`, `asset_class`, `equipment_name`, `equipment_make`, `equipment_model`, `equipment_sl_no`, `pms_due_date`, `supplied_by`, `sp_details`, `service_provider_details`, `pms_planned_date`, `pms_report_attached`, `link_generated_by`, `link_generate_time`, `row_status`, `pms_status`, `pms_sp_status`, `assign_to_sp_engg`, `pms_data_updated`) VALUES
+(1, '0001', 7, '000300007', 3, '0003', '2', 0, 1, 'Difibrilator', 'Phillips', 'Difib', 'AB1234', '2024-07-01', 'Bhogilal', '8910420169', '', '2025-07-05', '', 1, '2025-07-05 21:59:16', 2, 0, 0, 0, '2025-07-05 21:59:16'),
+(2, '0002', 8, '000300008', 3, '0003', '1', 0, 1, 'X-ray', 'ME xray', 'Xray123', 'ME123456', '2025-07-20', 'Bhogilal', '8910420169', '', '2025-07-09', '', 1, '2025-07-09 15:56:26', 2, 0, 0, 0, '2025-07-09 15:56:31'),
+(3, '0003', 3, '000100003', 1, '0001', '2', 1, 2, 'Multipara monitor', 'Philips', 'Pro', '12345678', '2025-05-01', 'Philips', 'Philips Pvt. Ltd.', '', '2025-07-16', '', 1, '2025-07-16 13:15:44', 2, 0, 0, 0, '2025-07-16 13:15:44'),
+(4, '0004', 2, '000100002', 1, '0001', '2', 1, 2, 'Incubator', 'Phoneix', 'Incub', 'Phn123456', '2025-04-01', 'Philips', 'Phoneix Pvt. Ltd.', '', '2025-07-21', '', 1, '2025-07-16 13:29:22', 2, 1, 0, 0, '2025-07-21 16:00:22'),
+(5, '0005', 1, '000100001', 1, '0001', '2', 1, 2, 'Radiant Warmer', 'NAT Steel', 'Difibmax', '12345678', '2025-04-29', 'NAT steel', 'NAT Steel Ltd.', '', '2025-07-21', '[\"687e165ec5e29.png\"]', 1, '2025-07-21 15:55:50', 2, 1, 0, 0, '2025-07-21 15:55:57'),
+(6, '0006', 9, '000200009', 2, '0002', '3', 3, 1, 'X-ray', 'PHILIPS', '300mA', 'LM200i', '2025-01-01', 'Eastern Meditech', '8910420169', '', '2025-07-21', '', 1, '2025-07-21 16:08:32', 2, 0, 0, 0, '2025-07-21 16:08:34');
+
 -- --------------------------------------------------------
 
 --
@@ -195,6 +210,21 @@ CREATE TABLE `call_log_register` (
   `cmc_last_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `call_log_register`
+--
+
+INSERT INTO `call_log_register` (`call_log_id`, `token_id`, `facility_id`, `asset_code`, `user_id`, `ticket_raiser_name`, `ticket_raiser_contact`, `issue_description`, `call_log_date_time`, `resolved_date_time`, `assign_to`, `eng_contact_no`, `uploaded_report`, `engineer_coment`, `call_log_comment`, `call_log_attach`, `status_by_engg`, `call_log_status`, `ticket_class`, `amc_yes_no`, `amc_last_date`, `cmc_yes_no`, `cmc_last_date`) VALUES
+(1, '0001', 1, '000100003', 1, 'Mr. Superadmin', '9733935161', 'Malfunction ', '2025-07-05 23:32:24', '0000-00-00 00:00:00', 0, '', '', '', '', '', 2, 0, 0, 2, '0000-00-00', 2, '0000-00-00'),
+(2, '0002', 2, '000200004', 26, 'Dr. Kamal', '8910420169', 'Paper roll jammed ', '2025-07-07 22:30:05', '0000-00-00 00:00:00', 0, '', '', '', '', '', 0, 0, 0, 0, '0000-00-00', 0, '1970-01-01'),
+(3, '0003', 3, '000300006', 26, 'Dr. Kamal', '8910420169', 'Vapour not creating ', '2025-07-07 22:35:11', '0000-00-00 00:00:00', 2, '9674194486', '', '', '', '', 0, 0, 0, 0, '0000-00-00', 0, '1970-01-01'),
+(4, '0004', 3, '000300008', 30, 'Hospital 1 admin', '9', 'Collimator issue ', '2025-07-15 17:10:54', '0000-00-00 00:00:00', 0, '', '', '', '', '', 0, 0, 0, 0, '0000-00-00', 0, '1970-01-01'),
+(5, '0005', 2, '000200009', 30, 'Hospital 1 admin', '9', 'Collimator issue ', '2025-07-15 17:12:55', '0000-00-00 00:00:00', 2, '123456789', '', '', 'done', '', 1, 0, 0, 0, '0000-00-00', 0, '0000-00-00'),
+(8, '0008', 2, '000200005', 1, 'Mr. Superadmin', '9733935161', 'issue', '2025-07-15 17:34:50', '0000-00-00 00:00:00', 0, '', '', '', '', '', 0, 0, 0, 0, '0000-00-00', 0, '1970-01-01'),
+(9, '0009', 2, '000200009', 30, 'Hospital 1 admin', '9', 'Issue ', '2025-07-15 17:39:43', '0000-00-00 00:00:00', 0, '', '', '', '', '', 0, 0, 0, 0, '0000-00-00', 0, '0000-00-00'),
+(10, '0010', 3, '000300007', 31, 'Hospital 2 admin', '10', 'Not charging ', '2025-07-15 17:42:44', '0000-00-00 00:00:00', 0, '', '', '', '', '', 0, 0, 0, 0, '0000-00-00', 0, '1970-01-01'),
+(11, '0011', 1, '000100003', 31, 'Hospital 2 admin', '10', 'Issue ', '2025-07-15 17:43:07', '0000-00-00 00:00:00', 0, '', '', '', '', '', 0, 0, 0, 2, '0000-00-00', 2, '0000-00-00');
+
 -- --------------------------------------------------------
 
 --
@@ -226,11 +256,9 @@ CREATE TABLE `department_list` (
 --
 
 INSERT INTO `department_list` (`department_id`, `department_name`, `department_code`, `department_status`) VALUES
-(1, 'SNCU', 'SNCU', 1),
-(3, 'CCU', 'CCU', 1),
-(4, 'Neonatal Care Unit', 'NICU', 1),
-(5, 'OPD', 'OPD', 1),
-(7, 'ot', 'ot', 1);
+(1, 'OPD', 'OPD', 1),
+(2, 'IPD', 'IPD', 1),
+(3, 'Radiology', 'Radiology', 1);
 
 -- --------------------------------------------------------
 
@@ -249,16 +277,10 @@ CREATE TABLE `device_group_list` (
 --
 
 INSERT INTO `device_group_list` (`device_group_id`, `device_name`, `device_status`) VALUES
-(1, 'Scanner', 1),
-(2, 'In vitro Diagnostics', 1),
-(3, 'Radiology', 1),
-(4, 'Monitors', 1),
-(5, 'Crtitical Care', 1),
-(6, 'Opthalmology', 1),
-(7, 'Surgical', 1),
-(8, 'Drug Delivery', 1),
-(9, 'Sterilization', 1),
-(10, 'Neonatal & Pediatric', 1);
+(1, 'Group A', 1),
+(2, 'Group B', 1),
+(3, 'Diagnostic', 1),
+(4, 'Therapeutic', 1);
 
 -- --------------------------------------------------------
 
@@ -285,14 +307,9 @@ CREATE TABLE `facility_master` (
 --
 
 INSERT INTO `facility_master` (`facility_id`, `hospital_id`, `department_id`, `facility_name`, `facility_type`, `facility_code`, `facility_address`, `nabh_accrediated`, `nabl_accrediated`, `contact_person`, `user_id`) VALUES
-(1, 2, '[\"5\",\"1\"]', 'Hospital 1', 1, '0001', 'Kolkata, 7123456', 1, 2, '+91 78901 32902', 1),
-(2, 2, '[\"4\",\"5\",\"1\"]', 'Hospital 2', 1, '0002', 'Kolkata, 711340', 1, 2, '+91 78901 32902', 1),
-(3, 2, '[\"5\",\"1\"]', 'Hospital 3', 1, '0003', 'Howrah', 2, 2, '+91 78901 32902', 1),
-(4, 2, '[\"5\",\"1\"]', 'Hospital 4', 1, '0004', 'Kolkata 45', 1, 1, '+91 78901 32902', 1),
-(5, 2, '[\"3\",\"4\"]', 'Jjb', 1, '0005', 'BG street ', 2, 2, '8910420169', 1),
-(6, 2, '[\"5\",\"1\"]', 'Surya Hospital', 1, '0006', 'Khandokosh, Burdwan', 2, 2, '7001917240', 1),
-(7, 2, '[\"3\",\"4\",\"5\",\"6\",\"1\"]', 'JK HOSPITAL', 1, '0007', 'Pradesh', 1, 2, 'S GHOSH', 1),
-(8, 2, '[\"3\",\"5\"]', 'Abcd ', 1, '0008', 'Bankura 722122', 2, 2, '8910420169', 1);
+(1, 0, '[\"1\"]', 'Uluberia Hospital', 1, '0001', 'Uluberia', 1, 1, 'suman jana', 1),
+(2, 0, '[\"2\",\"1\"]', 'Hospital 1', 1, '0002', 'Garia, WB', 1, 2, '7890132902', 1),
+(3, 0, '[\"2\",\"1\"]', 'Hospital 2', 1, '0003', 'Kolkata', 2, 2, '8910420169', 1);
 
 -- --------------------------------------------------------
 
@@ -313,10 +330,7 @@ CREATE TABLE `hospital_list` (
 --
 
 INSERT INTO `hospital_list` (`hospital_id`, `hospital_name`, `hospital_code`, `hospital_address`, `hospital_status`) VALUES
-(2, 'Bagnan Hospital', 'Bagnan_Hospital', '', 1),
-(3, 'Uluberia Hospital', 'Uluberia_Hospital', ' Uluberia', 1),
-(4, 'GGG hospital', 'GGG_hospital', 'kolkata', 1),
-(5, 'DP hospital', 'H001', ' Bauria, 711310', 1);
+(1, 'Uluberia Hospital', '', '', 1);
 
 -- --------------------------------------------------------
 
@@ -373,7 +387,12 @@ CREATE TABLE `pms_info` (
 --
 
 INSERT INTO `pms_info` (`pms_id`, `pms_info_id`, `asset_id`, `asset_code`, `facility_id`, `facility_code`, `department_id`, `device_group`, `asset_class`, `equipment_name`, `equipment_make`, `equipment_model`, `equipment_sl_no`, `pms_due_date`, `supplied_by`, `sp_details`, `service_provider_details`, `pms_planned_date`, `pms_report_attached`, `link_generated_by`, `link_generate_time`, `row_status`, `pms_status`, `pms_sp_status`, `assign_to_sp_engg`, `pms_data_updated`) VALUES
-(1, '0001', 29, '000100029', 1, '0001', '1', 5, 1, 'Incubator', 'Phoneix', 'Incub', 'Phn123456', '2025-06-01', 'eastermedutech', '8910420169', '', '2025-06-15', '', 1, '2025-06-15 10:40:44', 2, 1, 0, 0, '2025-06-15 10:40:44');
+(1, '0001', 1, '000100001', 1, '0001', '2', 1, 2, 'Radiant Warmer', 'NAT Steel', 'Difibmax', '12345678', '2024-04-01', 'NAT steel', 'NAT Steel Ltd.', 'work in progress', '2025-06-29', '', 1, '2025-06-29 22:37:21', 2, 1, 0, 0, '2025-06-29 22:45:35'),
+(2, '0002', 2, '000100002', 1, '0001', '2', 1, 2, 'Incubator', 'Phoneix', 'Incub', 'Phn123456', '2025-04-01', 'Philips', 'Phoneix Pvt. Ltd.', '', '2025-06-29', '', 1, '2025-06-29 22:49:50', 2, 0, 0, 1, '2025-06-29 22:49:50'),
+(3, '0003', 3, '000100003', 1, '0001', '2', 1, 2, 'Multipara monitor', 'Philips', 'Pro', '12345678', '2025-05-01', 'Philips', 'Philips Pvt. Ltd.', 'work almost done', '2025-06-29', '', 1, '2025-06-29 22:50:22', 2, 1, 0, 0, '2025-06-29 22:51:12'),
+(4, '0004', 6, '000300006', 3, '0003', '2', 1, 2, 'Nebulizer', 'Max', 'M2', '1001', '2025-04-01', 'Bhogilal', '8910420169', '', '2025-07-21', '[\"687e125854165.png\"]', 1, '2025-07-05 22:02:25', 2, 1, 0, 0, '2025-07-21 15:41:00'),
+(5, '0005', 8, '000300008', 3, '0003', '1', 1, 1, 'X-ray', 'ME xray', 'Xray123', 'ME123456', '2025-07-20', 'Bhogilal', '8910420169', '', '2025-07-09', '', 1, '2025-07-09 15:54:04', 2, 0, 0, 0, '2025-07-09 15:54:29'),
+(6, '0006', 5, '000200005', 2, '0002', '2', 1, 2, 'BP Machine', 'Omron', 'OMBP', '1245', '2025-05-02', 'Bhogilal', '8910420169', '', '2025-07-21', '', 1, '2025-07-21 15:37:05', 2, 0, 0, 0, '2025-07-21 15:37:08');
 
 -- --------------------------------------------------------
 
@@ -404,11 +423,20 @@ CREATE TABLE `qa_info` (
   `link_generated_by` int(11) NOT NULL,
   `link_generate_time` datetime NOT NULL,
   `row_status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1=pending, 2=done',
-  `pms_status` tinyint(1) NOT NULL COMMENT '0=wip 1=resolved, 2=closed',
+  `pms_status` tinyint(1) NOT NULL COMMENT '0=Due,1=done,2=wip',
   `pms_sp_status` tinyint(1) NOT NULL COMMENT '0=WIP, 1=Completed',
   `assign_to_sp_engg` tinyint(1) NOT NULL COMMENT '1=SP,2=Engg',
   `pms_data_updated` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `qa_info`
+--
+
+INSERT INTO `qa_info` (`qa_id`, `qa_info_id`, `asset_id`, `asset_code`, `facility_id`, `facility_code`, `department_id`, `device_group`, `asset_class`, `equipment_name`, `equipment_make`, `equipment_model`, `equipment_sl_no`, `pms_due_date`, `supplied_by`, `sp_details`, `service_provider_details`, `pms_planned_date`, `pms_report_attached`, `link_generated_by`, `link_generate_time`, `row_status`, `pms_status`, `pms_sp_status`, `assign_to_sp_engg`, `pms_data_updated`) VALUES
+(1, '0001', 9, '000200009', 2, '0002', '3', 3, 1, 'X-ray', 'PHILIPS', '300mA', 'LM200i', '2025-01-01', 'Eastern Meditech', '8910420169', '', '2025-07-15', '[\"68762b4e538b0.png\"]', 1, '2025-07-15 15:48:01', 2, 1, 0, 1, '2025-07-15 15:48:31'),
+(2, '0002', 10, '000300010', 3, '0003', '1', 3, 1, 'Mamo graphy', 'PHILIPS', 'Mamo 1', '121245', '2025-05-21', 'Eastern Meditech', '8910420169', '', '2025-07-21', '', 1, '2025-07-21 16:58:39', 2, 1, 0, 1, '2025-07-21 16:58:42'),
+(3, '0003', 11, '000200011', 2, '0002', '2', 3, 1, 'C-ARM', 'BPL', 'C-ARM', '102354', '2024-07-02', 'Eastern Meditech', '', 'done', '2025-07-21', '[\"687e26cb1aadd.png\"]', 1, '2025-07-21 17:04:29', 2, 1, 0, 2, '2025-07-21 17:10:19');
 
 -- --------------------------------------------------------
 
@@ -438,15 +466,6 @@ CREATE TABLE `rber_info` (
   `pms_data_updated` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `rber_info`
---
-
-INSERT INTO `rber_info` (`rber_id`, `rber_info_id`, `facility_id`, `facility_code`, `department_id`, `device_group`, `asset_class`, `equipment_name`, `equipment_make_model`, `equipment_sl_no`, `pms_due_date`, `supplied_by`, `service_provider_details`, `pms_planned_date`, `pms_report_attached`, `link_generated_by`, `link_generate_time`, `row_status`, `pms_data_updated`) VALUES
-(1, '0001', 4, '0001', '5', 5, 1, 'Radiant Warmer', '0001', '0001', '0000-00-00', 'SJ', '', '0000-00-00', '[\"670e7e4a91015.jpg\"]', 1, '2024-10-15 20:07:35', 2, '2024-10-15 20:07:52'),
-(2, '0002', 0, '', '', 0, 0, '', '', '', '0000-00-00', '', '', '0000-00-00', '', 1, '2025-03-22 15:19:35', 1, '0000-00-00 00:00:00'),
-(3, '0003', 0, '', '', 0, 0, '', '', '', '0000-00-00', '', '', '0000-00-00', '', 1, '2025-04-05 20:34:59', 1, '0000-00-00 00:00:00');
-
 -- --------------------------------------------------------
 
 --
@@ -463,20 +482,6 @@ CREATE TABLE `reloc_asset_detail` (
   `relocated_by` int(11) NOT NULL COMMENT 'PK of user_details',
   `sent_to_parent_dept` tinyint(1) NOT NULL COMMENT '0=No,1=Yes'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `reloc_asset_detail`
---
-
-INSERT INTO `reloc_asset_detail` (`reloc_id`, `facility_id`, `from_dept_id`, `to_dept_id`, `asset_id`, `relocate_date_time`, `relocated_by`, `sent_to_parent_dept`) VALUES
-(1, 1, '5', '1', 2, '2025-03-15 19:36:57', 1, 0),
-(2, 1, '5', '1', 3, '2025-03-15 19:37:22', 1, 1),
-(3, 1, '5', '1', 3, '2025-03-15 19:37:51', 1, 1),
-(22, 7, '6', '1', 24, '2025-05-28 22:54:45', 1, 1),
-(23, 7, '3', '1', 25, '2025-05-28 22:55:07', 1, 1),
-(24, 7, '3', '1', 25, '2025-05-28 22:55:51', 1, 1),
-(25, 7, '6', '1', 24, '2025-05-28 22:57:38', 1, 1),
-(26, 7, '3', '1', 25, '2025-05-28 22:58:01', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -535,15 +540,17 @@ CREATE TABLE `user_details` (
 --
 
 INSERT INTO `user_details` (`user_id`, `user_name`, `user_type_id`, `hospital_id`, `facility_id`, `user_mobile`, `user_phone`, `user_email`, `user_dob`, `user_address`, `user_user_name`, `user_password`, `user_status`) VALUES
-(1, 'Mr. Superadmin', 1, 2, 1, '9733935161', '256789', 'superadmin@apmeq.com', '1987-10-01', 'Bagnan', 'superadmin@apmeq.com', '12345678', 1),
-(15, 'Mr. Hospital Admin', 2, 2, 1, '9876543210', '', 'hospitaladmin@apmeq.com', '2024-08-28', 'Village: Bhuarah; Post Office: Agunshi; Police Station: Bagnan;\nDistrict: Howrah', 'hospitaladmin@apmeq.com', '12345678', 1),
-(16, 'Mr. Department Doctor', 3, 2, 1, '9876543211', '', 'department_doctor@apmeq.com', '2024-08-28', 'Village: Bhuarah; Post Office: Agunshi; Police Station: Bagnan;\nDistrict: Howrah', 'department_doctor@apmeq.com', '12345678', 1),
-(17, 'Mr. Calibration service provider', 4, 2, 1, '9876543212', '', 'calibration_ap@apmeq.com', '2024-08-28', 'Village: Bhuarah; Post Office: Agunshi; Police Station: Bagnan;\nDistrict: Howrah', 'calibration_ap@apmeq.com', '12345678', 1),
-(19, 'Mr. JK Hospital Admin', 2, 2, 7, '9876543210', '', 'jkhospitaladmin@apmeq.com', '2025-03-01', 'Pradesh', 'jkhospitaladmin', 'jkhospital', 1),
-(20, 'SK S A', 2, 2, 8, '8910420169', '', 'sksayan2012@gmail.com', '1985-01-16', ' howrah, 711310', 'Abcdapmeq', '711310', 1),
-(21, 'A G', 3, 2, 8, '7890132902', '', 'abcd@abcd', '2000-01-19', ' Kolkata', 'AGapmeq', '711310', 1),
-(22, 'Doctor', 3, 2, 8, '8910420169', '', 'hijibijia@apmeq.com', '2010-02-28', ' hgsjygftde', 'docabcd', '123456', 1),
-(23, 'S A', 3, 2, 8, '12345678', '', 'Ffffff', '2025-03-22', ' Ggggg', 'docabcd1', '123456', 1);
+(1, 'Mr. Superadmin', 1, 1, 1, '9733935161', '256789', 'superadmin@apmeq.com', '1987-10-01', 'Bagnan', 'superadmin@apmeq.com', '12345678', 1),
+(15, 'Mr. Hospital Admin', 2, 1, 1, '9876543210', '', 'hospitaladmin@apmeq.com', '2024-08-28', 'Village: Bhuarah; Post Office: Agunshi; Police Station: Bagnan;\nDistrict: Howrah', 'hospitaladmin@apmeq.com', '12345678', 1),
+(16, 'Mr. Department Doctor', 3, 1, 1, '9876543211', '', 'department_doctor@apmeq.com', '2024-08-28', 'Village: Bhuarah; Post Office: Agunshi; Police Station: Bagnan;\nDistrict: Howrah', 'department_doctor@apmeq.com', '12345678', 1),
+(17, 'Mr. Calibration service provider', 4, 1, 1, '9876543212', '', 'calibration_ap@apmeq.com', '2024-08-28', 'Village: Bhuarah; Post Office: Agunshi; Police Station: Bagnan;\nDistrict: Howrah', 'calibration_ap@apmeq.com', '12345678', 1),
+(20, 'SK S A', 2, 1, 1, '8910420169', '', 'sksayan2012@gmail.com', '1985-01-16', ' howrah, 711310', 'Abcdapmeq', '711310', 1),
+(26, 'Dr. Kamal', 3, 1, 3, '8910420169', '', 'rrr', '2025-07-07', ' ffff', 'Kamal', 'Kamal', 0),
+(27, 'Dr. Kamal', 3, 1, 3, '8910420169', '', 'hhhh', '2025-07-07', 'Chaksrikrishna, Hirapur', 'Kamal', 'Kamal', 0),
+(28, 'Dr. Kamal', 3, 1, 3, '8910420169', '', 'kamal@apmeq.com', '2025-07-07', 'Chaksrikrishna, Hirapur', 'Kamal', 'Kamal', 1),
+(29, 'Dr. Rajesh', 3, 1, 2, '8910420169', '', 'rajesh', '2025-07-15', ' Kolkata', 'Rajesh', 'Rajesh', 1),
+(30, 'Hospital 1 admin', 2, 1, 2, '9', '', 'c', '2025-07-15', ' d', 'Hospital 1', 'Hospital 1', 1),
+(31, 'Hospital 2 admin', 2, 1, 3, '10', '', '10', '2025-07-15', ' kolkata', 'Hospital 2', 'Hospital 2', 1);
 
 -- --------------------------------------------------------
 
@@ -694,7 +701,7 @@ ALTER TABLE `user_type`
 -- AUTO_INCREMENT for table `asset_details`
 --
 ALTER TABLE `asset_details`
-  MODIFY `asset_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `asset_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `asset_status_code`
@@ -706,97 +713,97 @@ ALTER TABLE `asset_status_code`
 -- AUTO_INCREMENT for table `asset_type_list`
 --
 ALTER TABLE `asset_type_list`
-  MODIFY `asset_type_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `asset_type_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `calib_info`
 --
 ALTER TABLE `calib_info`
-  MODIFY `calib_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `calib_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `call_log_register`
 --
 ALTER TABLE `call_log_register`
-  MODIFY `call_log_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `call_log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `category_list`
 --
 ALTER TABLE `category_list`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `department_list`
 --
 ALTER TABLE `department_list`
-  MODIFY `department_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `department_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `device_group_list`
 --
 ALTER TABLE `device_group_list`
-  MODIFY `device_group_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `device_group_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `facility_master`
 --
 ALTER TABLE `facility_master`
-  MODIFY `facility_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `facility_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `hospital_list`
 --
 ALTER TABLE `hospital_list`
-  MODIFY `hospital_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `hospital_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `manufacturer_list`
 --
 ALTER TABLE `manufacturer_list`
-  MODIFY `manufacturer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `manufacturer_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `pms_info`
 --
 ALTER TABLE `pms_info`
-  MODIFY `pms_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `pms_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `qa_info`
 --
 ALTER TABLE `qa_info`
-  MODIFY `qa_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `qa_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `rber_info`
 --
 ALTER TABLE `rber_info`
-  MODIFY `rber_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `rber_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `reloc_asset_detail`
 --
 ALTER TABLE `reloc_asset_detail`
-  MODIFY `reloc_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `reloc_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `service_providers_list`
 --
 ALTER TABLE `service_providers_list`
-  MODIFY `service_providers_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `service_providers_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `supplier_list`
 --
 ALTER TABLE `supplier_list`
-  MODIFY `supplier_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `supplier_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user_details`
 --
 ALTER TABLE `user_details`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `user_type`

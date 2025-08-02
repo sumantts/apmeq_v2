@@ -220,7 +220,9 @@
 
 						# Done Count
 						if($planned_due_done == 0){
-							$sql_4 = "SELECT * FROM pms_info WHERE asset_id = '" .$asset_id. "' ORDER BY pms_id DESC LIMIT 0,1";
+							$pms_done++;	
+							$planned_due_done = 3;
+							/*$sql_4 = "SELECT * FROM calib_info WHERE asset_id = '" .$asset_id. "' ORDER BY calib_id DESC LIMIT 0,1";
 							$result_4 = $mysqli->query($sql_4);
 							if ($result_4->num_rows > 0) {	
 								$row_4 = $result_4->fetch_array();
@@ -230,7 +232,7 @@
 									$pms_done++;	
 									$planned_due_done = 3;
 								}
-							}
+							}*/
 						}//end if
 					}//end while
 				}//end if

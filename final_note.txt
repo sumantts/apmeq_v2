@@ -1,0 +1,32 @@
+Link e giye status change korlei auto submit hoye jachhe …..
+PMS
+1. Status filter “Planned” diye search korle Hospital 1 er khetere kichui aschena
+Response: Device group ID ta save hoechilo na, sei karone problem hoechilo. Ami table e hie device group add korechi https://prnt.sc/zJowW7Jz2r6p
+#Note: To avoide such issue in future, please edit the asset data and se the Device Group from select dropdown.
+
+2. Status Filter e “Planned” diye search korle Hosputal 2 khetre “1 ta” asset “planned” e thaka sotteo search korle show hochhena(N.B. first e 2 to show korchlo in table and planned search korle “1” show korchilo) 
+Response: Please follow point 1.
+
+3. Hospital 2 er kheter Due + Planned+ Done eita “2 hochhe where total asset number is “3”
+Response: suppose kono akta asset er last PMS done date December 25 and frequesncy of PMS is 6 months 1 year. sei khetre ei asset ta due list e asbe na but done list e asbe. ebare amra PMS table ta majhe moddhei clean korechi tai PMS table e oi last 25th december 2024 er record ta nei tao done count korte parche na. ei dhoroner problem er karone counting gulo milche na.
+Otherwise jinis ta thik e ache, new asset add kore akta process complete korle jinis ta bojha jabe.
+
+4. Status filter e "Due" ta mone hoy add kora nei .. ekbar dekhe nio
+Response: Na, eta add korini tar karon, DUE count ta amra dekhachhi from asset details table theke. r PMS dashboard e filter list e data ana hochhe pms_info table theke. sutorang ekhane due count dekhaleo due ticket list dekhano somvob na. eta logic e conflict korche.
+
+
+Calibration
+1.View link and share link ta pasa pasi ache ota dekhe nio
+2.Uluberia Hospital e View table due+planned+done  eita 3 show korchilo and seach kore planned bar korar por jakhon
+Case 1: view link theke ami status update kore done kore di takhon planned theke minus hoye giye done er under e asset chole giye chilo in “view table” : jekhane due+planned+done “3 “ chilo
+Case 2 : share link e status done korar por view windoe te Due+planned+done eita  “2 show korche but filter e seach korle thik asche…
+3.Hospital  1 er due 2 to show korchilo tar modhhe 1 ta ke planned kora hoy but view table e “due” eta  tei ekhono 2 to show korche ar planned and done ei duto te “0” dekhachhe  kono change nei
+4.Hospital 2 tey planned “2 to” are done “1 ta”  show korche but seach korle aschena . 
+
+QA
+1.Uluberia hospital e Table e Due+planned+done “5 hochhe” where total asset is “3”
+2.Uluberia hospital e done search korle kichui aschena jekhane table e show korche “2”
+3.Hospital 1 er due “1 ta show korche table and oitar link generate korar poreo planned e refelect hochhena
+4.hospital 1 e done search korle QA code 0001 & 0003” show korche as done but table-e  done “0” hoye ache. 
+5.Hospital 1 er “QA code 0003” eita link generate korar por planned e esechilo but link thke submit /done korar por oita table e show korchena 
+6.Hospital 2 te actually QA 2 to done kora ache , kintu table kichui show korchena and as well as search kole “1 ta “ show korche
