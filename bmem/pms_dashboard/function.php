@@ -256,11 +256,13 @@
 		$return_array = array();
 		$mainData = array();
 		$status = true;
+		$slno = 1;
 
 		$facility_id = $_GET['facility_id'];
 		$facility_code = $_GET['facility_code'];
 		$device_group = $_GET['device_group'];
 		$asset_class = $_GET['asset_class'];
+		$user_id = $_SESSION["user_id"];
 	
 		$department_id = $_GET['department_id'];
 		$PMSStatus = $_GET['PMSStatus'];
@@ -300,7 +302,6 @@
 
 		if ($result->num_rows > 0) {
 			$status = true;
-			$slno = 1;
 
 			while($row = $result->fetch_array()){
 				$pms_id = $row['pms_id'];
@@ -433,6 +434,165 @@
 			$status = false;
 		}
 			
+		# Get Done Assets
+		if($facility_id > 0 && $PMSStatus == 1){
+			$sql = "SELECT * FROM facility_master  WHERE user_id = '" .$user_id. "' AND facility_id = '" .$facility_id. "' LIMIT 0, 50";
+			$result = $mysqli->query($sql);
+
+			if ($result->num_rows > 0) {
+				$status = true; 
+
+				while($row = $result->fetch_array()){
+					$facility_id = $row['facility_id'];	
+					$facility_code = $row['facility_code'];	
+					$facility_name = $row['facility_name'];	
+					
+					$pms_due = 0;
+					$pms_done = 0;
+					$pms_planned = 0;		
+					$total_asset = 0;
+
+					$sql_5 = "SELECT * FROM asset_details WHERE facility_id = '" .$facility_id. "'";
+					$result_5 = $mysqli->query($sql_5);
+					if ($result_5->num_rows > 0) {
+						while($row_5 = $result_5->fetch_array()){
+							$planned_due_done = 0;
+							$asset_id = $row_5['asset_id'];
+							$last_date_of_pms = $row_5['last_date_of_pms'];
+							$frequency_of_pms = $row_5['frequency_of_pms'];
+								
+							$equipment_name = $row_5['equipment_name'];
+							$device_group = $row_5['device_group'];
+							$asset_class = $row_5['asset_class'];
+							$asset_code = $row_5['asset_code'];
+							$asset_make = $row_5['asset_make'];
+							$asset_model = $row_5['asset_model'];
+							$slerial_number = $row_5['slerial_number'];
+							$asset_supplied_by = $row_5['asset_supplied_by'];
+							$sp_details = $row_5['sp_details']; 
+
+							$total_asset++;
+
+							# Planned Count
+							$available_in_pms = false;
+							$sql_3 = "SELECT * FROM pms_info WHERE asset_id = '" .$asset_id. "' ORDER BY pms_id DESC LIMIT 0,1";
+							$result_3 = $mysqli->query($sql_3);
+							if ($result_3->num_rows > 0) {	
+								$row_3 = $result_3->fetch_array();
+								$pms_status = $row_3['pms_status'];
+
+								if($pms_status == 0){
+									$pms_planned++;	
+									$planned_due_done = 1; 
+								}
+
+								if($pms_status == 1){ 
+									$available_in_pms = true;
+								}
+							}//end if
+
+							# Due Count 
+							if($planned_due_done == 0){
+								$pms_frequency = '';
+								$next_pms_date = '';
+								# PMS Frequency Calculation
+
+								if($last_date_of_pms != '0000-00-00' && $frequency_of_pms != ''){
+									$last_date_of_pms1 = date('Y-m-d', strtotime($last_date_of_pms));
+									$next_pms_date = $last_date_of_pms1;
+									$date = new DateTime($last_date_of_pms1); 
+										
+									$pms_freq_str = explode("|", $frequency_of_pms);
+									if($pms_freq_str[0] > 0){
+										$y1 = $pms_freq_str[0];
+										$pms_frequency .= 'Each '.$y1.' Year(s)';
+										$next_pms_date = date('d-F-Y', strtotime('+'.$y1.' year', strtotime($next_pms_date)));
+									}
+									if($pms_freq_str[1] > 0){
+										$m1 = $pms_freq_str[1];
+										if($pms_frequency != ''){
+											$pms_frequency .= ' '.$m1.' Month(s)';
+										}else{
+											$pms_frequency .= 'Each '.$m1.' Month(s)';
+										}
+										$next_pms_date = date('d-F-Y', strtotime('+'.$m1.' month', strtotime($next_pms_date)));
+									}
+									if($pms_freq_str[2] > 0){
+										$d1 = $pms_freq_str[2];
+										if($pms_frequency != ''){
+											$pms_frequency .= ' '.$d1.' Day(s)';
+										}else{
+											$pms_frequency .= 'Each '.$d1.' Day(s)';
+										}
+										$next_pms_date = date('d-F-Y', strtotime('+'.$d1.' day', strtotime($next_pms_date)));
+									} 
+								}//ennd if
+
+								if($next_pms_date != ''){					
+									$fifteen_day_prev = date('Y-m-d H:i:s',(strtotime ( '-15 day' , strtotime($next_pms_date))));
+									
+									// Create two DateTime objects
+									$today = date('Y-m-d');
+									$date1 = strtotime($today);
+									$date2 = strtotime($fifteen_day_prev);
+									$date3 = strtotime($next_pms_date);
+									
+									// Compare the dates
+									if ($date1 > $date2) {
+										//PMS within 15 days 
+										$pms_due++;
+										$planned_due_done = 2;
+									} elseif ($date1 > $date3) {
+										//PMS Date over 
+										$pms_due++;
+										$planned_due_done = 2;
+									} else {
+										// cool PMS
+										//$next_pms_date = '<span class="text-primary">'.$next_pms_date.'</span>';
+									}
+								}//end if 
+							}//end if
+
+							# Done Count
+							if($planned_due_done == 0){
+								$pms_done++;	
+								$planned_due_done = 3;
+
+								$data[0] = $slno; 
+								$data[1] = '-';//$calib_info_id;
+								$data[2] = $facility_name;
+								$data[3] = $facility_code;
+								$data[4] = '-';//$department_name;
+								$data[5] = $device_group; 
+								$data[6] = $asset_class;
+								$data[7] = $equipment_name;
+								$data[8] = $asset_code;
+								$data[9] = $asset_make;
+								$data[10] = $asset_model;
+								$data[11] = $slerial_number;
+								$data[12] = date('d-F-Y', strtotime($last_date_of_pms)); ///**** */
+								$data[13] = $asset_supplied_by;
+								$data[14] = $sp_details;
+								$data[15] = '-';//$pms_planned_date;
+								$data[16] = '-';//$updated_text1;
+								$data[17] = '-';//$view_link;
+								$data[18] = 'DONE';//$updated_text; 
+
+								// check it exists in pms table ot not
+								if($available_in_pms == false && $last_date_of_pms != '0000-00-00'){
+									array_push($mainData, $data);
+									$slno++;
+								}
+								
+							}//end if
+						}//end while
+					}//end if 
+				}//end while
+			} else {
+				$status = false;
+			}
+		}//end main if
+		# Get Done Assets End
 
 		$return_array['data'] = $mainData;
     	echo json_encode($return_array);
