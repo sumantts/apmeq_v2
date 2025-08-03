@@ -554,6 +554,20 @@
 										// cool qa
 										//$next_qa_date = '<span class="text-primary">'.$next_qa_date.'</span>';
 									}
+
+									if($planned_due_done == 2){
+										if(sizeof($mainData) > 0){
+											$temp_main_data = array();
+											for($i = 0; $i < sizeof($mainData); $i++){
+												if($mainData[$i][8] != $asset_code){
+													array_push($temp_main_data, $mainData[$i]);
+												}//end if
+											}//end for
+											$mainData = array();
+											$mainData = $temp_main_data;
+										}//end if
+									}//end if
+									
 								}//end if  
 							}//end if 
 
