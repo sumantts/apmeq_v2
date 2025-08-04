@@ -455,7 +455,7 @@
 					$pms_planned = 0;		
 					$total_asset = 0;
 
-					$sql_5 = "SELECT * FROM asset_details WHERE facility_id = '" .$facility_id. "'";
+					$sql_5 = "SELECT asset_details.asset_id, asset_details.facility_id, asset_details.department_id, asset_details.equipment_name, asset_details.asset_make, asset_details.asset_model, asset_details.slerial_number, asset_details.asset_specifiaction, asset_details.date_of_installation, asset_details.ins_certificate, asset_details.asset_supplied_by, asset_details.value_of_the_asset, asset_details.total_year_in_service, asset_details.technology, asset_details.asset_status, asset_details.asset_class, asset_details.device_group, asset_details.last_date_of_calibration, asset_details.calibration_attachment, asset_details.frequency_of_calibration, asset_details.last_date_of_pms, asset_details.pms_attachment, asset_details.frequency_of_pms, asset_details.frequency_of_qa, asset_details.qa_due_date, asset_details.qa_attachment, asset_details.warranty_last_date, asset_details.amc_yes_no, asset_details.amc_last_date, asset_details.cmc_yes_no, asset_details.cmc_last_date, asset_details.asset_code, asset_details.sp_details, asset_details.row_status, device_group_list.device_name FROM asset_details JOIN device_group_list ON asset_details.device_group = device_group_list.device_group_id WHERE asset_details.facility_id = '" .$facility_id. "'";
 					$result_5 = $mysqli->query($sql_5);
 					if ($result_5->num_rows > 0) {			
 						while($row_5 = $result_5->fetch_array()){
@@ -473,6 +473,8 @@
 							$slerial_number = $row_5['slerial_number'];
 							$asset_supplied_by = $row_5['asset_supplied_by'];
 							$sp_details = $row_5['sp_details']; 
+							$department_id = $row_5['department_id']; 
+							$device_name = $row_5['device_name']; 
 
 							$total_asset++;
 
@@ -493,6 +495,24 @@
 									$available_in_pms = true;
 								}
 							}
+
+							$dept_names = '';	
+							$ids = '';	 
+							$ids_str = json_decode($department_id);
+							foreach($ids_str as $key => $val){
+								$ids .= $val.',';
+							} 				
+							$ids = rtrim($ids, ",");
+							$sql_get = "SELECT * FROM department_list WHERE department_id IN ($ids)";
+							$result_get = $mysqli->query($sql_get);
+					
+							if ($result_get->num_rows > 0) {
+								$status = true;	
+								while($row_get = $result_get->fetch_array()){
+									$dept_names .= $row_get['department_name'].', ';	
+								}
+							} 				
+							$dept_names = rtrim($dept_names, ", "); 
 
 
 							# Due Count 
@@ -577,9 +597,9 @@
 								$data[1] = '-';//$calib_info_id;
 								$data[2] = $facility_name;
 								$data[3] = $facility_code;
-								$data[4] = '-';//$department_name;
-								$data[5] = $device_group; 
-								$data[6] = $asset_class;
+								$data[4] = $dept_names;
+								$data[5] = $device_name; 
+								$data[6] = ($asset_class == 1)? 'Critical' : 'Non critical';
 								$data[7] = $equipment_name;
 								$data[8] = $asset_code;
 								$data[9] = $asset_make;
