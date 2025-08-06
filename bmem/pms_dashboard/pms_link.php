@@ -645,6 +645,7 @@
     });
 
     $('#pms_status').on('change', function(){
+        /****
         $asset_id = $('#asset_id').val();
         $pms_status = $('#pms_status').val();
         $pms_id = $('#pms_id').val();
@@ -662,6 +663,7 @@
                 loadFormdata()
             }
         }); //end ajax
+        ****/
     })
     </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
