@@ -29,6 +29,7 @@
 		$pms_planned_date = $_POST['pms_planned_date'];
 		$pms_status = $_POST['pms_status'];
 		$sp_details = $_POST['sp_details'];
+		$asset_id = $_POST['asset_id'];
 		
 		try {
 			if($qa_info_id > 0){
@@ -36,7 +37,13 @@
 				$pms_data_updated = date('Y-m-d H:i:s');
 				$row_status = 2;
 				$sql = "UPDATE qa_info SET sp_details = '" .$sp_details. "', service_provider_details = '" .$service_provider_details. "', pms_planned_date = '" .$pms_planned_date. "', pms_data_updated = '" .$pms_data_updated. "', row_status = '" .$row_status. "', pms_status = '" .$pms_status. "' WHERE qa_info_id = '" .$qa_info_id. "' ";
-				$result = $mysqli->query($sql);
+				$result = $mysqli->query($sql); 	
+
+				if($pms_status == 1){
+					$qa_due_date = date('Y-m-d');
+					$sql_1 = "UPDATE asset_details SET qa_due_date = '" .$qa_due_date. "' WHERE asset_id = '".$asset_id."'";
+					$mysqli->query($sql_1);  
+				}
 			}	
 		} catch (PDOException $e) {
 			die("Error occurred:" . $e->getMessage());

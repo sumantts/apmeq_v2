@@ -29,6 +29,7 @@
 		$pms_planned_date = $_POST['pms_planned_date'];
 		$pms_status = $_POST['pms_status'];
 		$sp_details = $_POST['sp_details'];
+		$asset_id = $_POST['asset_id'];
 		
 		try {
 			if($calib_info_id > 0){
@@ -36,7 +37,13 @@
 				$pms_data_updated = date('Y-m-d H:i:s');
 				$row_status = 2;
 				$sql = "UPDATE calib_info SET sp_details = '" .$sp_details. "', service_provider_details = '" .$service_provider_details. "', pms_planned_date = '" .$pms_planned_date. "', pms_data_updated = '" .$pms_data_updated. "', row_status = '" .$row_status. "', pms_status = '" .$pms_status. "' WHERE calib_info_id = '" .$calib_info_id. "' ";
-				$result = $mysqli->query($sql);
+				$result = $mysqli->query($sql);  	
+
+				if($pms_status == 1){
+					$last_date_of_pms = date('Y-m-d');
+					$sql_1 = "UPDATE asset_details SET last_date_of_calibration = '" .$last_date_of_pms. "' WHERE asset_id = '".$asset_id."'";
+					$mysqli->query($sql_1);  
+				}
 			}	
 		} catch (PDOException $e) {
 			die("Error occurred:" . $e->getMessage());
@@ -341,8 +348,8 @@
 					$pms_planned_date = '';
 				}	
 				$view_link = "";
-				$view_link .= "<a href='calibration_dashboard/calib_link.php?calib_info_id=$calib_info_id', target='_blank'>View Link</a>";
-				$view_link .= "<a href='calibration_dashboard/calib_link.php?calib_info_id=$calib_info_id&link=external', target='_blank'>Share Link</a>";
+				$view_link .= "<a href='calibration_dashboard/calib_link.php?calib_info_id=$calib_info_id', target='_blank'>View Link</a><br>";
+				$view_link .= "<br><a href='calibration_dashboard/calib_link.php?calib_info_id=$calib_info_id&link=external', target='_blank'>Share Link</a>";
 
 				# 0=WIP, 1=Resolved, 2=Closed
 				$dynamic_id = 'calib_id_'.$calib_id;

@@ -324,11 +324,12 @@
             $pms_planned_date = $('#pms_planned_date').val();
             $pms_status = $('#pms_status').val();
             $sp_details = $('#sp_details').val();
+            $asset_id = $('#asset_id').val();
 
             $.ajax({
                 method: "POST",
                 url: "../qa_dashboard/function.php",
-                data: { fn: "updateGeneratedFormdata", qa_info_id: $qa_info_id, facility_id: $facility_id, facility_code: $facility_code, department_id: $department_id, device_group: $device_group, asset_class: $asset_class, equipment_name: $equipment_name, equipment_make: $equipment_make, equipment_model: $equipment_model, equipment_sl_no: $equipment_sl_no, pms_due_date: $pms_due_date, supplied_by: $supplied_by, service_provider_details: $service_provider_details, pms_planned_date: $pms_planned_date, pms_status: $pms_status, sp_details: $sp_details }
+                data: { fn: "updateGeneratedFormdata", qa_info_id: $qa_info_id, facility_id: $facility_id, facility_code: $facility_code, department_id: $department_id, device_group: $device_group, asset_class: $asset_class, equipment_name: $equipment_name, equipment_make: $equipment_make, equipment_model: $equipment_model, equipment_sl_no: $equipment_sl_no, pms_due_date: $pms_due_date, supplied_by: $supplied_by, service_provider_details: $service_provider_details, pms_planned_date: $pms_planned_date, pms_status: $pms_status, sp_details: $sp_details, asset_id: $asset_id }
             })
             .done(function( res ) {
                 $res1 = JSON.parse(res); 
