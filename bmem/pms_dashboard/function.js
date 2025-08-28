@@ -119,7 +119,7 @@ function populateDataTable_1(){
 
             if($rows.length > 0){
                 $('#facility_id').html(''); 
-                $html = "<option value=''>All Facility(PMS Done)</option><option value='all'>All Facility (New)</option>";
+                $html = "<option value=''>Select</option>";
 
                 for($i = 0; $i < $rows.length; $i++){
                     $html += "<option value='"+$rows[$i].facility_id+"'>"+$rows[$i].facility_name+"</option>";                    
@@ -132,30 +132,28 @@ function populateDataTable_1(){
 }//end
 
 $('#facility_id').on('change', function(){ 
-    $facility_id = $('#facility_id').val(); 
-    if($facility_id > 0) {
-        $.ajax({
-            method: "POST",
-            url: "asset/function.php",
-            data: { fn: "getAllDepartmentName", facility_id_dd: $facility_id }
-        })
-        .done(function( res ) {
-            $res1 = JSON.parse(res); 
-            if($res1.status == true){
-                $rows = $res1.data;
+    $facility_id = $('#facility_id').val();  
+    $.ajax({
+        method: "POST",
+        url: "asset/function.php",
+        data: { fn: "getAllDepartmentName", facility_id_dd: $facility_id }
+    })
+    .done(function( res ) {
+        $res1 = JSON.parse(res); 
+        if($res1.status == true){
+            $rows = $res1.data;
 
-                if($rows.length > 0){
-                    $('#department_id').html('');
-                    $html = "<option value=''>Select</option>";                             
-                    for($i = 0; $i < $rows.length; $i++){                                 
-                        $html += "<option value='"+$rows[$i].department_id+"'>"+$rows[$i].department_name+"</option>";                    
-                    }//end for
-                    console.log($html);
-                    $('#department_id').html($html);
-                }//end if
-            }        
-        });//end ajax  
-    }//end if
+            if($rows.length > 0){
+                $('#department_id').html('');
+                $html = "<option value=''>Select</option>";                             
+                for($i = 0; $i < $rows.length; $i++){                                 
+                    $html += "<option value='"+$rows[$i].department_id+"'>"+$rows[$i].department_name+"</option>";                    
+                }//end for
+                console.log($html);
+                $('#department_id').html($html);
+            }//end if
+        }        
+    });//end ajax  
 })
 
 //DeviceGroup
