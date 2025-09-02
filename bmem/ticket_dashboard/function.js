@@ -43,7 +43,7 @@ $('#myFormS').on('submit', function(){
 $('#myFormM').on('submit', function(){    
     $assign_to = $('#assign_to').val();
     $eng_contact_no = $('#eng_contact_no').val(); 
-    $status_by_enggM = $('#status_by_enggM').val();
+    $call_log_statusM = $('#call_log_statusM').val();
     $resolved_date_time = $('#resolved_date_time').val(); 
     $call_log_id = $('#call_log_id').val(); 
     $engineer_coment = $('#engineer_coment').val();
@@ -51,7 +51,7 @@ $('#myFormM').on('submit', function(){
     $.ajax({
         method: "POST",
         url: "ticket_dashboard/function.php",
-        data: { fn: "updateTicketInfo", assign_to: $assign_to, eng_contact_no: $eng_contact_no, status_by_enggM: $status_by_enggM, resolved_date_time: $resolved_date_time, call_log_id: $call_log_id, engineer_coment: $engineer_coment }
+        data: { fn: "updateTicketInfo", assign_to: $assign_to, eng_contact_no: $eng_contact_no, call_log_statusM: $call_log_statusM, resolved_date_time: $resolved_date_time, call_log_id: $call_log_id, engineer_coment: $engineer_coment }
     })
     .done(function( res ) {
         //console.log(res);
@@ -79,7 +79,7 @@ function editTableData($call_log_id){
             getAllProductImages($call_log_id) 
             $('#assign_to').val($res1.assign_to).trigger('change');
             $('#eng_contact_no').val($res1.eng_contact_no);
-            $('#status_by_enggM').val($res1.status_by_engg).trigger('change');
+            $('#call_log_statusM').val($res1.call_log_status).trigger('change');
             $('#resolved_date_time').val($res1.resolved_date_time); 
             $('#engineer_coment').val($res1.engineer_coment); 
             $html = '';
@@ -156,7 +156,7 @@ function populateDataTable_1(){
 
     $facility_id_s = $('#facility_id_s').val();
     $department_id = $('#department_id').val(); 
-    $status_by_engg = $('#status_by_engg').val();
+    $call_log_status = $('#call_log_status').val();
     $token_id = $('#token_id').val(); 
     $day_wise = $('#day_wise').val(); 
     $device_group = $('#device_group').val(); 
@@ -170,7 +170,7 @@ function populateDataTable_1(){
         columnDefs: [{ width: 5, targets: 0 } ],
         responsive: true,
         serverMethod: 'GET',
-        ajax: {'url': 'ticket_dashboard/function.php?fn=getTableData_1&facility_id_s='+$facility_id_s+'&department_id='+$department_id+'&status_by_engg='+$status_by_engg+'&token_id='+$token_id+'&day_wise='+$day_wise+'&device_group='+$device_group+'&equipment_name='+$equipment_name+'&ticket_class='+$ticket_class+'&from_dt='+$from_dt+'&to_dt='+$to_dt+'&warranty_sr='+$warranty_sr },
+        ajax: {'url': 'ticket_dashboard/function.php?fn=getTableData_1&facility_id_s='+$facility_id_s+'&department_id='+$department_id+'&call_log_status='+$call_log_status+'&token_id='+$token_id+'&day_wise='+$day_wise+'&device_group='+$device_group+'&equipment_name='+$equipment_name+'&ticket_class='+$ticket_class+'&from_dt='+$from_dt+'&to_dt='+$to_dt+'&warranty_sr='+$warranty_sr },
         dom: 'Bfrtip',
         buttons: [
             {

@@ -172,12 +172,13 @@ include('common/head.php');
                                 </div>    
 
                                 <div class="col-md-3 mb-3">
-                                    <label for="status_by_engg">Ticket Status</label>
-                                    <select class="form-control js-example-basic-single" id="status_by_engg" name="status_by_engg"> 
-                                        <option value="-1">Select</option> 
-                                        <option value="0">Work In Progress</option> 
-                                        <option value="1">Closed </option>
-                                        <option value="2">RBER</option>
+                                    <label for="call_log_status">Call Log Status</label>
+                                    <select class="form-control js-example-basic-single" id="call_log_status" name="call_log_status">  
+                                        <option value="-1">Select</option>
+                                        <option value="0">Raised</option> 
+                                        <option value="1">Reject</option>
+                                        <option value="2">Done</option>
+                                        <option value="3">RBER</option> 
                                     </select> 
                                 </div>    
 
@@ -363,13 +364,12 @@ include('common/head.php');
                                     </div> 
 
                                     <div class="col-md-4 mb-3">
-                                        <label for="status_by_enggM" class="text-danger">Call Log Status*</label>
-                                        <select class="form-control" name="status_by_enggM" id="status_by_enggM" required> 
-                                            <option value="-1">Select</option> 
-                                            <option value="0">Work In Progress</option> 
-                                            <option value="1">Closed </option>
-                                            <option value="2">RBER</option>
-                                            <option value="3">Condemed</option> 
+                                        <label for="call_log_statusM" class="text-danger">Call Log Status*</label>
+                                        <select class="form-control" name="call_log_statusM" id="call_log_statusM" required>  
+                                            <option value="0">Raised</option> 
+                                            <option value="1">Reject</option>
+                                            <option value="2">Done</option>
+                                            <option value="3">RBER</option> 
                                         </select> 
                                     </div>
                                     

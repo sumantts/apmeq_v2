@@ -115,18 +115,17 @@
                     $assign_to_text = '';
                 }	
 
+                //call_log_status
                 $call_log_status = $row['call_log_status'];	
                 $call_log_status_text = '';
                 if($call_log_status == 0){
                     $call_log_status_text = 'Raised';					
                 }else if($call_log_status == 1){
-                    $call_log_status_text = 'WIP';
+                    $call_log_status_text = 'Reject';
                 }else if($call_log_status == 2){
-                    $call_log_status_text = 'Resolved';
+                    $call_log_status_text = 'Done';
                 }else if($call_log_status == 3){
-                    $call_log_status_text = 'Closed';
-                }else if($call_log_status == 4){
-                    $call_log_status_text = 'Rejected';
+                    $call_log_status_text = 'RBER';
                 }else{
                     $call_log_status_text = 'Raised';
                 }
@@ -169,6 +168,15 @@
             }//end if
         }//end if
     }//end if
+
+    
+    $readonly_text = '';
+    if(isset($_GET["link"])){
+        $readonly_text = 'readonly';
+    }else{
+        $readonly_text = '';
+    }
+
     ?>
   <body>
     <div class="container">
@@ -217,77 +225,77 @@
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
                                     <label class="required-field" for="facility_name">Facility name</label>
-                                    <input type="text" class="form-control" id="facility_name" name="facility_name" value="<?=$facility_name?>" readonly >
+                                    <input type="text" class="form-control" id="facility_name" name="facility_name" value="<?=$facility_name?>" <?=$readonly_text?> >
                                 </div>
                             </div>
         
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
                                     <label for="facility_code">Facility Code</label>
-                                    <input type="text" class="form-control" id="facility_code" name="facility_code" value="<?=$facility_code?>" readonly >
+                                    <input type="text" class="form-control" id="facility_code" name="facility_code" value="<?=$facility_code?>" <?=$readonly_text?> >
                                 </div>
                             </div>
         
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
                                     <label class="required-field" for="dept_names">Department</label>
-                                    <input type="text" class="form-control" id="dept_names" name="dept_names" value="<?=$dept_names?>" readonly >
+                                    <input type="text" class="form-control" id="dept_names" name="dept_names" value="<?=$dept_names?>" <?=$readonly_text?> >
                                 </div>
                             </div>
         
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
                                     <label for="device_name">Device group</label> 
-                                    <input type="text" class="form-control" id="device_name" name="device_name" value="<?=$device_name?>" readonly >
+                                    <input type="text" class="form-control" id="device_name" name="device_name" value="<?=$device_name?>" <?=$readonly_text?> >
                                 </div>
                             </div> 
         
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
                                     <label for="equipment_name">Equpment Name</label>
-                                    <input type="text" class="form-control" id="equipment_name" name="equipment_name" value="<?=$equipment_name?>" readonly >
+                                    <input type="text" class="form-control" id="equipment_name" name="equipment_name" value="<?=$equipment_name?>" <?=$readonly_text?> >
                                 </div>
                             </div>
         
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
                                     <label for="asset_code">Asset Code</label>
-                                    <input type="text" class="form-control" id="asset_code" name="asset_code" value="<?=$asset_code?>" readonly>
+                                    <input type="text" class="form-control" id="asset_code" name="asset_code" value="<?=$asset_code?>" <?=$readonly_text?> >
                                 </div>
                             </div>
         
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
                                     <label for="equipment_make">Equipment Make</label>
-                                    <input type="text" class="form-control" id="equipment_make" name="equipment_make" value="<?=$asset_make?>" readonly>
+                                    <input type="text" class="form-control" id="equipment_make" name="equipment_make" value="<?=$asset_make?>" <?=$readonly_text?> >
                                 </div>
                             </div>
         
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
                                     <label for="equipment_model">Equipment Model</label>
-                                    <input type="text" class="form-control" id="equipment_model" name="equipment_model" value="<?=$asset_model?>" readonly>
+                                    <input type="text" class="form-control" id="equipment_model" name="equipment_model" value="<?=$asset_model?>" <?=$readonly_text?> >
                                 </div>
                             </div>
         
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
                                     <label for="equipment_sl_no">Equipment sl no</label>
-                                    <input type="text" class="form-control" id="equipment_sl_no" name="equipment_sl_no" value="<?=$slerial_number?>" readonly>
+                                    <input type="text" class="form-control" id="equipment_sl_no" name="equipment_sl_no" value="<?=$slerial_number?>" <?=$readonly_text?>>
                                 </div>
                             </div> 
         
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
                                     <label for="supplied_by">Supplied by</label>
-                                    <input type="text" class="form-control" id="supplied_by" name="supplied_by" value="<?=$asset_supplied_by?>" readonly >
+                                    <input type="text" class="form-control" id="supplied_by" name="supplied_by" value="<?=$asset_supplied_by?>" <?=$readonly_text?> >
                                 </div>
                             </div>  
         
                             <div class="col-sm-12 mb-1">
                                 <div class="form-group">
                                     <label class="required-field" for="sp_details">Service Provider Details</label>
-                                    <textarea class="form-control" id="sp_details" name="sp_details" rows="4" readonly><?=$sp_details?></textarea>
+                                    <textarea class="form-control" id="sp_details" name="sp_details" rows="4" <?=$readonly_text?>><?=$sp_details?></textarea>
                                 </div>
                             </div>
         
@@ -318,11 +326,12 @@
         
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
-                                    <label for="status_by_engg">Status</label>
-                                    <select class="form-control" name="status_by_engg" id="status_by_engg" > 
-                                        <option value="0" <?php if($status_by_engg == 0){?> selected="selected" <?php }?>>Work in progress</option>
-                                        <option value="1" <?php if($status_by_engg == 1){?> selected="selected" <?php }?>>Closed</option> 
-                                        <option value="2" <?php if($status_by_engg == 2){?> selected="selected" <?php }?>>RBER</option>  
+                                    <label for="call_log_status">Call Log Status</label>
+                                    <select class="form-control" name="call_log_status" id="call_log_status" > 
+                                        <option value="0" <?php if($call_log_status == 0){?> selected="selected" <?php }?>>Raised</option>
+                                        <option value="1" <?php if($call_log_status == 1){?> selected="selected" <?php }?>>Reject</option> 
+                                        <option value="2" <?php if($call_log_status == 2){?> selected="selected" <?php }?>>Done</option>  
+                                        <option value="2" <?php if($call_log_status == 3){?> selected="selected" <?php }?>>RBER</option>  
                                     </select>
                                 </div>
                             </div>
@@ -352,12 +361,12 @@
             console.log('click click..');
             $call_log_id = $('#call_log_id').val(); 
             $call_log_comment = $('#call_log_comment').val();
-            $status_by_engg = $('#status_by_engg').val();
+            $call_log_status = $('#call_log_status').val();
 
             $.ajax({
                 method: "POST",
                 url: "../ticket_dashboard/function.php",
-                data: { fn: "updateGeneratedFormdata", call_log_id: $call_log_id, call_log_comment: $call_log_comment, status_by_engg: $status_by_engg}
+                data: { fn: "updateGeneratedFormdata", call_log_id: $call_log_id, call_log_comment: $call_log_comment, call_log_status: $call_log_status}
             })
             .done(function( res ) {
                 $res1 = JSON.parse(res); 
