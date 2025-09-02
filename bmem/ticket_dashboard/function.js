@@ -405,6 +405,28 @@ function deleteProdImage($prod_iamge_name){
 }//end fun
 //End multiple pgoto upload
 
+
+function updateSpEnggStatus($call_log_id){
+    $assign_to_sp_engg_status = $('#assign_to_sp_engg_'+$call_log_id).val();
+    console.log('call_log_id: ' + $call_log_id + ' assign_to_sp_engg_status: ' + $assign_to_sp_engg_status);
+
+    if(confirm('Are you sure to change status?')){
+        $.ajax({
+            method: "POST",
+            url: "ticket_dashboard/function.php",
+            data: { fn: "updateSpEnggStatus", call_log_id: $call_log_id, assign_to_sp_engg_status: $assign_to_sp_engg_status }
+        })
+        .done(function( res ) {
+            //console.log(res);
+            $res1 = JSON.parse(res);
+            if($res1.status == true){
+                alert('Status Updated Successfully');
+                populateDataTable_1();
+            }
+        }); //end ajax
+    }
+}
+
 $(document).ready(function () {
     initTicketCounter();
     configureFacilityDropDown(); 

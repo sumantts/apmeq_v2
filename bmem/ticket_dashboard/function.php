@@ -256,7 +256,7 @@
 				$asset_supplied_by = $row['asset_supplied_by'];						
 				$engineer_coment = $row['engineer_coment'];				
 				$sp_details = $row['sp_details'];					
-				$asset_code = $row['asset_code'];	
+				$asset_code = $row['asset_code']; 	
 								
 				$call_log_date_time = date('d-F-Y h:i A', strtotime($row['call_log_date_time']));	
 				$resolved_date_time = '';
@@ -334,6 +334,32 @@
 				$view_link .= "<a href='ticket_dashboard/call_log_link.php?call_log_id=$call_log_id', target='_blank'>View Link</a><br><br>";
 				$view_link .= "<a href='ticket_dashboard/call_log_link.php?call_log_id=$call_log_id&link=external', target='_blank'>Share Link</a>";
 
+				
+				# Assign to SP or Engg				
+				$dynamic_id1 = 'assign_to_sp_engg_'.$call_log_id;
+				$updated_text1 = '';
+				$disabled_text = '';
+				if($call_log_status == 2){
+					$disabled_text = 'disabled';
+				}
+				$updated_text1 .= '<select name="'.$dynamic_id1.'" id="'.$dynamic_id1.'" onChange="updateSpEnggStatus('.$call_log_id.')" class="form-control-sm" '.$disabled_text.'>';
+				if($assign_to == 0){
+					$updated_text1 .= '<option value="0" selected="selected">Assign To</option>';
+				}else{
+					$updated_text1 .= '<option value="0">Assign To</option>';
+				}
+				if($assign_to == 1){
+					$updated_text1 .= '<option value="1" selected="selected">Service Provider</option>';
+				}else{
+					$updated_text1 .= '<option value="1">Service Provider</option>';
+				}
+				if($assign_to == 2){
+					$updated_text1 .= '<option value="2" selected="selected">Engineer</option>';
+				}else{
+					$updated_text1 .= '<option value="2">Engineer</option>';
+				}
+				$updated_text1 .= '</select>'; 
+
 				if($dept_match == true){
 					$data[0] = $slno; 
 					$data[1] = $token_id;
@@ -348,9 +374,9 @@
 					$data[10] = $call_log_date_time;
 					$data[11] = $resolved_date_time;
 					$data[12] = $ticket_raiser_contact;
-					$data[13] = $assign_to_text;
+					/*$data[13] = $updated_text1;
 					$data[14] = $eng_contact_no;
-					$data[15] = $call_log_status_text;	
+					$data[15] = $call_log_status_text;	*/
 							
 					if($warranty_last_date != '0000-00-00'){										
 						$fifteen_day_prev = date('Y-m-d H:i:s',(strtotime ( '-15 day' , strtotime($warranty_last_date))));
@@ -373,16 +399,16 @@
 							// cool PMS
 							$warranty_last_date = '<span class="text-primary">'.date('d-F-Y', strtotime($warranty_last_date)).'</span>';
 						}
-						$data[16] = $warranty_last_date;//date('d-F-Y', strtotime($warranty_last_date));
+						$data[13] = $warranty_last_date;//date('d-F-Y', strtotime($warranty_last_date));
 					}else{
-						$data[16] = '';
+						$data[13] = '';
 					}
-					$data[17] = $amc_info;	
-					$data[18] = $cmc_info;	
-					$data[19] = $sp_details;	
-					$data[20] = $view_link;
+					$data[14] = $amc_info;	
+					$data[15] = $cmc_info;	
+					$data[16] = $sp_details;	
+					$data[17] = $view_link;
 
-					$data[21] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$call_log_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$call_log_id.")'></i></a>";						
+					$data[18] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$call_log_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$call_log_id.")'></i></a>";						
 
 					array_push($mainData, $data);
 					$slno++;
@@ -738,5 +764,20 @@
 		
 		echo json_encode($return_result);
 	}//Save function end
+
+	//Update function
+	if($fn == 'updateSpEnggStatus'){
+		$return_result = array();
+		$call_log_id = $_POST["call_log_id"];
+		$assign_to_sp_engg_status = $_POST["assign_to_sp_engg_status"];  
+
+		$status = true;	 
+
+		$sql = "UPDATE call_log_register SET assign_to = '" .$assign_to_sp_engg_status. "' WHERE call_log_id = '".$call_log_id."'";
+		$mysqli->query($sql);    
+
+		$return_result['status'] = $status; 
+		echo json_encode($return_result);
+	}//end function deleteItem
 
 ?>

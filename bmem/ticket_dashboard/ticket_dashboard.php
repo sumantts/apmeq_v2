@@ -285,9 +285,9 @@ include('common/head.php');
                                         <th>Logged date</th> 
                                         <th>Resolved Date</th>
                                         <th>Contact details <br>of <br>ticket raiser</th>
-                                        <th>Assign Service provider/<br>Junior enhgineer</th>
+                                        <!-- <th>Assign Service provider/<br>Junior enhgineer</th>
                                         <th>Engineer Contact No</th>
-                                        <th>Call Log Status </th> 
+                                        <th>Call Log Status </th>  -->
                                         <th>Warrenty last date</th>
                                         <th>AMC(Y/N)<br>Date</th>
                                         <th>CMC(Y/N)<br>Date</th>
@@ -311,9 +311,9 @@ include('common/head.php');
                                         <th>Logged date</th> 
                                         <th>Resolved Date</th>
                                         <th>Contact details <br>of <br>ticket raiser</th>
-                                        <th>Assign Service provider/<br>Junior enhgineer</th>
+                                        <!-- <th>Assign Service provider/<br>Junior enhgineer</th>
                                         <th>Engineer Contact No</th>
-                                        <th>Call Log Status </th> 
+                                        <th>Call Log Status </th>  -->
                                         <th>Warrenty last date</th>
                                         <th>AMC(Y/N)<br>Date</th>
                                         <th>CMC(Y/N)<br>Date</th>
