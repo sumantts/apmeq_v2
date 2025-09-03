@@ -260,6 +260,8 @@
 								
 				$call_log_date_time = date('d-F-Y h:i A', strtotime($row['call_log_date_time']));	
 				$resolved_date_time = '';
+				$closed_time = $row['resolved_date_time'];
+
 				if($row['resolved_date_time'] != '0000-00-00 00:00:00'){			
 					$resolved_date_time = date('d-F-Y h:i A', strtotime($row['resolved_date_time']));
 				}				
@@ -368,6 +370,16 @@
 				}
 				$updated_text1 .= '</select>'; 
 
+				$show_action_btn = true;
+				if($closed_time != '0000-00-00 00:00:00'){
+					$new_time = date($closed_time, strtotime('+72 hours'));
+					$now_time = date('Y-m-d H:i:s');
+
+					if(strtotime($now_time) > strtotime($new_time)){
+						$show_action_btn = false;
+					}//end if
+				}//end if
+
 				if($dept_match == true){
 					$data[0] = $slno; 
 					$data[1] = $token_id;
@@ -416,7 +428,11 @@
 					$data[16] = $sp_details;	
 					$data[17] = $view_link;
 
-					$data[18] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$call_log_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$call_log_id.")'></i></a>";						
+					if($show_action_btn == true){
+						$data[18] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$call_log_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$call_log_id.")'></i></a>";	
+					}else{
+						$data[18] = "Restricted";
+					}					
 
 					array_push($mainData, $data);
 					$slno++;
