@@ -290,7 +290,14 @@
                                     <label for="supplied_by">Supplied by</label>
                                     <input type="text" class="form-control" id="supplied_by" name="supplied_by" value="<?=$asset_supplied_by?>" <?=$readonly_text?> >
                                 </div>
-                            </div>  
+                            </div>    
+        
+                            <div class="col-sm-12 mb-1">
+                                <div class="form-group">
+                                    <label class="required-field" for="issue_description">Issue Description</label>
+                                    <textarea class="form-control" id="issue_description" name="issue_description" <?=$readonly_text?>><?=$issue_description?></textarea>
+                                </div>
+                            </div>
         
                             <div class="col-sm-12 mb-1">
                                 <div class="form-group">

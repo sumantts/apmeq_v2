@@ -130,11 +130,11 @@
 
 						$sql_2 = "SELECT * FROM call_log_register WHERE call_log_status = '2' AND facility_id = '" .$facility_id. "'";
 						$result_2 = $mysqli->query($sql_2);
-						$resolved_ticket = $result_2->num_rows;
+						$closed_ticket = $result_2->num_rows;
 
-						$sql_3 = "SELECT * FROM call_log_register WHERE call_log_status = '3' AND facility_id = '" .$facility_id. "'";
+						/*$sql_3 = "SELECT * FROM call_log_register WHERE call_log_status = '3' AND facility_id = '" .$facility_id. "'";
 						$result_3 = $mysqli->query($sql_3);
-						$closed_ticket = $result_3->num_rows;
+						$closed_ticket = $result_3->num_rows;*/
 
 						$sql_c = "SELECT * FROM call_log_register WHERE ticket_class = '1' AND facility_id = '" .$facility_id. "'";
 						$result_c = $mysqli->query($sql_c);
@@ -170,13 +170,13 @@
 						$data[3] = $critical_ticket;
 						$data[4] = $non_critical_ticket; 
 						$data[5] = $closed_ticket;
-						$data[6] = $resolved_ticket;
-						$data[7] = $open_ticket;
-						$data[8] = $wip_ticket;
-						$data[9] = $below_three_days;
-						$data[10] = $below_five_days;
-						$data[11] = $below_seven_days;
-						$data[12] = $above_seven_days;
+						//$data[6] = $resolved_ticket;
+						$data[6] = $open_ticket;
+						//$data[7] = $wip_ticket;
+						$data[7] = $below_three_days;
+						$data[8] = $below_five_days;
+						$data[9] = $below_seven_days;
+						$data[10] = $above_seven_days;
 						array_push($mainData, $data);
 					}//end inner while
 				}//end if
@@ -211,7 +211,7 @@
 		if($facility_id_s > 0){
 			$where_condition .= " AND call_log_register.facility_id = '" .$facility_id_s. "' ";
 		}
-		if($call_log_status > 0){
+		if($call_log_status >= 0){
 			$where_condition .= " AND call_log_register.call_log_status = '" .$call_log_status. "' ";
 		}
 		if($token_id != ''){
@@ -324,12 +324,20 @@
 				$cmc_yes_no = $row['cmc_yes_no'];
 				$cmc_last_date = $row['cmc_last_date'];
 
-				$amc_info1 = ($amc_yes_no == 0)? 'No':'Yes';
-				$cmc_info1 = ($cmc_yes_no == 0)? 'No':'Yes'; 
+				if($amc_yes_no == 0){
+					$amc_info = 'No';
+				}else{
+					$amc_info = "Yes<br>". date('d-F-Y', strtotime($amc_last_date));
+				}
 
-				$amc_info = $amc_info1 ."<br>". date('d-F-Y', strtotime($amc_last_date));
-				$cmc_info = $cmc_info1 ."<br>". date('d-F-Y', strtotime($cmc_last_date));
+				if($cmc_yes_no == 0){
+					$cmc_info = 'No'; 
+				}else{
+					$cmc_info = "Yes<br>". date('d-F-Y', strtotime($cmc_last_date));
+				}
 
+				
+				
 				$view_link = "";
 				$view_link .= "<a href='ticket_dashboard/call_log_link.php?call_log_id=$call_log_id', target='_blank'>View Link</a><br><br>";
 				$view_link .= "<a href='ticket_dashboard/call_log_link.php?call_log_id=$call_log_id&link=external', target='_blank'>Share Link</a>";

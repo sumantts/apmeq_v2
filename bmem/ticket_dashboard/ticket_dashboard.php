@@ -63,7 +63,7 @@ include('common/head.php');
                             </div>
                             <div class="col">
                                 <h4 class="m-0 text-white" id="open_ticket">000</h4>
-                                <span>Open / Assign / WIP</span>
+                                <span>Open</span>
                             </div>
                         </div>
                     </div>
@@ -105,9 +105,9 @@ include('common/head.php');
                                         <th>Critical Tickets</th>
                                         <th>Non Critical Tickets</th>
                                         <th>Closed</th>
-                                        <th>Resolved Tickets</th>
+                                        <!-- <th>Resolved Tickets</th> -->
                                         <th>Open Tickets</th>
-                                        <th>WIP Tickets</th>
+                                        <!-- <th>WIP Tickets</th> -->
                                         <th>< 3 Days</th>
                                         <th>3 > < 5 Days</th>
                                         <th>5 > < 7 Days</th> 
@@ -122,9 +122,9 @@ include('common/head.php');
                                         <th>Critical Tickets</th>
                                         <th>Non Critical Tickets</th>
                                         <th>Closed</th>
-                                        <th>Resolved Tickets</th>
+                                        <!-- <th>Resolved Tickets</th> -->
                                         <th>Open Tickets</th>
-                                        <th>WIP Tickets</th>
+                                        <!-- <th>WIP Tickets</th> -->
                                         <th>< 3 Days</th>
                                         <th>3 > < 5 Days</th>
                                         <th>5 > < 7 Days</th> 
@@ -283,7 +283,7 @@ include('common/head.php');
                                         <th>Department</th>
                                         <th>Supplied by</th>
                                         <th>Logged date</th> 
-                                        <th>Resolved Date</th>
+                                        <th>Closed Date</th>
                                         <th>Contact details <br>of <br>ticket raiser</th>
                                         <!-- <th>Assign Service provider/<br>Junior enhgineer</th>
                                         <th>Engineer Contact No</th>
@@ -309,7 +309,7 @@ include('common/head.php');
                                         <th>Department</th>
                                         <th>Supplied by</th>
                                         <th>Logged date</th> 
-                                        <th>Resolved Date</th>
+                                        <th>Closed Date</th>
                                         <th>Contact details <br>of <br>ticket raiser</th>
                                         <!-- <th>Assign Service provider/<br>Junior enhgineer</th>
                                         <th>Engineer Contact No</th>
