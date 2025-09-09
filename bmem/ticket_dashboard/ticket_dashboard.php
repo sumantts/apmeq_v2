@@ -176,7 +176,7 @@ include('common/head.php');
                                     <select class="form-control js-example-basic-single" id="call_log_status" name="call_log_status">  
                                         <option value="-1">Select</option>
                                         <option value="0">Raised</option> 
-                                        <option value="1">Reject</option>
+                                        <option value="4">WIP</option>
                                         <option value="2">Done</option>
                                         <option value="3">RBER</option> 
                                     </select> 
@@ -285,9 +285,9 @@ include('common/head.php');
                                         <th>Logged date</th> 
                                         <th>Closed Date</th>
                                         <th>Contact details <br>of <br>ticket raiser</th>
-                                        <!-- <th>Assign Service provider/<br>Junior enhgineer</th>
+                                        <th>Assign Service provider/<br>Junior enhgineer</th>
                                         <th>Engineer Contact No</th>
-                                        <th>Call Log Status </th>  -->
+                                        <th>Call Log Status </th> 
                                         <th>Warrenty last date</th>
                                         <th>AMC(Y/N)<br>Date</th>
                                         <th>CMC(Y/N)<br>Date</th>
@@ -311,9 +311,11 @@ include('common/head.php');
                                         <th>Logged date</th> 
                                         <th>Closed Date</th>
                                         <th>Contact details <br>of <br>ticket raiser</th>
-                                        <!-- <th>Assign Service provider/<br>Junior enhgineer</th>
+                                        
+                                        <th>Assign Service provider/<br>Junior enhgineer</th>
                                         <th>Engineer Contact No</th>
-                                        <th>Call Log Status </th>  -->
+                                        <th>Call Log Status </th> 
+
                                         <th>Warrenty last date</th>
                                         <th>AMC(Y/N)<br>Date</th>
                                         <th>CMC(Y/N)<br>Date</th>
@@ -340,12 +342,9 @@ include('common/head.php');
                         <div class="modal-body">
                             <form class="needs-validation" method="POST" id="myFormM" action="#">
                                 <a href="javascript: void(0);" id="partTwoSwitch" class="float-right">Show Ticket Description</a>
-                                <br>
-                                <hr>
+                                <br><hr>
                                 <div class="form-row" id="partTwoBoard"> 
-                                    <div class="col-md-12 mb-3" id="ticket_data">
-                                        
-                                    </div>  
+                                    <div class="col-md-12 mb-3" id="ticket_data"></div>  
                                 </div>
 
                                 <div class="form-row">
@@ -366,7 +365,7 @@ include('common/head.php');
                                     <div class="col-md-4 mb-3">
                                         <label for="call_log_statusM" class="text-danger">Call Log Status*</label>
                                         <select class="form-control" name="call_log_statusM" id="call_log_statusM" required>  
-                                            <option value="0">Raised</option> 
+                                            <option value="">Select</option> 
                                             <option value="1">Reject</option>
                                             <option value="2">Done</option>
                                             <option value="3">RBER</option> 
@@ -401,6 +400,13 @@ include('common/head.php');
                                     <div class="col-md-12 mb-3">
                                         <textarea class="form-control" name="engineer_coment" id="engineer_coment"></textarea>
                                     </div>
+                                </div>
+
+                                
+                                <a href="javascript: void(0);" id="statusHistorySwitch" class="float-right">Status History</a>
+                                <br><hr>
+                                <div class="form-row" id="statusHistoryBoard"> 
+                                    <div class="col-md-12 mb-3" id="status_history">No History Available</div>  
                                 </div>
                             
                         </div>

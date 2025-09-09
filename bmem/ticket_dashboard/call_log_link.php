@@ -334,11 +334,10 @@
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
                                     <label for="call_log_status">Call Log Status</label>
-                                    <select class="form-control" name="call_log_status" id="call_log_status" > 
-                                        <option value="0" <?php if($call_log_status == 0){?> selected="selected" <?php }?>>Raised</option>
-                                        <option value="1" <?php if($call_log_status == 1){?> selected="selected" <?php }?>>Reject</option> 
+                                    <select class="form-control" name="call_log_status" id="call_log_status" >  
+                                        <option value="">Select</option> 
                                         <option value="2" <?php if($call_log_status == 2){?> selected="selected" <?php }?>>Done</option>  
-                                        <option value="2" <?php if($call_log_status == 3){?> selected="selected" <?php }?>>RBER</option>  
+                                        <option value="3" <?php if($call_log_status == 3){?> selected="selected" <?php }?>>RBER</option>  
                                     </select>
                                 </div>
                             </div>

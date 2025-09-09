@@ -258,12 +258,12 @@
 				$sp_details = $row['sp_details'];					
 				$asset_code = $row['asset_code']; 	
 								
-				$call_log_date_time = date('d-F-Y h:i A', strtotime($row['call_log_date_time']));	
+				$call_log_date_time = date('d-M-Y', strtotime($row['call_log_date_time'])).'<br>'.date('h:i A', strtotime($row['call_log_date_time']));	
 				$resolved_date_time = '';
 				$closed_time = $row['resolved_date_time'];
 
 				if($row['resolved_date_time'] != '0000-00-00 00:00:00'){			
-					$resolved_date_time = date('d-F-Y h:i A', strtotime($row['resolved_date_time']));
+					$resolved_date_time = date('d-M-Y', strtotime($row['resolved_date_time'])).'<br>'.date('h:i A', strtotime($row['resolved_date_time']));
 				}				
 				$ticket_raiser_contact = $row['ticket_raiser_contact'];						
 				$eng_contact_no = $row['eng_contact_no'];	
@@ -288,9 +288,47 @@
 					$call_log_status_text = 'Done';
 				}else if($call_log_status == 3){
 					$call_log_status_text = 'RBER';
+				}else if($call_log_status == 4){
+					$call_log_status_text = 'WIP';
 				}else{
 					$call_log_status_text = 'Raised';
 				}
+
+				# 0=WIP, 1=Resolved, 2=Closed
+				$dynamic_id = 'ticket_id_'.$call_log_id;
+				$updated_text = '';
+				$disabled_text = '';
+				if($call_log_status == 2){
+					$disabled_text = 'disabled';
+				}
+
+				$updated_text .= '<select name="'.$dynamic_id.'" id="'.$dynamic_id.'" onChange="updateTicketStatus('.$call_log_id.')" class="form-control-sm" '.$disabled_text.'>';
+				if($call_log_status == 0){
+					$updated_text .= '<option value="0" selected="selected">Raised</option>';
+				}else{
+					$updated_text .= '<option value="0">Raised</option>';
+				}
+				if($call_log_status == 1){
+					$updated_text .= '<option value="1" selected="selected">Reject</option>';
+				}else{
+					$updated_text .= '<option value="1">Reject</option>';
+				}
+				if($call_log_status == 2){
+					$updated_text .= '<option value="2" selected="selected">Done</option>';
+				}else{
+					$updated_text .= '<option value="2">Done</option>';
+				}
+				if($call_log_status == 3){
+					$updated_text .= '<option value="3" selected="selected">RBER</option>';
+				}else{
+					$updated_text .= '<option value="3">RBER</option>';
+				}
+				if($call_log_status == 4){
+					$updated_text .= '<option value="4" selected="selected">WIP</option>';
+				}else{
+					$updated_text .= '<option value="4">WIP</option>';
+				}
+				$updated_text .= '</select>'; 
 				
 				//get all depertment name
 				if($department_id_s > 0){
@@ -329,13 +367,13 @@
 				if($amc_yes_no == 0){
 					$amc_info = 'No';
 				}else{
-					$amc_info = "Yes<br>". date('d-F-Y', strtotime($amc_last_date));
+					$amc_info = "Yes<br>". date('d-M-Y', strtotime($amc_last_date));
 				}
 
 				if($cmc_yes_no == 0){
 					$cmc_info = 'No'; 
 				}else{
-					$cmc_info = "Yes<br>". date('d-F-Y', strtotime($cmc_last_date));
+					$cmc_info = "Yes<br>". date('d-M-Y', strtotime($cmc_last_date));
 				}
 
 				
@@ -394,9 +432,9 @@
 					$data[10] = $call_log_date_time;
 					$data[11] = $resolved_date_time;
 					$data[12] = $ticket_raiser_contact;
-					/*$data[13] = $updated_text1;
+					$data[13] = $updated_text1;
 					$data[14] = $eng_contact_no;
-					$data[15] = $call_log_status_text;	*/
+					$data[15] = $updated_text;
 							
 					if($warranty_last_date != '0000-00-00'){										
 						$fifteen_day_prev = date('Y-m-d H:i:s',(strtotime ( '-15 day' , strtotime($warranty_last_date))));
@@ -411,27 +449,27 @@
 						// Compare the dates
 						if ($date1 > $date2 && $date1 < $date3) {
 							//PMS within 15 days
-							$warranty_last_date = '<span class="text-warning blink">'.date('d-F-Y', strtotime($warranty_last_date)).'</span>';
+							$warranty_last_date = '<span class="text-warning blink">'.date('d-M-Y', strtotime($warranty_last_date)).'</span>';
 						} elseif ($date1 > $date3) {
 							//PMS Date over
-							$warranty_last_date = '<span class="text-danger blink">'.date('d-F-Y', strtotime($warranty_last_date)).'</span>';
+							$warranty_last_date = '<span class="text-danger blink">'.date('d-M-Y', strtotime($warranty_last_date)).'</span>';
 						} else {
 							// cool PMS
-							$warranty_last_date = '<span class="text-primary">'.date('d-F-Y', strtotime($warranty_last_date)).'</span>';
+							$warranty_last_date = '<span class="text-primary">'.date('d-M-Y', strtotime($warranty_last_date)).'</span>';
 						}
-						$data[13] = $warranty_last_date;//date('d-F-Y', strtotime($warranty_last_date));
+						$data[16] = $warranty_last_date;//date('d-F-Y', strtotime($warranty_last_date));
 					}else{
-						$data[13] = '';
+						$data[16] = '';
 					}
-					$data[14] = $amc_info;	
-					$data[15] = $cmc_info;	
-					$data[16] = $sp_details;	
-					$data[17] = $view_link;
+					$data[17] = $amc_info;	
+					$data[18] = $cmc_info;	
+					$data[19] = $sp_details;	
+					$data[20] = $view_link;
 
 					if($show_action_btn == true){
-						$data[18] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$call_log_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$call_log_id.")'></i></a>";	
+						$data[21] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$call_log_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$call_log_id.")'></i></a>";	
 					}else{
-						$data[18] = "Restricted";
+						$data[21] = "Restricted";
 					}					
 
 					array_push($mainData, $data);
@@ -446,6 +484,52 @@
     	echo json_encode($return_array);
 	}//function end	
 
+	
+
+	//Update function
+	if($fn == 'updateTicketStatus'){
+		$return_result = array();
+		$call_log_id = $_POST["call_log_id"];
+		$call_log_status = $_POST["call_log_status"];  
+		$call_log_status_o = '';
+		$cl_status_history_en = '';
+		$cl_status_history = array();
+
+		$status = true;	
+		$resolved_date_time = date('Y-m-d'); 		
+
+		$sql = "SELECT * FROM call_log_register WHERE call_log_id = '".$call_log_id."'";
+		$result = $mysqli->query($sql);
+		if ($result->num_rows > 0) {
+			$row = $result->fetch_array();
+			$call_log_status_o = $row['call_log_status'];
+			$cl_status_history1 = $row['cl_status_history'];
+			if($cl_status_history1 != ''){
+				$cl_status_history = json_decode($cl_status_history1);
+			}
+		} 
+
+		$cl_status_history_obj = new stdClass();
+		$cl_status_history_obj->date_time = date('Y-m-d H:i:s');
+		$cl_status_history_obj->date_time_text = date('d-M-Y h:i A');
+		$cl_status_history_obj->old = $call_log_status_o;
+		$cl_status_history_obj->new = $call_log_status;
+
+		array_push($cl_status_history, $cl_status_history_obj);
+		$cl_status_history_en = json_encode($cl_status_history);
+
+		if($call_log_status == 2){
+			$sql2 = "UPDATE call_log_register SET call_log_status = '" .$call_log_status. "', resolved_date_time = '" .$resolved_date_time. "', cl_status_history = '" .$cl_status_history_en. "' WHERE call_log_id = '".$call_log_id."'";
+			$mysqli->query($sql2);   
+		}else{
+			$sql2 = "UPDATE call_log_register SET call_log_status = '" .$call_log_status. "', cl_status_history = '" .$cl_status_history_en. "' WHERE call_log_id = '".$call_log_id."'";
+			$mysqli->query($sql2);   
+		}
+		$return_result['status'] = $status; 
+		echo json_encode($return_result);
+	}//end function deleteItem
+
+
 	//function start
 	if($fn == 'getFormEditData'){
 		$return_array = array();
@@ -455,7 +539,7 @@
 
 		$where_condition = "WHERE call_log_register.call_log_id = '" .$call_log_id. "' ";
 		
-		$sql = "SELECT call_log_register.call_log_id, call_log_register.token_id, call_log_register.issue_description, call_log_register.call_log_date_time, call_log_register.resolved_date_time, call_log_register.ticket_raiser_contact, call_log_register.assign_to, call_log_register.call_log_status, call_log_register.status_by_engg, call_log_register.eng_contact_no, call_log_register.engineer_coment, asset_details.equipment_name, asset_details.department_id, asset_details.asset_supplied_by, asset_details.sp_details, facility_master.facility_code, facility_master.facility_name FROM call_log_register JOIN asset_details ON call_log_register.asset_code = asset_details.asset_code JOIN facility_master ON call_log_register.facility_id = facility_master.facility_id $where_condition";
+		$sql = "SELECT call_log_register.call_log_id, call_log_register.token_id, call_log_register.issue_description, call_log_register.call_log_date_time, call_log_register.resolved_date_time, call_log_register.ticket_raiser_contact, call_log_register.assign_to, call_log_register.call_log_status, call_log_register.status_by_engg, call_log_register.eng_contact_no, call_log_register.engineer_coment, call_log_register.cl_status_history, asset_details.equipment_name, asset_details.department_id, asset_details.asset_supplied_by, asset_details.sp_details, facility_master.facility_code, facility_master.facility_name FROM call_log_register JOIN asset_details ON call_log_register.asset_code = asset_details.asset_code JOIN facility_master ON call_log_register.facility_id = facility_master.facility_id $where_condition";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -471,7 +555,8 @@
 				$department_id = $row['department_id'];					
 				$asset_supplied_by = $row['asset_supplied_by'];					
 				$engineer_coment = $row['engineer_coment'];					
-				$status_by_engg = $row['status_by_engg'];	
+				$status_by_engg = $row['status_by_engg'];					
+				$cl_status_history = json_decode($row['cl_status_history']);	
 							
 				$sp_details = $row['sp_details'];					
 				$call_log_date_time = date('d-F-Y h:i A', strtotime($row['call_log_date_time']));	
@@ -544,7 +629,8 @@
 				$return_array['call_log_status_text'] = $call_log_status_text;	
 				$return_array['eng_contact_no'] = $eng_contact_no;				
 				$return_array['engineer_coment'] = $engineer_coment;			
-				$return_array['status_by_engg'] = $status_by_engg;				
+				$return_array['status_by_engg'] = $status_by_engg;					
+				$return_array['cl_status_history'] = $cl_status_history;		
 			}
 		} else {
 			$status = false;
@@ -794,10 +880,11 @@
 		$return_result = array();
 		$call_log_id = $_POST["call_log_id"];
 		$assign_to_sp_engg_status = $_POST["assign_to_sp_engg_status"];  
+		$call_log_status = 4;
 
 		$status = true;	 
 
-		$sql = "UPDATE call_log_register SET assign_to = '" .$assign_to_sp_engg_status. "' WHERE call_log_id = '".$call_log_id."'";
+		$sql = "UPDATE call_log_register SET assign_to = '" .$assign_to_sp_engg_status. "', call_log_status = '" .$call_log_status. "' WHERE call_log_id = '".$call_log_id."'";
 		$mysqli->query($sql);    
 
 		$return_result['status'] = $status; 

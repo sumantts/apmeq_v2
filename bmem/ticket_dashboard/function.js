@@ -17,6 +17,10 @@ $("#partTwoSwitch").click(function(){
     $("#partTwoBoard").toggle('slow');
 });
 
+$("#statusHistorySwitch").click(function(){
+    $("#statusHistoryBoard").toggle('slow');
+});
+
 $('#myFormS').on('submit', function(){    
     $facility_id_s = $('#facility_id_s').val();
     $department_id = $('#department_id').val(); 
@@ -65,6 +69,8 @@ $('#myFormM').on('submit', function(){
 })
 
 function editTableData($call_log_id){
+    $status_arr = ["Raised", "Reject", "Done", "RBER"];
+
     $('#exampleModalLong').modal('show');
     $.ajax({
         method: "POST",
@@ -85,6 +91,20 @@ function editTableData($call_log_id){
             $html = '';
             $html += '<div><strong>Issue Description: </strong>'+$res1.issue_description+'</div>';
             $('#ticket_data').html($html);
+
+            $cl_status_history = $res1.cl_status_history;
+            if($cl_status_history.length > 0){
+                $html2 = '';
+                $html2 += '<div>';
+                for($h = 0; $h < $cl_status_history.length; $h++){
+                    $old = $cl_status_history[$h].old;
+                    $new = $cl_status_history[$h].new;
+
+                    $html2 += '<p>Status changed from <strong>'+$status_arr[$old]+'</strong> to <strong>'+$status_arr[$new]+'</strong> on '+$cl_status_history[$h].date_time_text+'</p>';
+                }
+                $html2 += '</div>';
+                $('#status_history').html($html2);
+            }
         }
     });//end ajax
 }//end functon
@@ -427,11 +447,32 @@ function updateSpEnggStatus($call_log_id){
     }
 }
 
+
+function updateTicketStatus($call_log_id){
+    $call_log_status = $('#ticket_id_'+$call_log_id).val(); 
+
+    if(confirm('Are you sure to change status?')){
+        $.ajax({
+            method: "POST",
+            url: "ticket_dashboard/function.php",
+            data: { fn: "updateTicketStatus", call_log_id: $call_log_id, call_log_status: $call_log_status }
+        })
+        .done(function( res ) { 
+            $res1 = JSON.parse(res);
+            if($res1.status == true){
+                alert('Status Updated Successfully');
+                populateDataTable_1();
+            }
+        }); //end ajax
+    }
+}
+
 $(document).ready(function () {
     initTicketCounter();
     configureFacilityDropDown(); 
     configureDeviceGroupDropDown();
     populateDataTable();
     $("#partTwoBoard").hide();
+    $("#statusHistoryBoard").hide();
     $('.js-example-basic-single').select2();
 });
