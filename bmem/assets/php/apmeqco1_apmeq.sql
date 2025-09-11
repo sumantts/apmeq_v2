@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 02, 2025 at 08:11 AM
+-- Generation Time: Sep 11, 2025 at 09:53 PM
 -- Server version: 10.3.39-MariaDB-cll-lve
--- PHP Version: 8.4.8
+-- PHP Version: 8.4.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -182,7 +182,7 @@ INSERT INTO `calib_info` (`calib_id`, `calib_info_id`, `asset_id`, `asset_code`,
 
 CREATE TABLE `call_log_register` (
   `call_log_id` int(11) NOT NULL,
-  `token_id` varchar(10) NOT NULL,
+  `token_id` varchar(20) NOT NULL,
   `facility_id` int(11) NOT NULL,
   `asset_code` varchar(10) NOT NULL,
   `user_id` int(11) NOT NULL COMMENT 'PK of user_details',
@@ -191,14 +191,15 @@ CREATE TABLE `call_log_register` (
   `issue_description` text NOT NULL,
   `call_log_date_time` datetime NOT NULL,
   `resolved_date_time` datetime NOT NULL,
-  `assign_to` tinyint(1) NOT NULL COMMENT '1-Engineer 2=ServiceProvider',
+  `assign_to` tinyint(1) NOT NULL COMMENT '1=ServiceProvider 2=Engineer',
   `eng_contact_no` varchar(10) NOT NULL,
   `uploaded_report` text NOT NULL,
   `engineer_coment` text NOT NULL,
   `call_log_comment` text NOT NULL,
   `call_log_attach` text NOT NULL COMMENT 'image uploaded by soft link',
   `status_by_engg` tinyint(1) NOT NULL COMMENT '0=wip,1=closed,2=rber, 3=Condemed',
-  `call_log_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0=Raised 1=WIP \r\n 2=Resolved 3=Closed 4=Rejected',
+  `call_log_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0=Raised 1=Reject\r\n 2=Done 3=RBER',
+  `cl_status_history` text NOT NULL,
   `ticket_class` tinyint(1) NOT NULL DEFAULT 0 COMMENT '1=critical 2=non-critical',
   `amc_yes_no` tinyint(1) NOT NULL COMMENT '0=No, 1=Yes',
   `amc_last_date` date NOT NULL,
@@ -210,10 +211,11 @@ CREATE TABLE `call_log_register` (
 -- Dumping data for table `call_log_register`
 --
 
-INSERT INTO `call_log_register` (`call_log_id`, `token_id`, `facility_id`, `asset_code`, `user_id`, `ticket_raiser_name`, `ticket_raiser_contact`, `issue_description`, `call_log_date_time`, `resolved_date_time`, `assign_to`, `eng_contact_no`, `uploaded_report`, `engineer_coment`, `call_log_comment`, `call_log_attach`, `status_by_engg`, `call_log_status`, `ticket_class`, `amc_yes_no`, `amc_last_date`, `cmc_yes_no`, `cmc_last_date`) VALUES
-(1, '0001', 3, '000300006', 1, 'Mr. Superadmin', '9733935161', 'intensifier issue  ', '2025-08-28 13:41:03', '0000-00-00 00:00:00', 0, '', '', '', '', '', 0, 0, 0, 2, '0000-00-00', 2, '0000-00-00'),
-(2, '0002', 2, '000200002', 1, 'Mr. Superadmin', '9733935161', 'Battery issue', '2025-08-28 13:46:55', '0000-00-00 00:00:00', 0, '', '', '', '28.08 rber', '', 2, 0, 0, 0, '0000-00-00', 0, '0000-00-00'),
-(3, '0003', 1, '000100007', 1, 'Mr. Superadmin', '9733935161', 'Heater Issue, Observation light not functional, Timer problem', '2025-08-28 22:10:21', '0000-00-00 00:00:00', 0, '', '', '', '', '', 0, 0, 0, 1, '2026-01-01', 1, '2026-01-01');
+INSERT INTO `call_log_register` (`call_log_id`, `token_id`, `facility_id`, `asset_code`, `user_id`, `ticket_raiser_name`, `ticket_raiser_contact`, `issue_description`, `call_log_date_time`, `resolved_date_time`, `assign_to`, `eng_contact_no`, `uploaded_report`, `engineer_coment`, `call_log_comment`, `call_log_attach`, `status_by_engg`, `call_log_status`, `cl_status_history`, `ticket_class`, `amc_yes_no`, `amc_last_date`, `cmc_yes_no`, `cmc_last_date`) VALUES
+(1, '0001', 3, '000300006', 1, 'Mr. Superadmin', '9733935161', 'intensifier issue  ', '2025-08-28 13:41:03', '0000-00-00 00:00:00', 1, '', '', '', '', '', 0, 4, '', 0, 2, '2026-09-01', 2, '2027-09-06'),
+(2, '0002', 2, '000200002', 1, 'Mr. Superadmin', '9733935161', 'Battery issue', '2025-08-28 13:46:55', '0000-00-00 00:00:00', 2, '', '', '', '28.08 rber', '', 0, 4, '', 0, 0, '0000-00-00', 0, '0000-00-00'),
+(3, '0003', 1, '000100007', 1, 'Mr. Superadmin', '9733935161', 'Heater Issue, Observation light not functional, Timer problem', '2025-08-28 22:10:21', '0000-00-00 00:00:00', 1, '', '', '', '', '', 0, 4, '', 0, 1, '2026-01-01', 1, '2026-01-01'),
+(4, '0004', 2, '000200003', 1, 'Mr. Superadmin', '9733935161', 'x-ray tube issue', '2025-09-11 16:25:59', '0000-00-00 00:00:00', 0, '', '', '', '', '', 0, 0, '', 0, 2, '0000-00-00', 2, '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -378,7 +380,7 @@ CREATE TABLE `pms_info` (
 --
 
 INSERT INTO `pms_info` (`pms_id`, `pms_info_id`, `asset_id`, `asset_code`, `facility_id`, `facility_code`, `department_id`, `device_group`, `asset_class`, `equipment_name`, `equipment_make`, `equipment_model`, `equipment_sl_no`, `pms_due_date`, `supplied_by`, `sp_details`, `service_provider_details`, `pms_planned_date`, `pms_report_attached`, `link_generated_by`, `link_generate_time`, `row_status`, `pms_status`, `pms_sp_status`, `assign_to_sp_engg`, `pms_data_updated`) VALUES
-(1, '0001', 1, '000100001', 1, '0001', '3', 1, 1, 'X-ray', 'ME xray', '300mA', '11334', '2025-01-01', 'ME X-ray', '8910420169', '', '2025-08-21', '', 1, '2025-08-21 16:39:22', 2, 0, 0, 0, '2025-08-21 16:39:24'),
+(1, '0001', 1, '000100001', 1, '0001', '3', 1, 1, 'X-ray', 'ME xray', '300mA', '11334', '2025-01-01', 'ME X-ray', '8910420169', '', '2025-08-21', '', 1, '2025-08-21 16:39:22', 2, 0, 0, 1, '2025-08-21 16:39:24'),
 (2, '0002', 5, '000300005', 3, '0003', '3', 1, 1, 'X-ray', 'PHILIPS', '500mA', '78912', '2025-08-11', 'Eastern Meditech', '8910420169', 'done 21.08', '2025-08-21', '[\"68a700185d7a9.png\"]', 1, '2025-08-21 16:39:46', 2, 1, 0, 2, '2025-08-21 16:46:42'),
 (3, '0003', 4, '000200004', 2, '0002', '2', 2, 2, 'Nebulizer', 'Omron', 'Nebulizer', '5544', '2025-07-01', 'Eastern Meditech', '8910420169', 'done 21.08', '2025-08-21', '[\"68a6ffb140e20.png\"]', 1, '2025-08-21 16:40:14', 2, 1, 0, 0, '2025-08-21 16:45:03');
 
@@ -713,7 +715,7 @@ ALTER TABLE `calib_info`
 -- AUTO_INCREMENT for table `call_log_register`
 --
 ALTER TABLE `call_log_register`
-  MODIFY `call_log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `call_log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `category_list`

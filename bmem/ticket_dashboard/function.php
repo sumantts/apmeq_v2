@@ -302,31 +302,33 @@
 					$disabled_text = 'disabled';
 				}
 
+				# Status hobe open, work in progress(WIP), closed and RBER
 				$updated_text .= '<select name="'.$dynamic_id.'" id="'.$dynamic_id.'" onChange="updateTicketStatus('.$call_log_id.')" class="form-control-sm" '.$disabled_text.'>';
+				$updated_text .= '<option value="">Select</option>'; 
 				if($call_log_status == 0){
-					$updated_text .= '<option value="0" selected="selected">Raised</option>';
+					$updated_text .= '<option value="0" selected="selected">Open</option>';
 				}else{
-					$updated_text .= '<option value="0">Raised</option>';
-				}
-				if($call_log_status == 1){
-					$updated_text .= '<option value="1" selected="selected">Reject</option>';
-				}else{
-					$updated_text .= '<option value="1">Reject</option>';
-				}
-				if($call_log_status == 2){
-					$updated_text .= '<option value="2" selected="selected">Done</option>';
-				}else{
-					$updated_text .= '<option value="2">Done</option>';
-				}
-				if($call_log_status == 3){
-					$updated_text .= '<option value="3" selected="selected">RBER</option>';
-				}else{
-					$updated_text .= '<option value="3">RBER</option>';
+					$updated_text .= '<option value="0">Open</option>';
 				}
 				if($call_log_status == 4){
 					$updated_text .= '<option value="4" selected="selected">WIP</option>';
 				}else{
 					$updated_text .= '<option value="4">WIP</option>';
+				}
+				if($call_log_status == 2){
+					$updated_text .= '<option value="2" selected="selected">Closed</option>';
+				}else{
+					$updated_text .= '<option value="2">Closed</option>';
+				}
+				/*if($call_log_status == 1){
+					$updated_text .= '<option value="1" selected="selected">Reject</option>';
+				}else{
+					$updated_text .= '<option value="1">Reject</option>';
+				}*/
+				if($call_log_status == 3){
+					$updated_text .= '<option value="3" selected="selected">RBER</option>';
+				}else{
+					$updated_text .= '<option value="3">RBER</option>';
 				}
 				$updated_text .= '</select>'; 
 				
@@ -432,9 +434,7 @@
 					$data[10] = $call_log_date_time;
 					$data[11] = $resolved_date_time;
 					$data[12] = $ticket_raiser_contact;
-					$data[13] = $updated_text1;
-					$data[14] = $eng_contact_no;
-					$data[15] = $updated_text;
+					$data[13] = $eng_contact_no;
 							
 					if($warranty_last_date != '0000-00-00'){										
 						$fifteen_day_prev = date('Y-m-d H:i:s',(strtotime ( '-15 day' , strtotime($warranty_last_date))));
@@ -457,14 +457,17 @@
 							// cool PMS
 							$warranty_last_date = '<span class="text-primary">'.date('d-M-Y', strtotime($warranty_last_date)).'</span>';
 						}
-						$data[16] = $warranty_last_date;//date('d-F-Y', strtotime($warranty_last_date));
+						$data[14] = $warranty_last_date;//date('d-F-Y', strtotime($warranty_last_date));
 					}else{
-						$data[16] = '';
+						$data[14] = '';
 					}
-					$data[17] = $amc_info;	
-					$data[18] = $cmc_info;	
-					$data[19] = $sp_details;	
-					$data[20] = $view_link;
+					$data[15] = $amc_info;	
+					$data[16] = $cmc_info;	
+					$data[17] = $sp_details;
+
+					$data[18] = $updated_text1;	
+					$data[19] = $view_link;
+					$data[20] = $updated_text;
 
 					if($show_action_btn == true){
 						$data[21] = "<a href='javascript: void(0)' data-center_id='1'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$call_log_id.")'></i></a><a href='javascript: void(0)' data-center_id='1'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$call_log_id.")'></i></a>";	
@@ -666,7 +669,7 @@
 		$call_log_id = $_POST['call_log_id']; 
 		$engineer_coment = $_POST['engineer_coment']; 
 
-		$sql = "UPDATE call_log_register SET assign_to = '" .$assign_to. "', eng_contact_no = '" .$eng_contact_no. "', call_log_status = '" .$call_log_statusM. "', resolved_date_time = '" .$resolved_date_time. "', engineer_coment = '" .$engineer_coment. "' WHERE call_log_id = '" .$call_log_id. "' ";
+		$sql = "UPDATE call_log_register SET call_log_status = '" .$call_log_statusM. "', engineer_coment = '" .$engineer_coment. "' WHERE call_log_id = '" .$call_log_id. "' ";
 		$result = $mysqli->query($sql);
 
 		$return_array['status'] = $status;
@@ -858,14 +861,22 @@
 
 		$call_log_id = $_POST['call_log_id'];
 		$call_log_comment = $_POST['call_log_comment']; 
-		$status_by_engg = $_POST['status_by_engg']; 
+		$call_log_status = $_POST['call_log_status']; 
+		$call_log_date_time1 = $_POST['call_log_date_time']; 
+		$call_log_date_time = $call_log_date_time1.' '.date('H:i:s');
+
+		$asset_code = $_POST['asset_code']; 
+		$sp_details = $_POST['sp_details']; 
 		
 		try {
 			if($call_log_id > 0){
 				$status = true;
 				$pms_data_updated = date('Y-m-d H:i:s'); 
-				$sql = "UPDATE call_log_register SET call_log_comment = '" .$call_log_comment. "', status_by_engg = '" .$status_by_engg. "' WHERE call_log_id = '" .$call_log_id. "' ";
-				$result = $mysqli->query($sql);
+				$sql = "UPDATE call_log_register SET call_log_comment = '" .$call_log_comment. "', call_log_status = '" .$call_log_status. "', call_log_date_time = '" .$call_log_date_time. "' WHERE call_log_id = '" .$call_log_id. "' ";
+				$result = $mysqli->query($sql); 
+
+				$sql2 = "UPDATE asset_details SET sp_details = '" .$sp_details. "' WHERE asset_code = '" .$asset_code. "' ";
+				$result2 = $mysqli->query($sql2);
 			}	
 		} catch (PDOException $e) {
 			die("Error occurred:" . $e->getMessage());

@@ -45,10 +45,10 @@ $('#myFormS').on('submit', function(){
 })
 
 $('#myFormM').on('submit', function(){    
-    $assign_to = $('#assign_to').val();
-    $eng_contact_no = $('#eng_contact_no').val(); 
+    $assign_to = '';// $('#assign_to').val();
+    $eng_contact_no = '';// $('#eng_contact_no').val(); 
     $call_log_statusM = $('#call_log_statusM').val();
-    $resolved_date_time = $('#resolved_date_time').val(); 
+    $resolved_date_time = '';// $('#resolved_date_time').val(); 
     $call_log_id = $('#call_log_id').val(); 
     $engineer_coment = $('#engineer_coment').val();
     

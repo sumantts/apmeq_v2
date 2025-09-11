@@ -171,13 +171,14 @@ include('common/head.php');
                                     </select> 
                                 </div>    
 
+                                <!-- Status in filter hobe Open, WIP, Closed & RBER  -->
                                 <div class="col-md-3 mb-3">
                                     <label for="call_log_status">Call Log Status</label>
                                     <select class="form-control js-example-basic-single" id="call_log_status" name="call_log_status">  
                                         <option value="-1">Select</option>
-                                        <option value="0">Raised</option> 
+                                        <option value="0">Open</option> 
                                         <option value="4">WIP</option>
-                                        <option value="2">Done</option>
+                                        <option value="2">Closed</option>
                                         <option value="3">RBER</option> 
                                     </select> 
                                 </div>    
@@ -285,14 +286,15 @@ include('common/head.php');
                                         <th>Logged date</th> 
                                         <th>Closed Date</th>
                                         <th>Contact details <br>of <br>ticket raiser</th>
-                                        <th>Assign Service provider/<br>Junior enhgineer</th>
                                         <th>Engineer Contact No</th>
-                                        <th>Call Log Status </th> 
                                         <th>Warrenty last date</th>
                                         <th>AMC(Y/N)<br>Date</th>
                                         <th>CMC(Y/N)<br>Date</th>
                                         <th>Service provider<br> details</th>
+                                        
+                                        <th>Assign Service provider/<br>Junior enhgineer</th>
                                         <th>Soft Link</th>
+                                        <th>Call Log Status </th> 
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -311,16 +313,15 @@ include('common/head.php');
                                         <th>Logged date</th> 
                                         <th>Closed Date</th>
                                         <th>Contact details <br>of <br>ticket raiser</th>
-                                        
-                                        <th>Assign Service provider/<br>Junior enhgineer</th>
                                         <th>Engineer Contact No</th>
-                                        <th>Call Log Status </th> 
-
                                         <th>Warrenty last date</th>
                                         <th>AMC(Y/N)<br>Date</th>
                                         <th>CMC(Y/N)<br>Date</th>
                                         <th>Service provider<br> details</th>
+                                        
+                                        <th>Assign Service provider/<br>Junior enhgineer</th>
                                         <th>Soft Link</th>
+                                        <th>Call Log Status </th> 
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
@@ -348,7 +349,7 @@ include('common/head.php');
                                 </div>
 
                                 <div class="form-row">
-                                    <div class="col-md-4 mb-3">
+                                    <!-- <div class="col-md-4 mb-3">
                                         <label for="assign_to" class="text-danger">Assign To*</label>
                                         <select class="form-control" name="assign_to" id="assign_to" required>
                                             <option value="0">Select</option> 
@@ -360,22 +361,23 @@ include('common/head.php');
                                     <div class="col-md-4 mb-3">
                                         <label for="eng_contact_no" class="text-danger">Engineer Contact Number</label>
                                         <input type="tel" class="form-control" id="eng_contact_no" value="" > 
-                                    </div> 
+                                    </div>  -->
 
+                                    <!-- Status inside action button Reject, Closed, & RBER -->
                                     <div class="col-md-4 mb-3">
                                         <label for="call_log_statusM" class="text-danger">Call Log Status*</label>
                                         <select class="form-control" name="call_log_statusM" id="call_log_statusM" required>  
                                             <option value="">Select</option> 
                                             <option value="1">Reject</option>
-                                            <option value="2">Done</option>
+                                            <option value="2">Closed</option>
                                             <option value="3">RBER</option> 
                                         </select> 
                                     </div>
                                     
-                                    <div class="col-md-4 mb-3">
+                                    <!-- <div class="col-md-4 mb-3">
                                         <label for="resolved_date_time" >Resolved Date Time</label>
                                         <input type="date" class="form-control" id="resolved_date_time" value="" > 
-                                    </div>
+                                    </div> -->
                                     
                                     <div class="col-md-6 mt-4">
                                         <div class="row">
@@ -397,6 +399,7 @@ include('common/head.php');
                                 </div>
 
                                 <div class="form-row"> 
+                                    <label for="call_log_statusM">Remarks</label>
                                     <div class="col-md-12 mb-3">
                                         <textarea class="form-control" name="engineer_coment" id="engineer_coment"></textarea>
                                     </div>

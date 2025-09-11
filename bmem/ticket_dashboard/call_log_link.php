@@ -97,7 +97,9 @@
                 $call_log_comment = $row['call_log_comment'];					
                 $status_by_engg = $row['status_by_engg'];
                                 
-                $call_log_date_time = date('d-F-Y h:i A', strtotime($row['call_log_date_time']));	
+                $call_log_date_time = date('d-F-Y h:i A', strtotime($row['call_log_date_time']));
+                $call_log_date_cal = date('Y-m-d', strtotime($row['call_log_date_time']));	
+
                 $resolved_date_time = '';
                 if($row['resolved_date_time'] != '0000-00-00 00:00:00'){			
                     $resolved_date_time = date('d-F-Y h:i A', strtotime($row['resolved_date_time']));
@@ -342,8 +344,16 @@
                                 </div>
                             </div>
         
+                            <div class="col-sm-6 mb-1">
+                                <div class="form-group">
+                                    <label for="call_log_date_time">Ticket open date</label>
+                                    <input type="date" class="form-control" id="call_log_date_time" name="call_log_date_time" value="<?=$call_log_date_cal?>" <?=$readonly_text?> >
+                                </div>
+                            </div> 
+        
                             <div class="col-sm-12 mb-1">
                                 <input type="hidden" name="call_log_id" id="call_log_id" value="<?=$_GET['call_log_id']?>">
+                                <input type="hidden" name="asset_code" id="asset_code" value="<?=$asset_code?>">
                                 <button type="submit" name="submit" class="btn btn-primary">Submit</button>
                             </div>
         
@@ -368,11 +378,14 @@
             $call_log_id = $('#call_log_id').val(); 
             $call_log_comment = $('#call_log_comment').val();
             $call_log_status = $('#call_log_status').val();
+            $call_log_date_time = $('#call_log_date_time').val();
+            $sp_details = $('#sp_details').val();
+            $asset_code = $('#asset_code').val();
 
             $.ajax({
                 method: "POST",
                 url: "../ticket_dashboard/function.php",
-                data: { fn: "updateGeneratedFormdata", call_log_id: $call_log_id, call_log_comment: $call_log_comment, call_log_status: $call_log_status}
+                data: { fn: "updateGeneratedFormdata", call_log_id: $call_log_id, call_log_comment: $call_log_comment, call_log_status: $call_log_status, call_log_date_time: $call_log_date_time, sp_details: $sp_details, asset_code: $asset_code}
             })
             .done(function( res ) {
                 $res1 = JSON.parse(res); 

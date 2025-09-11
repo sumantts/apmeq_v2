@@ -200,7 +200,8 @@
 
 					if($insert_id > 0){
 						$status = true;  
-						$token_id = str_pad($insert_id, 4, '0', STR_PAD_LEFT);
+						//$token_id = str_pad($insert_id, 4, '0', STR_PAD_LEFT);
+						$token_id = date('dmY-Hms');
 
 						$upd_sql = "UPDATE call_log_register SET token_id = '" .$token_id. "' WHERE call_log_id = '" .$insert_id. "' ";
 						$result_upd = $mysqli->query($upd_sql); 
