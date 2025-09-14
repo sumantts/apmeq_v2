@@ -61,6 +61,7 @@ $('#myFormM').on('submit', function(){
         //console.log(res);
         $res1 = JSON.parse(res);
         if($res1.status == true){
+            populateDataTable_1();
             alert('Data updated successfully');
         }
     });//end ajax

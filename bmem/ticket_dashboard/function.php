@@ -558,8 +558,11 @@
 				$department_id = $row['department_id'];					
 				$asset_supplied_by = $row['asset_supplied_by'];					
 				$engineer_coment = $row['engineer_coment'];					
-				$status_by_engg = $row['status_by_engg'];					
-				$cl_status_history = json_decode($row['cl_status_history']);	
+				$status_by_engg = $row['status_by_engg'];	
+				$cl_status_history = array();		
+				if($row['cl_status_history'] != ''){
+					$cl_status_history = json_decode($row['cl_status_history']);	
+				}
 							
 				$sp_details = $row['sp_details'];					
 				$call_log_date_time = date('d-F-Y h:i A', strtotime($row['call_log_date_time']));	
@@ -657,9 +660,10 @@
 		echo json_encode($return_result);
 	}//end function deleteItem	
 
-	//Get Course name
+	//Update Ticket Info
 	if($fn == 'updateTicketInfo'){
 		$return_array = array();
+		$cl_status_history = array();
 		$status = true;
 		   
 		$assign_to = $_POST['assign_to'];
@@ -667,13 +671,39 @@
 		$call_log_statusM = $_POST['call_log_statusM'];
 		$resolved_date_time = $_POST['resolved_date_time'].' '.date('H:i:s'); 
 		$call_log_id = $_POST['call_log_id']; 
-		$engineer_coment = $_POST['engineer_coment']; 
+		$engineer_coment = $_POST['engineer_coment']; 		
 
-		$sql = "UPDATE call_log_register SET call_log_status = '" .$call_log_statusM. "', engineer_coment = '" .$engineer_coment. "' WHERE call_log_id = '" .$call_log_id. "' ";
+		$sql = "SELECT * FROM call_log_register WHERE call_log_id = '".$call_log_id."'";
 		$result = $mysqli->query($sql);
+		if ($result->num_rows > 0) {
+			$row = $result->fetch_array();
+			$call_log_status_o = $row['call_log_status'];
+			$cl_status_history1 = $row['cl_status_history'];
+			if($cl_status_history1 != ''){
+				$cl_status_history = json_decode($cl_status_history1);
+			}
+		} 
 
-		$return_array['status'] = $status;
-		
+		$cl_status_history_obj = new stdClass();
+		$cl_status_history_obj->date_time = date('Y-m-d H:i:s');
+		$cl_status_history_obj->date_time_text = date('d-M-Y h:i A');
+		$cl_status_history_obj->old = $call_log_status_o;
+		$cl_status_history_obj->new = $call_log_statusM;
+
+		array_push($cl_status_history, $cl_status_history_obj);
+		$cl_status_history_en = json_encode($cl_status_history);
+
+		if($call_log_statusM == '1'){
+			$call_log_status_temp = 0;
+			$assign_to = 0;
+			$sql1 = "UPDATE call_log_register SET call_log_status = '" .$call_log_status_temp. "', assign_to = '" .$assign_to. "', cl_status_history = '" .$cl_status_history_en. "' WHERE call_log_id = '" .$call_log_id. "' ";
+			$result1 = $mysqli->query($sql1);
+		}else{
+			$sql2 = "UPDATE call_log_register SET call_log_status = '" .$call_log_statusM. "', engineer_coment = '" .$engineer_coment. "', cl_status_history = '" .$cl_status_history_en. "' WHERE call_log_id = '" .$call_log_id. "' ";
+			$result2 = $mysqli->query($sql2);
+		}
+
+		$return_array['status'] = $status;		
 		echo json_encode($return_array);
 	}//function end	
 
