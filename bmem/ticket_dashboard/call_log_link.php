@@ -69,6 +69,7 @@
 
     if(isset($_GET['call_log_id'])){
         $call_log_id = $_GET['call_log_id'];
+        $readonly_text1 = '';
 
         if($call_log_id > 0){
             $sql = "SELECT call_log_register.call_log_id, call_log_register.token_id, call_log_register.asset_code, call_log_register.issue_description, call_log_register.call_log_date_time, call_log_register.resolved_date_time, call_log_register.ticket_raiser_contact, call_log_register.assign_to, call_log_register.call_log_status, call_log_register.eng_contact_no, call_log_register.engineer_coment, call_log_register.amc_yes_no, call_log_register.amc_last_date, call_log_register.cmc_yes_no, call_log_register.cmc_last_date, call_log_register.call_log_comment, call_log_register.status_by_engg, asset_details.equipment_name, asset_details.asset_make, asset_details.asset_model, asset_details.slerial_number, asset_details.department_id, asset_details.asset_supplied_by, asset_details.sp_details, asset_details.warranty_last_date, asset_details.device_group, facility_master.facility_code, facility_master.facility_name, device_group_list.device_name FROM call_log_register JOIN asset_details ON call_log_register.asset_code = asset_details.asset_code JOIN facility_master ON call_log_register.facility_id = facility_master.facility_id JOIN device_group_list ON asset_details.device_group = device_group_list.device_group_id WHERE call_log_register.call_log_id = '" .$call_log_id. "' ";
@@ -126,6 +127,7 @@
                     $call_log_status_text = 'Reject';
                 }else if($call_log_status == 2){
                     $call_log_status_text = 'Done';
+                    $readonly_text1 = 'disabled';
                 }else if($call_log_status == 3){
                     $call_log_status_text = 'RBER';
                 }else{
@@ -318,11 +320,11 @@
                             <div class="col-md-6 mt-4">
                                 <div class="row">
                                     <div class="col-md-8">
-                                        <input type="file" id="multiupload" name="uploadFiledd[]" multiple accept=".jpg,.jpeg,.png" >
+                                        <input type="file" id="multiupload" name="uploadFiledd[]" multiple accept=".jpg,.jpeg,.png" <?=$readonly_text1?>>
                                         <span id="uploadMessage"></span>
                                     </div>
                                     <div class="col-md-4">
-                                        <button type="button" id="startUpload" class="btn btn-primary btn-sm">Upload</button>
+                                        <button type="button" id="startUpload" class="btn btn-primary btn-sm" <?=$readonly_text1?>>Upload</button>
                                     </div>
                                 </div>
                             </div> 
@@ -336,7 +338,7 @@
                             <div class="col-sm-6 mb-1">
                                 <div class="form-group">
                                     <label for="call_log_status">Call Log Status</label>
-                                    <select class="form-control" name="call_log_status" id="call_log_status" >  
+                                    <select class="form-control" name="call_log_status" id="call_log_status" <?=$readonly_text1?>>  
                                         <option value="">Select</option> 
                                         <option value="2" <?php if($call_log_status == 2){?> selected="selected" <?php }?>>Done</option>  
                                         <option value="3" <?php if($call_log_status == 3){?> selected="selected" <?php }?>>RBER</option>  
@@ -354,7 +356,7 @@
                             <div class="col-sm-12 mb-1">
                                 <input type="hidden" name="call_log_id" id="call_log_id" value="<?=$_GET['call_log_id']?>">
                                 <input type="hidden" name="asset_code" id="asset_code" value="<?=$asset_code?>">
-                                <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" name="submit" class="btn btn-primary" <?=$readonly_text1?>>Submit</button>
                             </div>
         
                         </div>

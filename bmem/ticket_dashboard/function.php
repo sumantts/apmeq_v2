@@ -294,6 +294,19 @@
 					$call_log_status_text = 'Raised';
 				}
 
+				
+
+				$show_action_btn = true;
+				if($closed_time != '0000-00-00 00:00:00'){
+					$new_time = date($closed_time, strtotime('+72 hours'));
+					$now_time = date('Y-m-d H:i:s');
+
+					if(strtotime($now_time) > strtotime($new_time)){
+						$show_action_btn = false;
+						$disabled_text = 'disabled';
+					}//end if
+				}//end if
+				
 				# 0=WIP, 1=Resolved, 2=Closed
 				$dynamic_id = 'ticket_id_'.$call_log_id;
 				$updated_text = '';
@@ -392,6 +405,7 @@
 				if($call_log_status == 2){
 					$disabled_text = 'disabled';
 				}
+
 				$updated_text1 .= '<select name="'.$dynamic_id1.'" id="'.$dynamic_id1.'" onChange="updateSpEnggStatus('.$call_log_id.')" class="form-control-sm" '.$disabled_text.'>';
 				if($assign_to == 0){
 					$updated_text1 .= '<option value="0" selected="selected">Assign To</option>';
@@ -409,16 +423,6 @@
 					$updated_text1 .= '<option value="2">Engineer</option>';
 				}
 				$updated_text1 .= '</select>'; 
-
-				$show_action_btn = true;
-				if($closed_time != '0000-00-00 00:00:00'){
-					$new_time = date($closed_time, strtotime('+72 hours'));
-					$now_time = date('Y-m-d H:i:s');
-
-					if(strtotime($now_time) > strtotime($new_time)){
-						$show_action_btn = false;
-					}//end if
-				}//end if
 
 				if($dept_match == true){
 					$data[0] = $slno; 
@@ -499,7 +503,7 @@
 		$cl_status_history = array();
 
 		$status = true;	
-		$resolved_date_time = date('Y-m-d'); 		
+		$resolved_date_time = date('Y-m-d H:i:s'); 		
 
 		$sql = "SELECT * FROM call_log_register WHERE call_log_id = '".$call_log_id."'";
 		$result = $mysqli->query($sql);
@@ -669,7 +673,7 @@
 		$assign_to = $_POST['assign_to'];
 		$eng_contact_no = $_POST['eng_contact_no']; 
 		$call_log_statusM = $_POST['call_log_statusM'];
-		$resolved_date_time = $_POST['resolved_date_time'].' '.date('H:i:s'); 
+		$resolved_date_time = date('Y-m-d H:i:s'); 
 		$call_log_id = $_POST['call_log_id']; 
 		$engineer_coment = $_POST['engineer_coment']; 		
 
@@ -698,6 +702,9 @@
 			$assign_to = 0;
 			$sql1 = "UPDATE call_log_register SET call_log_status = '" .$call_log_status_temp. "', assign_to = '" .$assign_to. "', cl_status_history = '" .$cl_status_history_en. "' WHERE call_log_id = '" .$call_log_id. "' ";
 			$result1 = $mysqli->query($sql1);
+		}else if($call_log_statusM == '2'){ 
+			$sql3 = "UPDATE call_log_register SET call_log_status = '" .$call_log_statusM. "', resolved_date_time = '" .$resolved_date_time. "', engineer_coment = '" .$engineer_coment. "', cl_status_history = '" .$cl_status_history_en. "' WHERE call_log_id = '" .$call_log_id. "' ";
+			$result3 = $mysqli->query($sql3);
 		}else{
 			$sql2 = "UPDATE call_log_register SET call_log_status = '" .$call_log_statusM. "', engineer_coment = '" .$engineer_coment. "', cl_status_history = '" .$cl_status_history_en. "' WHERE call_log_id = '" .$call_log_id. "' ";
 			$result2 = $mysqli->query($sql2);
