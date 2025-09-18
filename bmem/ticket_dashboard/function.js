@@ -70,7 +70,7 @@ $('#myFormM').on('submit', function(){
 })
 
 function editTableData($call_log_id){
-    $status_arr = ["Raised", "Reject", "Done", "RBER"];
+    $status_arr = ["Raised", "Reject", "Done", "RBER", "WIP", "Condemned"];
 
     $('#exampleModalLong').modal('show');
     $.ajax({

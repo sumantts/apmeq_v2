@@ -196,7 +196,7 @@
 		$mainData = array();   
 		
 		
-		$sql = "SELECT call_log_register.call_log_id, call_log_register.token_id, call_log_register.asset_code, call_log_register.issue_description, call_log_register.call_log_date_time, call_log_register.resolved_date_time, call_log_register.ticket_raiser_contact, call_log_register.assign_to, call_log_register.status_by_engg, call_log_register.eng_contact_no, call_log_register.engineer_coment, call_log_register.amc_yes_no, call_log_register.amc_last_date, call_log_register.cmc_yes_no, call_log_register.cmc_last_date, asset_details.equipment_name, asset_details.department_id, asset_details.asset_supplied_by, asset_details.sp_details, asset_details.warranty_last_date, facility_master.facility_code, facility_master.facility_name FROM call_log_register JOIN asset_details ON call_log_register.asset_code = asset_details.asset_code JOIN facility_master ON call_log_register.facility_id = facility_master.facility_id WHERE call_log_register.status_by_engg >= '2' ORDER BY call_log_register.call_log_id DESC LIMIT 0, 50";
+		$sql = "SELECT call_log_register.call_log_id, call_log_register.token_id, call_log_register.asset_code, call_log_register.issue_description, call_log_register.call_log_date_time, call_log_register.resolved_date_time, call_log_register.ticket_raiser_contact, call_log_register.assign_to, call_log_register.status_by_engg, call_log_register.eng_contact_no, call_log_register.engineer_coment, call_log_register.amc_yes_no, call_log_register.amc_last_date, call_log_register.cmc_yes_no, call_log_register.cmc_last_date, call_log_register.call_log_status, asset_details.equipment_name, asset_details.department_id, asset_details.asset_supplied_by, asset_details.sp_details, asset_details.warranty_last_date, facility_master.facility_code, facility_master.facility_name FROM call_log_register JOIN asset_details ON call_log_register.asset_code = asset_details.asset_code JOIN facility_master ON call_log_register.facility_id = facility_master.facility_id WHERE call_log_register.call_log_status = 5 ORDER BY call_log_register.call_log_id DESC LIMIT 0, 50";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -234,18 +234,21 @@
 					$assign_to_text = '';
 				}	
 
-				$status_by_engg = $row['status_by_engg'];	
+				$call_log_status = $row['call_log_status'];	
 				$call_log_status_text = '';
-				if($status_by_engg == 0){
-					$call_log_status_text = 'WIP';					
-				}else if($status_by_engg == 1){
-					$call_log_status_text = 'Closed';
-				}else if($status_by_engg == 2){
+				if($call_log_status == 0){
+					$call_log_status_text = 'Raised';					
+				}else if($call_log_status == 1){
+					$call_log_status_text = 'Reject';
+				}else if($call_log_status == 2){
+					$call_log_status_text = 'Done';
+				}else if($call_log_status == 3){
 					$call_log_status_text = 'RBER';
-				}else if($status_by_engg == 3){
-					$call_log_status_text = 'Condemed';
-				}else{
+				}else if($call_log_status == 4){
 					$call_log_status_text = 'WIP';
+				}else if($call_log_status == 5){
+					$call_log_status_text = 'Condemned';
+				}else{ 
 				}
 				
 				//get all depertment name
@@ -480,12 +483,34 @@
 		   
 		$assign_to = $_POST['assign_to'];
 		$eng_contact_no = $_POST['eng_contact_no']; 
-		$status_by_enggM = $_POST['status_by_enggM'];
+		$call_log_status = $_POST['status_by_enggM'];
 		$resolved_date_time = $_POST['resolved_date_time'].' '.date('H:i:s'); 
 		$call_log_id = $_POST['call_log_id']; 
 		$engineer_coment = $_POST['engineer_coment']; 
+						
 
-		$sql = "UPDATE call_log_register SET assign_to = '" .$assign_to. "', eng_contact_no = '" .$eng_contact_no. "', status_by_engg = '" .$status_by_enggM. "', resolved_date_time = '" .$resolved_date_time. "', engineer_coment = '" .$engineer_coment. "' WHERE call_log_id = '" .$call_log_id. "' ";
+		$sql = "SELECT * FROM call_log_register WHERE call_log_id = '".$call_log_id."'";
+		$result = $mysqli->query($sql);
+		if ($result->num_rows > 0) {
+			$row = $result->fetch_array();
+			$call_log_status_o = $row['call_log_status'];
+			$cl_status_history1 = $row['cl_status_history'];
+			if($cl_status_history1 != ''){
+				$cl_status_history = json_decode($cl_status_history1);
+			}
+		} 
+
+		$cl_status_history_obj = new stdClass();
+		$cl_status_history_obj->date_time = date('Y-m-d H:i:s');
+		$cl_status_history_obj->date_time_text = date('d-M-Y h:i A');
+		$cl_status_history_obj->old = $call_log_status_o;
+		$cl_status_history_obj->new = $call_log_status;
+
+		array_push($cl_status_history, $cl_status_history_obj);
+		$cl_status_history_en = json_encode($cl_status_history);
+		
+
+		$sql = "UPDATE call_log_register SET assign_to = '" .$assign_to. "', eng_contact_no = '" .$eng_contact_no. "', call_log_status = '" .$call_log_status. "', engineer_coment = '" .$engineer_coment. "', cl_status_history = '" .$cl_status_history_en. "' WHERE call_log_id = '" .$call_log_id. "' ";
 		$result = $mysqli->query($sql);
 
 		$return_array['status'] = $status;

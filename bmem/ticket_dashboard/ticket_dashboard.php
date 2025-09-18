@@ -371,6 +371,7 @@ include('common/head.php');
                                             <option value="1">Reject</option>
                                             <option value="2">Closed</option>
                                             <option value="3">RBER</option> 
+                                            <option value="5">Condemned</option> 
                                         </select> 
                                     </div>
                                     

@@ -206,7 +206,7 @@
 		$to_dt = $_GET['to_dt'];  
 		$warranty_sr = $_GET['warranty_sr']; 
 
-		$where_condition = "WHERE call_log_register.call_log_id > 0";
+		$where_condition = "WHERE call_log_register.call_log_status != 5";
 
 		if($facility_id_s > 0){
 			$where_condition .= " AND call_log_register.facility_id = '" .$facility_id_s. "' ";
@@ -306,7 +306,7 @@
 						$disabled_text = 'disabled';
 					}//end if
 				}//end if
-				
+
 				# 0=WIP, 1=Resolved, 2=Closed
 				$dynamic_id = 'ticket_id_'.$call_log_id;
 				$updated_text = '';
@@ -903,13 +903,33 @@
 		$call_log_date_time = $call_log_date_time1.' '.date('H:i:s');
 
 		$asset_code = $_POST['asset_code']; 
-		$sp_details = $_POST['sp_details']; 
+		$sp_details = $_POST['sp_details']; 				
+
+		$sql = "SELECT * FROM call_log_register WHERE call_log_id = '".$call_log_id."'";
+		$result = $mysqli->query($sql);
+		if ($result->num_rows > 0) {
+			$row = $result->fetch_array();
+			$call_log_status_o = $row['call_log_status'];
+			$cl_status_history1 = $row['cl_status_history'];
+			if($cl_status_history1 != ''){
+				$cl_status_history = json_decode($cl_status_history1);
+			}
+		} 
+
+		$cl_status_history_obj = new stdClass();
+		$cl_status_history_obj->date_time = date('Y-m-d H:i:s');
+		$cl_status_history_obj->date_time_text = date('d-M-Y h:i A');
+		$cl_status_history_obj->old = $call_log_status_o;
+		$cl_status_history_obj->new = $call_log_status;
+
+		array_push($cl_status_history, $cl_status_history_obj);
+		$cl_status_history_en = json_encode($cl_status_history);
 		
 		try {
 			if($call_log_id > 0){
 				$status = true;
 				$pms_data_updated = date('Y-m-d H:i:s'); 
-				$sql = "UPDATE call_log_register SET call_log_comment = '" .$call_log_comment. "', call_log_status = '" .$call_log_status. "', call_log_date_time = '" .$call_log_date_time. "' WHERE call_log_id = '" .$call_log_id. "' ";
+				$sql = "UPDATE call_log_register SET call_log_comment = '" .$call_log_comment. "', call_log_status = '" .$call_log_status. "', call_log_date_time = '" .$call_log_date_time. "', cl_status_history = '" .$cl_status_history_en. "' WHERE call_log_id = '" .$call_log_id. "' ";
 				$result = $mysqli->query($sql); 
 
 				$sql2 = "UPDATE asset_details SET sp_details = '" .$sp_details. "' WHERE asset_code = '" .$asset_code. "' ";

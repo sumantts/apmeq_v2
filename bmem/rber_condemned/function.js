@@ -44,7 +44,7 @@ $('#myFormM').on('submit', function(){
     $assign_to = $('#assign_to').val();
     $eng_contact_no = $('#eng_contact_no').val(); 
     $status_by_enggM = $('#status_by_enggM').val();
-    $resolved_date_time = $('#resolved_date_time').val(); 
+    $resolved_date_time = '';//$('#resolved_date_time').val(); 
     $call_log_id = $('#call_log_id').val(); 
     $engineer_coment = $('#engineer_coment').val();
     
@@ -80,7 +80,7 @@ function editTableData($call_log_id){
             $('#assign_to').val($res1.assign_to).trigger('change');
             $('#eng_contact_no').val($res1.eng_contact_no);
             $('#status_by_enggM').val($res1.status_by_engg).trigger('change');
-            $('#resolved_date_time').val($res1.resolved_date_time); 
+            //$('#resolved_date_time').val($res1.resolved_date_time); 
             $('#engineer_coment').val($res1.engineer_coment); 
             $html = '';
             $html += '<div><strong>Issue Description: </strong>'+$res1.issue_description+'</div>';
