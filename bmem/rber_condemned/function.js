@@ -1,12 +1,15 @@
 $('#clearForm').on('click', function(){
     console.log('clear FormData');
     $('#myFormS').trigger('reset');
-        populateDataTable_1();
-    /*$('#facility_id_s').val('0').trigger('change');
+    $('#facility_id_s').val('0').trigger('change');
     $('#department_id').val('0').trigger('change');
+    $('#device_group').val('0').trigger('change');
+    $('#asset_class').val('0').trigger('change');
+    populateDataTable_1();
+
+    /*
     $('#call_log_status').val('0').trigger('change');
     $('#day_wise').val('0').trigger('change');
-    $('#device_group').val('0').trigger('change');
     $('#ticket_class').val('-1').trigger('change'); 
     
     $('#filteredTicketDiv').removeClass('d-block');
