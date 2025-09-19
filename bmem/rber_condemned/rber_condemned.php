@@ -42,6 +42,81 @@ include('common/head.php');
         <!-- [ Main Content ] start -->
         <div class="row">
             
+            <!-- [ sample-table ] Filter start -->
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Filter wise</h5> 
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;" id="orgFormAlert">
+							<strong>Success!</strong> Your Data Deleted successfully.
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						</div>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;" id="orgFormAlert1">
+							<strong>Success!</strong> Your Data saved successfully.
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						</div>
+                         
+
+                        <form class="needs-validation" id="myFormS" action="#" method="POST">
+                            <div class="form-row">                               
+                                <div class="col-md-3 mb-3">
+                                    <label for="facility_id_s">Facility Name</label>
+                                    <select class="form-control js-example-basic-single" id="facility_id_s" name="facility_id_s">
+                                        <option value="0">Select</option>
+                                    </select> 
+                                </div>     
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="FacilityCode">Facility Code</label>
+                                    <input type="text" class="form-control form-control-sm" id="facility_code_s" name="facility_code_s"> 
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="department_id">Department</label>
+                                    <select class="form-control js-example-basic-single" id="department_id" name="department_id">
+                                        <option value="0">Select</option> 
+                                    </select> 
+                                </div>      
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="EquipmentName">Equipment name</label>
+                                    <input type="text" class="form-control form-control-sm" id="equipment_name_s" name="equipment_name_s"> 
+                                </div>       
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="Assetcode">Asset code</label>
+                                    <input type="text" class="form-control form-control-sm" id="asset_code_s" name="asset_code_s"> 
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="device_group_s">Device Group</label>
+                                    <select class="form-control js-example-basic-single" id="device_group" name="device_group">
+                                        <option value="0">Select</option> 
+                                    </select> 
+                                </div>  
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="asset_class">Asset Class</label>
+                                    <select class="form-control js-example-basic-single" id="asset_class" name="asset_class">
+                                        <option value="0">Select</option>
+                                        <option value="1">critical</option>
+                                        <option value="2">Non Critical</option>
+                                    </select> 
+                                </div>  
+
+                                <div class="col-md-4 mt-4">
+                                    <button class="btn btn-sm  btn-primary" type="submit" id="submitForm"> Search </button>
+                                    
+                                    <button class="btn btn-sm btn-dark" type="button" id="clearForm"> Clear </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
             <!-- [ sample-table ] start --> 
             <div class="col-sm-12 d-block" id="filteredTicketDiv">
                 <div class="card">

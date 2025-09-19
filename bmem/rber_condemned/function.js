@@ -1,7 +1,8 @@
 $('#clearForm').on('click', function(){
     console.log('clear FormData');
     $('#myFormS').trigger('reset');
-    $('#facility_id_s').val('0').trigger('change');
+        populateDataTable_1();
+    /*$('#facility_id_s').val('0').trigger('change');
     $('#department_id').val('0').trigger('change');
     $('#call_log_status').val('0').trigger('change');
     $('#day_wise').val('0').trigger('change');
@@ -10,7 +11,7 @@ $('#clearForm').on('click', function(){
     
     $('#filteredTicketDiv').removeClass('d-block');
     $('#filteredTicketDiv').addClass('d-none');
-    $('#engineer_coment').val('');
+    $('#engineer_coment').val('');*/
 })
 
 $("#partTwoSwitch").click(function(){
@@ -20,17 +21,13 @@ $("#partTwoSwitch").click(function(){
 $('#myFormS').on('submit', function(){    
     $facility_id_s = $('#facility_id_s').val();
     $department_id = $('#department_id').val(); 
-    $call_log_status = $('#call_log_status').val();
-    $token_id = $('#token_id').val(); 
-    $day_wise = $('#day_wise').val(); 
+    $facility_code_s = $('#facility_code_s').val(); 
+    $equipment_name_s = $('#equipment_name_s').val();
+    $asset_code_s = $('#asset_code_s').val(); 
     $device_group = $('#device_group').val(); 
-    $equipment_name = $('#equipment_name').val(); 
-    $ticket_class = $('#ticket_class').val();  
-    $from_dt = $('#from_dt').val();  
-    $to_dt = $('#to_dt').val();  
-    $warranty_sr = $('#warranty_sr').val();
-    
-    if($facility_id_s > 0 || $department_id > 0 || $call_log_status > 0 || $token_id != '' || $day_wise > 0 || $device_group > 0 || $equipment_name != '' || $ticket_class >= 0 || $from_dt != '' || $to_dt != '' || $warranty_sr != ''){
+    $asset_class = $('#asset_class').val(); 
+        
+    if($facility_id_s > 0 || $department_id > 0 || $facility_code_s != '' || $equipment_name_s != '' || $asset_code_s != '' || $device_group > 0 || $asset_class > 0){
         populateDataTable_1();
         $('#filteredTicketDiv').removeClass('d-none');
         $('#filteredTicketDiv').addClass('d-block');
@@ -152,13 +149,21 @@ function populateDataTable(){
 
 function populateDataTable_1(){
     $('#example_1').dataTable().fnClearTable();
-    $('#example_1').dataTable().fnDestroy();    
+    $('#example_1').dataTable().fnDestroy();  
+
+    $facility_id_s = $('#facility_id_s').val();
+    $department_id = $('#department_id').val(); 
+    $facility_code_s = $('#facility_code_s').val(); 
+    $equipment_name_s = $('#equipment_name_s').val();
+    $asset_code_s = $('#asset_code_s').val(); 
+    $device_group = $('#device_group').val(); 
+    $asset_class = $('#asset_class').val();   
 
     $('#example_1').DataTable({ 
         columnDefs: [{ width: 5, targets: 0 } ],
         responsive: true,
         serverMethod: 'GET',
-        ajax: {'url': 'rber_condemned/function.php?fn=getTableData_1'},
+        ajax: {'url': 'rber_condemned/function.php?fn=getTableData_1&facility_id_s='+$facility_id_s+'&department_id='+$department_id+'&facility_code_s='+$facility_code_s+'&equipment_name_s='+$equipment_name_s+'&asset_code_s='+$asset_code_s+'&device_group='+$device_group+'&asset_class='+$asset_class},
         dom: 'Bfrtip',
         buttons: [
             {
@@ -393,12 +398,13 @@ function deleteProdImage($prod_iamge_name){
 }//end fun
 //End multiple pgoto upload
 
+
 $(document).ready(function () {
     populateDataTable_1();
-    /*initTicketCounter();
     configureFacilityDropDown(); 
     configureDeviceGroupDropDown();
+    $('.js-example-basic-single').select2();
+    /*initTicketCounter();
     populateDataTable();
-    $("#partTwoBoard").hide();
-    $('.js-example-basic-single').select2();*/
+    $("#partTwoBoard").hide();*/
 });
