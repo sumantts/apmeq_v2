@@ -43,7 +43,7 @@ $('#myFormS').on('submit', function(){
 $('#myFormM').on('submit', function(){    
     $assign_to = $('#assign_to').val();
     $eng_contact_no = $('#eng_contact_no').val(); 
-    $status_by_enggM = $('#status_by_enggM').val();
+    $call_log_statusM = $('#call_log_statusM').val();
     $resolved_date_time = '';//$('#resolved_date_time').val(); 
     $call_log_id = $('#call_log_id').val(); 
     $engineer_coment = $('#engineer_coment').val();
@@ -51,12 +51,13 @@ $('#myFormM').on('submit', function(){
     $.ajax({
         method: "POST",
         url: "rber_condemned/function.php",
-        data: { fn: "updateTicketInfo", assign_to: $assign_to, eng_contact_no: $eng_contact_no, status_by_enggM: $status_by_enggM, resolved_date_time: $resolved_date_time, call_log_id: $call_log_id, engineer_coment: $engineer_coment }
+        data: { fn: "updateTicketInfo", assign_to: $assign_to, eng_contact_no: $eng_contact_no, call_log_statusM: $call_log_statusM, resolved_date_time: $resolved_date_time, call_log_id: $call_log_id, engineer_coment: $engineer_coment }
     })
     .done(function( res ) {
         //console.log(res);
         $res1 = JSON.parse(res);
         if($res1.status == true){
+            populateDataTable_1(); 
             alert('Data updated successfully');
         }
     });//end ajax

@@ -508,7 +508,7 @@
 		   
 		$assign_to = $_POST['assign_to'];
 		$eng_contact_no = $_POST['eng_contact_no']; 
-		$call_log_status = $_POST['status_by_enggM'];
+		$call_log_status = $_POST['call_log_statusM'];
 		$resolved_date_time = $_POST['resolved_date_time'].' '.date('H:i:s'); 
 		$call_log_id = $_POST['call_log_id']; 
 		$engineer_coment = $_POST['engineer_coment']; 

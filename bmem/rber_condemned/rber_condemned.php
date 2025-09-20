@@ -226,13 +226,11 @@ include('common/head.php');
                                     </div> 
 
                                     <div class="col-md-4 mb-3">
-                                        <label for="status_by_enggM" class="text-danger">Call Log Status*</label>
-                                        <select class="form-control" name="status_by_enggM" id="status_by_enggM" required> 
-                                            <option value="-1">Select</option> 
-                                            <option value="0">Work In Progress</option> 
-                                            <option value="1">Closed </option>
-                                            <option value="2">RBER</option>
-                                            <option value="3">Condemed</option> 
+                                        <label for="call_log_statusM" class="text-danger">Call Log Status*</label>
+                                        <select class="form-control" name="call_log_statusM" id="call_log_statusM" required> 
+                                            <option value="-1">Select</option>
+                                            <option value="1">Reject</option>
+                                            <option value="5">Condemned</option> 
                                         </select> 
                                     </div>
                                     
