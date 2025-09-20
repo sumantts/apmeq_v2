@@ -80,7 +80,7 @@ function editTableData($call_log_id){
             getAllProductImages($call_log_id) 
             $('#assign_to').val($res1.assign_to).trigger('change');
             $('#eng_contact_no').val($res1.eng_contact_no);
-            $('#status_by_enggM').val($res1.status_by_engg).trigger('change');
+            $('#call_log_statusM').val($res1.call_log_status).trigger('change');
             //$('#resolved_date_time').val($res1.resolved_date_time); 
             $('#engineer_coment').val($res1.engineer_coment); 
             $html = '';

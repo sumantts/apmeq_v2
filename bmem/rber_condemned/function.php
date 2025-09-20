@@ -404,7 +404,8 @@
 				$department_id = $row['department_id'];					
 				$asset_supplied_by = $row['asset_supplied_by'];					
 				$engineer_coment = $row['engineer_coment'];					
-				$status_by_engg = $row['status_by_engg'];	
+				$status_by_engg = $row['status_by_engg'];					
+				$call_log_status = $row['call_log_status'];	
 							
 				$sp_details = $row['sp_details'];					
 				$call_log_date_time = date('d-F-Y h:i A', strtotime($row['call_log_date_time']));	
@@ -425,7 +426,7 @@
 					$assign_to_text = '';
 				}	
 
-				$call_log_status = $row['call_log_status'];	
+				 
 				$call_log_status_text = '';
 				if($call_log_status == 0){
 					$call_log_status_text = 'Raised';					
