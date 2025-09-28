@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 22, 2025 at 09:42 AM
--- Server version: 10.11.11-MariaDB
--- PHP Version: 8.3.23
+-- Generation Time: Sep 28, 2025 at 01:09 PM
+-- Server version: 10.3.39-MariaDB-cll-lve
+-- PHP Version: 8.4.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `apmeqcom_apmeq`
+-- Database: `apmeqco1_apmeq`
 --
 
 -- --------------------------------------------------------
@@ -70,17 +70,19 @@ CREATE TABLE `asset_details` (
 --
 
 INSERT INTO `asset_details` (`asset_id`, `facility_id`, `department_id`, `equipment_name`, `asset_make`, `asset_model`, `slerial_number`, `asset_specifiaction`, `date_of_installation`, `ins_certificate`, `asset_supplied_by`, `value_of_the_asset`, `total_year_in_service`, `technology`, `asset_status`, `asset_class`, `device_group`, `last_date_of_calibration`, `calibration_attachment`, `frequency_of_calibration`, `last_date_of_pms`, `pms_attachment`, `frequency_of_pms`, `qa_due_date`, `frequency_of_qa`, `qa_attachment`, `warranty_last_date`, `amc_yes_no`, `amc_last_date`, `cmc_yes_no`, `cmc_last_date`, `asset_code`, `sp_details`, `reloc_initiated`, `row_status`) VALUES
-(1, 1, '[\"2\"]', 'Radiant Warmer', 'NAT Steel', 'Difibmax', '12345678', 'NA', '2025-01-01', '', 'NAT steel', '450000', '0 years, 5 months, 29 days', 2, 1, 2, 1, '2025-07-21', '', '|3|', '2025-06-29', '', '|3|', '2025-01-01', '|3|', '', '2026-01-01', 1, '2025-06-01', 2, '0000-00-00', '000100001', 'NAT Steel Ltd.', 1, 1),
-(2, 1, '[\"2\"]', 'Incubator', 'Phoneix', 'Incub', 'Phn123456', 'NA', '2025-02-01', '', 'Philips', '75000', '0 years, 4 months, 28 days', 2, 1, 2, 1, '2025-07-21', '', '|2|', '2025-02-01', '', '|2|', '2025-02-01', '|2|', '', '2026-02-01', 2, '0000-00-00', 2, '0000-00-00', '000100002', 'Phoneix Pvt. Ltd.', 1, 1),
-(3, 1, '[\"2\"]', 'Multipara monitor', 'Philips', 'Pro', '12345678', 'NA', '2025-03-01', '', 'Philips', '10000', '0 years, 4 months, 0 days', 2, 1, 2, 1, '2025-03-01', '', '|2|', '2025-07-16', '', '|2|', '2025-03-01', '|2|', '', '2026-03-01', 2, '0000-00-00', 2, '0000-00-00', '000100003', 'Philips Pvt. Ltd.', 1, 1),
-(4, 2, '[\"2\"]', 'ECG', 'BPL', 'Cardiart', '123123', 'NA', '2023-02-10', '', 'Bhogilal', '25000', '2 years, 4 months, 25 days', 2, 1, 2, 0, '2024-02-02', '', '1|0|0', '2024-02-02', '', '0|4|0', '0000-00-00', '', '', '2024-02-10', 0, '0000-00-00', 0, '1970-01-01', '000200004', '8910420169', 1, 1),
-(5, 2, '[\"2\"]', 'BP Machine', 'Omron', 'OMBP', '1245', 'NA', '2024-02-10', '', 'Bhogilal', '3000', '+1 years 4 months', 2, 1, 2, 0, '2025-02-02', '', '1|0|0', '2025-02-02', '', '0|3|0', '1970-01-01', '', '', '2025-02-10', 0, '0000-00-00', 0, '1970-01-01', '000200005', '8910420169', 1, 1),
-(6, 3, '[\"2\"]', 'Nebulizer', 'Max', 'M2', '1001', 'NA', '2025-01-01', '', 'Bhogilal', '2500', '0 years, 6 months, 6 days', 2, 1, 2, 1, '2025-01-01', '', '1|0|0', '2025-07-21', '', '0|3|0', '1970-01-01', '', '', '2025-07-01', 0, '0000-00-00', 0, '1970-01-01', '000300006', '8910420169', 1, 1),
-(7, 3, '[\"2\"]', 'Difibrilator', 'Phillips', 'Difib', 'AB1234', 'NA', '2023-01-01', '', 'Bhogilal', '600000', '+2 years 6 months', 2, 1, 1, 0, '2024-01-01', '', '0|6|0', '2025-06-01', '', '0|6|0', '1970-01-01', '', '', '2024-01-01', 0, '0000-00-00', 0, '1970-01-01', '000300007', '8910420169', 1, 1),
-(8, 3, '[\"1\"]', 'X-ray', 'ME xray', 'Xray123', 'ME123456', 'NA', '2023-09-01', '', 'Bhogilal', '300000', '1 years, 10 months, 7 days', 2, 1, 1, 0, '2025-01-20', '', '0|6|0', '2025-04-20', '', '0|3|0', '2025-01-01', '1|0|0', '', '2024-09-01', 0, '0000-00-00', 0, '1970-01-01', '000300008', '8910420169', 1, 1),
-(9, 2, '[\"3\"]', 'X-ray', 'PHILIPS', '300mA', 'LM200i', 'N.A', '2024-01-01', '', 'Eastern Meditech', '800000', '1 years, 6 months, 22 days', 2, 1, 1, 3, '2024-01-01', '', '1||', '2024-01-01', '', '|6|', '2024-02-15', '1||', '', '2025-01-31', 0, '0000-00-00', 0, '0000-00-00', '000200009', '8910420169', 1, 1),
-(10, 3, '[\"1\"]', 'Mamo graphy', 'PHILIPS', 'Mamo 1', '121245', '', '2024-11-21', '', 'Eastern Meditech', '100000', '0 years, 8 months, 2 days', 2, 1, 1, 3, '2025-01-01', '', '1||', '2025-02-04', '', '|6|', '2025-07-21', '|6|', '', '2025-11-21', 0, '0000-00-00', 0, '0000-00-00', '000300010', '8910420169', 1, 1),
-(11, 2, '[\"2\"]', 'C-ARM', 'BPL', 'C-ARM', '102354', '', '2024-01-01', '', 'Eastern Meditech', '1500000', '1 years, 6 months, 22 days', 2, 1, 1, 3, '2025-06-21', '', '|6|', '2025-06-21', '', '|6|0', '2025-07-21', '|6|', '', '2025-07-21', 0, '0000-00-00', 0, '0000-00-00', '000200011', '', 1, 1);
+(1, 1, '[\"3\"]', 'X-ray', 'ME xray', '300mA', '11334', 'N.A.', '2024-01-01', '', 'ME X-ray', '60000', '1 years, 7 months, 26 days', 2, 1, 1, 1, '2024-01-01', '', '0|6|0', '2024-01-01', '', '1||', '2024-01-01', '1||', '', '2025-01-01', 2, '0000-00-00', 2, '0000-00-00', '000100001', '8910420169 .ooooo', 1, 1),
+(2, 2, '[\"1\"]', 'ECG', 'BPL', 'Cardiart', '1456', 'NA', '2024-05-20', '', 'BPL', '30000', '1 years, 3 months, 3 days', 2, 1, 2, 1, '2025-08-27', '', '|8|', '2025-01-08', '', '|7|', '0000-00-00', '', '', '2025-05-20', 0, '0000-00-00', 0, '0000-00-00', '000200002', '8910420169 23.37 13.09.25', 1, 1),
+(3, 2, '[\"3\"]', 'Mamo graphy', 'Siemens', 'Clarity', 'TA2344', 'NA', '2024-09-01', '', 'Sapoorji', '800000', '0 years, 11 months, 24 days', 2, 1, 1, 1, '2025-08-22', '', '1||', '2025-01-01', '', '1||', '2025-08-21', '1||', '', '2025-09-01', 2, '0000-00-00', 2, '0000-00-00', '000200003', '8910420169', 1, 1),
+(4, 2, '[\"2\"]', 'Nebulizer', 'Omron', 'Nebulizer', '5544', 'NA', '2024-12-15', '', 'Eastern Meditech', '5000', '0 years, 8 months, 9 days', 2, 1, 2, 2, '2025-08-21', '', '|6|', '2025-08-21', '', '|6|', '0000-00-00', '', '', '2025-12-15', 0, '0000-00-00', 0, '0000-00-00', '000200004', '8910420169', 1, 1),
+(5, 3, '[\"3\"]', 'X-ray', 'PHILIPS', '500mA', '78912', 'NA', '2024-05-20', '', 'Eastern Meditech', '', '1 years, 3 months, 3 days', 2, 1, 1, 1, '2025-08-24', '', '1||', '2025-08-21', '', '|9|', '2025-08-21', '1||', '', '2025-05-20', 1, '2026-06-25', 2, '0000-00-00', '000300005', '8910420169', 1, 1),
+(6, 3, '[\"3\"]', 'C-ARM', 'PHILIPS', 'C-ARM', '22222', 'NA', '2025-01-01', '', 'Eastern Meditech', '1500000', '0 years, 7 months, 22 days', 2, 1, 1, 1, '2025-01-01', '', '1||', '2025-01-01', '', '1||', '2025-01-01', '1||', '', '2026-01-01', 2, '0000-00-00', 2, '0000-00-00', '000300006', '8910420169', 1, 1),
+(7, 1, '[\"3\"]', 'Radiant Warmer', 'NAT Steel', 'Difibmax', 'Phn123456', 'NA', '2025-01-01', '', 'NAT steel', '450000', '0 years, 7 months, 28 days', 2, 1, 2, 2, '2025-01-01', '', '0|1|0', '2025-01-01', '', '0|1|0', '2025-01-01', '0|1|0', '', '2026-01-01', 1, '2026-01-01', 1, '2026-01-01', '000100007', '8910420169 13.. 23.13', 1, 1),
+(8, 1, '[\"1\"]', 'ECG', 'BPL', 'Caridiart 08T', '66553322', 'NA', '2025-09-14', '', 'Electro care service pvt ltd', '65000', '0 years, 0 months, 0 days', 2, 1, 2, 1, '2025-09-14', '', '1||', '2025-09-14', '', '1||', '0000-00-00', '', '', '2026-09-15', 2, '0000-00-00', 2, '0000-00-00', '000100008', '8910420169', 1, 1),
+(9, 3, '[\"1\"]', 'ECG', 'GE', 'Alpha', '167773', 'NA', '2025-09-14', '', 'Eastern meditech ', '100000', '0 years, 0 months, 0 days', 2, 1, 2, 1, '2025-09-14', '', '1||', '2025-09-14', '', '1||', '0000-00-00', '', '', '2026-09-15', 2, '0000-00-00', 2, '0000-00-00', '000300009', '8910420169', 1, 1),
+(10, 6, '[\"2\"]', 'Dental Chair', 'L&T', 'Dentchair', '1340986', 'NA', '2023-01-25', '[\"68d51064e80ea.jpeg\"]', 'L&T', '200000', '2 years, 8 months, 4 days', 2, 1, 2, 2, '2024-01-25', '', '1||', '2024-01-25', '', '|6|', '0000-00-00', '', '', '2024-01-25', 2, '0000-00-00', 2, '0000-00-00', '000600010', '8910420169', 1, 1),
+(11, 6, '[\"3\"]', 'X-Ray', 'Philips', 'Phi-X', '12303', '', '2022-05-29', '', 'Phillips', '8,00,000', '3 years, 4 months, 0 days', 2, 1, 1, 1, '2025-05-29', '', '1||', '2025-08-29', '', '|1|', '2024-05-29', '2||', '', '2025-05-29', 2, '0000-00-00', 2, '0000-00-00', '000600011', '8910181521', 1, 1),
+(12, 6, '[\"5\"]', 'OT light', 'philips', 'OT light', '12123344678', 'NA', '2024-06-02', '', 'Electrocare', '300000', '1 years, 3 months, 25 days', 2, 1, 2, 1, '2024-06-02', '', '1||', '2025-09-25', '', '|6|', '0000-00-00', '||', '', '2027-06-02', 2, '0000-00-00', 2, '0000-00-00', '000600012', '8910420169', 1, 1),
+(13, 6, '[\"5\"]', 'Nebulizer', 'Resmed', 'Remi-600', '310506', 'NA', '2024-04-01', '', 'RESMED', '2800', '1 years, 5 months, 27 days', 2, 1, 1, 2, '2025-04-01', '', '1||', '2025-06-01', '', '|3|', '0000-00-00', '', '', '2026-04-25', 2, '0000-00-00', 2, '0000-00-00', '000600013', '7439331467', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -171,12 +173,13 @@ CREATE TABLE `calib_info` (
 --
 
 INSERT INTO `calib_info` (`calib_id`, `calib_info_id`, `asset_id`, `asset_code`, `facility_id`, `facility_code`, `department_id`, `device_group`, `asset_class`, `equipment_name`, `equipment_make`, `equipment_model`, `equipment_sl_no`, `pms_due_date`, `supplied_by`, `sp_details`, `service_provider_details`, `pms_planned_date`, `pms_report_attached`, `link_generated_by`, `link_generate_time`, `row_status`, `pms_status`, `pms_sp_status`, `assign_to_sp_engg`, `pms_data_updated`) VALUES
-(1, '0001', 7, '000300007', 3, '0003', '2', 0, 1, 'Difibrilator', 'Phillips', 'Difib', 'AB1234', '2024-07-01', 'Bhogilal', '8910420169', '', '2025-07-05', '', 1, '2025-07-05 21:59:16', 2, 0, 0, 0, '2025-07-05 21:59:16'),
-(2, '0002', 8, '000300008', 3, '0003', '1', 0, 1, 'X-ray', 'ME xray', 'Xray123', 'ME123456', '2025-07-20', 'Bhogilal', '8910420169', '', '2025-07-09', '', 1, '2025-07-09 15:56:26', 2, 0, 0, 0, '2025-07-09 15:56:31'),
-(3, '0003', 3, '000100003', 1, '0001', '2', 1, 2, 'Multipara monitor', 'Philips', 'Pro', '12345678', '2025-05-01', 'Philips', 'Philips Pvt. Ltd.', '', '2025-07-16', '', 1, '2025-07-16 13:15:44', 2, 0, 0, 0, '2025-07-16 13:15:44'),
-(4, '0004', 2, '000100002', 1, '0001', '2', 1, 2, 'Incubator', 'Phoneix', 'Incub', 'Phn123456', '2025-04-01', 'Philips', 'Phoneix Pvt. Ltd.', '', '2025-07-21', '', 1, '2025-07-16 13:29:22', 2, 1, 0, 0, '2025-07-21 16:00:22'),
-(5, '0005', 1, '000100001', 1, '0001', '2', 1, 2, 'Radiant Warmer', 'NAT Steel', 'Difibmax', '12345678', '2025-04-29', 'NAT steel', 'NAT Steel Ltd.', '', '2025-07-21', '[\"687e165ec5e29.png\"]', 1, '2025-07-21 15:55:50', 2, 1, 0, 0, '2025-07-21 15:55:57'),
-(6, '0006', 9, '000200009', 2, '0002', '3', 3, 1, 'X-ray', 'PHILIPS', '300mA', 'LM200i', '2025-01-01', 'Eastern Meditech', '8910420169', '', '2025-07-21', '', 1, '2025-07-21 16:08:32', 2, 0, 0, 0, '2025-07-21 16:08:34');
+(1, '0001', 1, '000100001', 1, '0001', '3', 1, 1, 'X-ray', 'ME xray', '300mA', '11334', '2025-01-01', 'ME X-ray', '8910420169', '21.08', '2025-08-21', '[\"68a701dddfd03.png\"]', 1, '2025-08-21 16:40:41', 2, 1, 0, 0, '2025-08-21 16:54:21'),
+(2, '0002', 4, '000200004', 2, '0002', '2', 2, 2, 'Nebulizer', 'Omron', 'Nebulizer', '5544', '2025-07-01', 'Eastern Meditech', '8910420169', '21.08', '2025-08-21', '[\"68a7017795c0d.png\"]', 1, '2025-08-21 16:41:11', 2, 1, 0, 0, '2025-08-21 16:52:40'),
+(3, '0003', 3, '000200003', 2, '0002', '3', 1, 1, 'Mamo graphy', 'Siemens', 'Clarity', 'TA2344', '2025-09-01', 'Sapoorji', '8910420169', 'Done ', '2025-08-22', '', 1, '2025-08-22 10:04:53', 2, 1, 0, 1, '2025-08-22 10:07:36'),
+(4, '0004', 5, '000300005', 3, '0003', '3', 1, 1, 'X-ray', 'PHILIPS', '500mA', '78912', '2025-05-20', 'Eastern Meditech', '8910420169', 'Done 24.08', '2025-08-24', '[\"68ab48835d2b4.jpg\"]', 1, '2025-08-24 22:41:12', 2, 1, 0, 0, '2025-08-24 22:44:56'),
+(5, '0005', 7, '000100007', 1, '0001', '3', 2, 2, 'Radiant Warmer', 'NAT Steel', 'Difibmax', 'Phn123456', '2025-02-01', 'NAT steel', '', '', '2025-08-27', '[\"68af2597ed3c3.png\"]', 1, '2025-08-27 21:02:34', 2, 0, 0, 0, '2025-08-27 21:02:34'),
+(6, '0006', 2, '000200002', 2, '0002', '1', 1, 2, 'ECG', 'BPL', 'Cardiart', '1456', '2025-09-08', 'BPL', '8910420169', '27', '2025-08-27', '[\"68af32ee6123c.jpg\"]', 1, '2025-08-27 22:00:38', 2, 1, 0, 0, '2025-08-27 22:01:50'),
+(7, '0007', 10, '000600010', 6, '0006', '2', 2, 2, 'Dental Chair', 'L&T', 'Dentchair', '1340986', '2025-01-25', 'L&T', '8910420169', '', '2025-09-25', '', 1, '2025-09-25 15:59:48', 2, 0, 0, 0, '2025-09-25 16:00:29');
 
 -- --------------------------------------------------------
 
@@ -186,7 +189,7 @@ INSERT INTO `calib_info` (`calib_id`, `calib_info_id`, `asset_id`, `asset_code`,
 
 CREATE TABLE `call_log_register` (
   `call_log_id` int(11) NOT NULL,
-  `token_id` varchar(10) NOT NULL,
+  `token_id` varchar(20) NOT NULL,
   `facility_id` int(11) NOT NULL,
   `asset_code` varchar(10) NOT NULL,
   `user_id` int(11) NOT NULL COMMENT 'PK of user_details',
@@ -195,14 +198,15 @@ CREATE TABLE `call_log_register` (
   `issue_description` text NOT NULL,
   `call_log_date_time` datetime NOT NULL,
   `resolved_date_time` datetime NOT NULL,
-  `assign_to` tinyint(1) NOT NULL COMMENT '1-Engineer 2=ServiceProvider',
+  `assign_to` tinyint(1) NOT NULL COMMENT '1=ServiceProvider 2=Engineer',
   `eng_contact_no` varchar(10) NOT NULL,
   `uploaded_report` text NOT NULL,
   `engineer_coment` text NOT NULL,
   `call_log_comment` text NOT NULL,
   `call_log_attach` text NOT NULL COMMENT 'image uploaded by soft link',
   `status_by_engg` tinyint(1) NOT NULL COMMENT '0=wip,1=closed,2=rber, 3=Condemed',
-  `call_log_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0=Raised 1=WIP \r\n 2=Resolved 3=Closed 4=Rejected',
+  `call_log_status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0=Raised 1=Reject\r\n 2=Done 3=RBER 4=WIP 5=Condemned',
+  `cl_status_history` text NOT NULL,
   `ticket_class` tinyint(1) NOT NULL DEFAULT 0 COMMENT '1=critical 2=non-critical',
   `amc_yes_no` tinyint(1) NOT NULL COMMENT '0=No, 1=Yes',
   `amc_last_date` date NOT NULL,
@@ -214,16 +218,12 @@ CREATE TABLE `call_log_register` (
 -- Dumping data for table `call_log_register`
 --
 
-INSERT INTO `call_log_register` (`call_log_id`, `token_id`, `facility_id`, `asset_code`, `user_id`, `ticket_raiser_name`, `ticket_raiser_contact`, `issue_description`, `call_log_date_time`, `resolved_date_time`, `assign_to`, `eng_contact_no`, `uploaded_report`, `engineer_coment`, `call_log_comment`, `call_log_attach`, `status_by_engg`, `call_log_status`, `ticket_class`, `amc_yes_no`, `amc_last_date`, `cmc_yes_no`, `cmc_last_date`) VALUES
-(1, '0001', 1, '000100003', 1, 'Mr. Superadmin', '9733935161', 'Malfunction ', '2025-07-05 23:32:24', '0000-00-00 00:00:00', 0, '', '', '', '', '', 2, 0, 0, 2, '0000-00-00', 2, '0000-00-00'),
-(2, '0002', 2, '000200004', 26, 'Dr. Kamal', '8910420169', 'Paper roll jammed ', '2025-07-07 22:30:05', '0000-00-00 00:00:00', 0, '', '', '', '', '', 0, 0, 0, 0, '0000-00-00', 0, '1970-01-01'),
-(3, '0003', 3, '000300006', 26, 'Dr. Kamal', '8910420169', 'Vapour not creating ', '2025-07-07 22:35:11', '0000-00-00 00:00:00', 2, '9674194486', '', '', '', '', 0, 0, 0, 0, '0000-00-00', 0, '1970-01-01'),
-(4, '0004', 3, '000300008', 30, 'Hospital 1 admin', '9', 'Collimator issue ', '2025-07-15 17:10:54', '0000-00-00 00:00:00', 0, '', '', '', '', '', 0, 0, 0, 0, '0000-00-00', 0, '1970-01-01'),
-(5, '0005', 2, '000200009', 30, 'Hospital 1 admin', '9', 'Collimator issue ', '2025-07-15 17:12:55', '0000-00-00 00:00:00', 2, '123456789', '', '', 'done', '', 1, 0, 0, 0, '0000-00-00', 0, '0000-00-00'),
-(8, '0008', 2, '000200005', 1, 'Mr. Superadmin', '9733935161', 'issue', '2025-07-15 17:34:50', '0000-00-00 00:00:00', 0, '', '', '', '', '', 0, 0, 0, 0, '0000-00-00', 0, '1970-01-01'),
-(9, '0009', 2, '000200009', 30, 'Hospital 1 admin', '9', 'Issue ', '2025-07-15 17:39:43', '0000-00-00 00:00:00', 0, '', '', '', '', '', 0, 0, 0, 0, '0000-00-00', 0, '0000-00-00'),
-(10, '0010', 3, '000300007', 31, 'Hospital 2 admin', '10', 'Not charging ', '2025-07-15 17:42:44', '0000-00-00 00:00:00', 0, '', '', '', '', '', 0, 0, 0, 0, '0000-00-00', 0, '1970-01-01'),
-(11, '0011', 1, '000100003', 31, 'Hospital 2 admin', '10', 'Issue ', '2025-07-15 17:43:07', '0000-00-00 00:00:00', 0, '', '', '', '', '', 0, 0, 0, 2, '0000-00-00', 2, '0000-00-00');
+INSERT INTO `call_log_register` (`call_log_id`, `token_id`, `facility_id`, `asset_code`, `user_id`, `ticket_raiser_name`, `ticket_raiser_contact`, `issue_description`, `call_log_date_time`, `resolved_date_time`, `assign_to`, `eng_contact_no`, `uploaded_report`, `engineer_coment`, `call_log_comment`, `call_log_attach`, `status_by_engg`, `call_log_status`, `cl_status_history`, `ticket_class`, `amc_yes_no`, `amc_last_date`, `cmc_yes_no`, `cmc_last_date`) VALUES
+(2, '0002', 2, '000200002', 1, 'Mr. Superadmin', '9733935161', 'Battery issue', '2025-08-28 23:39:20', '0000-00-00 00:00:00', 2, '', '', 'Not done', 'Done 13.09.25', '[\"68c5b33cf0855.jpg\"]', 0, 0, '[{\"date_time\":\"2025-09-13 23:41:48\",\"date_time_text\":\"13-Sep-2025 11:41 PM\",\"old\":\"1\",\"new\":\"0\"}]', 0, 0, '0000-00-00', 0, '0000-00-00'),
+(3, '0003', 1, '000100007', 1, 'Mr. Superadmin', '9733935161', 'Heater Issue, Observation light not functional, Timer problem', '2025-08-28 23:15:54', '0000-00-00 00:00:00', 0, '', '[\"68c5ae44539a0.png\"]', 'Heater issues are not resolved ', 'Issue solved ', '[\"68c5adcc77fd1.png\"]', 0, 0, '[{\"date_time\":\"2025-09-14 19:36:26\",\"date_time_text\":\"14-Sep-2025 07:36 PM\",\"old\":\"1\",\"new\":\"1\"}]', 0, 1, '2026-01-01', 1, '2026-01-01'),
+(4, '0004', 2, '000200003', 1, 'Mr. Superadmin', '9733935161', 'x-ray tube issue', '2025-09-11 16:18:46', '0000-00-00 00:00:00', 0, '', '', '', 'Done', '', 0, 1, '[{\"date_time\":\"2025-09-14 15:18:09\",\"date_time_text\":\"14-Sep-2025 03:18 PM\",\"old\":\"2\",\"new\":\"2\"},{\"date_time\":\"2025-09-14 15:18:20\",\"date_time_text\":\"14-Sep-2025 03:18 PM\",\"old\":\"2\",\"new\":\"1\"},{\"date_time\":\"2025-09-17 16:19:37\",\"date_time_text\":\"17-Sep-2025 04:19 PM\",\"old\":\"3\",\"new\":\"3\"},{\"date_time\":\"2025-09-17 16:20:24\",\"date_time_text\":\"17-Sep-2025 04:20 PM\",\"old\":\"3\",\"new\":\"3\"},{\"date_time\":\"2025-09-18 09:40:47\",\"date_time_text\":\"18-Sep-2025 09:40 AM\",\"old\":\"3\",\"new\":\"5\"},{\"date_time\":\"2025-09-25 14:25:42\",\"date_time_text\":\"25-Sep-2025 02:25 PM\",\"old\":\"5\",\"new\":\"1\"}]', 0, 2, '0000-00-00', 2, '0000-00-00'),
+(6, '14092025-150957', 1, '000100001', 1, 'Mr. Superadmin', '9733935161', 'mA is not changing ', '2025-09-14 16:50:16', '2025-09-20 17:05:18', 0, '', '[\"68c68e624fa7f.jpg\"]', '', 'Issue resolved ', '[\"68c68e28b36fd.jpg\"]', 0, 2, '[{\"date_time\":\"2025-09-14 15:14:09\",\"date_time_text\":\"14-Sep-2025 03:14 PM\",\"old\":\"2\",\"new\":\"1\"},{\"date_time\":\"2025-09-14 19:35:09\",\"date_time_text\":\"14-Sep-2025 07:35 PM\",\"old\":\"2\",\"new\":\"1\"},{\"date_time\":\"2025-09-18 08:45:22\",\"date_time_text\":\"18-Sep-2025 08:45 AM\",\"old\":\"2\",\"new\":\"2\"},{\"date_time\":\"2025-09-20 17:05:18\",\"date_time_text\":\"20-Sep-2025 05:05 PM\",\"old\":\"2\",\"new\":\"2\"}]', 0, 2, '0000-00-00', 2, '0000-00-00'),
+(7, '25092025-160939', 6, '000600011', 32, 'Asmita', '8910420169', 'X-Ray light not working ', '2025-09-25 21:25:44', '0000-00-00 00:00:00', 1, '', '', '', 'work in progress', '[\"68d521a2793e7.jpg\"]', 0, 0, '[{\"date_time\":\"2025-09-25 21:25:21\",\"date_time_text\":\"25-Sep-2025 09:25 PM\",\"old\":\"4\",\"new\":\"\"},{\"date_time\":\"2025-09-25 21:25:25\",\"date_time_text\":\"25-Sep-2025 09:25 PM\",\"old\":\"0\",\"new\":\"\"},{\"date_time\":\"2025-09-25 21:25:44\",\"date_time_text\":\"25-Sep-2025 09:25 PM\",\"old\":\"0\",\"new\":\"\"}]', 0, 2, '0000-00-00', 2, '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -258,7 +258,10 @@ CREATE TABLE `department_list` (
 INSERT INTO `department_list` (`department_id`, `department_name`, `department_code`, `department_status`) VALUES
 (1, 'OPD', 'OPD', 1),
 (2, 'IPD', 'IPD', 1),
-(3, 'Radiology', 'Radiology', 1);
+(3, 'Radiology', 'Radiology', 1),
+(4, 'Pathology', 'Pathology', 1),
+(5, 'OT', 'OT', 1),
+(6, 'CSSD', 'CSSD', 1);
 
 -- --------------------------------------------------------
 
@@ -277,10 +280,8 @@ CREATE TABLE `device_group_list` (
 --
 
 INSERT INTO `device_group_list` (`device_group_id`, `device_name`, `device_status`) VALUES
-(1, 'Group A', 1),
-(2, 'Group B', 1),
-(3, 'Diagnostic', 1),
-(4, 'Therapeutic', 1);
+(1, 'Diagnostic', 1),
+(2, 'Theraputic', 1);
 
 -- --------------------------------------------------------
 
@@ -307,9 +308,10 @@ CREATE TABLE `facility_master` (
 --
 
 INSERT INTO `facility_master` (`facility_id`, `hospital_id`, `department_id`, `facility_name`, `facility_type`, `facility_code`, `facility_address`, `nabh_accrediated`, `nabl_accrediated`, `contact_person`, `user_id`) VALUES
-(1, 0, '[\"1\"]', 'Uluberia Hospital', 1, '0001', 'Uluberia', 1, 1, 'suman jana', 1),
+(1, 0, '[\"6\",\"2\",\"1\",\"5\",\"4\",\"3\"]', 'Uluberia Hospital', 1, '0001', 'Uluberia', 1, 1, 'suman jana', 1),
 (2, 0, '[\"2\",\"1\"]', 'Hospital 1', 1, '0002', 'Garia, WB', 1, 2, '7890132902', 1),
-(3, 0, '[\"2\",\"1\"]', 'Hospital 2', 1, '0003', 'Kolkata', 2, 2, '8910420169', 1);
+(3, 0, '[\"6\",\"2\",\"1\",\"5\",\"4\",\"3\"]', 'Hospital 2', 1, '0003', 'Kolkata', 2, 2, '8910420169', 1),
+(6, 0, '[\"6\",\"2\",\"1\",\"5\",\"4\",\"3\"]', 'Purulia Hospital', 1, '0006', 'Purulia Hospital, Ranchi Road, near Bus Stand, PIN - 723101', 1, 2, '7278310506', 1);
 
 -- --------------------------------------------------------
 
@@ -387,12 +389,11 @@ CREATE TABLE `pms_info` (
 --
 
 INSERT INTO `pms_info` (`pms_id`, `pms_info_id`, `asset_id`, `asset_code`, `facility_id`, `facility_code`, `department_id`, `device_group`, `asset_class`, `equipment_name`, `equipment_make`, `equipment_model`, `equipment_sl_no`, `pms_due_date`, `supplied_by`, `sp_details`, `service_provider_details`, `pms_planned_date`, `pms_report_attached`, `link_generated_by`, `link_generate_time`, `row_status`, `pms_status`, `pms_sp_status`, `assign_to_sp_engg`, `pms_data_updated`) VALUES
-(1, '0001', 1, '000100001', 1, '0001', '2', 1, 2, 'Radiant Warmer', 'NAT Steel', 'Difibmax', '12345678', '2024-04-01', 'NAT steel', 'NAT Steel Ltd.', 'work in progress', '2025-06-29', '', 1, '2025-06-29 22:37:21', 2, 1, 0, 0, '2025-06-29 22:45:35'),
-(2, '0002', 2, '000100002', 1, '0001', '2', 1, 2, 'Incubator', 'Phoneix', 'Incub', 'Phn123456', '2025-04-01', 'Philips', 'Phoneix Pvt. Ltd.', '', '2025-06-29', '', 1, '2025-06-29 22:49:50', 2, 0, 0, 1, '2025-06-29 22:49:50'),
-(3, '0003', 3, '000100003', 1, '0001', '2', 1, 2, 'Multipara monitor', 'Philips', 'Pro', '12345678', '2025-05-01', 'Philips', 'Philips Pvt. Ltd.', 'work almost done', '2025-06-29', '', 1, '2025-06-29 22:50:22', 2, 1, 0, 0, '2025-06-29 22:51:12'),
-(4, '0004', 6, '000300006', 3, '0003', '2', 1, 2, 'Nebulizer', 'Max', 'M2', '1001', '2025-04-01', 'Bhogilal', '8910420169', '', '2025-07-21', '[\"687e125854165.png\"]', 1, '2025-07-05 22:02:25', 2, 1, 0, 0, '2025-07-21 15:41:00'),
-(5, '0005', 8, '000300008', 3, '0003', '1', 1, 1, 'X-ray', 'ME xray', 'Xray123', 'ME123456', '2025-07-20', 'Bhogilal', '8910420169', '', '2025-07-09', '', 1, '2025-07-09 15:54:04', 2, 0, 0, 0, '2025-07-09 15:54:29'),
-(6, '0006', 5, '000200005', 2, '0002', '2', 1, 2, 'BP Machine', 'Omron', 'OMBP', '1245', '2025-05-02', 'Bhogilal', '8910420169', '', '2025-07-21', '', 1, '2025-07-21 15:37:05', 2, 0, 0, 0, '2025-07-21 15:37:08');
+(1, '0001', 1, '000100001', 1, '0001', '3', 1, 1, 'X-ray', 'ME xray', '300mA', '11334', '2025-01-01', 'ME X-ray', '8910420169', '', '2025-08-21', '', 1, '2025-08-21 16:39:22', 2, 0, 0, 1, '2025-08-21 16:39:24'),
+(2, '0002', 5, '000300005', 3, '0003', '3', 1, 1, 'X-ray', 'PHILIPS', '500mA', '78912', '2025-08-11', 'Eastern Meditech', '8910420169', 'done 21.08', '2025-08-21', '[\"68a700185d7a9.png\"]', 1, '2025-08-21 16:39:46', 2, 1, 0, 2, '2025-08-21 16:46:42'),
+(3, '0003', 4, '000200004', 2, '0002', '2', 2, 2, 'Nebulizer', 'Omron', 'Nebulizer', '5544', '2025-07-01', 'Eastern Meditech', '8910420169', 'done 21.08', '2025-08-21', '[\"68a6ffb140e20.png\"]', 1, '2025-08-21 16:40:14', 2, 1, 0, 0, '2025-08-21 16:45:03'),
+(4, '0004', 11, '000600011', 6, '0006', '3', 1, 1, 'X-Ray', 'Philips', 'Phi-X', '12303', '2025-09-29', 'Phillips', '8910181521', '', '2025-09-25', '', 1, '2025-09-25 15:31:44', 2, 0, 0, 0, '2025-09-25 15:32:09'),
+(5, '0005', 12, '000600012', 6, '0006', '5', 1, 2, 'OT light', 'philips', 'OT light', '12123344678', '2024-12-02', 'Electrocare', '888888888888', 'cali done 25-09-25', '2025-09-25', '[\"68d51ce948f83.jpeg\"]', 1, '2025-09-25 15:40:17', 2, 1, 0, 1, '2025-09-25 16:14:00');
 
 -- --------------------------------------------------------
 
@@ -434,9 +435,9 @@ CREATE TABLE `qa_info` (
 --
 
 INSERT INTO `qa_info` (`qa_id`, `qa_info_id`, `asset_id`, `asset_code`, `facility_id`, `facility_code`, `department_id`, `device_group`, `asset_class`, `equipment_name`, `equipment_make`, `equipment_model`, `equipment_sl_no`, `pms_due_date`, `supplied_by`, `sp_details`, `service_provider_details`, `pms_planned_date`, `pms_report_attached`, `link_generated_by`, `link_generate_time`, `row_status`, `pms_status`, `pms_sp_status`, `assign_to_sp_engg`, `pms_data_updated`) VALUES
-(1, '0001', 9, '000200009', 2, '0002', '3', 3, 1, 'X-ray', 'PHILIPS', '300mA', 'LM200i', '2025-01-01', 'Eastern Meditech', '8910420169', '', '2025-07-15', '[\"68762b4e538b0.png\"]', 1, '2025-07-15 15:48:01', 2, 1, 0, 1, '2025-07-15 15:48:31'),
-(2, '0002', 10, '000300010', 3, '0003', '1', 3, 1, 'Mamo graphy', 'PHILIPS', 'Mamo 1', '121245', '2025-05-21', 'Eastern Meditech', '8910420169', '', '2025-07-21', '', 1, '2025-07-21 16:58:39', 2, 1, 0, 1, '2025-07-21 16:58:42'),
-(3, '0003', 11, '000200011', 2, '0002', '2', 3, 1, 'C-ARM', 'BPL', 'C-ARM', '102354', '2024-07-02', 'Eastern Meditech', '', 'done', '2025-07-21', '[\"687e26cb1aadd.png\"]', 1, '2025-07-21 17:04:29', 2, 1, 0, 2, '2025-07-21 17:10:19');
+(1, '0001', 3, '000200003', 2, '0002', '3', 1, 1, 'Mamo graphy', 'Siemens', 'Clarity', 'TA2344', '2025-09-01', 'Sapoorji', '8910420169', '21.08', '2025-08-21', '[\"68a7027db4517.png\"]', 1, '2025-08-21 16:41:48', 2, 1, 0, 1, '2025-08-21 16:56:55'),
+(2, '0002', 5, '000300005', 3, '0003', '3', 1, 1, 'X-ray', 'PHILIPS', '500mA', '78912', '2025-05-20', 'Eastern Meditech', '8910420169', '21.08', '2025-08-21', '[\"68a7024dcb033.png\"]', 1, '2025-08-21 16:42:36', 2, 1, 0, 0, '2025-08-21 16:56:08'),
+(3, '0003', 1, '000100001', 1, '0001', '3', 1, 1, 'X-ray', 'ME xray', '300mA', '11334', '2025-01-01', 'ME X-ray', '8910420169', '', '2025-08-21', '', 1, '2025-08-21 16:57:22', 2, 0, 0, 0, '2025-08-21 16:57:25');
 
 -- --------------------------------------------------------
 
@@ -547,10 +548,11 @@ INSERT INTO `user_details` (`user_id`, `user_name`, `user_type_id`, `hospital_id
 (20, 'SK S A', 2, 1, 1, '8910420169', '', 'sksayan2012@gmail.com', '1985-01-16', ' howrah, 711310', 'Abcdapmeq', '711310', 1),
 (26, 'Dr. Kamal', 3, 1, 3, '8910420169', '', 'rrr', '2025-07-07', ' ffff', 'Kamal', 'Kamal', 0),
 (27, 'Dr. Kamal', 3, 1, 3, '8910420169', '', 'hhhh', '2025-07-07', 'Chaksrikrishna, Hirapur', 'Kamal', 'Kamal', 0),
-(28, 'Dr. Kamal', 3, 1, 3, '8910420169', '', 'kamal@apmeq.com', '2025-07-07', 'Chaksrikrishna, Hirapur', 'Kamal', 'Kamal', 1),
+(28, 'Dr. Kamal', 3, 1, 3, '8910420169', '', 'kamal@apmeq.com', '2025-07-07', 'Chaksrikrishna, Hirapur', 'Dr. Kamal', 'Kamal', 1),
 (29, 'Dr. Rajesh', 3, 1, 2, '8910420169', '', 'rajesh', '2025-07-15', ' Kolkata', 'Rajesh', 'Rajesh', 1),
 (30, 'Hospital 1 admin', 2, 1, 2, '9', '', 'c', '2025-07-15', ' d', 'Hospital 1', 'Hospital 1', 1),
-(31, 'Hospital 2 admin', 2, 1, 3, '10', '', '10', '2025-07-15', ' kolkata', 'Hospital 2', 'Hospital 2', 1);
+(31, 'Hospital 2 admin', 2, 1, 3, '10', '', '10', '2025-07-15', ' kolkata', 'Hospital 2', 'Hospital 2', 1),
+(32, 'Asmita', 2, 1, 6, '8910420169', '', 'asmita@gmail.com', '1996-01-07', ' Purulia', 'asmita', 'asmita', 1);
 
 -- --------------------------------------------------------
 
@@ -701,7 +703,7 @@ ALTER TABLE `user_type`
 -- AUTO_INCREMENT for table `asset_details`
 --
 ALTER TABLE `asset_details`
-  MODIFY `asset_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `asset_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `asset_status_code`
@@ -719,13 +721,13 @@ ALTER TABLE `asset_type_list`
 -- AUTO_INCREMENT for table `calib_info`
 --
 ALTER TABLE `calib_info`
-  MODIFY `calib_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `calib_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `call_log_register`
 --
 ALTER TABLE `call_log_register`
-  MODIFY `call_log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `call_log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `category_list`
@@ -737,19 +739,19 @@ ALTER TABLE `category_list`
 -- AUTO_INCREMENT for table `department_list`
 --
 ALTER TABLE `department_list`
-  MODIFY `department_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `department_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `device_group_list`
 --
 ALTER TABLE `device_group_list`
-  MODIFY `device_group_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `device_group_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `facility_master`
 --
 ALTER TABLE `facility_master`
-  MODIFY `facility_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `facility_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `hospital_list`
@@ -767,7 +769,7 @@ ALTER TABLE `manufacturer_list`
 -- AUTO_INCREMENT for table `pms_info`
 --
 ALTER TABLE `pms_info`
-  MODIFY `pms_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `pms_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `qa_info`
@@ -803,7 +805,7 @@ ALTER TABLE `supplier_list`
 -- AUTO_INCREMENT for table `user_details`
 --
 ALTER TABLE `user_details`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `user_type`

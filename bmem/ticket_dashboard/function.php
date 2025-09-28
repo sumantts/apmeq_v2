@@ -895,6 +895,7 @@
 	if($fn == 'updateGeneratedFormdata'){
 		$return_result = array();
 		$status = true;
+		$cl_status_history = array();
 
 		$call_log_id = $_POST['call_log_id'];
 		$call_log_comment = $_POST['call_log_comment']; 

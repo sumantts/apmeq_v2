@@ -13,6 +13,7 @@
 		$return_result = array();
 		$status = true; 
 		$insert_id = 0;
+		$total_asset_now = 0;
 
 		$asset_id = $_POST['asset_id']; 
 		$facility_id = $_POST['facility_id']; 
@@ -67,15 +68,16 @@
 					}
 					 
 					//Get facility Code
-					/*$sql_get1 = "SELECT facility_code FROM asset_details WHERE facility_id = '" .$facility_id. "'";
+					$sql_get1 = "SELECT * FROM asset_details WHERE facility_id = '" .$facility_id. "'";
 					$result_get1 = $mysqli->query($sql_get1);
 			
 					if ($result_get1->num_rows > 0) { 
-						$row_get1 = $result_get1->fetch_array();
-						$facility_code = $row_get1['facility_code'];	
-					}*/
+						$total_asset_now = $result_get1->num_rows;	
+					}
 
-					$asset_code = $facility_code.''.str_pad($asset_id_temp, 5, '0', STR_PAD_LEFT);
+					
+					//$asset_code = $facility_code.''.str_pad($asset_id_temp, 5, '0', STR_PAD_LEFT);
+					$asset_code = $facility_code.''.str_pad($total_asset_now, 5, '0', STR_PAD_LEFT);
 
 					$upd_sql = "UPDATE asset_details SET asset_code = '" .$asset_code. "' WHERE asset_id = '" .$asset_id_temp. "' ";
 					$result_upd = $mysqli->query($upd_sql); 
