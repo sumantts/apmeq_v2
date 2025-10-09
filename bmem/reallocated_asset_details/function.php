@@ -79,7 +79,7 @@
 				$facility_name = $row['facility_name'];	
 				$facility_code = $row['facility_code'];	
 
-				$sql1 = "SELECT COUNT(reloc_id) AS count_reloc_id FROM reloc_asset_detail WHERE facility_id = '" .$facility_id. "' GROUP BY facility_id";
+				$sql1 = "SELECT COUNT(reloc_id) AS count_reloc_id FROM reloc_asset_detail WHERE facility_id = '" .$facility_id. "'";
 				$result1 = $mysqli->query($sql1);		
 				if ($result1->num_rows > 0) {
 					while($row1 = $result1->fetch_array()){
