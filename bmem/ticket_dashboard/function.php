@@ -206,7 +206,7 @@
 		$to_dt = $_GET['to_dt'];  
 		$warranty_sr = $_GET['warranty_sr']; 
 
-		$where_condition = "WHERE call_log_register.call_log_status != 5";
+		$where_condition = "WHERE call_log_register.call_log_status != 3";
 
 		if($facility_id_s > 0){
 			$where_condition .= " AND call_log_register.facility_id = '" .$facility_id_s. "' ";

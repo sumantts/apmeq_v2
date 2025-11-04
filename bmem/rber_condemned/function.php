@@ -203,7 +203,7 @@
 		$device_group = $_GET['device_group']; 
 		$asset_class = $_GET['asset_class'];
 		
-		$where_condition = "WHERE call_log_register.call_log_status = 5";
+		$where_condition = "WHERE call_log_register.call_log_status = 3";
 
 		if($facility_id_s > 0){
 			$where_condition .= " AND call_log_register.facility_id = '" .$facility_id_s. "' ";
