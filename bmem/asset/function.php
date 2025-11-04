@@ -652,8 +652,8 @@
 		}
 		$ids = substr($ids, 0, -1);
 
-		//$sql = "SELECT * FROM department_list WHERE department_id IN ($ids) ORDER BY department_name ASC";
-		$sql = "SELECT * FROM department_list ORDER BY department_name ASC";
+		$sql = "SELECT * FROM department_list WHERE department_id IN ($ids) ORDER BY department_name ASC";
+		//$sql = "SELECT * FROM department_list ORDER BY department_name ASC";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {

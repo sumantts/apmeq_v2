@@ -59,7 +59,7 @@ include('common/head.php');
                             </div>
                             <div class="col">
                                 <h4 class="m-0 text-white" id="resolved_ticket">000</h4>
-                                <span>Resolved</span>
+                                <span>Closed</span>
                             </div>
                             <div class="col">
                                 <h4 class="m-0 text-white" id="open_ticket">000</h4>

@@ -1,0 +1,13 @@
+1. Asset enlist korar somoy facility er je department add kora ache seta charao onno department er under e asset add kora jachhe..
+e.g. : Hospital 1 only have two department opd & ipd but asset create korar somoy radiology department er under e asset add korte perechi.
+Comment: Updated as per requirement: https://prnt.sc/qQdaskkDNs7W
+Old code: https://prnt.sc/SHJjj4ZmNkxA
+
+2. Reallocation initiate korar somoy Hospital 1 er only two department ( opd & ipd)  but reallocation department OT tey kora jachhe and even sob kota department er option asche which are not even selected for hospital 1. 
+Comment: updatd as per requirement: https://prnt.sc/-QwT0KEUwzSY
+
+3. Ticket dashboard issue no 1 & 2 : done - thank you
+4. Ticket dashboard er issue no 3 tay bolte cheyechilam je as Link and action ei duto jaygay input dilei call log status auto update hoy tai oikhane manually change ta thakbena.... but ekhon manually change kora jachhe. ( Any input please)
+5. RBER issue no 1 : not solved.
+6. RBER issue no 2 : not answered / solved 
+## general issue status not updated...
