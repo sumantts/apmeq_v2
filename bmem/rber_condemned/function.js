@@ -29,14 +29,15 @@ $('#myFormS').on('submit', function(){
     $asset_code_s = $('#asset_code_s').val(); 
     $device_group = $('#device_group').val(); 
     $asset_class = $('#asset_class').val(); 
+        populateDataTable_1();
         
-    if($facility_id_s > 0 || $department_id > 0 || $facility_code_s != '' || $equipment_name_s != '' || $asset_code_s != '' || $device_group > 0 || $asset_class > 0){
+    /*if($facility_id_s > 0 || $department_id > 0 || $facility_code_s != '' || $equipment_name_s != '' || $asset_code_s != '' || $device_group > 0 || $asset_class > 0){
         populateDataTable_1();
         $('#filteredTicketDiv').removeClass('d-none');
         $('#filteredTicketDiv').addClass('d-block');
     }else{
         alert('Please choose search parameter');
-    }
+    }*/
     return false;
 })
 
