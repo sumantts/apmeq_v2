@@ -539,6 +539,12 @@
 		$sql = "UPDATE call_log_register SET assign_to = '" .$assign_to. "', eng_contact_no = '" .$eng_contact_no. "', call_log_status = '" .$call_log_status. "', engineer_coment = '" .$engineer_coment. "', cl_status_history = '" .$cl_status_history_en. "' WHERE call_log_id = '" .$call_log_id. "' ";
 		$result = $mysqli->query($sql);
 
+		if($call_log_status_o == '1'){
+			$call_log_status = '0';
+			$sql = "UPDATE call_log_register SET call_log_status = '" .$call_log_status. "' WHERE call_log_id = '" .$call_log_id. "' ";
+			$result = $mysqli->query($sql);
+		}
+
 		$return_array['status'] = $status;
 		
 		echo json_encode($return_array);
