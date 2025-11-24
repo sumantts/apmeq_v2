@@ -492,7 +492,7 @@ $last_index = sizeof($master_datas) - 1;
 				<div class="row">
 					<div class="col-sm-4">
 						<div class="card text-white bg-danger">
-							<div class="card-header">Facility 1</div>
+							<div class="card-header">Total</div>
 							<div class="card-body">
 								<h5 class="card-title text-white">Due Calibration: <?=$st_calib_due?></h5>
                                 <h5 class="card-title text-white">Due PMS: <?=$st_pms_due?></h5>

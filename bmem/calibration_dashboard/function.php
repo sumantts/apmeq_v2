@@ -119,8 +119,15 @@
 		$mainData = array();
 		$email1 = '';
 		$user_id = $_SESSION["user_id"];
+		$facility_id = $_SESSION["facility_id"];
+		$user_type_code = $_SESSION["user_type_code"];
 
-		$sql = "SELECT * FROM facility_master  WHERE user_id = '" .$user_id. "' LIMIT 0, 50";
+		//$sql = "SELECT * FROM facility_master  WHERE user_id = '" .$user_id. "' LIMIT 0, 50";
+		if($user_type_code == 'super'){
+			$sql = "SELECT * FROM facility_master  WHERE user_id = '" .$user_id. "' LIMIT 0, 50";
+		}else{
+			$sql = "SELECT * FROM facility_master  WHERE facility_id = '" .$facility_id. "'";
+		}
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {

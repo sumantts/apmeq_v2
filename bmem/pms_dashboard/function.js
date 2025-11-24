@@ -122,7 +122,11 @@ function populateDataTable_1(){
                 $html = "<option value=''>Select</option>";
 
                 for($i = 0; $i < $rows.length; $i++){
-                    $html += "<option value='"+$rows[$i].facility_id+"'>"+$rows[$i].facility_name+"</option>";                    
+                    if($rows.length == 1){ 
+                        $html += "<option value='"+$rows[$i].facility_id+"' selected='selected'>"+$rows[$i].facility_name+"</option>"; 
+                    }else{
+                        $html += "<option value='"+$rows[$i].facility_id+"'>"+$rows[$i].facility_name+"</option>"; 
+                    }//end if                   
                 }//end for
                 
                 $('#facility_id').html($html);  
@@ -282,6 +286,7 @@ $(document).ready(function () {
         $tot_due_pms = 0;
         $total_planned_pms = 0;
         $total_done_pms = 0;
+        $tot_due_pms = 0;
         
         $('#example tr:gt(0)').each(function(){
             $pms_due_temp = $(this).find('td:eq(2)').text();
@@ -301,7 +306,10 @@ $(document).ready(function () {
 
             $('#tot_due_pms').html($tot_due_pms);
             $('#total_planned_pms').html($total_planned_pms);
-            $('#total_done_pms').html($total_done_pms);            
+            $('#total_done_pms').html($total_done_pms);         
+            
+            $total_ticket = parseInt($tot_due_pms) + parseInt($total_planned_pms) + parseInt($total_done_pms);
+            $('#total_ticket').html($total_ticket);      
         });       
     },1000)
 });

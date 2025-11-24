@@ -240,7 +240,11 @@ function configureFacilityDropDown(){
                 $html = "<option value='0'>Select</option>";
 
                 for($i = 0; $i < $rows.length; $i++){
-                    $html += "<option value='"+$rows[$i].facility_id+"'>"+$rows[$i].facility_name+"</option>";                    
+                    if($rows.length == 1){ 
+                        $html += "<option value='"+$rows[$i].facility_id+"'  selected='selected'>"+$rows[$i].facility_name+"</option>"; 
+                    }else{
+                        $html += "<option value='"+$rows[$i].facility_id+"'>"+$rows[$i].facility_name+"</option>";                    
+                    }
                 }//end for
                 
                 $('#facility_id_s').html($html);
