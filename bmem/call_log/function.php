@@ -13,6 +13,8 @@
 		$return_array = array();
 		$mainData = array();
 		$asset_code = $_POST['asset_code'];
+		$facility_id = $_SESSION["facility_id"];
+		$user_type_code = $_SESSION["user_type_code"];
 		
 		$asset_id = ''; 
 		$facility_id = '';
@@ -50,7 +52,12 @@
 		$sp_details = '';
 		$status = true;
 
-		$sql = "SELECT asset_details.*, facility_master.facility_name FROM asset_details JOIN facility_master ON asset_details.facility_id = facility_master.facility_id WHERE asset_details.asset_code = '" .$asset_code. "'";
+		if($user_type_code == 'super'){
+			$sql = "SELECT asset_details.*, facility_master.facility_name FROM asset_details JOIN facility_master ON asset_details.facility_id = facility_master.facility_id WHERE asset_details.asset_code = '" .$asset_code. "'";
+		}else{
+			$sql = "SELECT asset_details.*, facility_master.facility_name FROM asset_details JOIN facility_master ON asset_details.facility_id = facility_master.facility_id WHERE asset_details.asset_code = '" .$asset_code. "' AND facility_master.facility_id = '" .$facility_id. "'";
+		}
+
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {

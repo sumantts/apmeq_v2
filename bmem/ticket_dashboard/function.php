@@ -206,6 +206,10 @@
 		$to_dt = $_GET['to_dt'];  
 		$warranty_sr = $_GET['warranty_sr']; 
 
+		$facility_id = $_SESSION["facility_id"];
+		$user_type_code = $_SESSION["user_type_code"];
+
+
 		$where_condition = "WHERE call_log_register.call_log_status != 3";
 
 		if($facility_id_s > 0){
@@ -307,6 +311,13 @@
 					}//end if
 				}//end if
 
+				if($user_type_code == 'super'){}else{
+					$show_action_btn = false;
+					$disabled_text = 'disabled';					
+				}
+
+
+
 				# 0=WIP, 1=Resolved, 2=Closed
 				$dynamic_id = 'ticket_id_'.$call_log_id;
 				$updated_text = '';
@@ -392,10 +403,14 @@
 				}
 
 				
-				
-				$view_link = "";
-				$view_link .= "<a href='ticket_dashboard/call_log_link.php?call_log_id=$call_log_id', target='_blank'>View Link</a><br><br>";
-				$view_link .= "<a href='ticket_dashboard/call_log_link.php?call_log_id=$call_log_id&link=external', target='_blank'>Share Link</a>";
+				if($user_type_code == 'super'){
+					$view_link = "";
+					$view_link .= "<a href='ticket_dashboard/call_log_link.php?call_log_id=$call_log_id', target='_blank'>View Link</a><br><br>";
+					$view_link .= "<a href='ticket_dashboard/call_log_link.php?call_log_id=$call_log_id&link=external', target='_blank'>Share Link</a>";
+				}else{
+					$view_link = ""; 
+					$view_link .= "<a href='ticket_dashboard/call_log_link.php?call_log_id=$call_log_id&link=external', target='_blank'>Share Link</a>";
+				}
 
 				
 				# Assign to SP or Engg				
@@ -423,6 +438,11 @@
 					$updated_text1 .= '<option value="2">Engineer</option>';
 				}
 				$updated_text1 .= '</select>'; 
+
+				if($user_type_code == 'super'){}else{ 	
+					$updated_text1 = '-';	
+					$updated_text = $call_log_status_text;		
+				}
 
 				if($dept_match == true){
 					$data[0] = $slno; 
@@ -722,14 +742,24 @@
 		$total_ticket = 0; 
 		$resolved_ticket = 0;
 		$open_ticket = 0;
+		$facility_id = $_SESSION["facility_id"];
+		$user_type_code = $_SESSION["user_type_code"];
 
 
 		//Total Assets
-		$sql1 = "SELECT * FROM call_log_register";
+		if($user_type_code == 'super'){
+			$sql1 = "SELECT * FROM call_log_register";
+		}else{
+			$sql1 = "SELECT * FROM call_log_register WHERE facility_id = '" .$facility_id. "'";
+		}
 		$result1 = $mysqli->query($sql1);
 		$total_ticket = $result1->num_rows; 
 
-		$sql_2 = "SELECT * FROM call_log_register WHERE call_log_status = '2' ";
+		if($user_type_code == 'super'){
+			$sql_2 = "SELECT * FROM call_log_register WHERE call_log_status = '2' ";
+		}else{
+			$sql_2 = "SELECT * FROM call_log_register WHERE call_log_status = '2' AND facility_id = '" .$facility_id. "'";
+		}
 		$result_2 = $mysqli->query($sql_2);
 		$resolved_ticket = $result_2->num_rows;
 

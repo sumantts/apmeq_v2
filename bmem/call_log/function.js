@@ -48,7 +48,7 @@ $('#asset_code').on('blur', function(){
                 $('#asset_detail, #s_button_div').addClass('d-block').hide();
                 
             }else{
-                alert('Asset Code Does Not Match');
+                alert('Asset Code Does Not Match / You have no access on it');
             }
         });//end ajax
     }//end if
