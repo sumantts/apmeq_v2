@@ -210,21 +210,11 @@ include('common/head.php');
                                     </div>  
                                 </div>
 
-                                <div class="form-row">
+                                <div class="form-row">                                    
                                     <div class="col-md-4 mb-3">
-                                        <label for="assign_to" class="text-danger">Assign To*</label>
-                                        <select class="form-control" name="assign_to" id="assign_to" required>
-                                            <option value="0">Select</option> 
-                                            <option value="1">Engineer</option> 
-                                            <option value="2">Service Provider</option> 
-                                        </select> 
+                                        <label for="condemned_date" class="text-danger">Dated*</label>
+                                        <input type="date" class="form-control" id="condemned_date" value=""> 
                                     </div>
-                                    
-                                    <div class="col-md-4 mb-3">
-                                        <label for="eng_contact_no" class="text-danger">Engineer Contact Number</label>
-                                        <input type="tel" class="form-control" id="eng_contact_no" value="" > 
-                                    </div> 
-
                                     <div class="col-md-4 mb-3">
                                         <label for="call_log_statusM" class="text-danger">Call Log Status*</label>
                                         <select class="form-control" name="call_log_statusM" id="call_log_statusM" required> 
@@ -232,14 +222,8 @@ include('common/head.php');
                                             <option value="1">Reject</option>
                                             <option value="5">Condemned</option> 
                                         </select> 
-                                    </div>
-                                    
-                                    <!-- <div class="col-md-4 mb-3">
-                                        <label for="resolved_date_time" >Resolved Date Time</label>
-                                        <input type="date" class="form-control" id="resolved_date_time" value="" > 
-                                    </div>
-                                    
-                                    <div class="col-md-6 mt-4">
+                                    </div>                                   
+                                    <div class="col-md-4 mt-4">
                                         <div class="row">
                                             <div class="col-md-8">
                                                 <input type="file" id="multiupload" name="uploadFiledd[]" multiple accept=".jpg,.jpeg,.png" >
@@ -249,7 +233,7 @@ include('common/head.php');
                                                 <button type="button" id="startUpload" class="btn btn-primary btn-sm">Upload</button>
                                             </div>
                                         </div>
-                                    </div>                                     -->
+                                    </div>
                                 </div> 
 
                                 <div class="form-row"> 
@@ -257,7 +241,7 @@ include('common/head.php');
                                         <div class="text-center" id="product_gallery"> </div>
                                     </div>
                                 </div>
-
+                                
                                 <div class="form-row"> 
                                     <div class="col-md-12 mb-3">
                                         <textarea class="form-control" name="engineer_coment" id="engineer_coment"></textarea>

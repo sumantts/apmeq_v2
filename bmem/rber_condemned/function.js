@@ -378,7 +378,7 @@ function getAllProductImages(pmsinfoid){
                 $html = "";
                 console.log('all_images length: '+$all_images.length);
                 for($i in $all_images ){
-                    $html += '<img src="./ticket_dashboard/photos/'+$all_images[$i]+'" width="75" class="img-fluid img-thumbnail" alt="..."><a href="javascript: void(0)"> <i class="fa fa-trash" aria-hidden="true" onclick="deleteProdImage(\''+$all_images[$i]+'\')"></i></a>'; 
+                    $html += '<img src="./rber_condemned/photos/'+$all_images[$i]+'" width="75" class="img-fluid img-thumbnail" alt="..."><a href="javascript: void(0)"> <i class="fa fa-trash" aria-hidden="true" onclick="deleteProdImage(\''+$all_images[$i]+'\')"></i></a>'; 
                 }//end for
                 
                 $('#product_gallery').html($html);
