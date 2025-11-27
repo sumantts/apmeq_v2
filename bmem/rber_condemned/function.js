@@ -42,17 +42,18 @@ $('#myFormS').on('submit', function(){
 })
 
 $('#myFormM').on('submit', function(){    
-    $assign_to = $('#assign_to').val();
-    $eng_contact_no = $('#eng_contact_no').val(); 
+    $assign_to = '';//$('#assign_to').val();
+    $eng_contact_no = '';//$('#eng_contact_no').val(); 
     $call_log_statusM = $('#call_log_statusM').val();
     $resolved_date_time = '';//$('#resolved_date_time').val(); 
     $call_log_id = $('#call_log_id').val(); 
-    $engineer_coment = $('#engineer_coment').val();
+    $engineer_coment = $('#engineer_coment').val(); 
+    $condemned_declare_date = $('#condemned_declare_date').val();
     
     $.ajax({
         method: "POST",
         url: "rber_condemned/function.php",
-        data: { fn: "updateTicketInfo", assign_to: $assign_to, eng_contact_no: $eng_contact_no, call_log_statusM: $call_log_statusM, resolved_date_time: $resolved_date_time, call_log_id: $call_log_id, engineer_coment: $engineer_coment }
+        data: { fn: "updateTicketInfo", assign_to: $assign_to, eng_contact_no: $eng_contact_no, call_log_statusM: $call_log_statusM, resolved_date_time: $resolved_date_time, call_log_id: $call_log_id, engineer_coment: $engineer_coment, condemned_declare_date: $condemned_declare_date }
     })
     .done(function( res ) {
         //console.log(res);
@@ -84,6 +85,7 @@ function editTableData($call_log_id){
             $('#call_log_statusM').val($res1.call_log_status).trigger('change');
             //$('#resolved_date_time').val($res1.resolved_date_time); 
             $('#engineer_coment').val($res1.engineer_coment); 
+            $('#condemned_declare_date').val($res1.condemned_declare_date); 
             $html = '';
             $html += '<div><strong>Issue Description: </strong>'+$res1.issue_description+'</div>';
             $('#ticket_data').html($html);

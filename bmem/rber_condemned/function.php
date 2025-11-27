@@ -203,7 +203,7 @@
 		$device_group = $_GET['device_group']; 
 		$asset_class = $_GET['asset_class'];
 		
-		$where_condition = "WHERE call_log_register.call_log_status = 3";
+		$where_condition = "WHERE call_log_register.call_log_status = 3 OR call_log_register.call_log_status = 5 ";
 
 		if($facility_id_s > 0){
 			$where_condition .= " AND call_log_register.facility_id = '" .$facility_id_s. "' ";
@@ -388,7 +388,7 @@
 
 		$where_condition = "WHERE call_log_register.call_log_id = '" .$call_log_id. "' ";
 		
-		$sql = "SELECT call_log_register.call_log_id, call_log_register.token_id, call_log_register.issue_description, call_log_register.call_log_date_time, call_log_register.resolved_date_time, call_log_register.ticket_raiser_contact, call_log_register.assign_to, call_log_register.call_log_status, call_log_register.status_by_engg, call_log_register.eng_contact_no, call_log_register.engineer_coment, asset_details.equipment_name, asset_details.department_id, asset_details.asset_supplied_by, asset_details.sp_details, facility_master.facility_code, facility_master.facility_name FROM call_log_register JOIN asset_details ON call_log_register.asset_code = asset_details.asset_code JOIN facility_master ON call_log_register.facility_id = facility_master.facility_id $where_condition";
+		$sql = "SELECT call_log_register.call_log_id, call_log_register.token_id, call_log_register.issue_description, call_log_register.call_log_date_time, call_log_register.resolved_date_time, call_log_register.ticket_raiser_contact, call_log_register.assign_to, call_log_register.call_log_status, call_log_register.status_by_engg, call_log_register.eng_contact_no, call_log_register.engineer_coment, call_log_register.condemned_declare_date, asset_details.equipment_name, asset_details.department_id, asset_details.asset_supplied_by, asset_details.sp_details, facility_master.facility_code, facility_master.facility_name FROM call_log_register JOIN asset_details ON call_log_register.asset_code = asset_details.asset_code JOIN facility_master ON call_log_register.facility_id = facility_master.facility_id $where_condition";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -405,7 +405,8 @@
 				$asset_supplied_by = $row['asset_supplied_by'];					
 				$engineer_coment = $row['engineer_coment'];					
 				$status_by_engg = $row['status_by_engg'];					
-				$call_log_status = $row['call_log_status'];	
+				$call_log_status = $row['call_log_status'];						
+				$condemned_declare_date = $row['condemned_declare_date'];	
 							
 				$sp_details = $row['sp_details'];					
 				$call_log_date_time = date('d-F-Y h:i A', strtotime($row['call_log_date_time']));	
@@ -478,7 +479,8 @@
 				$return_array['call_log_status_text'] = $call_log_status_text;	
 				$return_array['eng_contact_no'] = $eng_contact_no;				
 				$return_array['engineer_coment'] = $engineer_coment;			
-				$return_array['status_by_engg'] = $status_by_engg;				
+				$return_array['status_by_engg'] = $status_by_engg;							
+				$return_array['condemned_declare_date'] = $condemned_declare_date;
 			}
 		} else {
 			$status = false;
@@ -513,6 +515,7 @@
 		$resolved_date_time = $_POST['resolved_date_time'].' '.date('H:i:s'); 
 		$call_log_id = $_POST['call_log_id']; 
 		$engineer_coment = $_POST['engineer_coment']; 
+		$condemned_declare_date = $_POST['condemned_declare_date']; 
 						
 
 		$sql = "SELECT * FROM call_log_register WHERE call_log_id = '".$call_log_id."'";
@@ -543,6 +546,11 @@
 			$call_log_status = '0';
 			$sql = "UPDATE call_log_register SET call_log_status = '" .$call_log_status. "' WHERE call_log_id = '" .$call_log_id. "' ";
 			$result = $mysqli->query($sql);
+		}
+
+		if($call_log_status == 5){			
+			$sql2 = "UPDATE call_log_register SET condemned_declare_date = '" .$condemned_declare_date. "' WHERE call_log_id = '" .$call_log_id. "' ";
+			$result2 = $mysqli->query($sql2);
 		}
 
 		$return_array['status'] = $status;

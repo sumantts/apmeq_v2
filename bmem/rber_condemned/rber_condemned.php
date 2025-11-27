@@ -212,8 +212,8 @@ include('common/head.php');
 
                                 <div class="form-row">                                    
                                     <div class="col-md-4 mb-3">
-                                        <label for="condemned_date" class="text-danger">Dated*</label>
-                                        <input type="date" class="form-control" id="condemned_date" value=""> 
+                                        <label for="condemned_declare_date" class="text-danger">Dated*</label>
+                                        <input type="date" class="form-control" id="condemned_declare_date" value=""> 
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <label for="call_log_statusM" class="text-danger">Call Log Status*</label>
