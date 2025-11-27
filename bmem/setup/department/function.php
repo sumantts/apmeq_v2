@@ -53,6 +53,7 @@
 		$status = true;
 		$mainData = array();
 		$author_bio1 = '';
+		$user_type_code = $_SESSION["user_type_code"];
 		$sql = "SELECT * FROM department_list ORDER BY department_id DESC";
 		$result = $mysqli->query($sql);
 
@@ -71,7 +72,11 @@
 				$data[1] = $department_name;
 				$data[2] = $department_code;
 				$data[3] =  $activity_status[$department_status];
-				$data[4] = "<a href='javascript: void(0)' data-department_id='.$department_id.'><i class='fa fa-eye' aria-hidden='true' onclick='editTableData(".$view_params.")'></i></a> <a href='javascript: void(0)' data-department_id='.$department_id.'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$edit_params.")'></i></a> <a href='javascript: void(0)' data-department_id='.$department_id.'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$department_id.")'></i></a>";
+				if($user_type_code == 'super'){
+					$data[4] = "<a href='javascript: void(0)' data-department_id='.$department_id.'><i class='fa fa-eye' aria-hidden='true' onclick='editTableData(".$view_params.")'></i></a> <a href='javascript: void(0)' data-department_id='.$department_id.'><i class='fa fa-edit' aria-hidden='true' onclick='editTableData(".$edit_params.")'></i></a> <a href='javascript: void(0)' data-department_id='.$department_id.'> <i class='fa fa-trash' aria-hidden='true' onclick='deleteTableData(".$department_id.")'></i></a>";
+				}else{
+					$data[4] = "<a href='javascript: void(0)' data-department_id='.$department_id.'><i class='fa fa-eye' aria-hidden='true' onclick='editTableData(".$view_params.")'></i></a>";
+				}
 
 				array_push($mainData, $data);
 				$slno++;

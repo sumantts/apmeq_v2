@@ -70,7 +70,9 @@ include('common/head.php'); ?>
 							<strong>Success!</strong> Your Data saved successfully.
 							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						</div>
+                        <?php if($_SESSION["user_type_code"] == 'super'){?>
                         <button type="button" class="btn btn-primary mb-2 float-right" id="onMyModal">Add New</button>
+                        <?php } ?>
                         
                         <div class="table-responsive">
                             <table id="example" class="table table-striped" style="width:100%">
