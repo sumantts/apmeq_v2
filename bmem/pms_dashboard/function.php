@@ -443,11 +443,15 @@
 					array_push($mainData, $data);
 					$slno++;
 				}
-			}
+			}//end while
 		} else {
 			$status = false;
 		}
 			
+		if($PMSStatus == ''){
+			$PMSStatus = 1;
+		}
+
 		# Get Done Assets
 		if($facility_id > 0 && $PMSStatus == 1){
 			$sql = "SELECT * FROM facility_master  WHERE user_id = '" .$user_id. "' AND facility_id = '" .$facility_id. "' LIMIT 0, 50";
