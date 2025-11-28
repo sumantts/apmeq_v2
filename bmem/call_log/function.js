@@ -4,6 +4,9 @@ $('#asset_code').on('blur', function(){
     $('#asset_detail, #s_button_div').removeClass('d-block').show();
     $('#asset_detail, #s_button_div').addClass('d-none').hide();
 
+    $('#asset_error_span').removeClass('d-block');
+    $('#asset_error_span').addClass('d-none');
+
     if($asset_code != ''){
         $.ajax({
             method: "POST",
@@ -48,7 +51,9 @@ $('#asset_code').on('blur', function(){
                 $('#asset_detail, #s_button_div').addClass('d-block').hide();
                 
             }else{
-                alert('Asset Code Does Not Match / You have no access on it');
+                //alert('Asset Code Does Not Match / You have no access on it');
+                $('#asset_error_span').removeClass('d-none');
+                $('#asset_error_span').addClass('d-block');
             }
         });//end ajax
     }//end if

@@ -78,6 +78,8 @@ include('common/head.php');
                                 <div class="col-md-3 mb-3">
                                     <label for="asset_code" class="text-danger">Asset Code*</label>
                                     <input type="text" class="form-control" id="asset_code" required> 
+
+                                    <span class="d-none text-danger" id="asset_error_span">Asset Code Does Not Match / You have no access on it</span>
                                 </div>   
 
                                 <div class="col-md-3 mb-3">
