@@ -17,7 +17,7 @@
 		$user_type_code = $_SESSION["user_type_code"];
 		
 		$asset_id = ''; 
-		$facility_id = '';
+		//$facility_id = '';
 		$facility_name = ''; 
 		$department_id = ''; 
 		$equipment_name = ''; 
@@ -56,7 +56,7 @@
 			$sql = "SELECT asset_details.*, facility_master.facility_name FROM asset_details JOIN facility_master ON asset_details.facility_id = facility_master.facility_id WHERE asset_details.asset_code = '" .$asset_code. "'";
 		}else{
 			$sql = "SELECT asset_details.*, facility_master.facility_name FROM asset_details JOIN facility_master ON asset_details.facility_id = facility_master.facility_id WHERE asset_details.asset_code = '" .$asset_code. "' AND facility_master.facility_id = '" .$facility_id. "'";
-		}
+		} 
 
 		$result = $mysqli->query($sql);
 
