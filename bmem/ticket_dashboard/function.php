@@ -311,7 +311,7 @@
 					}//end if
 				}//end if
 
-				if($user_type_code == 'super'){}else{
+				if($user_type_code == 'super' || $user_type_code == 'h_admin'){}else{
 					$show_action_btn = false;
 					$disabled_text = 'disabled';					
 				}
@@ -403,7 +403,7 @@
 				}
 
 				
-				if($user_type_code == 'super'){
+				if($user_type_code == 'super' || $user_type_code == 'h_admin'){
 					$view_link = "";
 					$view_link .= "<a href='ticket_dashboard/call_log_link.php?call_log_id=$call_log_id', target='_blank'>View Link</a><br><br>";
 					$view_link .= "<a href='ticket_dashboard/call_log_link.php?call_log_id=$call_log_id&link=external', target='_blank'>Share Link</a>";
@@ -439,7 +439,7 @@
 				}
 				$updated_text1 .= '</select>'; 
 
-				if($user_type_code == 'super'){}else{ 	
+				if($user_type_code == 'super' || $user_type_code == 'h_admin'){}else{ 	
 					$updated_text1 = '-';	
 					$updated_text = $call_log_status_text;		
 				}
@@ -797,8 +797,18 @@
 		}
 		//$mysqli->close();
 
+		$temp_all_img = array();
+		if(sizeof($all_images) > 0){
+			for($i = 0; $i < sizeof($all_images); $i++){
+				$f_path = 'photos/'.$all_images[$i];
+				if(file_exists($f_path) == 1){
+					array_push($temp_all_img, $all_images[$i]);
+				}
+			}
+		}
+
 		$return_array['status'] = $status;
-		$return_array['all_images'] = $all_images;
+		$return_array['all_images'] = $temp_all_img;
     	echo json_encode($return_array);
 	}//function end		
 
@@ -819,6 +829,8 @@
 				if($all_images_en != ''){
 					$status = true;
 					$all_images = json_decode($all_images_en);
+
+
 				}
 			}
 		} else {
@@ -826,8 +838,18 @@
 		}
 		//$mysqli->close();
 
+		$temp_all_img = array();
+		if(sizeof($all_images) > 0){
+			for($i = 0; $i < sizeof($all_images); $i++){
+				$f_path = 'photos/'.$all_images[$i];
+				if(file_exists($f_path) == 1){
+					array_push($temp_all_img, $all_images[$i]);
+				}
+			}
+		}
+
 		$return_array['status'] = $status;
-		$return_array['all_images'] = $all_images;
+		$return_array['all_images'] = $temp_all_img;
     	echo json_encode($return_array);
 	}//function end		
 

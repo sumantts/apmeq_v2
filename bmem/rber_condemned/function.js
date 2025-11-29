@@ -216,13 +216,12 @@ function configureFacilityDropDown(){
 
             if($rows.length > 0){
                 $('#facility_id_s').html('');
-                $html = "<option value='0'>Select</option>";
 
-                for($i = 0; $i < $rows.length; $i++){
-                    //$html += "<option value='"+$rows[$i].facility_id+"'>"+$rows[$i].facility_name+"</option>";   
+                for($i = 0; $i < $rows.length; $i++){    
                     if($rows.length == 1){ 
-                        $html += "<option value='"+$rows[$i].facility_id+"' selected='selected'>"+$rows[$i].facility_name+"</option>"; 
+                        $html = "<option value='"+$rows[$i].facility_id+"' selected='selected'>"+$rows[$i].facility_name+"</option>"; 
                     }else{
+                        $html = "<option value='0'>Select</option>";
                         $html += "<option value='"+$rows[$i].facility_id+"'>"+$rows[$i].facility_name+"</option>"; 
                     }//end if                               
                 }//end for

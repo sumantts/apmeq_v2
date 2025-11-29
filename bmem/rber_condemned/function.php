@@ -611,8 +611,18 @@
 		}
 		//$mysqli->close();
 
+		$temp_all_img = array();
+		if(sizeof($all_images) > 0){
+			for($i = 0; $i < sizeof($all_images); $i++){
+				$f_path = 'photos/'.$all_images[$i];
+				if(file_exists($f_path) == 1){
+					array_push($temp_all_img, $all_images[$i]);
+				}
+			}
+		}
+
 		$return_array['status'] = $status;
-		$return_array['all_images'] = $all_images;
+		$return_array['all_images'] = $temp_all_img;
     	echo json_encode($return_array);
 	}//function end		
 
@@ -640,8 +650,18 @@
 		}
 		//$mysqli->close();
 
+		$temp_all_img = array();
+		if(sizeof($all_images) > 0){
+			for($i = 0; $i < sizeof($all_images); $i++){
+				$f_path = 'photos/'.$all_images[$i];
+				if(file_exists($f_path) == 1){
+					array_push($temp_all_img, $all_images[$i]);
+				}
+			}
+		}
+
 		$return_array['status'] = $status;
-		$return_array['all_images'] = $all_images;
+		$return_array['all_images'] = $temp_all_img;
     	echo json_encode($return_array);
 	}//function end		
 
