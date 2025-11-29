@@ -265,6 +265,8 @@
 		$device_group = $_GET['device_group'];
 		$asset_class = $_GET['asset_class'];
 		$user_id = $_SESSION["user_id"];
+		$facility_id_sess = $_SESSION["facility_id"];
+		$user_type_code = $_SESSION["user_type_code"];
 	
 		$department_id = $_GET['department_id'];
 		$PMSStatus = $_GET['PMSStatus'];
@@ -453,8 +455,13 @@
 		}
 
 		# Get Done Assets
-		if($facility_id > 0 && $PMSStatus == 1){
-			$sql = "SELECT * FROM facility_master  WHERE user_id = '" .$user_id. "' AND facility_id = '" .$facility_id. "' LIMIT 0, 50";
+		if($facility_id > 0 && $PMSStatus == 1){			
+			if($user_type_code == 'super'){
+				$sql = "SELECT * FROM facility_master  WHERE user_id = '" .$user_id. "' AND facility_id = '" .$facility_id. "' LIMIT 0, 50";
+			}else{
+				$sql = "SELECT * FROM facility_master  WHERE facility_id = '" .$facility_id_sess. "' LIMIT 0, 50";
+			} 
+
 			$result = $mysqli->query($sql);
 
 			if ($result->num_rows > 0) {
