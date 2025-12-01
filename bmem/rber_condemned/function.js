@@ -79,13 +79,12 @@ function editTableData($call_log_id){
         $res1 = JSON.parse(res);
         if($res1.status == true){
             $('#call_log_id').val($call_log_id); 
-            getAllProductImages($call_log_id) 
-            $('#assign_to').val($res1.assign_to).trigger('change');
-            $('#eng_contact_no').val($res1.eng_contact_no);
-            $('#call_log_statusM').val($res1.call_log_status).trigger('change');
-            //$('#resolved_date_time').val($res1.resolved_date_time); 
+            getAllProductImages($call_log_id)
+            
+            $('#call_log_statusM').val($res1.call_log_status).trigger('change'); 
             $('#engineer_coment').val($res1.engineer_coment); 
             $('#condemned_declare_date').val($res1.condemned_declare_date); 
+
             $html = '';
             $html += '<div><strong>Issue Description: </strong>'+$res1.issue_description+'</div>';
             $('#ticket_data').html($html);

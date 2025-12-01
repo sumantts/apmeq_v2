@@ -201,12 +201,19 @@
 		$equipment_name_s = $_GET['equipment_name_s'];
 		$asset_code_s = $_GET['asset_code_s']; 
 		$device_group = $_GET['device_group']; 
-		$asset_class = $_GET['asset_class'];
-		
-		$where_condition = "WHERE call_log_register.call_log_status = 3 OR call_log_register.call_log_status = 5 ";
+		$asset_class = $_GET['asset_class'];	
 
-		if($facility_id_s > 0){
-			$where_condition .= " AND call_log_register.facility_id = '" .$facility_id_s. "' ";
+		$session_facility_id = $_SESSION["facility_id"]; 
+		$user_type_id = $_SESSION["user_type_id"];
+		
+		$where_condition = "WHERE call_log_register.call_log_status = 3 OR call_log_register.call_log_status = 5 ";	
+
+		if($user_type_id != 1){
+			$where_condition .= " AND call_log_register.facility_id = '" .$session_facility_id. "' ";
+		}else{
+			if($facility_id_s > 0){
+				$where_condition .= " AND call_log_register.facility_id = '" .$facility_id_s. "' ";
+			}
 		}
 		if($facility_code_s > 0){
 			$where_condition .= " AND facility_master.facility_code = '" .$facility_code_s. "' ";
@@ -222,6 +229,7 @@
 		}
 		
 		$sql = "SELECT call_log_register.call_log_id, call_log_register.token_id, call_log_register.asset_code, call_log_register.issue_description, call_log_register.call_log_date_time, call_log_register.resolved_date_time, call_log_register.ticket_raiser_contact, call_log_register.assign_to, call_log_register.status_by_engg, call_log_register.eng_contact_no, call_log_register.engineer_coment, call_log_register.amc_yes_no, call_log_register.amc_last_date, call_log_register.cmc_yes_no, call_log_register.cmc_last_date, call_log_register.call_log_status, asset_details.equipment_name, asset_details.department_id, asset_details.asset_supplied_by, asset_details.sp_details, asset_details.warranty_last_date, facility_master.facility_code, facility_master.facility_name FROM call_log_register JOIN asset_details ON call_log_register.asset_code = asset_details.asset_code JOIN facility_master ON call_log_register.facility_id = facility_master.facility_id $where_condition ORDER BY call_log_register.call_log_id DESC LIMIT 0, 50";
+
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -386,9 +394,9 @@
 		$mainData = array();
 		$call_log_id = $_POST['call_log_id'];
 
-		$where_condition = "WHERE call_log_register.call_log_id = '" .$call_log_id. "' ";
+		//$where_condition = "WHERE call_log_register.call_log_id = '" .$call_log_id. "' ";
 		
-		$sql = "SELECT call_log_register.call_log_id, call_log_register.token_id, call_log_register.issue_description, call_log_register.call_log_date_time, call_log_register.resolved_date_time, call_log_register.ticket_raiser_contact, call_log_register.assign_to, call_log_register.call_log_status, call_log_register.status_by_engg, call_log_register.eng_contact_no, call_log_register.engineer_coment, call_log_register.condemned_declare_date, asset_details.equipment_name, asset_details.department_id, asset_details.asset_supplied_by, asset_details.sp_details, facility_master.facility_code, facility_master.facility_name FROM call_log_register JOIN asset_details ON call_log_register.asset_code = asset_details.asset_code JOIN facility_master ON call_log_register.facility_id = facility_master.facility_id $where_condition";
+		$sql = "SELECT * FROM call_log_register WHERE call_log_register.call_log_id = '" .$call_log_id. "' ";
 		$result = $mysqli->query($sql);
 
 		if ($result->num_rows > 0) {
@@ -396,91 +404,15 @@
 			$slno = 1;
 
 			while($row = $result->fetch_array()){
-				$token_id = $row['token_id'];	
-				$issue_description = $row['issue_description'];			
-				$equipment_name = $row['equipment_name'];				
-				$facility_code = $row['facility_code'];					
-				$facility_name = $row['facility_name'];					
-				$department_id = $row['department_id'];					
-				$asset_supplied_by = $row['asset_supplied_by'];					
-				$engineer_coment = $row['engineer_coment'];					
-				$status_by_engg = $row['status_by_engg'];					
-				$call_log_status = $row['call_log_status'];						
-				$condemned_declare_date = $row['condemned_declare_date'];	
-							
-				$sp_details = $row['sp_details'];					
-				$call_log_date_time = date('d-F-Y h:i A', strtotime($row['call_log_date_time']));	
-				$resolved_date_time = '';
-				if($row['resolved_date_time'] != '0000-00-00 00:00:00'){			
-					$resolved_date_time = date('Y-m-d', strtotime($row['resolved_date_time']));
-				}				
-				$ticket_raiser_contact = $row['ticket_raiser_contact'];					
-				$eng_contact_no = $row['eng_contact_no'];	
-							
-				$assign_to = $row['assign_to'];	
-				$assign_to_text = '';
-				if($assign_to == 1){
-					$assign_to_text = 'Engineer';					
-				}else if($assign_to == 2){
-					$assign_to_text = 'ServiceProvider';
-				}else{
-					$assign_to_text = '';
-				}	
-
-				 
-				$call_log_status_text = '';
-				if($call_log_status == 0){
-					$call_log_status_text = 'Raised';					
-				}else if($call_log_status == 1){
-					$call_log_status_text = 'WIP';
-				}else if($call_log_status == 2){
-					$call_log_status_text = 'Resolved';
-				}else if($call_log_status == 3){
-					$call_log_status_text = 'Closed';
-				}else if($call_log_status == 4){
-					$call_log_status_text = 'Rejected';
-				}else{
-					$call_log_status_text = 'Raised';
-				}
+				$call_log_status = $row['call_log_status'];	
+				$engineer_coment = $row['engineer_coment'];			
+				$condemned_declare_date = $row['condemned_declare_date'];				
+				$issue_description = $row['issue_description'];	 
 				
-				//get all depertment name	
-				$dept_names = '';	
-				$ids = '';	 
-				$ids_str = json_decode($department_id);
-				foreach($ids_str as $key => $val){
-					$ids .= $val.',';
-				} 				
-				$ids = rtrim($ids, ",");
-				$sql_get = "SELECT * FROM department_list WHERE department_id IN ($ids)";
-				$result_get = $mysqli->query($sql_get);
-		
-				if ($result_get->num_rows > 0) {
-					$status = true;	
-					while($row_get = $result_get->fetch_array()){
-						$dept_names .= $row_get['department_name'].', ';	
-					}				
-					$dept_names = rtrim($dept_names, ", ");
-				} 
-				
-				$return_array['token_id'] = $token_id;
-				$return_array['issue_description'] = $issue_description; 
-				$return_array['equipment_name'] = $equipment_name; 
-				$return_array['facility_code'] = $facility_code;
-				$return_array['facility_name'] = $facility_name;
-				$return_array['dept_names'] = $dept_names;
-				$return_array['asset_supplied_by'] = $asset_supplied_by;
-				$return_array['sp_details'] = $sp_details;
-				$return_array['call_log_date_time'] = $call_log_date_time;
-				$return_array['resolved_date_time'] = $resolved_date_time;
-				$return_array['ticket_raiser_contact'] = $ticket_raiser_contact;
-				$return_array['assign_to'] = $assign_to;  
-				$return_array['assign_to_text'] = $assign_to_text;  
-				$return_array['call_log_status'] = $call_log_status;
-				$return_array['call_log_status_text'] = $call_log_status_text;	
-				$return_array['eng_contact_no'] = $eng_contact_no;				
+				$return_array['call_log_status'] = $call_log_status;				
 				$return_array['engineer_coment'] = $engineer_coment;			
-				$return_array['status_by_engg'] = $status_by_engg;							
-				$return_array['condemned_declare_date'] = $condemned_declare_date;
+				$return_array['condemned_declare_date'] = $condemned_declare_date;							
+				$return_array['issue_description'] = $issue_description;
 			}
 		} else {
 			$status = false;
@@ -508,15 +440,15 @@
 	if($fn == 'updateTicketInfo'){
 		$return_array = array();
 		$status = true;
-		   
+		
 		$assign_to = $_POST['assign_to'];
 		$eng_contact_no = $_POST['eng_contact_no']; 
 		$call_log_status = $_POST['call_log_statusM'];
 		$resolved_date_time = $_POST['resolved_date_time'].' '.date('H:i:s'); 
 		$call_log_id = $_POST['call_log_id']; 
 		$engineer_coment = $_POST['engineer_coment']; 
-		$condemned_declare_date = $_POST['condemned_declare_date']; 
-						
+		$condemned_declare_date = date('Y-m-d', strtotime($_POST['condemned_declare_date'])); 
+		
 
 		$sql = "SELECT * FROM call_log_register WHERE call_log_id = '".$call_log_id."'";
 		$result = $mysqli->query($sql);
@@ -527,7 +459,8 @@
 			if($cl_status_history1 != ''){
 				$cl_status_history = json_decode($cl_status_history1);
 			}
-		} 
+		}
+		
 
 		$cl_status_history_obj = new stdClass();
 		$cl_status_history_obj->date_time = date('Y-m-d H:i:s');
@@ -541,17 +474,20 @@
 
 		$sql = "UPDATE call_log_register SET assign_to = '" .$assign_to. "', eng_contact_no = '" .$eng_contact_no. "', call_log_status = '" .$call_log_status. "', engineer_coment = '" .$engineer_coment. "', cl_status_history = '" .$cl_status_history_en. "' WHERE call_log_id = '" .$call_log_id. "' ";
 		$result = $mysqli->query($sql);
+		
 
 		if($call_log_status_o == '1'){
 			$call_log_status = '0';
 			$sql = "UPDATE call_log_register SET call_log_status = '" .$call_log_status. "' WHERE call_log_id = '" .$call_log_id. "' ";
 			$result = $mysqli->query($sql);
 		}
+		
 
-		if($call_log_status == 5){			
+		if($call_log_status == '5'){			
 			$sql2 = "UPDATE call_log_register SET condemned_declare_date = '" .$condemned_declare_date. "' WHERE call_log_id = '" .$call_log_id. "' ";
 			$result2 = $mysqli->query($sql2);
 		}
+		
 
 		$return_array['status'] = $status;
 		
