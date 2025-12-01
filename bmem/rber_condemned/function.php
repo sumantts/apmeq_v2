@@ -476,8 +476,8 @@
 		$result = $mysqli->query($sql);
 		
 
-		if($call_log_status_o == '1'){
-			$call_log_status = '0';
+		if($call_log_status == '1'){
+			$call_log_status = 0;
 			$sql = "UPDATE call_log_register SET call_log_status = '" .$call_log_status. "' WHERE call_log_id = '" .$call_log_id. "' ";
 			$result = $mysqli->query($sql);
 		}
