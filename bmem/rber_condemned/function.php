@@ -205,16 +205,16 @@
 
 		$session_facility_id = $_SESSION["facility_id"]; 
 		$user_type_id = $_SESSION["user_type_id"];
+		$user_type_code = $_SESSION["user_type_code"];
 		
-		$where_condition = "WHERE call_log_register.call_log_status = 3 OR call_log_register.call_log_status = 5 ";	
+		$where_condition = "WHERE (call_log_register.call_log_status = 3 OR call_log_register.call_log_status = 5) ";	
 
-		if($user_type_id != 1){
-			$where_condition .= " AND call_log_register.facility_id = '" .$session_facility_id. "' ";
-		}else{
-			if($facility_id_s > 0){
-				$where_condition .= " AND call_log_register.facility_id = '" .$facility_id_s. "' ";
-			}
+		
+		
+		if($facility_id_s > 0){
+			$where_condition .= " AND call_log_register.facility_id = '" .$facility_id_s. "' ";
 		}
+		
 		if($facility_code_s > 0){
 			$where_condition .= " AND facility_master.facility_code = '" .$facility_code_s. "' ";
 		}
@@ -227,7 +227,11 @@
 		if($device_group > 0){
 			$where_condition .= " AND asset_details.device_group = '" .$device_group. "' ";
 		}
-		
+
+		if($user_type_code != 'super'){
+			$where_condition .= " AND call_log_register.facility_id = '" .$session_facility_id. "' ";
+		} 
+
 		$sql = "SELECT call_log_register.call_log_id, call_log_register.token_id, call_log_register.asset_code, call_log_register.issue_description, call_log_register.call_log_date_time, call_log_register.resolved_date_time, call_log_register.ticket_raiser_contact, call_log_register.assign_to, call_log_register.status_by_engg, call_log_register.eng_contact_no, call_log_register.engineer_coment, call_log_register.amc_yes_no, call_log_register.amc_last_date, call_log_register.cmc_yes_no, call_log_register.cmc_last_date, call_log_register.call_log_status, asset_details.equipment_name, asset_details.department_id, asset_details.asset_supplied_by, asset_details.sp_details, asset_details.warranty_last_date, facility_master.facility_code, facility_master.facility_name FROM call_log_register JOIN asset_details ON call_log_register.asset_code = asset_details.asset_code JOIN facility_master ON call_log_register.facility_id = facility_master.facility_id $where_condition ORDER BY call_log_register.call_log_id DESC LIMIT 0, 50";
 
 		$result = $mysqli->query($sql);
