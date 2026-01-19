@@ -1,6 +1,6 @@
-<?php
-	//include('assets/php/sql_conn.php');	
-	
+<?php	//include('assets/php/sql_conn.php');	
+
+
 	if(isset($_GET["p"])){
 		$p = $_GET["p"];
 	}else{

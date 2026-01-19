@@ -23,16 +23,18 @@
               <form class="row g-3">
                 <div class="col-md-6"><label class="visually-hidden" for="inputName">Name</label><input class="form-control form-livedoc-control" id="inputName" type="text" placeholder="Name" /></div>
                 <div class="col-md-6"><label class="visually-hidden" for="inputPhone">Phone</label><input class="form-control form-livedoc-control" id="inputPhone" type="text" placeholder="Phone" /></div>
+				  <!--
                 <div class="col-md-6"><label class="form-label visually-hidden" for="inputCategory">Category</label><select class="form-select" id="inputCategory">
                     <option selected="selected">Category</option>
                     <option> Category One</option>
                     <option> Category Two</option>
                     <option> Category Three</option>
                   </select></div>
+					-->
                 <div class="col-md-6"><label class="form-label visually-hidden" for="inputEmail">Email</label><input class="form-control form-livedoc-control" id="inputEmail" type="email" placeholder="Email" /></div>
                 <div class="col-md-12"><label class="form-label visually-hidden" for="validationTextarea">Message</label><textarea class="form-control form-livedoc-control" id="validationTextarea" placeholder="Message" style="height: 250px;" required="required"></textarea></div>
                 <div class="col-12">
-                  <div class="d-grid"> <button class="btn btn-primary rounded-pill" type="submit">Sign in</button></div>
+                  <div class="d-grid"> <button class="btn btn-primary rounded-pill" type="submit">Submit</button></div>
                 </div>
               </form>
             </div>

@@ -3,10 +3,17 @@
         <!--/.bg-holder-->
         <div class="container">
           <div class="row min-vh-xl-100 min-vh-xxl-25">
-            <div class="col-md-5 col-xl-6 col-xxl-7 order-0 order-md-1 text-end"><img class="pt-7 pt-md-0 w-100" src="assets/img/gallery/hero.png" alt="hero-header" /></div>
+            <div class="col-md-5 col-xl-6 col-xxl-7 order-0 order-md-1 text-end">
+				<!-- <img class="pt-7 pt-md-0 w-100" src="assets/img/gallery/hero.png" alt="hero-header" /> -->
+				<img class="pt-7 pt-md-0 w-100" style="border-radius: 50px;" src="assets/img/gallery/hero_new.jpg" alt="hero-header" />
+			</div>
             <div class="col-md-75 col-xl-6 col-xxl-5 text-md-start text-center py-6">
+			  <!--
               <h1 class="fw-light font-base fs-6 fs-xxl-7">We're <strong>determined </strong>for<br />your&nbsp;<strong>better life.</strong></h1>
-              <p class="fs-1 mb-5">You can get the care you need 24/7 – be it online or in <br />person. You will be treated by caring specialist doctors. </p><a class="btn btn-lg btn-primary rounded-pill" href="?p=contact-us" role="button">Contact Us</a>
+              <p class="fs-1 mb-5">You can get the care you need 24/7 – be it online or in <br />person. You will be treated by caring specialist doctors. </p>
+			  -->
+			  <h1 class="fw-light font-base fs-6 fs-xxl-7">Pioneering a Benchmark in <strong>Bio-Medical Equipment Management </strong>(BMEM)</h1>
+			  <a class="btn btn-lg btn-primary rounded-pill" href="?p=contact-us" role="button">Contact Us</a>
             </div>
           </div>
         </div>
