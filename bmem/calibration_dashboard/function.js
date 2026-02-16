@@ -116,12 +116,13 @@ function populateDataTable_1(){
 
             if($rows.length > 0){
                 $('#facility_id').html('');
-
+                if($rows.length > 1){
+                    $html = "<option value=''>Select</option>";
+                }
                 for($i = 0; $i < $rows.length; $i++){            
                     if($rows.length == 1){ 
                         $html = "<option value='"+$rows[$i].facility_id+"' selected='selected'>"+$rows[$i].facility_name+"</option>"; 
                     }else{ 
-                        $html = "<option value=''>Select</option>";
                         $html += "<option value='"+$rows[$i].facility_id+"'>"+$rows[$i].facility_name+"</option>"; 
                     }//end if 
                 }//end for
